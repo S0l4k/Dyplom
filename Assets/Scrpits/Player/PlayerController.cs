@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
     }
+    
 
     private void HandleStamina()
     {
@@ -95,24 +96,36 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         moveDirection.Normalize();
 
-        if (moveDirection != Vector3.zero)
+        if (moveDirection.sqrMagnitude < 0.01f)
+            return;
+
+        
+        if (Physics.Raycast(transform.position, moveDirection, out RaycastHit hit, 0.6f))
         {
             
-            if (Physics.Raycast(transform.position, moveDirection, out RaycastHit hit, 0.6f))
+            if ((groundMask.value & (1 << hit.collider.gameObject.layer)) == 0)
             {
-                if (!hit.collider.CompareTag("Ground"))
-                    moveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal);
+                
+                moveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal);
+
+                
+                if (Vector3.Dot(moveDirection, hit.normal) < 0)
+                    moveDirection -= Vector3.Dot(moveDirection, hit.normal) * hit.normal;
             }
         }
 
-        rb.AddForce(moveDirection * acceleration * currentSpeed / walkSpeed, ForceMode.Acceleration);
+        
+        Vector3 force = moveDirection * acceleration * (currentSpeed / walkSpeed);
+        rb.AddForce(force, ForceMode.Acceleration);
     }
+
+
+
 
     private void SpeedControl()
     {

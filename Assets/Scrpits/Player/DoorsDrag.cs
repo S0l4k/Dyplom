@@ -12,7 +12,7 @@ public class DoorsDrag : MonoBehaviour
 
     void Update()
     {
-        //Raycast
+        
         RaycastHit hit;
 
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20, doorLayer))
@@ -28,7 +28,7 @@ public class DoorsDrag : MonoBehaviour
             HingeJoint joint = selectedDoor.GetComponent<HingeJoint>();
             JointMotor motor = joint.motor;
 
-            //Create drag point object for reference where players mouse is pointing
+            
             if (dragPointGameobject == null)
             {
                 dragPointGameobject = new GameObject("Ray door");
@@ -42,7 +42,7 @@ public class DoorsDrag : MonoBehaviour
 
             float delta = Mathf.Pow(Vector3.Distance(dragPointGameobject.transform.position, selectedDoor.position), 3);
 
-            //Deciding if it is left or right door
+            
             if (selectedDoor.GetComponent<MeshRenderer>().localBounds.center.x > selectedDoor.localPosition.x)
             {
                 leftDoor = 1;
@@ -52,7 +52,7 @@ public class DoorsDrag : MonoBehaviour
                 leftDoor = -1;
             }
 
-            //Applying velocity to door motor
+           
             float speedMultiplier = 60000;
             if (Mathf.Abs(selectedDoor.parent.forward.z) > 0.5f)
             {
