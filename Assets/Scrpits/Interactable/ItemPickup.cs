@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Commands;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -10,15 +11,14 @@ public class ItemPickup : MonoBehaviour
     public Vector3 localRotationOffset;
 
     [Header("UI")]
-    public TMP_Text pickupText; // wspólny TextMeshPro (np. na UI Canvasie)
+    public TMP_Text pickupText;
 
     private Camera playerCamera;
     private bool canPickup = false;
     private bool isHeld = false;
 
-    private static bool playerHasItem = false;     // Czy gracz trzyma coœ?
-    private static ItemPickup currentTarget = null; // Który item pokazuje tekst
-
+    private static bool playerHasItem = false;    
+    private static ItemPickup currentTarget = null; 
     void Start()
     {
         playerCamera = Camera.main;
@@ -32,16 +32,16 @@ public class ItemPickup : MonoBehaviour
 
     void Update()
     {
-        if (!isHeld) // tylko jeœli item nie jest trzymany
+        if (!isHeld) 
             CheckForPickup();
         else
             ShowDropText();
 
-        // podnoszenie
+        
         if (canPickup && !playerHasItem && Input.GetKeyDown(KeyCode.E))
             Pickup();
 
-        // upuszczanie
+        
         if (isHeld && Input.GetKeyDown(KeyCode.G))
             Drop();
     }
@@ -75,7 +75,8 @@ public class ItemPickup : MonoBehaviour
         canPickup = false;
     }
 
-    void ShowPickupText()
+    [Command("ShowText", "dasdasdasda")]
+   public void ShowPickupText()
     {
         pickupText.gameObject.SetActive(true);
         pickupText.text = $"Press E to pick up {itemName}";

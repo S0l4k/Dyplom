@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float walkSpeed = 5f;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
+    public GameObject console;
 
     private float horizontalInput;
     private float verticalInput;
@@ -43,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundMask);
 
         HandleInput();
@@ -63,7 +65,12 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         bool wantsToSprint = Input.GetKey(KeyCode.LeftShift) && verticalInput > 0 && !isExhausted;
-
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            console.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }    
        
         isSprinting = wantsToSprint && grounded && currentStamina > 0;
 
