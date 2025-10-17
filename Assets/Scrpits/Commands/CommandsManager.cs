@@ -17,7 +17,8 @@ namespace Commands
         string _input;
         private void Awake()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+            .Where(a => a.GetName().Name == "Assembly-CSharp");
 
             foreach (var assembly in assemblies)
             {
