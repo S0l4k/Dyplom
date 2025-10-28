@@ -21,6 +21,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 36
+<<<<<<< HEAD
     width: 1280
     height: 573.3333
   m_MinSize: {x: 400, y: 100}
@@ -31,6 +32,14 @@ MonoBehaviour:
 =======
   controlID: 10435
 >>>>>>> origin/Maria
+=======
+    width: 1920
+    height: 933
+  m_MinSize: {x: 400, y: 100}
+  m_MaxSize: {x: 32384, y: 16192}
+  vertical: 0
+  controlID: 10323
+>>>>>>> origin/Kinga
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -54,9 +63,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 358
     width: 740.3333
     height: 267.99997
+=======
+    y: 491
+    width: 743
+    height: 495
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -112,16 +127,24 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
+<<<<<<< HEAD
       width: 740.3333
       height: 246.99997
     m_Scale: {x: 0.34305552, y: 0.34305552}
     m_Translation: {x: 370.16666, y: 123.499985}
+=======
+      width: 743
+      height: 474
+    m_Scale: {x: 0.38697916, y: 0.38697916}
+    m_Translation: {x: 371.5, y: 237.00002}
+>>>>>>> origin/Kinga
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -1079.0284
       y: -360
       width: 2158.057
@@ -129,6 +152,15 @@ MonoBehaviour:
     m_MinimalGUI: 1
   m_defaultScale: 0.34305552
   m_LastWindowPixelSize: {x: 1110.5, y: 401.99994}
+=======
+      x: -960
+      y: -612.4361
+      width: 1920
+      height: 1224.8722
+    m_MinimalGUI: 1
+  m_defaultScale: 0.38697916
+  m_LastWindowPixelSize: {x: 743, y: 495}
+>>>>>>> origin/Kinga
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -154,6 +186,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 741.3333
     height: 573.3333
   m_MinSize: {x: 100, y: 100}
@@ -164,6 +197,14 @@ MonoBehaviour:
 =======
   controlID: 9993
 >>>>>>> origin/Maria
+=======
+    width: 744
+    height: 933
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 8096, y: 16192}
+  vertical: 1
+  controlID: 10197
+>>>>>>> origin/Kinga
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -182,8 +223,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 741.3333
     height: 279.33334
+=======
+    width: 744
+    height: 412
+>>>>>>> origin/Kinga
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 5}
@@ -215,9 +261,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 78.66667
     width: 740.3333
     height: 253.33334
+=======
+    y: 79
+    width: 743
+    height: 386
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -763,6 +815,7 @@ MonoBehaviour:
       containerId: overlay-toolbar__left
       displayed: 1
       id: AINavigationOverlay
+<<<<<<< HEAD
       index: 0
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-210.66664123535157,"y":-245.3343505859375},"m_SnapOffsetDelta":{"x":0.0000152587890625,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
@@ -770,6 +823,15 @@ MonoBehaviour:
       snapOffset: {x: -210.66664, y: -245.33435}
       snapOffsetDelta: {x: 0.000015258789, y: 0}
       snapCorner: 3
+=======
+      index: 11
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":25.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 24, y: 25}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+>>>>>>> origin/Kinga
       layout: 4
       size: {x: 0, y: 0}
       sizeOverridden: 0
@@ -801,6 +863,7 @@ MonoBehaviour:
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: -2.144356, y: -1.724931, z: -0.1723168}
     speed: 2
     m_Value: {x: -2.144356, y: -1.724931, z: -0.1723168}
@@ -809,6 +872,11 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -1.4986284, y: 0.90319383, z: -7.425596}
 >>>>>>> origin/Maria
+=======
+    m_Target: {x: 7.875093, y: 1.5015467, z: 9.291614}
+    speed: 2
+    m_Value: {x: 7.875093, y: 1.5015467, z: 9.291614}
+>>>>>>> origin/Kinga
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -855,12 +923,17 @@ MonoBehaviour:
     m_gridOpacity: 0.5
   m_Rotation:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: 0.31099063, y: -0.6853698, z: 0.4209892, w: 0.5063656}
+=======
+    m_Target: {x: -0.20643999, y: 0.6092869, z: 0.16843562, w: 0.74685276}
+>>>>>>> origin/Kinga
     speed: 2
-    m_Value: {x: 0.31097743, y: -0.6853407, z: 0.42097133, w: 0.5063441}
+    m_Value: {x: -0.2064392, y: 0.6092846, z: 0.16843498, w: 0.7468499}
   m_Size:
-    m_Target: 7.684221
+    m_Target: 0.35394925
     speed: 2
+<<<<<<< HEAD
     m_Value: 7.684221
 =======
     m_Target: {x: -0.08969794, y: 0.2506055, z: -0.023327667, w: -0.9636923}
@@ -871,6 +944,9 @@ MonoBehaviour:
     speed: 2
     m_Value: 2.875253
 >>>>>>> origin/Maria
+=======
+    m_Value: 0.35394925
+>>>>>>> origin/Kinga
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -926,9 +1002,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 78.66667
     width: 581
     height: 84
+=======
+    y: 79
+    width: 743
+    height: 386
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1028,9 +1110,15 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 279.33334
     width: 741.3333
     height: 293.99997
+=======
+    y: 412
+    width: 744
+    height: 521
+>>>>>>> origin/Kinga
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 2}
@@ -1078,10 +1166,14 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastSelectedObjectID: -98208
 =======
   m_LastSelectedObjectID: -14680
 >>>>>>> origin/Maria
+=======
+  m_LastSelectedObjectID: -5248
+>>>>>>> origin/Kinga
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1097,10 +1189,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 741.3333
     y: 0
     width: 100.66669
     height: 573.3333
+=======
+    x: 744
+    y: 0
+    width: 292
+    height: 933
+>>>>>>> origin/Kinga
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 11}
@@ -1129,10 +1228,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 741.3334
     y: 78.66667
     width: 98.66669
     height: 547.3333
+=======
+    x: 744
+    y: 79
+    width: 290
+    height: 907
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1150,10 +1256,14 @@ MonoBehaviour:
       m_SelectedIDs: 
       m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_ExpandedIDs: 98a8feff88cdfeff30d0feffccd0feff70ecfeff240fffffac16fffffc1affffa21dffffc025ffff082effff4aceffff02d8ffffc2d8ffffeeebffffc0faffffcaad0000e0ad0000
 =======
       m_ExpandedIDs: a8c6ffff1efbffff
 >>>>>>> origin/Maria
+=======
+      m_ExpandedIDs: 82ebffff6eecffff56edffff36eeffffd8efffffc0f0ffffa8f1ffff90f2ffff78f3ffff60f4ffff4af5ffff32f6ffff1cfbffff08c70000
+>>>>>>> origin/Kinga
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1193,12 +1303,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 842
     y: 0
     width: 211.33337
     height: 573.3333
   m_MinSize: {x: 230, y: 250}
   m_MaxSize: {x: 10000, y: 10000}
+=======
+    x: 1036
+    y: 0
+    width: 502
+    height: 933
+  m_MinSize: {x: 232, y: 276}
+  m_MaxSize: {x: 10002, y: 10026}
+>>>>>>> origin/Kinga
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -1225,10 +1344,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 842
     y: 78.66667
     width: 209.33337
     height: 547.3333
+=======
+    x: 1036
+    y: 79
+    width: 500
+    height: 907
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1252,10 +1378,14 @@ MonoBehaviour:
     m_SearchArea: 1
     m_Folders:
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Assets/Scenes
 =======
     - Assets/Maria/Flashlight
 >>>>>>> origin/Maria
+=======
+    - Assets/Scrpits/Interactable
+>>>>>>> origin/Kinga
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1266,16 +1396,23 @@ MonoBehaviour:
   m_StartGridSize: 89
   m_LastFolders:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Assets/Scenes
 =======
   - Assets/Maria/Flashlight
 >>>>>>> origin/Maria
   m_LastFoldersGridSize: 89
   m_LastProjectPath: C:\Users\Admin\Desktop\Dyplom
+=======
+  - Assets/Scrpits/Interactable
+  m_LastFoldersGridSize: 89
+  m_LastProjectPath: "C:\\Users\\Ki\u0144\\Documents\\GitKraken\\Dyplom"
+>>>>>>> origin/Kinga
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_SelectedIDs: 48ab0000
     m_LastClickedID: 43848
@@ -1285,6 +1422,11 @@ MonoBehaviour:
     m_LastClickedID: 43208
     m_ExpandedIDs: 00000000dca60000baa8000000ca9a3b
 >>>>>>> origin/Maria
+=======
+    m_SelectedIDs: 62b20000
+    m_LastClickedID: 45666
+    m_ExpandedIDs: 0000000064b0000066b0000068b000006ab0000000ca9a3bffffff7f
+>>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1314,10 +1456,14 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 0000000000ab000000ca9a3bffffff7f
 =======
     m_ExpandedIDs: 00000000dca6000000ca9a3b
 >>>>>>> origin/Maria
+=======
+    m_ExpandedIDs: 0000000064b0000066b0000068b000006ab0000000ca9a3bffffff7f
+>>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1344,12 +1490,17 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 72a9feff
     m_LastClickedInstanceID: -87694
 =======
     m_SelectedInstanceIDs: a8c6ffff
     m_LastClickedInstanceID: -14680
 >>>>>>> origin/Maria
+=======
+    m_SelectedInstanceIDs: 80ebffff
+    m_LastClickedInstanceID: -5248
+>>>>>>> origin/Kinga
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: d693000000000000c0db0000
     m_RenameOverlay:
@@ -1395,10 +1546,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1053.3334
     y: 0
     width: 226.66663
     height: 573.3333
+=======
+    x: 1538
+    y: 0
+    width: 382
+    height: 933
+>>>>>>> origin/Kinga
   m_MinSize: {x: 276, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 15}
@@ -1427,10 +1585,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1053.3334
     y: 78.66667
     width: 225.66663
     height: 547.3333
+=======
+    x: 1538
+    y: 79
+    width: 381
+    height: 907
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1449,10 +1614,14 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastInspectedObjectInstanceID: -87694
 =======
   m_LastInspectedObjectInstanceID: -14680
 >>>>>>> origin/Maria
+=======
+  m_LastInspectedObjectInstanceID: -5248
+>>>>>>> origin/Kinga
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

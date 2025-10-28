@@ -16,9 +16,13 @@ public class ItemPickup : MonoBehaviour
     private Camera playerCamera;
     private bool canPickup = false;
     private bool isHeld = false;
+    private bool isHidden = false;
 
-    private static bool playerHasItem = false;    
-    private static ItemPickup currentTarget = null; 
+    private static bool playerHasItem = false;
+    private static ItemPickup currentTarget = null;
+
+    private Flashlight flashlight;
+
     void Start()
     {
         playerCamera = Camera.main;
@@ -28,22 +32,25 @@ public class ItemPickup : MonoBehaviour
 
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
+
+        flashlight = GetComponent<Flashlight>();
     }
 
     void Update()
     {
-        if (!isHeld) 
+        if (!isHeld)
             CheckForPickup();
         else
-            ShowDropText();
+            ShowItemUI();
 
-        
         if (canPickup && !playerHasItem && Input.GetKeyDown(KeyCode.E))
             Pickup();
 
-        
-        if (isHeld && Input.GetKeyDown(KeyCode.G))
+        if (isHeld && flashlight == null && Input.GetKeyDown(KeyCode.G))
             Drop();
+
+        if (isHeld && flashlight != null && Input.GetKeyDown(KeyCode.F))
+            ToggleHidden();
     }
 
     void CheckForPickup()
@@ -76,15 +83,25 @@ public class ItemPickup : MonoBehaviour
     }
 
     [Command("ShowText", "dasdasdasda")]
-   public void ShowPickupText()
+    public void ShowPickupText()
     {
         pickupText.gameObject.SetActive(true);
         pickupText.text = $"Press E to pick up {itemName}";
     }
 
-    void ShowDropText()
+    void ShowItemUI()
     {
-        if (pickupText != null && playerHasItem)
+        if (pickupText == null || !playerHasItem)
+            return;
+
+        if (flashlight != null)
+        {
+            pickupText.gameObject.SetActive(true);
+            pickupText.text = isHidden
+                ? $"Press F to take out {itemName}"
+                : $"Press F to hide {itemName}";
+        }
+        else
         {
             pickupText.gameObject.SetActive(true);
             pickupText.text = $"Press G to drop {itemName}";
@@ -116,6 +133,12 @@ public class ItemPickup : MonoBehaviour
         HidePickupText();
         currentTarget = null;
         canPickup = false;
+
+        if (flashlight != null)
+        {
+            flashlight.TurnOn();
+            isHidden = false;
+        }
     }
 
     void Drop()
@@ -131,6 +154,31 @@ public class ItemPickup : MonoBehaviour
 
         isHeld = false;
         playerHasItem = false;
+
+        HidePickupText();
+    }
+
+    void ToggleHidden()
+    {
+        if (flashlight == null)
+            return;
+
+        if (isHidden)
+        {
+            transform.SetParent(handPosition);
+            transform.localPosition = localPositionOffset;
+            transform.localRotation = Quaternion.Euler(localRotationOffset);
+            flashlight.TurnOn();
+            isHidden = false;
+        }
+        else
+        {
+            flashlight.TurnOff();
+            transform.SetParent(null);
+
+            transform.position = new Vector3(0, -1000, 0);
+            isHidden = true;
+        }
 
         HidePickupText();
     }
