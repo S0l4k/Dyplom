@@ -3,58 +3,96 @@ using TMPro;
 
 public class Dialog : MonoBehaviour
 {
-    [SerializeField] private string[] sentences1;
-    [SerializeField] private string[] sentences2;
+    public DialogNode[] dialogNodes;
     public GameObject[] answers;
     public TextMeshProUGUI dialogText;
 
+    private int currentNode = 0;
+    private bool optionsActive = false;
+
+    public bool happy = false;
+
     void Awake()
     {
-        Debug.Log("Dialog Awake start");
-
-        for (int i = 0; i < answers.Length; i++)
-        {
-            Debug.Log($"Wy³¹czam: {answers[i].name}");
-            answers[i].SetActive(false);
-        }
-
-        if (dialogText != null)
-        {
-            dialogText.gameObject.SetActive(false);
-            Debug.Log("Ukry³em dialogText");
-        }
-
-        Debug.Log("Dialog Awake koniec");
+        HideAll();
     }
 
-    void Start()
+    void Update()
     {
+        if (!optionsActive) return;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SelectOption(0);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SelectOption(1);
     }
 
-    public void ShowAnswers()
+    public void StartDialog()
     {
-        for (int i = 0; i < answers.Length; i++)
+        currentNode = 0;
+        ShowNode();
+    }
+
+    void ShowNode()
+    {
+        HideAll();
+
+        DialogNode node = dialogNodes[currentNode];
+
+        dialogText.text = node.npcLine;
+        dialogText.gameObject.SetActive(true);
+
+        for (int i = 0; i < node.responses.Length; i++)
+        {
             answers[i].SetActive(true);
+            answers[i].GetComponent<TMP_Text>().text = node.responses[i];
+        }
 
-        if (dialogText != null)
-            dialogText.gameObject.SetActive(false);
+        optionsActive = true;
     }
 
-    public void DialogOption1()
+    void SelectOption(int optionIndex)
     {
+        DialogNode node = dialogNodes[currentNode];
+
+        if (node.responseEvents != null &&
+            optionIndex < node.responseEvents.Length &&
+            node.responseEvents[optionIndex] != null)
+        {
+            node.responseEvents[optionIndex].Invoke();
+        }
+
+        if (node.nextNodeIndex.Length <= optionIndex ||
+            node.nextNodeIndex[optionIndex] < 0)
+        {
+            EndDialog();
+            return;
+        }
+
+        currentNode = node.nextNodeIndex[optionIndex];
+        ShowNode();
+    }
+
+    public void Happiness()
+    {
+        happy = true;
+        Debug.Log("Krzysiu jest zadowolony!");
+    }
+
+    void EndDialog()
+    {
+        HideAll();
+        Debug.Log("Dialog zakoñczony");
+    }
+
+    void HideAll()
+    {
+        dialogText.gameObject.SetActive(false);
+
         for (int i = 0; i < answers.Length; i++)
             answers[i].SetActive(false);
 
-        dialogText.gameObject.SetActive(true);
-        dialogText.text = sentences1.Length > 0 ? sentences1[0] : "";
-    }
-
-    public void DialogOption2()
-    {
-        for (int i = 0; i < answers.Length; i++)
-            answers[i].SetActive(false);
-
-        dialogText.gameObject.SetActive(true);
-        dialogText.text = sentences2.Length > 0 ? sentences2[0] : "";
+        optionsActive = false;
     }
 }
