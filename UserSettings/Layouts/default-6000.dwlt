@@ -1566,6 +1566,7 @@ MonoBehaviour:
   m_Position:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: -0.54380083, y: 1.5854318, z: 2.855885}
     speed: 2
     m_Value: {x: -0.54380083, y: 1.5854318, z: 2.855885}
@@ -1576,6 +1577,9 @@ MonoBehaviour:
 >>>>>>> origin/Maria
 =======
     m_Target: {x: 847.29926, y: 115.83563, z: 364.7929}
+=======
+    m_Target: {x: 7.875093, y: 1.5015467, z: 9.291614}
+>>>>>>> origin/Kinga
     speed: 2
     m_Value: {x: 847.29926, y: 115.83563, z: 364.7929}
 >>>>>>> origin/Kinga
@@ -1626,14 +1630,18 @@ MonoBehaviour:
   m_Rotation:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: -0.32717755, y: -0.2678047, z: 0.09723664, w: -0.9010318}
 =======
     m_Target: {x: -0.24818738, y: 0.004935659, z: -0.0012746578, w: -0.968712}
 >>>>>>> origin/Kinga
+=======
+    m_Target: {x: -0.20643999, y: 0.6092869, z: 0.16843562, w: 0.74685276}
+>>>>>>> origin/Kinga
     speed: 2
     m_Value: {x: -0.24818736, y: 0.004935659, z: -0.0012746578, w: -0.9687119}
   m_Size:
-    m_Target: 566.90607
+    m_Target: 0.35394925
     speed: 2
 <<<<<<< HEAD
     m_Value: 1.2781417
@@ -1962,7 +1970,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 9ebe0000
     m_LastClickedID: 48798
-    m_ExpandedIDs: 0000000064b0000066b0000068b000006ab00000
+    m_ExpandedIDs: 0000000082b0000084b0000086b0000088b00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1991,7 +1999,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000064b0000066b0000068b000006ab00000
+    m_ExpandedIDs: 0000000082b0000084b0000086b0000088b00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

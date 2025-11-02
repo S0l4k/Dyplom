@@ -38,7 +38,11 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
+<<<<<<< HEAD
   controlID: 10323
+>>>>>>> origin/Kinga
+=======
+  controlID: 10301
 >>>>>>> origin/Kinga
   draggingID: 0
 --- !u!114 &2
@@ -69,7 +73,7 @@ MonoBehaviour:
     height: 267.99997
 =======
     y: 491
-    width: 743
+    width: 712
     height: 495
 >>>>>>> origin/Kinga
   m_SerializedDataModeController:
@@ -128,6 +132,7 @@ MonoBehaviour:
       x: 0
       y: 21
 <<<<<<< HEAD
+<<<<<<< HEAD
       width: 740.3333
       height: 246.99997
     m_Scale: {x: 0.34305552, y: 0.34305552}
@@ -137,6 +142,12 @@ MonoBehaviour:
       height: 474
     m_Scale: {x: 0.38697916, y: 0.38697916}
     m_Translation: {x: 371.5, y: 237.00002}
+>>>>>>> origin/Kinga
+=======
+      width: 712
+      height: 474
+    m_Scale: {x: 0.37083334, y: 0.37083334}
+    m_Translation: {x: 356, y: 237}
 >>>>>>> origin/Kinga
     m_MarginLeft: 0
     m_MarginRight: 0
@@ -154,12 +165,17 @@ MonoBehaviour:
   m_LastWindowPixelSize: {x: 1110.5, y: 401.99994}
 =======
       x: -960
-      y: -612.4361
+      y: -639.10114
       width: 1920
-      height: 1224.8722
+      height: 1278.2023
     m_MinimalGUI: 1
+<<<<<<< HEAD
   m_defaultScale: 0.38697916
   m_LastWindowPixelSize: {x: 743, y: 495}
+>>>>>>> origin/Kinga
+=======
+  m_defaultScale: 0.37083334
+  m_LastWindowPixelSize: {x: 712, y: 495}
 >>>>>>> origin/Kinga
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
@@ -187,6 +203,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 741.3333
     height: 573.3333
   m_MinSize: {x: 100, y: 100}
@@ -199,11 +216,18 @@ MonoBehaviour:
 >>>>>>> origin/Maria
 =======
     width: 744
+=======
+    width: 713
+>>>>>>> origin/Kinga
     height: 933
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
+<<<<<<< HEAD
   controlID: 10197
+>>>>>>> origin/Kinga
+=======
+  controlID: 10171
 >>>>>>> origin/Kinga
   draggingID: 0
 --- !u!114 &4
@@ -224,10 +248,14 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 741.3333
     height: 279.33334
 =======
     width: 744
+=======
+    width: 713
+>>>>>>> origin/Kinga
     height: 412
 >>>>>>> origin/Kinga
   m_MinSize: {x: 201, y: 226}
@@ -267,7 +295,7 @@ MonoBehaviour:
     height: 253.33334
 =======
     y: 79
-    width: 743
+    width: 712
     height: 386
 >>>>>>> origin/Kinga
   m_SerializedDataModeController:
@@ -825,10 +853,10 @@ MonoBehaviour:
       snapCorner: 3
 =======
       index: 11
-      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":25.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
-      snapOffset: {x: 24, y: 25}
+      snapOffset: {x: 24, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
 >>>>>>> origin/Kinga
@@ -864,6 +892,7 @@ MonoBehaviour:
   m_Position:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: -2.144356, y: -1.724931, z: -0.1723168}
     speed: 2
     m_Value: {x: -2.144356, y: -1.724931, z: -0.1723168}
@@ -876,6 +905,11 @@ MonoBehaviour:
     m_Target: {x: 7.875093, y: 1.5015467, z: 9.291614}
     speed: 2
     m_Value: {x: 7.875093, y: 1.5015467, z: 9.291614}
+>>>>>>> origin/Kinga
+=======
+    m_Target: {x: 0.73931897, y: 6.0921617, z: 0.86713296}
+    speed: 2
+    m_Value: {x: 0.73931897, y: 6.0921617, z: 0.86713296}
 >>>>>>> origin/Kinga
   m_RenderMode: 0
   m_CameraMode:
@@ -924,15 +958,20 @@ MonoBehaviour:
   m_Rotation:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: 0.31099063, y: -0.6853698, z: 0.4209892, w: 0.5063656}
 =======
     m_Target: {x: -0.20643999, y: 0.6092869, z: 0.16843562, w: 0.74685276}
 >>>>>>> origin/Kinga
+=======
+    m_Target: {x: 0.27049652, y: 0.07673697, z: -0.021619963, w: 0.95940405}
+>>>>>>> origin/Kinga
     speed: 2
-    m_Value: {x: -0.2064392, y: 0.6092846, z: 0.16843498, w: 0.7468499}
+    m_Value: {x: 0.27049917, y: 0.076737724, z: -0.021620173, w: 0.9594134}
   m_Size:
-    m_Target: 0.35394925
+    m_Target: 0.5596257
     speed: 2
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_Value: 7.684221
 =======
@@ -946,6 +985,9 @@ MonoBehaviour:
 >>>>>>> origin/Maria
 =======
     m_Value: 0.35394925
+>>>>>>> origin/Kinga
+=======
+    m_Value: 0.5596257
 >>>>>>> origin/Kinga
   m_Ortho:
     m_Target: 0
@@ -1008,7 +1050,7 @@ MonoBehaviour:
     height: 84
 =======
     y: 79
-    width: 743
+    width: 712
     height: 386
 >>>>>>> origin/Kinga
   m_SerializedDataModeController:
@@ -1116,7 +1158,7 @@ MonoBehaviour:
     height: 293.99997
 =======
     y: 412
-    width: 744
+    width: 713
     height: 521
 >>>>>>> origin/Kinga
   m_MinSize: {x: 201, y: 226}
@@ -1167,12 +1209,16 @@ MonoBehaviour:
     m_IsLocked: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastSelectedObjectID: -98208
 =======
   m_LastSelectedObjectID: -14680
 >>>>>>> origin/Maria
 =======
   m_LastSelectedObjectID: -5248
+>>>>>>> origin/Kinga
+=======
+  m_LastSelectedObjectID: 44552
 >>>>>>> origin/Kinga
 --- !u!114 &10
 MonoBehaviour:
@@ -1190,14 +1236,18 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 741.3333
     y: 0
     width: 100.66669
     height: 573.3333
 =======
     x: 744
+=======
+    x: 713
+>>>>>>> origin/Kinga
     y: 0
-    width: 292
+    width: 332
     height: 933
 >>>>>>> origin/Kinga
   m_MinSize: {x: 202, y: 226}
@@ -1229,14 +1279,18 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 741.3334
     y: 78.66667
     width: 98.66669
     height: 547.3333
 =======
     x: 744
+=======
+    x: 713
+>>>>>>> origin/Kinga
     y: 79
-    width: 290
+    width: 330
     height: 907
 >>>>>>> origin/Kinga
   m_SerializedDataModeController:
@@ -1257,12 +1311,16 @@ MonoBehaviour:
       m_LastClickedID: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_ExpandedIDs: 98a8feff88cdfeff30d0feffccd0feff70ecfeff240fffffac16fffffc1affffa21dffffc025ffff082effff4aceffff02d8ffffc2d8ffffeeebffffc0faffffcaad0000e0ad0000
 =======
       m_ExpandedIDs: a8c6ffff1efbffff
 >>>>>>> origin/Maria
 =======
       m_ExpandedIDs: 82ebffff6eecffff56edffff36eeffffd8efffffc0f0ffffa8f1ffff90f2ffff78f3ffff60f4ffff4af5ffff32f6ffff1cfbffff08c70000
+>>>>>>> origin/Kinga
+=======
+      m_ExpandedIDs: 1cfbffff08ae000082ae0000ccae0000
 >>>>>>> origin/Kinga
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1304,6 +1362,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 842
     y: 0
     width: 211.33337
@@ -1312,8 +1371,11 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
 =======
     x: 1036
+=======
+    x: 1045
+>>>>>>> origin/Kinga
     y: 0
-    width: 502
+    width: 493
     height: 933
   m_MinSize: {x: 232, y: 276}
   m_MaxSize: {x: 10002, y: 10026}
@@ -1345,14 +1407,18 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 842
     y: 78.66667
     width: 209.33337
     height: 547.3333
 =======
     x: 1036
+=======
+    x: 1045
+>>>>>>> origin/Kinga
     y: 79
-    width: 500
+    width: 491
     height: 907
 >>>>>>> origin/Kinga
   m_SerializedDataModeController:
@@ -1379,12 +1445,16 @@ MonoBehaviour:
     m_Folders:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Assets/Scenes
 =======
     - Assets/Maria/Flashlight
 >>>>>>> origin/Maria
 =======
     - Assets/Scrpits/Interactable
+>>>>>>> origin/Kinga
+=======
+    - Assets/Scrpits/Dialog
 >>>>>>> origin/Kinga
     m_Globs: []
     m_ProductIds: 
@@ -1397,6 +1467,7 @@ MonoBehaviour:
   m_LastFolders:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Assets/Scenes
 =======
   - Assets/Maria/Flashlight
@@ -1405,6 +1476,9 @@ MonoBehaviour:
   m_LastProjectPath: C:\Users\Admin\Desktop\Dyplom
 =======
   - Assets/Scrpits/Interactable
+=======
+  - Assets/Scrpits/Dialog
+>>>>>>> origin/Kinga
   m_LastFoldersGridSize: 89
   m_LastProjectPath: "C:\\Users\\Ki\u0144\\Documents\\GitKraken\\Dyplom"
 >>>>>>> origin/Kinga
@@ -1412,6 +1486,7 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     m_SelectedIDs: 48ab0000
@@ -1426,6 +1501,11 @@ MonoBehaviour:
     m_SelectedIDs: 62b20000
     m_LastClickedID: 45666
     m_ExpandedIDs: 0000000064b0000066b0000068b000006ab0000000ca9a3bffffff7f
+>>>>>>> origin/Kinga
+=======
+    m_SelectedIDs: 7eb20000
+    m_LastClickedID: 45694
+    m_ExpandedIDs: 0000000082b0000084b0000086b0000088b0000000ca9a3bffffff7f
 >>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1457,12 +1537,16 @@ MonoBehaviour:
     m_LastClickedID: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 0000000000ab000000ca9a3bffffff7f
 =======
     m_ExpandedIDs: 00000000dca6000000ca9a3b
 >>>>>>> origin/Maria
 =======
     m_ExpandedIDs: 0000000064b0000066b0000068b000006ab0000000ca9a3bffffff7f
+>>>>>>> origin/Kinga
+=======
+    m_ExpandedIDs: 0000000082b0000084b0000086b0000088b0000000ca9a3bffffff7f
 >>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1491,6 +1575,7 @@ MonoBehaviour:
   m_ListAreaState:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 72a9feff
     m_LastClickedInstanceID: -87694
 =======
@@ -1503,6 +1588,12 @@ MonoBehaviour:
 >>>>>>> origin/Kinga
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: d693000000000000c0db0000
+=======
+    m_SelectedInstanceIDs: 08ae0000
+    m_LastClickedInstanceID: 44552
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: d693000000000000
+>>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1615,6 +1706,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastInspectedObjectInstanceID: -87694
 =======
   m_LastInspectedObjectInstanceID: -14680
@@ -1623,6 +1715,10 @@ MonoBehaviour:
   m_LastInspectedObjectInstanceID: -5248
 >>>>>>> origin/Kinga
   m_LastVerticalScrollValue: 0
+=======
+  m_LastInspectedObjectInstanceID: 44552
+  m_LastVerticalScrollValue: 23
+>>>>>>> origin/Kinga
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

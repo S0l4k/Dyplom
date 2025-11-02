@@ -950,14 +950,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a337c47e4ff3439b6faaace184eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentences1:
-  - Co?
-  sentences2:
-  - "Zacznij od z\u0142ej."
+  dialogNodes:
+  - npcLine: Krzysiu?
+    responses:
+    - 1. Co?
+    - "2. \u017Begnaj."
+    nextNodeIndex: 01000000ffffffff
+    responseEvents: []
+  - npcLine: Jem
+    responses:
+    - Co?
+    - Smacznego...
+    nextNodeIndex: 02000000ffffffff
+    responseEvents: []
+  - npcLine: "Zup\u0119"
+    responses:
+    - "Yyy, ciesz\u0119 si\u0119..."
+    nextNodeIndex: ffffffff
+    responseEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 408790771}
+          m_TargetAssemblyTypeName: Dialog, Assembly-CSharp
+          m_MethodName: Happiness
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Happiness()
+            m_BoolArgument: 0
+          m_CallState: 2
   answers:
-  - {fileID: 1321078999}
+  - {fileID: 688432626}
   - {fileID: 708750446}
-  dialogText: {fileID: 688432627}
+  dialogText: {fileID: 1321079002}
+  happy: 0
 --- !u!4 &408790772
 Transform:
   m_ObjectHideFlags: 0
@@ -1909,7 +1938,7 @@ GameObject:
   - component: {fileID: 688432628}
   - component: {fileID: 688432627}
   m_Layer: 5
-  m_Name: Dialog
+  m_Name: Option1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2135,7 +2164,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Oty\u0142y Panie, mam dobr\u0105 i z\u0142\u0105 wiadomo\u015B\u0107."
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3855,7 +3884,7 @@ GameObject:
   - component: {fileID: 1321079002}
   - component: {fileID: 1321079001}
   m_Layer: 5
-  m_Name: Option1
+  m_Name: Dialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3877,7 +3906,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 960, y: 226.66998}
+  m_AnchoredPosition: {x: 960, y: 257}
   m_SizeDelta: {x: 1700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321079001
@@ -3944,7 +3973,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Krzysiu?
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

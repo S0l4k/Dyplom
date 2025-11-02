@@ -93,7 +93,7 @@ public class DialogActivator : MonoBehaviour
             Dialog dialog = dialogManager.GetComponent<Dialog>();
             if (dialog != null)
             {
-                dialog.ShowAnswers();
+                dialog.StartDialog();
             }
             else
             {
