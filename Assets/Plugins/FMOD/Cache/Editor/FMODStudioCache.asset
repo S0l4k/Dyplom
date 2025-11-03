@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638978058311919557
+  lastModified: 638978069517761040
   FileSizes:
   - Name: Desktop
-    Value: 362240
+    Value: 634592
   Exists: 1
 --- !u!114 &-1527081354752880853
 MonoBehaviour:
@@ -64,12 +64,13 @@ MonoBehaviour:
   - {fileID: -8547665289150529961}
   EditorEvents:
   - {fileID: -1527081354752880853}
+  - {fileID: 5176973841943538615}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8547665289150529961}
   StringsBanks:
   - {fileID: 67097360528624472}
-  cacheTime: 638978058311929528
+  cacheTime: 638978069517771079
   cacheVersion: 131633
 --- !u!114 &67097360528624472
 MonoBehaviour:
@@ -86,8 +87,35 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638978058311929528
+  lastModified: 638978069517771079
   FileSizes:
   - Name: Desktop
-    Value: 758
+    Value: 812
   Exists: 1
+--- !u!114 &5176973841943538615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LoudWhisper
+  m_EditorClassIdentifier: 
+  Path: event:/LoudWhisper
+  Guid:
+    Data1: 103261158
+    Data2: 1192334794
+    Data3: 802692508
+    Data4: -741569768
+  Banks:
+  - {fileID: -8547665289150529961}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 23014

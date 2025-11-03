@@ -10,11 +10,11 @@ public class ItemPickup : MonoBehaviour
     public Vector3 localPositionOffset;
     public Vector3 localRotationOffset;
 
+    [Header("FMOD Trigger Link")]
+    public FMODTriggerZone linkedTrigger;
+
     [Header("UI")]
     public TMP_Text pickupText;
-
-    //[Header("FMOD Integration")]
-    //public LoudWhisperSource whisperSource;
 
     private Camera playerCamera;
     private bool canPickup = false;
@@ -143,10 +143,11 @@ public class ItemPickup : MonoBehaviour
             isHidden = false;
         }
 
-        //if (whisperSource != null)
-        //{
-            //whisperSource.StopWhisper();
-        //}
+        if (linkedTrigger != null)
+        {
+            Debug.Log("[ItemPickup] Picking up item -> stopping linked FMOD trigger.");
+            linkedTrigger.StopEvent();
+        }
     }
 
     void Drop()
