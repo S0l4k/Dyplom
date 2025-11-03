@@ -13,6 +13,9 @@ public class ItemPickup : MonoBehaviour
     [Header("UI")]
     public TMP_Text pickupText;
 
+    //[Header("FMOD Integration")]
+    //public LoudWhisperSource whisperSource;
+
     private Camera playerCamera;
     private bool canPickup = false;
     private bool isHeld = false;
@@ -139,6 +142,11 @@ public class ItemPickup : MonoBehaviour
             flashlight.TurnOn();
             isHidden = false;
         }
+
+        //if (whisperSource != null)
+        //{
+            //whisperSource.StopWhisper();
+        //}
     }
 
     void Drop()

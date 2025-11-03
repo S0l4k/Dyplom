@@ -26,7 +26,11 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
+<<<<<<< HEAD
   controlID: 11261
+=======
+  controlID: 3914
+>>>>>>> origin/Kinga
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -50,9 +54,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 566
     width: 893
     height: 428
+=======
+    y: 667
+    width: 743
+    height: 319
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -106,16 +116,24 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
+<<<<<<< HEAD
       width: 893
       height: 407
     m_Scale: {x: 0.37685186, y: 0.37685186}
     m_Translation: {x: 446.5, y: 203.5}
+=======
+      width: 743
+      height: 298
+    m_Scale: {x: 0.27592593, y: 0.27592593}
+    m_Translation: {x: 371.50003, y: 149}
+>>>>>>> origin/Kinga
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -1184.8157
       y: -540
       width: 2369.6313
@@ -123,6 +141,15 @@ MonoBehaviour:
     m_MinimalGUI: 1
   m_defaultScale: 0.37685186
   m_LastWindowPixelSize: {x: 893, y: 428}
+=======
+      x: -1346.3759
+      y: -540
+      width: 2692.7517
+      height: 1080
+    m_MinimalGUI: 1
+  m_defaultScale: 0.27592593
+  m_LastWindowPixelSize: {x: 743, y: 319}
+>>>>>>> origin/Kinga
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -148,12 +175,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 894
     height: 941
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
   controlID: 11262
+=======
+    width: 744
+    height: 933
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 8096, y: 16192}
+  vertical: 1
+  controlID: 3778
+>>>>>>> origin/Kinga
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -172,10 +208,17 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 894
     height: 487
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
+=======
+    width: 744
+    height: 588
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> origin/Kinga
   m_ActualView: {fileID: 5}
   m_Panes:
   - {fileID: 5}
@@ -205,8 +248,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 79
+<<<<<<< HEAD
     width: 893
     height: 461
+=======
+    width: 743
+    height: 562
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -691,9 +739,15 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: 24.25163, y: -11.971905, z: -5.1760855}
     speed: 2
     m_Value: {x: 24.25163, y: -11.971905, z: -5.1760855}
+=======
+    m_Target: {x: 10.245116, y: -0.8044944, z: 1.185694}
+    speed: 2
+    m_Value: {x: 10.245116, y: -0.8044944, z: 1.185694}
+>>>>>>> origin/Kinga
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -739,6 +793,7 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
+<<<<<<< HEAD
     m_Target: {x: 0.18078645, y: 0.7506923, z: -0.22873753, w: 0.5930724}
     speed: 2
     m_Value: {x: 0.18076128, y: 0.7505878, z: -0.22870569, w: 0.59298986}
@@ -746,6 +801,15 @@ MonoBehaviour:
     m_Target: 12.124355
     speed: 2
     m_Value: 12.124355
+=======
+    m_Target: {x: -0.09290178, y: -0.69600743, z: 0.09155484, w: -0.70607126}
+    speed: 2
+    m_Value: {x: -0.09290289, y: -0.6960158, z: 0.09155594, w: -0.7060797}
+  m_Size:
+    m_Target: 6.659487
+    speed: 2
+    m_Value: 6.659487
+>>>>>>> origin/Kinga
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -788,6 +852,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< HEAD
+=======
+  m_Script: {fileID: 12003, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 50, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Console
+    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Console\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 79
+    width: 743
+    height: 562
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_OverlaysVisible: 1
+--- !u!114 &7
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+>>>>>>> origin/Kinga
   m_Script: {fileID: 12914, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -867,11 +970,19 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 487
     width: 894
     height: 454
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
+=======
+    y: 588
+    width: 744
+    height: 345
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> origin/Kinga
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -953,7 +1064,11 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
+<<<<<<< HEAD
   m_LastSelectedObjectID: -18756
+=======
+  m_LastSelectedObjectID: 45020
+>>>>>>> origin/Kinga
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -969,12 +1084,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 894
     y: 0
     width: 277
     height: 941
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
+=======
+    x: 744
+    y: 0
+    width: 292
+    height: 933
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> origin/Kinga
   m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 11}
@@ -1001,10 +1125,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 894
     y: 79
     width: 275
     height: 915
+=======
+    x: 744
+    y: 79
+    width: 290
+    height: 907
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1019,9 +1150,15 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
       m_SelectedIDs: 506bfcff
       m_LastClickedID: -234672
       m_ExpandedIDs: ba7bfcffcc7bfcffde7bfcffc67cfcffda7cfcfff27cfcff987dfcffbe7dfcff8c7ffcff8e8afcff7eb5fcfff8e5fcff12e6fcffd0ebfcff8aecfcffee23fdff78c7fdff1a90feff7c90feff0ebefeff1049ffff5a4dffff844fffff0c57ffff5a6fffff5884ffffe48bffffbcb6fffff2c1ffff04c2ffff18c2ffff28c2ffff3ac2ffff3cc2ffff9ce6ffffb2efffffa8f0ffffa0f1ffff0efbffffc2b600003cb7000006bb000006c300000ac300001ec3000032c3000050c300005ac300006cc3000072c300008cc300009ec30000c0c30000c4c30000d6c30000dac30000f0c3000012c400001ac4000026c400004ec4000076c4000094600100c46001006c680100a2680100b868010040690100ae690100
+=======
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 1cfbffffdcaf000042b000007eb00000
+>>>>>>> origin/Kinga
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1038,7 +1175,7 @@ MonoBehaviour:
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
-        m_ClientGUIView: {fileID: 10}
+        m_ClientGUIView: {fileID: 4}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1061,12 +1198,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1171
     y: 0
     width: 315
     height: 941
   m_MinSize: {x: 232, y: 276}
   m_MaxSize: {x: 10002, y: 10026}
+=======
+    x: 1036
+    y: 0
+    width: 502
+    height: 933
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+>>>>>>> origin/Kinga
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -1093,10 +1239,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1171
     y: 79
     width: 313
     height: 915
+=======
+    x: 1036
+    y: 79
+    width: 500
+    height: 907
+>>>>>>> origin/Kinga
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1119,7 +1272,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/Prefabs
+=======
+    - Assets/Plugins/FMOD/Resources
+>>>>>>> origin/Kinga
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1129,16 +1286,28 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\lukas\Documents\GitKraken\Dyplom
+=======
+  - Assets/Plugins/FMOD/Resources
+  m_LastFoldersGridSize: 89
+  m_LastProjectPath: "C:\\Users\\Ki\u0144\\Documents\\GitKraken\\Dyplom"
+>>>>>>> origin/Kinga
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 34b20000
     m_LastClickedID: 45620
     m_ExpandedIDs: 000000006ab000002eb2000030c1000036c1000000ca9a3bffffff7f
+=======
+    m_SelectedIDs: aab40000
+    m_LastClickedID: 46250
+    m_ExpandedIDs: 000000006cb200006eb2000070b2000072b2000060b40000acb4000000ca9a3bffffff7f
+>>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1167,7 +1336,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 000000006ab0000000ca9a3bffffff7f
+=======
+    m_ExpandedIDs: 000000006cb200006eb2000070b2000072b2000000ca9a3bffffff7f
+>>>>>>> origin/Kinga
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1193,8 +1366,13 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 506bfcff
     m_LastClickedInstanceID: -234672
+=======
+    m_SelectedInstanceIDs: 54af0000
+    m_LastClickedInstanceID: 44884
+>>>>>>> origin/Kinga
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 9cb006007ac0000080c10000acc1000000000000
     m_RenameOverlay:
@@ -1242,8 +1420,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1486
     y: 0
+<<<<<<< HEAD
     width: 434
     height: 941
+=======
+    width: 382
+    height: 933
+>>>>>>> origin/Kinga
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
@@ -1293,7 +1476,11 @@ MonoBehaviour:
     m_CachedPref: -160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
+<<<<<<< HEAD
   m_LastInspectedObjectInstanceID: -1
+=======
+  m_LastInspectedObjectInstanceID: 44884
+>>>>>>> origin/Kinga
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
