@@ -10,6 +10,7 @@ public class DoorsDrag : MonoBehaviour
     int leftDoor = 0;
     [SerializeField] LayerMask doorLayer;
 
+  
     void Update()
     {
         
