@@ -20,6 +20,7 @@ public class DoorsDrag : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 selectedDoor = hit.collider.gameObject.transform;
+                Debug.Log("drzwi");
             }
         }
 
