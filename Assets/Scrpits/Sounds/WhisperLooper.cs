@@ -2,12 +2,12 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
-public class LoudWhisperLooper : MonoBehaviour
+public class LoudWhisper2D : MonoBehaviour
 {
     [EventRef]
-    public string WhisperEvent; // np. "event:/Whispers"
+    public string WhisperEvent = "event:/Whispers"; // <- tu wpisz nazwê eventu
 
-    public float interval = 10f;
+    public float interval = 10f; // czas miêdzy odtworzeniami
     private float nextPlayTime;
 
     void Start()
@@ -28,7 +28,7 @@ public class LoudWhisperLooper : MonoBehaviour
     {
         EventInstance instance = RuntimeManager.CreateInstance(WhisperEvent);
 
-        instance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(Vector3.zero));
 
         instance.start();
         instance.release();
