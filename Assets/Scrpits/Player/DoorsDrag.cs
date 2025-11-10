@@ -10,6 +10,7 @@ public class DoorsDrag : MonoBehaviour
     int leftDoor = 0;
     [SerializeField] LayerMask doorLayer;
 
+  
     void Update()
     {
         
@@ -20,6 +21,7 @@ public class DoorsDrag : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 selectedDoor = hit.collider.gameObject.transform;
+                Debug.Log("drzwi");
             }
         }
 
