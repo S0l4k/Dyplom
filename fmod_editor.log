@@ -19,10 +19,134 @@
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+<<<<<<< Updated upstream
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+=======
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 956832
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 6848
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DF5069ECA8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFE95F5C40
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFE95F5C00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFE95F5D20
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFE95F5DE0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000262E235FA28
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='whispers4', format=5, channels=2, frequency=48000, lengthbytes=50880, lengthpcm=200429, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.387604.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 956832
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 6848
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DF5069ECA8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFE95F5C40
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFE95F5C00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFE95F5D20
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFE95F5DE0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000262E235FA28
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='whispers1', format=5, channels=2, frequency=48000, lengthbytes=56736, lengthpcm=229494, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.123535.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 956832
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 6848
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DF5069ECA8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFE95F5C40
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFE95F5C00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFE95F5D20
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFE95F5DE0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000262E235FA28
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='whispers5', format=5, channels=2, frequency=48000, lengthbytes=66112, lengthpcm=258921, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.190613.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 956832
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 6848
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DF5069ECA8
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFFE95F5C40
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFFE95F5C00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFFE95F5D20
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFFE95F5DE0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000262E235FA28
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='whispers3', format=5, channels=2, frequency=48000, lengthbytes=53920, lengthpcm=211934, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.268646.
+[LOG] SystemI::createSound                     : filename = Dyplom/dyplom/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] Thread::initThread                       : Init FMOD nonblocking thread (0). Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 114688, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000262B0B22C98, queue head = 00000263BDC88D48, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000262B0B22C98
+[LOG] SystemI::createSoundInternal             :     Create name='Dyplom/dyplom/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSound                     :     filename = Dyplom/dyplom/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 956832
+[LOG] AsyncThread::add                         :     add sound to async queue : soundi = 00000263F43FE1A8, queue head = 00000263BDC88D48, queue count = 0
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 6848
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000262B0C50260
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 39000
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='monster_whispers', format=5, channels=2, frequency=48000, lengthbytes=598368, lengthpcm=2121728, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.282440.
+[LOG] Thread::initThread                       :     Init FMOD file thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000262B0B22C98
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000263F43FE1A8
+[LOG] SystemI::createSoundInternal             :     Create name='Dyplom/dyplom/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 956832
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 6848
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000262B0C4F9A0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 2500
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='monster_whispers', format=5, channels=2, frequency=48000, lengthbytes=598368, lengthpcm=2121728, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.282440.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000263F43FE1A8
+[LOG] SoundI::release                          : monster_whispers (00000263F43FE1A8)
+[LOG] SoundI::release                          :     monster_whispers (00000262E2631628)
+[LOG] SoundI::release                          :     monster_whispers (0000026341163228)
+[LOG] SoundI::release                          : monster_whispers (00000262B0B22C98)
+[LOG] SoundI::release                          :     monster_whispers (00000262E2630788)
+[LOG] SoundI::release                          :     monster_whispers (00000263F43FF438)
+[LOG] SoundI::release                          :  (00000263BFEFD278)
+[LOG] SoundI::release                          :     whispers1 (00000262E262F748)
+[LOG] SoundI::release                          :  (00000263BFEFD3E8)
+[LOG] SoundI::release                          :     whispers3 (00000262E26305E8)
+[LOG] SoundI::release                          :  (00000263BFEFD558)
+[LOG] SoundI::release                          :     whispers4 (00000262E2631CA8)
+[LOG] SoundI::release                          :  (00000263BFEFD108)
+[LOG] SoundI::release                          :     whispers5 (00000262E262F8E8)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+>>>>>>> Stashed changes
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
 [LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
+<<<<<<< Updated upstream
 [LOG] SystemI::close                           : Closed.
+=======
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
+[ERR] assert                                   : assertion: 'gSystemInitCount == 0' failed
+>>>>>>> Stashed changes
