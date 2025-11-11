@@ -21,11 +21,9 @@ public class FMODTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"[FMODTriggerZone] Trigger Entered by {other.name}");
         if (!other.CompareTag("Player")) return;
         if (isPlaying) return;
 
-        Debug.Log("[FMODTriggerZone] Player entered trigger — starting event: " + eventPath);
         eventInstance = RuntimeManager.CreateInstance(eventPath);
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(soundSource));
         eventInstance.start();
@@ -38,7 +36,6 @@ public class FMODTriggerZone : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (!stopOnPlayerExit) return;
 
-        Debug.Log("[FMODTriggerZone] Player left trigger — stopping event (exit).");
         StopEvent();
     }
 
@@ -46,19 +43,13 @@ public class FMODTriggerZone : MonoBehaviour
     {
         if (!isPlaying)
         {
-            Debug.Log("[FMODTriggerZone] StopEvent() called but event is not playing.");
             return;
         }
 
         if (eventInstance.isValid())
         {
-            Debug.Log("[FMODTriggerZone] Stopping FMOD event with fadeout.");
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             eventInstance.release();
-        }
-        else
-        {
-            Debug.LogWarning("[FMODTriggerZone] eventInstance invalid when trying to stop.");
         }
 
         isPlaying = false;

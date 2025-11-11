@@ -5,9 +5,9 @@ using FMOD.Studio;
 public class LoudWhisper2D : MonoBehaviour
 {
     [EventRef]
-    public string WhisperEvent = "event:/Whispers"; // <- tu wpisz nazwê eventu
+    public string WhisperEvent = "event:/Whispers";
 
-    public float interval = 10f; // czas miêdzy odtworzeniami
+    public float interval = 10f;
     private float nextPlayTime;
 
     void Start()
