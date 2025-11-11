@@ -9197,6 +9197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Monster
   interactionText: {fileID: 1877847460}
+  player: {fileID: 1833239509}
   dialogManager: {fileID: 941040471}
 --- !u!43 &1489279710
 Mesh:

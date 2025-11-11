@@ -18,8 +18,7 @@ public class Dialog : MonoBehaviour
     private bool skipTyping = false;
 
     [Header("Marker Settings")]
-    [Tooltip("Kolor markera (RGBA w HEX) np. #00000080 dla czarnego półprzezroczystego")]
-    public string markerColor = "#00000080"; // ✅ czarny marker (poprawiony - jedno #)
+    public string markerColor = "#00000080";
     public float typeSpeed = 0.08f;
     public float delayBetweenAnswers = 0.3f;
 
@@ -33,13 +32,11 @@ public class Dialog : MonoBehaviour
 
     void Update()
     {
-        // Pomijanie animacji pisania
         if (isTyping && Input.GetKeyDown(KeyCode.Space))
         {
             skipTyping = true;
         }
 
-        // Wybór opcji
         if (!optionsActive) return;
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -62,7 +59,6 @@ public class Dialog : MonoBehaviour
         DialogNode node = dialogNodes[currentNode];
         dialogText.gameObject.SetActive(true);
 
-        // Uruchamiamy proces dialogu — NPC + odpowiedzi po kolei
         typingCoroutine = StartCoroutine(FullDialogSequence(node));
     }
 
@@ -71,7 +67,6 @@ public class Dialog : MonoBehaviour
         isTyping = true;
         skipTyping = false;
 
-        // 1️⃣ — Tekst NPC-a
         dialogText.text = "";
         for (int i = 0; i < node.npcLine.Length; i++)
         {
@@ -85,10 +80,8 @@ public class Dialog : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed);
         }
 
-        // Poczekaj chwilę po zakończeniu tekstu NPC
         yield return new WaitForSeconds(0.4f);
 
-        // 2️⃣ — Odpowiedzi (po kolei, z efektem markera)
         for (int i = 0; i < node.responses.Length && i < answers.Length; i++)
         {
             yield return StartCoroutine(TypeAnswerText(answers[i], node.responses[i]));
@@ -105,7 +98,6 @@ public class Dialog : MonoBehaviour
         TMP_Text answerText = answerObj.GetComponent<TMP_Text>();
         answerText.text = "";
 
-        // ✅ Używamy twardo wpisanego czarnego koloru (TMP czasem ignoruje zmienne)
         string openTag = "<mark=#00000080>";
         string closeTag = "</mark>";
 
@@ -157,6 +149,8 @@ public class Dialog : MonoBehaviour
     {
         HideAll();
         Debug.Log("Dialog zakończony");
+
+        gameObject.SetActive(false);
     }
 
     void HideAll()

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -9,9 +10,14 @@ public class DialogActivator : MonoBehaviour
     [Header("UI")]
     public TMP_Text interactionText;
 
+    [Header("Player Settings")]
+    public GameObject player;
+    private MonoBehaviour playerMovementScript;
+
     private Camera playerCamera;
     private bool canTalk = false;
     private static DialogActivator currentTarget = null;
+    private bool isTalking = false;
 
     [SerializeField]
     private GameObject dialogManager;
@@ -25,10 +31,18 @@ public class DialogActivator : MonoBehaviour
 
         if (interactionText != null)
             interactionText.gameObject.SetActive(false);
+
+        if (player != null)
+        {
+            playerMovementScript = player.GetComponent<MonoBehaviour>();
+        }
     }
 
     void Update()
     {
+        if (isTalking)
+            return;
+
         CheckForNPC();
 
         if (canTalk && Input.GetKeyDown(KeyCode.E))
@@ -84,7 +98,10 @@ public class DialogActivator : MonoBehaviour
     void StartConversation()
     {
         HideInteractionText();
-        Debug.Log($"Rozpoczynasz rozmowê z {npcName}!");
+        isTalking = true;
+
+        if (playerMovementScript != null)
+            playerMovementScript.enabled = false;
 
         if (dialogManager != null)
         {
@@ -94,6 +111,8 @@ public class DialogActivator : MonoBehaviour
             if (dialog != null)
             {
                 dialog.StartDialog();
+
+                StartCoroutine(WaitForDialogEnd(dialog));
             }
             else
             {
@@ -104,5 +123,19 @@ public class DialogActivator : MonoBehaviour
         {
             Debug.LogWarning("Brak przypisanego dialogManager w inspektorze!");
         }
+    }
+
+    IEnumerator WaitForDialogEnd(Dialog dialog)
+    {
+        while (dialog.gameObject.activeSelf)
+        {
+            yield return null;
+        }
+
+        isTalking = false;
+        Debug.Log($"Rozmowa z {npcName} zakoñczona.");
+
+        if (playerMovementScript != null)
+            playerMovementScript.enabled = true;
     }
 }

@@ -15,10 +15,10 @@ public class ItemPickup : MonoBehaviour
     public FMODTriggerZone linkedTrigger;
 
     [Header("Pickup UI (on look)")]
-    public TMP_Text pickupText; // Tekst: "Press E to pick up"
+    public TMP_Text pickupText;
 
     [Header("Flashlight UI (after pickup)")]
-    public GameObject flashlightUIRoot; // Ca³y panel z ikon¹ + tekstem "Press F"
+    public GameObject flashlightUIRoot;
     public Image flashlightUIImage;
     public TMP_Text flashlightUIText;
     public Sprite flashlightOnSprite;
@@ -46,7 +46,6 @@ public class ItemPickup : MonoBehaviour
 
         flashlight = GetComponent<Flashlight>();
 
-        // Jeœli to latarka, sprite pocz¹tkowo OFF
         if (flashlightUIImage != null && flashlightOffSprite != null)
             flashlightUIImage.sprite = flashlightOffSprite;
     }
@@ -114,27 +113,22 @@ public class ItemPickup : MonoBehaviour
 
         if (flashlight != null)
         {
-            // Schowaj "pickup text"
             if (pickupText != null)
                 pickupText.gameObject.SetActive(false);
 
-            // Poka¿ panel latarki
             if (flashlightUIRoot != null)
             {
                 flashlightUIRoot.SetActive(true);
 
-                // Tekst Press F
                 if (flashlightUIText != null)
                     flashlightUIText.text = "Press F";
 
-                // Sprite zale¿ny od stanu
                 if (flashlightUIImage != null)
                     flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
             }
         }
         else
         {
-            // Normalne przedmioty
             if (pickupText != null)
             {
                 pickupText.gameObject.SetActive(true);
@@ -207,7 +201,6 @@ public class ItemPickup : MonoBehaviour
 
         HidePickupText();
 
-        // Schowaj UI latarki
         if (flashlightUIRoot != null)
             flashlightUIRoot.SetActive(false);
     }
@@ -233,7 +226,6 @@ public class ItemPickup : MonoBehaviour
             isHidden = true;
         }
 
-        // Aktualizacja sprite’a
         if (flashlightUIImage != null)
             flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
     }
