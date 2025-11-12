@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8547665289150529961
+--- !u!114 &-7748856290096084023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,26 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LoudWhisper
   m_EditorClassIdentifier: 
-  Path: Dyplom/dyplom/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  lastModified: 638983296590943908
-=======
-  lastModified: 638978927570484360
->>>>>>> Stashed changes
-=======
-  lastModified: 638984469324751752
->>>>>>> origin/Kinga
-  FileSizes:
-  - Name: Desktop
-    Value: 483072
-  Exists: 1
---- !u!114 &-1527081354752880853
+  Path: event:/LoudWhisper
+  Guid:
+    Data1: 103261158
+    Data2: 1192334794
+    Data3: 802692508
+    Data4: -741569768
+  Banks:
+  - {fileID: 2264913903785115789}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 23888
+--- !u!114 &-3142142192032577089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,7 +46,7 @@ MonoBehaviour:
     Data3: -1938019930
     Data4: 1364511621
   Banks:
-  - {fileID: -8547665289150529961}
+  - {fileID: 2264913903785115789}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -68,27 +67,39 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 67097360528624472}
-  - {fileID: -8547665289150529961}
+  - {fileID: 8650323160333843165}
+  - {fileID: 2264913903785115789}
   EditorEvents:
-  - {fileID: -1527081354752880853}
-  - {fileID: 5176973841943538615}
+  - {fileID: -3142142192032577089}
+  - {fileID: -7748856290096084023}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -8547665289150529961}
+  - {fileID: 2264913903785115789}
   StringsBanks:
-  - {fileID: 67097360528624472}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  cacheTime: 638983296590948873
-=======
-  cacheTime: 638978927570574399
->>>>>>> Stashed changes
-=======
-  cacheTime: 638984469324762658
->>>>>>> origin/Kinga
+  - {fileID: 8650323160333843165}
+  cacheTime: 638985832222907776
   cacheVersion: 131633
---- !u!114 &67097360528624472
+--- !u!114 &2264913903785115789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Dyplom/dyplom/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638985832222907776
+  FileSizes:
+  - Name: Desktop
+    Value: 483072
+  Exists: 1
+--- !u!114 &8650323160333843165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,43 +114,8 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  lastModified: 638983296590948873
-=======
   lastModified: 638978927570574399
->>>>>>> Stashed changes
-=======
-  lastModified: 638984469324762658
->>>>>>> origin/Kinga
   FileSizes:
   - Name: Desktop
     Value: 812
   Exists: 1
---- !u!114 &5176973841943538615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/LoudWhisper
-  m_EditorClassIdentifier: 
-  Path: event:/LoudWhisper
-  Guid:
-    Data1: 103261158
-    Data2: 1192334794
-    Data3: 802692508
-    Data4: -741569768
-  Banks:
-  - {fileID: -8547665289150529961}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 23888
