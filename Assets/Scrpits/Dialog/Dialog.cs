@@ -1,15 +1,28 @@
+﻿using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class Dialog : MonoBehaviour
 {
+    [Header("Dialog Data")]
     public DialogNode[] dialogNodes;
+
+    [Header("UI Elements")]
     public GameObject[] answers;
     public TextMeshProUGUI dialogText;
 
     private int currentNode = 0;
     private bool optionsActive = false;
+    private Coroutine typingCoroutine;
+    private bool isTyping = false;
+    private bool skipTyping = false;
 
+    [Header("Marker Settings")]
+    public string markerColor = "#00000080";
+    public float typeSpeed = 0.08f;
+    public float delayBetweenAnswers = 0.3f;
+
+    [Header("Debug")]
     public bool happy = false;
 
     void Awake()
@@ -19,6 +32,11 @@ public class Dialog : MonoBehaviour
 
     void Update()
     {
+        if (isTyping && Input.GetKeyDown(KeyCode.Space))
+        {
+            skipTyping = true;
+        }
+
         if (!optionsActive) return;
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -39,21 +57,68 @@ public class Dialog : MonoBehaviour
         HideAll();
 
         DialogNode node = dialogNodes[currentNode];
-
-        dialogText.text = node.npcLine;
         dialogText.gameObject.SetActive(true);
 
-        for (int i = 0; i < node.responses.Length; i++)
+        typingCoroutine = StartCoroutine(FullDialogSequence(node));
+    }
+
+    IEnumerator FullDialogSequence(DialogNode node)
+    {
+        isTyping = true;
+        skipTyping = false;
+
+        dialogText.text = "";
+        for (int i = 0; i < node.npcLine.Length; i++)
         {
-            answers[i].SetActive(true);
-            answers[i].GetComponent<TMP_Text>().text = node.responses[i];
+            if (skipTyping)
+            {
+                dialogText.text = node.npcLine;
+                break;
+            }
+
+            dialogText.text = node.npcLine.Substring(0, i + 1);
+            yield return new WaitForSeconds(typeSpeed);
         }
 
+        yield return new WaitForSeconds(0.4f);
+
+        for (int i = 0; i < node.responses.Length && i < answers.Length; i++)
+        {
+            yield return StartCoroutine(TypeAnswerText(answers[i], node.responses[i]));
+            yield return new WaitForSeconds(delayBetweenAnswers);
+        }
+
+        isTyping = false;
         optionsActive = true;
+    }
+
+    IEnumerator TypeAnswerText(GameObject answerObj, string text)
+    {
+        answerObj.SetActive(true);
+        TMP_Text answerText = answerObj.GetComponent<TMP_Text>();
+        answerText.text = "";
+
+        string openTag = "<mark=#00000080>";
+        string closeTag = "</mark>";
+
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (skipTyping)
+            {
+                answerText.text = openTag + text + closeTag;
+                yield break;
+            }
+
+            string visible = text.Substring(0, i + 1);
+            answerText.text = openTag + visible + closeTag;
+            yield return new WaitForSeconds(typeSpeed);
+        }
     }
 
     void SelectOption(int optionIndex)
     {
+        if (!optionsActive) return;
+
         DialogNode node = dialogNodes[currentNode];
 
         if (node.responseEvents != null &&
@@ -83,16 +148,23 @@ public class Dialog : MonoBehaviour
     void EndDialog()
     {
         HideAll();
-        Debug.Log("Dialog zako�czony");
+        Debug.Log("Dialog zakończony");
+
+        gameObject.SetActive(false);
     }
 
     void HideAll()
     {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
         dialogText.gameObject.SetActive(false);
 
-        for (int i = 0; i < answers.Length; i++)
-            answers[i].SetActive(false);
+        foreach (var answer in answers)
+            answer.SetActive(false);
 
         optionsActive = false;
+        isTyping = false;
+        skipTyping = false;
     }
 }

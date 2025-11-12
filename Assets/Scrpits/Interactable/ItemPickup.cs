@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using Commands;
 
 public class ItemPickup : MonoBehaviour
@@ -13,8 +14,15 @@ public class ItemPickup : MonoBehaviour
     [Header("FMOD Trigger Link")]
     public FMODTriggerZone linkedTrigger;
 
-    [Header("UI")]
+    [Header("Pickup UI (on look)")]
     public TMP_Text pickupText;
+
+    [Header("Flashlight UI (after pickup)")]
+    public GameObject flashlightUIRoot;
+    public Image flashlightUIImage;
+    public TMP_Text flashlightUIText;
+    public Sprite flashlightOnSprite;
+    public Sprite flashlightOffSprite;
 
     private Camera playerCamera;
     private bool canPickup = false;
@@ -30,13 +38,16 @@ public class ItemPickup : MonoBehaviour
     {
         playerCamera = Camera.main;
 
-        if (pickupText == null)
-            pickupText = FindObjectOfType<TMP_Text>();
-
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
 
+        if (flashlightUIRoot != null)
+            flashlightUIRoot.SetActive(false);
+
         flashlight = GetComponent<Flashlight>();
+
+        if (flashlightUIImage != null && flashlightOffSprite != null)
+            flashlightUIImage.sprite = flashlightOffSprite;
     }
 
     void Update()
@@ -85,29 +96,44 @@ public class ItemPickup : MonoBehaviour
         canPickup = false;
     }
 
-    [Command("ShowText", "dasdasdasda")]
+    [Command("ShowText", "Shows pickup text")]
     public void ShowPickupText()
     {
-        pickupText.gameObject.SetActive(true);
-        pickupText.text = $"Press E to pick up {itemName}";
+        if (pickupText != null)
+        {
+            pickupText.gameObject.SetActive(true);
+            pickupText.text = $"Press E to pick up {itemName}";
+        }
     }
 
     void ShowItemUI()
     {
-        if (pickupText == null || !playerHasItem)
+        if (!playerHasItem)
             return;
 
         if (flashlight != null)
         {
-            pickupText.gameObject.SetActive(true);
-            pickupText.text = isHidden
-                ? $"Press F to take out {itemName}"
-                : $"Press F to hide {itemName}";
+            if (pickupText != null)
+                pickupText.gameObject.SetActive(false);
+
+            if (flashlightUIRoot != null)
+            {
+                flashlightUIRoot.SetActive(true);
+
+                if (flashlightUIText != null)
+                    flashlightUIText.text = "Press F";
+
+                if (flashlightUIImage != null)
+                    flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
+            }
         }
         else
         {
-            pickupText.gameObject.SetActive(true);
-            pickupText.text = $"Press G to drop {itemName}";
+            if (pickupText != null)
+            {
+                pickupText.gameObject.SetActive(true);
+                pickupText.text = $"Press G to drop {itemName}";
+            }
         }
     }
 
@@ -141,6 +167,15 @@ public class ItemPickup : MonoBehaviour
         {
             flashlight.TurnOn();
             isHidden = false;
+
+            if (flashlightUIRoot != null)
+                flashlightUIRoot.SetActive(true);
+
+            if (flashlightUIImage != null)
+                flashlightUIImage.sprite = flashlightOnSprite;
+
+            if (flashlightUIText != null)
+                flashlightUIText.text = "Press F";
         }
 
         if (linkedTrigger != null)
@@ -165,6 +200,9 @@ public class ItemPickup : MonoBehaviour
         playerHasItem = false;
 
         HidePickupText();
+
+        if (flashlightUIRoot != null)
+            flashlightUIRoot.SetActive(false);
     }
 
     void ToggleHidden()
@@ -184,11 +222,11 @@ public class ItemPickup : MonoBehaviour
         {
             flashlight.TurnOff();
             transform.SetParent(null);
-
             transform.position = new Vector3(0, -1000, 0);
             isHidden = true;
         }
 
-        HidePickupText();
+        if (flashlightUIImage != null)
+            flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
     }
 }
