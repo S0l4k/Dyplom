@@ -539,13 +539,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9202308652405928462}
   serializedVersion: 2
-  m_LocalRotation: {x: 1, y: -0.0000029504295, z: 0.0000032186508, w: 9.208634e-12}
+  m_LocalRotation: {x: 0.000005913107, y: 0.999421, z: -0.00000006797427, w: 0.03402573}
   m_LocalPosition: {x: 1.229, y: -0.20808111, z: -0.1}
   m_LocalScale: {x: 1, y: 1.2891246, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2737024856487628181}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: -180}
+  m_LocalEulerAnglesHint: {x: 0, y: -183.9, z: -359.999}
 --- !u!33 &3672850155832469842
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -657,7 +657,7 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 6490192944710264627}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0.7}
+  m_Anchor: {x: 0, y: 0, z: 0.79}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -675,8 +675,8 @@ HingeJoint:
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
-    min: 0
-    max: 90
+    min: -90
+    max: 0
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -769,6 +769,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2446296258008430019, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
+    - {fileID: 7402967604031037332, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4531871050075241065, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       insertIndex: -1

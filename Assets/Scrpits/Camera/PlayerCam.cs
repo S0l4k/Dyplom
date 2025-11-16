@@ -16,11 +16,12 @@ public class PlayerCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        Vector3 euler = transform.rotation.eulerAngles;
-        xRotation = euler.x;
-        yRotation = euler.y;
-    }
+       
+        yRotation = orientation.rotation.eulerAngles.y;
+        xRotation = transform.localRotation.eulerAngles.x;
 
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -34,6 +35,10 @@ public class PlayerCam : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation= Quaternion.Euler(0, yRotation, 0);
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            Debug.Log(">>> CURRENT ROT " + transform.rotation.eulerAngles);
+        }
     }
     public void SyncRotationWithCamera()
     {

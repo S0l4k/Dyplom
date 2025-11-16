@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+      
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         currentStamina = maxStamina;
