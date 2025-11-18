@@ -44,7 +44,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.9622642, g: 0.8932805, b: 0.66723037, a: 1}
-  m_Intensity: 1
+  m_Intensity: 4.55
   m_Range: 10
   m_SpotAngle: 88.369545
   m_InnerSpotAngle: 80.171646
@@ -452,7 +452,13 @@ MonoBehaviour:
   handPosition: {fileID: 0}
   localPositionOffset: {x: 0, y: 0.3, z: 0.2}
   localRotationOffset: {x: 180, y: 0, z: 0}
+  linkedTrigger: {fileID: 0}
   pickupText: {fileID: 0}
+  flashlightUIRoot: {fileID: 0}
+  flashlightUIImage: {fileID: 0}
+  flashlightUIText: {fileID: 0}
+  flashlightOnSprite: {fileID: 0}
+  flashlightOffSprite: {fileID: 0}
 --- !u!114 &731969220446282752
 MonoBehaviour:
   m_ObjectHideFlags: 0
