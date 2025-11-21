@@ -7383,8 +7383,8 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params: []
   OverrideAttenuation: 1
-  OverrideMinDistance: 1.67
-  OverrideMaxDistance: 18.98
+  OverrideMinDistance: 1.34
+  OverrideMaxDistance: 4.12
 --- !u!1 &1199581211 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6100480148400463975, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
@@ -14909,9 +14909,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cda887ddc72b241ae813b7d35baf88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventPath: event:/LoudWhisper
+  eventPath:
+    Guid:
+      Data1: 103261158
+      Data2: 1192334794
+      Data3: 802692508
+      Data4: -741569768
+    Path: event:/LoudWhisper
   soundSource: {fileID: 1197205905}
-  stopOnPlayerExit: 0
+  stopOnExit: 0
 --- !u!1 &2109077011
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638984469324751752
+  lastModified: 638993482218890688
   FileSizes:
   - Name: Desktop
-    Value: 483072
+    Value: 471680
   Exists: 1
 --- !u!114 &-1527081354752880853
 MonoBehaviour:
@@ -70,7 +70,7 @@ MonoBehaviour:
   - {fileID: -8547665289150529961}
   StringsBanks:
   - {fileID: 67097360528624472}
-  cacheTime: 638984469324762658
+  cacheTime: 638993482218900658
   cacheVersion: 131633
 --- !u!114 &67097360528624472
 MonoBehaviour:
@@ -87,7 +87,7 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638984469324762658
+  lastModified: 638993482218900658
   FileSizes:
   - Name: Desktop
     Value: 812

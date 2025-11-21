@@ -4,19 +4,27 @@ using FMOD.Studio;
 
 public class FMODTriggerZone : MonoBehaviour
 {
-    [Header("FMOD Event")]
-    [EventRef] public string eventPath = "event:/LoudWhisper";
+    public EventReference eventPath;
     public Transform soundSource;
 
-    [Header("Optional")]
-    public bool stopOnPlayerExit = false;
+    public bool stopOnExit = false;
 
-    private EventInstance eventInstance;
+    private EventInstance instance;
     private bool isPlaying = false;
+    private bool shouldUpdatePosition = false;
 
     void Start()
     {
-        if (soundSource == null) soundSource = transform;
+        if (soundSource == null)
+            soundSource = transform;
+    }
+
+    void Update()
+    {
+        if (shouldUpdatePosition && instance.isValid())
+        {
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(soundSource));
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,35 +32,36 @@ public class FMODTriggerZone : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (isPlaying) return;
 
-        eventInstance = RuntimeManager.CreateInstance(eventPath);
-        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(soundSource));
-        eventInstance.start();
+        instance = RuntimeManager.CreateInstance(eventPath);
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(soundSource));
+        instance.start();
 
+        shouldUpdatePosition = true;
         isPlaying = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        if (!stopOnPlayerExit) return;
+        if (!stopOnExit) return;
 
         StopEvent();
     }
 
     public void StopEvent()
     {
-        if (!isPlaying)
+        if (!isPlaying) return;
+
+        if (instance.isValid())
         {
-            return;
+            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            instance.release();
         }
 
-        if (eventInstance.isValid())
-        {
-            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            eventInstance.release();
-        }
-
+        shouldUpdatePosition = false;
         isPlaying = false;
+
+        Destroy(gameObject);
     }
 
     public void StopEventOnPickup()
