@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
   m_Name: event:/LoudWhisper
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   Path: event:/LoudWhisper
   Guid:
     Data1: 103261158
@@ -28,6 +29,17 @@ MonoBehaviour:
   MaxDistance: 20
   Length: 23888
 --- !u!114 &-3142142192032577089
+=======
+  Path: Dyplom/dyplom/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638993482218890688
+  FileSizes:
+  - Name: Desktop
+    Value: 471680
+  Exists: 1
+--- !u!114 &-1527081354752880853
+>>>>>>> origin/Kinga
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,8 +88,13 @@ MonoBehaviour:
   MasterBanks:
   - {fileID: 2264913903785115789}
   StringsBanks:
+<<<<<<< HEAD
   - {fileID: 8650323160333843165}
   cacheTime: 638985832222907776
+=======
+  - {fileID: 67097360528624472}
+  cacheTime: 638993482218900658
+>>>>>>> origin/Kinga
   cacheVersion: 131633
 --- !u!114 &2264913903785115789
 MonoBehaviour:
@@ -114,7 +131,11 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
+<<<<<<< HEAD
   lastModified: 638978927570574399
+=======
+  lastModified: 638993482218900658
+>>>>>>> origin/Kinga
   FileSizes:
   - Name: Desktop
     Value: 812
