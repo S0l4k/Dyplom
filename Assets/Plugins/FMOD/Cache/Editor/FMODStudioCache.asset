@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7748856290096084023
+--- !u!114 &-6053713513493322112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,37 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/LoudWhisper
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  Path: event:/LoudWhisper
-  Guid:
-    Data1: 103261158
-    Data2: 1192334794
-    Data3: 802692508
-    Data4: -741569768
-  Banks:
-  - {fileID: 2264913903785115789}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 23888
---- !u!114 &-3142142192032577089
-=======
-  Path: Dyplom/dyplom/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638993482218890688
+  Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638983296590948873
   FileSizes:
   - Name: Desktop
-    Value: 471680
+    Value: 812
   Exists: 1
---- !u!114 &-1527081354752880853
->>>>>>> origin/Kinga
+--- !u!114 &-5593259380685891256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +39,7 @@ MonoBehaviour:
     Data3: -1938019930
     Data4: 1364511621
   Banks:
-  - {fileID: 2264913903785115789}
+  - {fileID: -5267878563669782836}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -66,37 +47,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 11000
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: 8650323160333843165}
-  - {fileID: 2264913903785115789}
-  EditorEvents:
-  - {fileID: -3142142192032577089}
-  - {fileID: -7748856290096084023}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: 2264913903785115789}
-  StringsBanks:
-<<<<<<< HEAD
-  - {fileID: 8650323160333843165}
-  cacheTime: 638985832222907776
-=======
-  - {fileID: 67097360528624472}
-  cacheTime: 638993482218900658
->>>>>>> origin/Kinga
-  cacheVersion: 131633
---- !u!114 &2264913903785115789
+--- !u!114 &-5267878563669782836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,12 +62,12 @@ MonoBehaviour:
   Path: Dyplom/dyplom/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638985832222907776
+  lastModified: 638993564961196996
   FileSizes:
   - Name: Desktop
-    Value: 483072
+    Value: 471680
   Exists: 1
---- !u!114 &8650323160333843165
+--- !u!114 &-2504764210985326467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,18 +76,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LoudWhisper
   m_EditorClassIdentifier: 
-  Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-<<<<<<< HEAD
-  lastModified: 638978927570574399
-=======
-  lastModified: 638993482218900658
->>>>>>> origin/Kinga
-  FileSizes:
-  - Name: Desktop
-    Value: 812
-  Exists: 1
+  Path: event:/LoudWhisper
+  Guid:
+    Data1: 103261158
+    Data2: 1192334794
+    Data3: 802692508
+    Data4: -741569768
+  Banks:
+  - {fileID: -5267878563669782836}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 23888
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: -6053713513493322112}
+  - {fileID: -5267878563669782836}
+  EditorEvents:
+  - {fileID: -5593259380685891256}
+  - {fileID: -2504764210985326467}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: -5267878563669782836}
+  StringsBanks:
+  - {fileID: -6053713513493322112}
+  cacheTime: 638993564961196996
+  cacheVersion: 131633
