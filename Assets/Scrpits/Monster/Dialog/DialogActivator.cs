@@ -115,11 +115,14 @@ public class DialogActivator : MonoBehaviour
             yield return null;
 
         isTalking = false;
-        GameState.IsTalking = false; 
+        GameState.IsTalking = false;
 
         if (playerMovementScript != null)
             playerMovementScript.enabled = true;
 
         Debug.Log($"Rozmowa z {npcName} zakoñczona.");
+
+        
+       
     }
 }
