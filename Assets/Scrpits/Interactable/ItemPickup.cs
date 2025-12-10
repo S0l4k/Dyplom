@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Commands;
@@ -39,6 +39,23 @@ public class ItemPickup : MonoBehaviour
     {
         playerCamera = Camera.main;
 
+       
+        if (handPosition == null)
+        {
+            GameObject handObj = GameObject.Find("PlayerHand");
+            if (handObj != null)
+                handPosition = handObj.transform;
+        }
+
+        
+        if (pickupText == null)
+        {
+            TMP_Text txt = FindObjectOfType<TMP_Text>(true);
+            if (txt != null)
+                pickupText = txt;
+        }
+
+       
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
 
@@ -50,6 +67,7 @@ public class ItemPickup : MonoBehaviour
         if (flashlightUIImage != null && flashlightOffSprite != null)
             flashlightUIImage.sprite = flashlightOffSprite;
     }
+
 
     void Update()
     {

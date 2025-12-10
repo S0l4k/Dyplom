@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public Transform orientation;
     public GameObject console;
+    public Transform hand;
+    public TMP_Text pickupText;
 
     private float horizontalInput;
     private float verticalInput;
@@ -112,22 +115,47 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.sqrMagnitude < 0.01f)
             return;
 
-        
-        if (Physics.Raycast(transform.position, moveDirection, out RaycastHit hit, 0.6f))
+        RaycastHit hit;
+
+        bool hasForwardHit = Physics.Raycast(
+            transform.position,
+            moveDirection,
+            out hit,
+            0.6f
+        );
+
+        if (hasForwardHit)
         {
-            
+           
             if ((groundMask.value & (1 << hit.collider.gameObject.layer)) == 0)
             {
-                
-                moveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal);
-
-                
-                if (Vector3.Dot(moveDirection, hit.normal) < 0)
-                    moveDirection -= Vector3.Dot(moveDirection, hit.normal) * hit.normal;
+              
+                moveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal).normalized;
             }
         }
 
         
+        float slopeAngle = 0f;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, playerHeight * 0.6f))
+        {
+            slopeAngle = Vector3.Angle(slopeHit.normal, Vector3.up);
+
+            
+            if (slopeAngle > 5f)
+            {
+                
+                float slopeBoost = 1f + (slopeAngle / 45f);
+                moveDirection *= slopeBoost;
+            }
+
+        
+            if (slopeAngle < 45f && grounded)
+            {
+                rb.AddForce(Vector3.up * 4f, ForceMode.Acceleration);
+            }
+        }
+
+      
         Vector3 force = moveDirection * acceleration * (currentSpeed / walkSpeed);
         rb.AddForce(force, ForceMode.Acceleration);
     }
