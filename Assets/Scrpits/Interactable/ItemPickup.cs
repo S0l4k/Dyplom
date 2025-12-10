@@ -28,6 +28,7 @@ public class ItemPickup : MonoBehaviour
     private bool canPickup = false;
     private bool isHeld = false;
     private bool isHidden = false;
+    public bool isFlashlight = false;
 
     private static bool playerHasItem = false;
     private static ItemPickup currentTarget = null;
@@ -182,6 +183,10 @@ public class ItemPickup : MonoBehaviour
         {
             Debug.Log("[ItemPickup] Picking up item -> stopping linked FMOD trigger.");
             linkedTrigger.StopEvent();
+        }
+        if (isFlashlight)
+        {
+            QuestManager.Instance.CompleteQuest("Pick up flashlight");
         }
     }
 

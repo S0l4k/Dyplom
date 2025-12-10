@@ -149,7 +149,7 @@ public class Dialog : MonoBehaviour
     {
         HideAll();
         Debug.Log("Dialog zakończony");
-
+        QuestManager.Instance.CompleteQuest("Talk with the Thing");
         gameObject.SetActive(false);
     }
 
