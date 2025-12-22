@@ -1,39 +1,67 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class DialogActivator : MonoBehaviour
 {
+    [Header("NPC Settings")]
     public string npcName = "NPC";
+
+    [Header("UI")]
+    [Tooltip("TEXT TYLKO do interakcji z NPC (Press E to talk)")]
     public TMP_Text interactionText;
+
+    [Header("References")]
     public GameObject player;
-    private MonoBehaviour playerMovementScript;
+    [SerializeField] private GameObject dialogManager;
+
     private Camera playerCamera;
+    private PlayerCam playerCamScript;
+    private MonoBehaviour playerMovementScript;
+
     private bool canTalk = false;
     private bool isTalking = false;
-    [SerializeField] private GameObject dialogManager;
 
     void Start()
     {
         playerCamera = Camera.main;
-        if (interactionText == null) interactionText = FindObjectOfType<TMP_Text>();
-        if (interactionText != null) interactionText.gameObject.SetActive(false);
-        if (player != null) playerMovementScript = player.GetComponent<MonoBehaviour>();
+
+        if (playerCamera != null)
+            playerCamScript = playerCamera.GetComponent<PlayerCam>();
+
+        if (player != null)
+            playerMovementScript = player.GetComponent<MonoBehaviour>();
+
+        // 🔴 TWARDY BEZPIECZNIK – bez przypisanego textu nie jedziemy dalej
+        if (interactionText == null)
+        {
+            Debug.LogError("[DialogActivator] interactionText NIE JEST PRZYPISANY w Inspectorze!");
+            enabled = false;
+            return;
+        }
+
+        interactionText.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (!playerCamera || interactionText == null) return;
+        // Jeśli dialog trwa → absolutnie nic nie rób
+        if (isTalking)
+        {
+            HideInteractionText();
+            return;
+        }
+
+        if (!playerCamera) return;
 
         CheckForNPC();
 
-        
-        if (canTalk && Input.GetKeyDown(KeyCode.E) && !isTalking && !IsEnemyChasing())
+        if (canTalk && Input.GetKeyDown(KeyCode.E) && !IsEnemyChasing())
         {
             StartConversation();
         }
 
-        
+        // Debug / awaryjne odblokowanie chase
         if (GameState.ChaseLocked && Input.GetKeyDown(KeyCode.X))
         {
             GameState.ChaseLocked = false;
@@ -54,16 +82,18 @@ public class DialogActivator : MonoBehaviour
         RaycastHit hit;
         float talkRange = 3f;
 
-        if (Physics.Raycast(ray, out hit, talkRange) && hit.collider.gameObject == gameObject)
+        if (Physics.Raycast(ray, out hit, talkRange))
         {
-            ShowInteractionText();
-            canTalk = true;
+            if (hit.collider.gameObject == gameObject)
+            {
+                ShowInteractionText();
+                canTalk = true;
+                return;
+            }
         }
-        else
-        {
-            HideInteractionText();
-            canTalk = false;
-        }
+
+        HideInteractionText();
+        canTalk = false;
     }
 
     bool IsEnemyChasing()
@@ -74,27 +104,29 @@ public class DialogActivator : MonoBehaviour
 
     void ShowInteractionText()
     {
-        if (interactionText != null)
-        {
-            interactionText.gameObject.SetActive(true);
-            interactionText.text = $"Press E to talk with {npcName}";
-        }
+        interactionText.gameObject.SetActive(true);
+        interactionText.text = $"Press E to talk with {npcName}";
     }
 
     void HideInteractionText()
     {
-        if (interactionText != null)
+        if (interactionText.gameObject.activeSelf)
             interactionText.gameObject.SetActive(false);
     }
 
     void StartConversation()
     {
+        // 🔥 KLUCZOWE – gasimy text NATYCHMIAST
         HideInteractionText();
+
         isTalking = true;
-        GameState.IsTalking = true; 
+        GameState.IsTalking = true;
 
         if (playerMovementScript != null)
             playerMovementScript.enabled = false;
+
+        if (playerCamScript != null)
+            playerCamScript.enabled = false;
 
         if (dialogManager != null)
         {
@@ -103,7 +135,7 @@ public class DialogActivator : MonoBehaviour
             Dialog dialog = dialogManager.GetComponent<Dialog>();
             if (dialog != null)
             {
-                dialog.StartDialog(); 
+                dialog.StartDialog();
                 StartCoroutine(WaitForDialogEnd(dialog));
             }
         }
@@ -120,9 +152,9 @@ public class DialogActivator : MonoBehaviour
         if (playerMovementScript != null)
             playerMovementScript.enabled = true;
 
-        Debug.Log($"Rozmowa z {npcName} zako�czona.");
+        if (playerCamScript != null)
+            playerCamScript.enabled = true;
 
-        
-       
+        Debug.Log($"Rozmowa z {npcName} zakończona.");
     }
 }

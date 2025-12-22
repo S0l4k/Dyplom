@@ -53,9 +53,10 @@ public class ItemPickup : MonoBehaviour
 
     void Update()
     {
-        if (!isHeld)
+        if (!isHeld && !playerHasItem)
             CheckForPickup();
-        else
+
+        if (isHeld)
             ShowItemUI();
 
         if (canPickup && !playerHasItem && Input.GetKeyDown(KeyCode.E))
@@ -67,6 +68,7 @@ public class ItemPickup : MonoBehaviour
         if (isHeld && flashlight != null && Input.GetKeyDown(KeyCode.F))
             ToggleHidden();
     }
+
 
     void CheckForPickup()
     {
@@ -109,7 +111,7 @@ public class ItemPickup : MonoBehaviour
 
     void ShowItemUI()
     {
-        if (!playerHasItem)
+        if (!isHeld)
             return;
 
         if (flashlight != null)
@@ -137,6 +139,7 @@ public class ItemPickup : MonoBehaviour
             }
         }
     }
+
 
     void HidePickupText()
     {
