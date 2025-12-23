@@ -48,5 +48,15 @@ public class QuestManager : MonoBehaviour
         activeQuests.Remove(questName);
 
         Debug.Log($"[QUEST] Ukończono quest: {questName}");
+
+        CheckForChaseTrigger();
+    }
+    private void CheckForChaseTrigger()
+    {
+        if (activeQuests.Count == 0)
+        {
+            GameState.ChaseLocked = false;
+            Debug.Log("[CHASE] Wszystkie questy ukończone – chase odblokowany!");
+        }
     }
 }

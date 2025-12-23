@@ -10,6 +10,7 @@ public class ItemPickup : MonoBehaviour
     public Transform handPosition;
     public Vector3 localPositionOffset;
     public Vector3 localRotationOffset;
+    public bool isFlashlight = false;
 
     [Header("FMOD Trigger Link")]
     public FMODTriggerZone linkedTrigger;
@@ -23,20 +24,27 @@ public class ItemPickup : MonoBehaviour
     public TMP_Text flashlightUIText;
     public Sprite flashlightOnSprite;
     public Sprite flashlightOffSprite;
+   
 
     private Camera playerCamera;
     private bool canPickup = false;
     private bool isHeld = false;
     private bool isHidden = false;
-    public bool isFlashlight = false;
 
-    private static bool playerHasItem = false;
+    private static ItemPickup heldItem = null;
+    private static ItemPickup heldFlashlight = null;
     private static ItemPickup currentTarget = null;
 
     private Flashlight flashlight;
 
     void Start()
     {
+        if (isFlashlight)
+            heldFlashlight = null;
+
+        if (!isFlashlight)
+            heldItem = null;
+
         playerCamera = Camera.main;
 
         if (pickupText != null)
@@ -51,37 +59,39 @@ public class ItemPickup : MonoBehaviour
             flashlightUIImage.sprite = flashlightOffSprite;
     }
 
+
     void Update()
     {
-        if (!isHeld && !playerHasItem)
+        if (!isHeld)
             CheckForPickup();
 
         if (isHeld)
             ShowItemUI();
 
-        if (canPickup && !playerHasItem && Input.GetKeyDown(KeyCode.E))
+        if (canPickup && Input.GetKeyDown(KeyCode.E))
             Pickup();
 
-        if (isHeld && flashlight == null && Input.GetKeyDown(KeyCode.G))
+        if (isHeld && !isFlashlight && Input.GetKeyDown(KeyCode.G))
             Drop();
 
-        if (isHeld && flashlight != null && Input.GetKeyDown(KeyCode.F))
+        if (isHeld && isFlashlight && Input.GetKeyDown(KeyCode.F))
             ToggleHidden();
     }
-
 
     void CheckForPickup()
     {
         if (!playerCamera || pickupText == null)
             return;
 
+        if (isFlashlight && heldFlashlight != null) return;
+        if (!isFlashlight && heldItem != null) return;
+
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
-        float pickupRange = 3f;
 
-        if (Physics.Raycast(ray, out hit, pickupRange))
+        if (Physics.Raycast(ray, out hit, 3f))
         {
-            if (hit.collider.gameObject == gameObject && !playerHasItem)
+            if (hit.collider.gameObject == gameObject)
             {
                 currentTarget = this;
                 ShowPickupText();
@@ -90,65 +100,41 @@ public class ItemPickup : MonoBehaviour
             }
         }
 
-        if (currentTarget == this)
-        {
-            HidePickupText();
-            currentTarget = null;
-        }
-
+        HidePickupText();
         canPickup = false;
     }
 
     [Command("ShowText", "Shows pickup text")]
+
     public void ShowPickupText()
     {
-        if (pickupText != null)
-        {
-            pickupText.gameObject.SetActive(true);
-            pickupText.text = $"Press E to pick up {itemName}";
-        }
+        pickupText.gameObject.SetActive(true);
+        pickupText.text = $"Press E to pick up {itemName}";
     }
-
-    void ShowItemUI()
-    {
-        if (!isHeld)
-            return;
-
-        if (flashlight != null)
-        {
-            if (pickupText != null)
-                pickupText.gameObject.SetActive(false);
-
-            if (flashlightUIRoot != null)
-            {
-                flashlightUIRoot.SetActive(true);
-
-                if (flashlightUIText != null)
-                    flashlightUIText.text = "Press F";
-
-                if (flashlightUIImage != null)
-                    flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
-            }
-        }
-        else
-        {
-            if (pickupText != null)
-            {
-                pickupText.gameObject.SetActive(true);
-                pickupText.text = $"Press G to drop {itemName}";
-            }
-        }
-    }
-
 
     void HidePickupText()
     {
-        if (pickupText != null)
-            pickupText.gameObject.SetActive(false);
+        pickupText.gameObject.SetActive(false);
     }
 
     void Pickup()
     {
+        if (isFlashlight && heldFlashlight != null)
+        {
+            Debug.Log("[Pickup] Flashlight already held – skipping pickup");
+            return;
+        }
+
+        if (!isFlashlight && heldItem != null)
+            return;
+
+        
+        if (isFlashlight)
+        {
+            Debug.Log("[Pickup] Flashlight picked up -> sending quest");
+            QuestManager.Instance.CompleteQuest("Pick up flashlight");
+        }
+
         transform.SetParent(handPosition);
         transform.localPosition = localPositionOffset;
         transform.localRotation = Quaternion.Euler(localRotationOffset);
@@ -161,37 +147,29 @@ public class ItemPickup : MonoBehaviour
         }
 
         isHeld = true;
-        playerHasItem = true;
-
-        HidePickupText();
-        currentTarget = null;
         canPickup = false;
+        HidePickupText();
+
+        if (isFlashlight)
+            heldFlashlight = this;
+        else
+            heldItem = this;
 
         if (flashlight != null)
         {
             flashlight.TurnOn();
             isHidden = false;
-
-            if (flashlightUIRoot != null)
-                flashlightUIRoot.SetActive(true);
-
-            if (flashlightUIImage != null)
-                flashlightUIImage.sprite = flashlightOnSprite;
-
-            if (flashlightUIText != null)
-                flashlightUIText.text = "Press F";
+            flashlightUIRoot.SetActive(true);
+            flashlightUIImage.sprite = flashlightOnSprite;
+            flashlightUIText.text = "Press F";
         }
 
         if (linkedTrigger != null)
-        {
-            Debug.Log("[ItemPickup] Picking up item -> stopping linked FMOD trigger.");
             linkedTrigger.StopEvent();
-        }
-        if (isFlashlight)
-        {
-            QuestManager.Instance.CompleteQuest("Pick up flashlight");
-        }
     }
+
+
+
 
     void Drop()
     {
@@ -205,12 +183,9 @@ public class ItemPickup : MonoBehaviour
         }
 
         isHeld = false;
-        playerHasItem = false;
+        heldItem = null;
 
         HidePickupText();
-
-        if (flashlightUIRoot != null)
-            flashlightUIRoot.SetActive(false);
     }
 
     void ToggleHidden()
@@ -234,7 +209,15 @@ public class ItemPickup : MonoBehaviour
             isHidden = true;
         }
 
-        if (flashlightUIImage != null)
-            flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
+        flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
+    }
+
+    void ShowItemUI()
+    {
+        if (!isFlashlight)
+        {
+            pickupText.gameObject.SetActive(true);
+            pickupText.text = $"Press G to drop {itemName}";
+        }
     }
 }

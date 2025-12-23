@@ -46,4 +46,9 @@ public class PlayerCam : MonoBehaviour
         xRotation = euler.x;
         yRotation = euler.y;
     }
+    public void SetSensitivity(float value)
+    {
+        sensX = value;
+        sensY = value;
+    }
 }

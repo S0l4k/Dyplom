@@ -10,6 +10,7 @@ public class Dialog : MonoBehaviour
     [Header("UI Elements")]
     public GameObject[] answers;
     public TextMeshProUGUI dialogText;
+    public GameObject dialogueBG;
 
     private int currentNode = 0;
     private bool optionsActive = false;
@@ -50,11 +51,13 @@ public class Dialog : MonoBehaviour
     {
         currentNode = 0;
         ShowNode();
+        dialogueBG.SetActive(true);
     }
 
     void ShowNode()
     {
         HideAll();
+        dialogueBG.SetActive(true);
 
         DialogNode node = dialogNodes[currentNode];
         dialogText.gameObject.SetActive(true);
@@ -166,5 +169,6 @@ public class Dialog : MonoBehaviour
         optionsActive = false;
         isTyping = false;
         skipTyping = false;
+        dialogueBG.SetActive(false);
     }
 }
