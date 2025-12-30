@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     [Header("UI")]
     public GameObject pausePanel;
+    public GameObject settingsPanel;
     public Slider sensitivitySlider;
     public TMP_Text sensitivityValueText;
 
@@ -48,14 +50,14 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        Time.timeScale = 0f; // opcjonalne – jeœli NIE chcesz pauzy, usuñ
+        Time.timeScale = 0f; 
     }
 
-    void Resume()
+    public void Resume()
     {
         isPaused = false;
         pausePanel.SetActive(false);
-
+        settingsPanel.SetActive(false);
         playerController.enabled = true;
         playerCam.enabled = true;
 
@@ -63,6 +65,11 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
 
         Time.timeScale = 1f;
+    }
+    
+    public void Quit()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 
     void OnSensitivityChanged(float value)

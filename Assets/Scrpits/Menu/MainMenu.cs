@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("Kinga");
+        SceneManager.LoadSceneAsync("FlatScene");
     }
 
     public void QuitGame()

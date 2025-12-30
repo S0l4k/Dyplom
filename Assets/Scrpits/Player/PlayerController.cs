@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     private void ApplyGravity()
     {
         if (controller.isGrounded && velocity.y < 0)
-            velocity.y = -2f; // trzyma przy ziemi
+            velocity.y = -2f; 
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
