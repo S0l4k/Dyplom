@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     [Header("References")]
     public PlayerController playerController;
     public PlayerCam playerCam;
+    public ComputerInteract computerInteract;
 
     private bool isPaused = false;
 
@@ -30,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !computerInteract.isUsingComputer)
         {
             if (isPaused)
                 Resume();

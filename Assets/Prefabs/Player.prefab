@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 4513462609448506532}
   - component: {fileID: 7220525269816530413}
   - component: {fileID: 3562924513336435913}
-  - component: {fileID: 9055341681676431661}
   m_Layer: 0
   m_Name: Player obj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,29 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &9055341681676431661
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2537224085684926047}
-  m_Material: {fileID: 13400000, guid: f8fa9321a2dfe4d4790ae537fb2bda5e, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4287795208887740713
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,12 +95,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 284342272291542515}
-  - component: {fileID: 8599653553791262203}
   - component: {fileID: 3691168743758794483}
   - component: {fileID: 5112105959013125352}
+  - component: {fileID: 6369856301153719152}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,8 +113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4287795208887740713}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.49, z: 0}
+  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: -3.91, y: 1, z: 4.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -146,34 +122,7 @@ Transform:
   - {fileID: 7429265618188783008}
   - {fileID: 7144519021842495675}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &8599653553791262203
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4287795208887740713}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &3691168743758794483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,19 +135,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1596c4af00930a74e89e67d237460c30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  sprintSpeed: 10
-  acceleration: 10
-  groundDrag: 5
-  playerHeight: 2
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
+  walkSpeed: 3.5
+  sprintSpeed: 5
+  gravity: -20
   maxStamina: 5
   staminaDrainRate: 1
   staminaRegenRate: 0.8
   orientation: {fileID: 7429265618188783008}
   console: {fileID: 0}
+  hand: {fileID: 0}
+  pickupText: {fileID: 0}
 --- !u!114 &5112105959013125352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +161,31 @@ MonoBehaviour:
   doorLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!143 &6369856301153719152
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287795208887740713}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.4
+  m_SlopeLimit: 50
+  m_StepOffset: 0.4
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7000872478299827693
 GameObject:
   m_ObjectHideFlags: 0

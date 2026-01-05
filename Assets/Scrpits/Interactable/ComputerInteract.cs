@@ -20,7 +20,7 @@ public class ComputerInteract : MonoBehaviour
     public float returnSpeed = 3f; 
     public LayerMask computerMask;
 
-    private bool isUsingComputer = false;
+    public bool isUsingComputer = false;
     private bool canUse = false;
     private Vector3 originalCamPosition;
     private Quaternion originalCamRotation;
@@ -39,6 +39,7 @@ public class ComputerInteract : MonoBehaviour
         playerCamScript = FindObjectOfType<PlayerCam>();
     }
 
+
     void Update()
     {
         
@@ -46,6 +47,8 @@ public class ComputerInteract : MonoBehaviour
 
         if (canUse && Input.GetKeyDown(KeyCode.E))
             StartCoroutine(UseComputer());
+
+     
     }
     public void EscapeComputer()
     {
