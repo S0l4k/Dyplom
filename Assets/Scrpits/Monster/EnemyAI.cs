@@ -94,6 +94,13 @@ public class EnemyAI : MonoBehaviour
             float distance = Vector3.Distance(player.position, transform.position);
             if (distance <= catchDistance)
             {
+                PlayerController pc = player.GetComponent<PlayerController>();
+                if (pc != null && pc.godMode)
+                {
+                    // ignore catch
+                    return;
+                }
+
                 player.gameObject.SetActive(false);
                 aiAnim.SetTrigger("jumpscare");
                 StartCoroutine(deathRoutine());

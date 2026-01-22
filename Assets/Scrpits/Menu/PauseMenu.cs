@@ -16,6 +16,9 @@ public class PauseMenu : MonoBehaviour
     public PlayerCam playerCam;
     public ComputerInteract computerInteract;
 
+    [Header("Console")]
+    public GameObject consolePanel;
+
     private bool isPaused = false;
 
     void Start()
@@ -84,4 +87,35 @@ public class PauseMenu : MonoBehaviour
         if (sensitivityValueText != null)
             sensitivityValueText.text = value.ToString("0");
     }
+
+    public void OpenConsole()
+    {
+        isPaused = true;
+        consolePanel.SetActive(true);
+
+        playerController.enabled = false;
+        playerCam.enabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0f;
+
+        consolePanel.GetComponentInChildren<TMP_InputField>().ActivateInputField();
+    }
+
+    public void CloseConsole()
+    {
+        isPaused = false;
+        consolePanel.SetActive(false);
+
+        playerController.enabled = true;
+        playerCam.enabled = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        Time.timeScale = 1f;
+    }
+
 }

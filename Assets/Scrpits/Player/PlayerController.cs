@@ -13,12 +13,15 @@ public class PlayerController : MonoBehaviour
     public float maxStamina = 5f;
     public float staminaDrainRate = 1f;
     public float staminaRegenRate = 0.8f;
+    public bool godMode = false;
 
     [Header("References")]
     public Transform orientation;
     public GameObject console;
     public Transform hand;
     public TMP_Text pickupText;
+    public PauseMenu pauseMenu;
+
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -44,10 +47,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            console.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            pauseMenu.OpenConsole();
         }
+
     }
 
     private void Move()
