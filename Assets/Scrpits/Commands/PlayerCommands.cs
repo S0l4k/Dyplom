@@ -49,6 +49,15 @@ namespace Commands
                 Debug.Log($"{cmd.attr.CommandName} - {cmd.attr.CommandDescription}");
             }
         }
+        [Command("killall", "Destroy all enemies")]
+        public void KillAll()
+        {
+            foreach (var e in EnemyAI.AllEnemies.ToArray()) 
+            {
+                GameObject.Destroy(e.gameObject);
+            }
+            Debug.Log("All enemies destroyed.");
+        }
 
     }
 }

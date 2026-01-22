@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class EnemyAI : MonoBehaviour
 {
+    public static List<EnemyAI> AllEnemies = new List<EnemyAI>();
+
     [Header("Components")]
     public NavMeshAgent ai;
     public Animator aiAnim;
@@ -39,6 +41,15 @@ public class EnemyAI : MonoBehaviour
     private float loseSightTimer = 0f;
     private bool playerInSight = false;
 
+    private void Awake()
+    {
+        AllEnemies.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        AllEnemies.Remove(this);
+    }
     private void Start()
     {
         walking = true;
@@ -97,7 +108,7 @@ public class EnemyAI : MonoBehaviour
                 PlayerController pc = player.GetComponent<PlayerController>();
                 if (pc != null && pc.godMode)
                 {
-                    // ignore catch
+                    
                     return;
                 }
 
