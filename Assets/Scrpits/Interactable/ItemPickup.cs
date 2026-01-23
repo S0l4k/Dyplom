@@ -12,8 +12,6 @@ public class ItemPickup : MonoBehaviour
     public Vector3 localRotationOffset;
     public bool isFlashlight = false;
 
-    [Header("FMOD Trigger Link")]
-    public FMODTriggerZone linkedTrigger;
 
     [Header("Pickup UI (on look)")]
     public TMP_Text pickupText;
@@ -164,8 +162,7 @@ public class ItemPickup : MonoBehaviour
             flashlightUIText.text = "Press F";
         }
 
-        if (linkedTrigger != null)
-            linkedTrigger.StopEvent();
+       
     }
 
 

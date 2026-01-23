@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - SoundTrigger
+  - Floor
+  - Stone
   layers:
   - Default
   - TransparentFX

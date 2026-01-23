@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     public TMP_Text pickupText;
     public PauseMenu pauseMenu;
 
+    [Header("Audio")]
+    private PlayerSound playerSound;
+    private float stepTimer;
+    public float walkStepInterval = 0.22f;
+    public float sprintStepInterval = 0.13f;
+
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -31,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        playerSound = GetComponent<PlayerSound>();
         controller = GetComponent<CharacterController>();
         currentStamina = maxStamina;
     }
@@ -41,6 +48,7 @@ public class PlayerController : MonoBehaviour
         HandleStamina();
         ApplyGravity();
         Move();
+        HandleFootsteps();
     }
 
     private void HandleInput()
@@ -67,6 +75,33 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(move * speed * Time.deltaTime);
     }
+    private void HandleFootsteps()
+    {
+        if (!controller.isGrounded) return;
+
+        float speed = controller.velocity.magnitude;
+
+        if (speed > 0.1f)
+        {
+            stepTimer += Time.deltaTime;
+
+
+            float interval = isSprinting ? sprintStepInterval : walkStepInterval;
+
+
+            if (stepTimer >= interval)
+            {
+                playerSound.PlayFootstep();
+                stepTimer = 0f;
+            }
+        }
+        else
+        {
+            stepTimer = 0f;
+        }
+    }
+
+
 
     private void ApplyGravity()
     {

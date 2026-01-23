@@ -1,6 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6053713513493322112
+--- !u!114 &-8806076913453465968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Whispers/FollowWhisper
+  m_EditorClassIdentifier: 
+  Path: event:/Whispers/FollowWhisper
+  Guid:
+    Data1: -1566560136
+    Data2: 1135201706
+    Data3: 16963234
+    Data4: 169607711
+  Banks:
+  - {fileID: 9029131091979072003}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5952301801523062342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Footsteps/Surface
+  m_EditorClassIdentifier: 
+  Name: Surface
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 976118153
+    data2: 769486052
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Floor
+  - Stone
+  Exists: 1
+--- !u!114 &-5423187267984701243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,15 +65,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/Master.strings.bank
   m_EditorClassIdentifier: 
-  Path: Dyplom/dyplom/Build/Desktop/Master.strings.bank
+  Path: Dyplom/Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638978927570574399
+  lastModified: 639047428058091106
   FileSizes:
   - Name: Desktop
-    Value: 812
+    Value: 1034
   Exists: 1
---- !u!114 &-5593259380685891256
+--- !u!114 &-3620103675162175237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,44 +83,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Whispers
+  m_Name: event:/Whispers/HelpWhisper
   m_EditorClassIdentifier: 
-  Path: event:/Whispers
+  Path: event:/Whispers/HelpWhisper
   Guid:
-    Data1: -763835697
-    Data2: 1282470127
-    Data3: -1938019930
-    Data4: 1364511621
+    Data1: 397539286
+    Data2: 1316059733
+    Data3: -1452317050
+    Data4: 973377492
   Banks:
-  - {fileID: -5267878563669782836}
+  - {fileID: 9029131091979072003}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 11000
---- !u!114 &-5267878563669782836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: Dyplom/dyplom/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638998662303127630
-  FileSizes:
-  - Name: Desktop
-    Value: 471680
-  Exists: 1
---- !u!114 &-2504764210985326467
+  Length: 0
+--- !u!114 &-2198009116785346681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,23 +110,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/LoudWhisper
+  m_Name: event:/Whispers/HereWhisper
   m_EditorClassIdentifier: 
-  Path: event:/LoudWhisper
+  Path: event:/Whispers/HereWhisper
   Guid:
-    Data1: 103261158
-    Data2: 1192334794
-    Data3: 802692508
-    Data4: -741569768
+    Data1: 1113942703
+    Data2: 1275035483
+    Data3: -1747414604
+    Data4: -478994868
   Banks:
-  - {fileID: -5267878563669782836}
+  - {fileID: 9029131091979072003}
   IsStream: 0
   Is3D: 1
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 23888
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,15 +140,93 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -6053713513493322112}
-  - {fileID: -5267878563669782836}
+  - {fileID: -5423187267984701243}
+  - {fileID: 9029131091979072003}
   EditorEvents:
-  - {fileID: -5593259380685891256}
-  - {fileID: -2504764210985326467}
+  - {fileID: 7862840577367686516}
+  - {fileID: -8806076913453465968}
+  - {fileID: -2198009116785346681}
+  - {fileID: -3620103675162175237}
+  - {fileID: 5249292206928337142}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -5267878563669782836}
+  - {fileID: 9029131091979072003}
   StringsBanks:
-  - {fileID: -6053713513493322112}
-  cacheTime: 638998662303127630
+  - {fileID: -5423187267984701243}
+  cacheTime: 639047428058091106
   cacheVersion: 131633
+--- !u!114 &5249292206928337142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Footsteps/Footsteps
+  m_EditorClassIdentifier: 
+  Path: event:/Footsteps/Footsteps
+  Guid:
+    Data1: -806012422
+    Data2: 1210251892
+    Data3: -845520222
+    Data4: 973975246
+  Banks:
+  - {fileID: 9029131091979072003}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -5952301801523062342}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7862840577367686516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Whispers/AmbientWhispers
+  m_EditorClassIdentifier: 
+  Path: event:/Whispers/AmbientWhispers
+  Guid:
+    Data1: 2055321461
+    Data2: 1170988511
+    Data3: 193847966
+    Data4: 1359515424
+  Banks:
+  - {fileID: 9029131091979072003}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &9029131091979072003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Dyplom/Licencjat/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639047428058051206
+  FileSizes:
+  - Name: Desktop
+    Value: 528192
+  Exists: 1
