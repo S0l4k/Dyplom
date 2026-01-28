@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{85e40d56-d426-4091-a693-34fc0c435f3c}">
+		<property name="assetPath">
+			<value>CUTSCENE/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{994e93a8-1e15-4e73-aefe-6b54654f82ba}</destination>
+		</relationship>
+	</object>
+</objects>

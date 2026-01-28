@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{29ba00b9-8a53-4fd6-961e-e7694e16ca36}">
 		<property name="assetPath">
-			<value>443724__cabusta9__1-ambiente-noche-night-ambient.wav</value>
+			<value>CUTSCENE/443724__cabusta9__1-ambiente-noche-night-ambient.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

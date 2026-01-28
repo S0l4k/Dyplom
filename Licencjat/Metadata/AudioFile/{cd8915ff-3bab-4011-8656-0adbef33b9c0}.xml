@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{cd8915ff-3bab-4011-8656-0adbef33b9c0}">
 		<property name="assetPath">
-			<value>ComputerClick.flac</value>
+			<value>Flat/Computer/ComputerClick.flac</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

@@ -22,6 +22,15 @@ public class PlayerController : MonoBehaviour
     public TMP_Text pickupText;
     public PauseMenu pauseMenu;
 
+    [Header("Sneak Settings")]
+    public bool isSneaking = false;
+    public KeyCode sneakKey = KeyCode.LeftControl;
+    public float sneakHeight = 1f;       
+    private float normalHeight;           
+    private Vector3 normalCenter;
+    public Vector3 sneakCenter = new Vector3(0, 0.5f, 0);
+    public float sneakSpeedMultiplier = 0.5f;
+
     [Header("Audio")]
     private PlayerSound playerSound;
     private float lastStepTime;
@@ -46,11 +55,15 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+
     void Start()
     {
         playerSound = GetComponent<PlayerSound>();
         controller = GetComponent<CharacterController>();
         currentStamina = maxStamina;
+
+        normalHeight = controller.height;
+        normalCenter = controller.center;
     }
 
     void Update()
@@ -60,6 +73,7 @@ public class PlayerController : MonoBehaviour
         ApplyGravity();
         Move();
         HandleFootsteps();
+        HandleSneak();
     }
 
     private void HandleInput()
@@ -68,6 +82,9 @@ public class PlayerController : MonoBehaviour
         {
             pauseMenu.OpenConsole();
         }
+   
+        isSneaking = Input.GetKey(KeyCode.LeftControl);
+
 
     }
 
@@ -82,9 +99,32 @@ public class PlayerController : MonoBehaviour
 
         move.Normalize();
 
+     
         float speed = isSprinting ? sprintSpeed : walkSpeed;
 
+        if (isSneaking)
+            speed *= sneakSpeedMultiplier;
+
         controller.Move(move * speed * Time.deltaTime);
+
+    }
+
+    private void HandleSneak()
+    {
+        if (Input.GetKey(sneakKey))
+        {
+            isSneaking = true;
+            controller.height = sneakHeight;
+            controller.center = sneakCenter;
+           
+        }
+        else
+        {
+            isSneaking = false;
+            controller.height = normalHeight;
+            controller.center = normalCenter;
+           
+        }
     }
     private void HandleFootsteps()
     {
@@ -97,6 +137,10 @@ public class PlayerController : MonoBehaviour
         if (!isMoving) return;
 
         float interval = isSprinting ? sprintStepInterval : walkStepInterval;
+
+
+        if (isSneaking)
+            interval *= 2f;
 
         if (Time.time - lastStepTime >= interval)
         {

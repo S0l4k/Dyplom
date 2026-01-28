@@ -134,6 +134,9 @@
 		<property name="volume">
 			<value>-8</value>
 		</property>
+		<property name="playlistMode">
+			<value>1</value>
+		</property>
 		<relationship name="modulators">
 			<destination>{0e6500ef-a5cf-4645-841b-2ed82794fe0f}</destination>
 		</relationship>

@@ -2,6 +2,7 @@
 using TMPro;
 using System.Collections;
 using Unity.VisualScripting;
+using FMODUnity;
 
 public class ComputerInteract : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class ComputerInteract : MonoBehaviour
     private Quaternion originalCamRotation;
     private MonoBehaviour playerMovementScript;
     private MonoBehaviour playerCamScript;
+
+    [Header("Audio")]
+    [SerializeField] private EventReference turnOnEvent;
+    [SerializeField] private EventReference turnOffEvent;
+    [SerializeField] private EventReference clickEvent;
 
     void Start()
     {
@@ -99,6 +105,7 @@ public class ComputerInteract : MonoBehaviour
             elapsed += Time.deltaTime * moveSpeed;
             playerCamera.position = Vector3.Lerp(startPos, computerViewPoint.position, elapsed);
             playerCamera.rotation = Quaternion.Slerp(startRot, computerViewPoint.rotation, elapsed);
+            RuntimeManager.PlayOneShot(turnOnEvent);
             yield return null;
         }
 
@@ -110,6 +117,7 @@ public class ComputerInteract : MonoBehaviour
 
     public IEnumerator ExitComputerSmooth()
     {
+        RuntimeManager.PlayOneShot(turnOffEvent);
         if (computerCanvas != null)
             computerCanvas.gameObject.SetActive(false);
 
@@ -134,5 +142,11 @@ public class ComputerInteract : MonoBehaviour
             playerCanvas.gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+
+    public void Click()
+    {
+        RuntimeManager.PlayOneShot(clickEvent);
     }
 }

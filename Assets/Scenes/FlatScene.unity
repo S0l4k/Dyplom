@@ -214,6 +214,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5363251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,6 +1186,66 @@ PrefabInstance:
       propertyPath: computerCanvas
       value: 
       objectReference: {fileID: 514770381}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: clickEvent.Path
+      value: event:/Computer/ComputerClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOnEvent.Path
+      value: event:/Computer/ComputerOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOffEvent.Path
+      value: event:/Computer/ComputerOff
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: clickEvent.Guid.Data1
+      value: -257336957
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: clickEvent.Guid.Data2
+      value: 1223906652
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: clickEvent.Guid.Data3
+      value: 2144215213
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: clickEvent.Guid.Data4
+      value: 943156004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOnEvent.Guid.Data1
+      value: 1352063251
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOnEvent.Guid.Data2
+      value: 1243306407
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOnEvent.Guid.Data3
+      value: 1678667673
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOnEvent.Guid.Data4
+      value: -1305166910
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOffEvent.Guid.Data1
+      value: -292192955
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOffEvent.Guid.Data2
+      value: 1327799333
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOffEvent.Guid.Data3
+      value: -1358945353
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623715741052325814, guid: bb226fcc343fe84478508a60b373f164, type: 3}
+      propertyPath: turnOffEvent.Guid.Data4
+      value: -1503880886
+      objectReference: {fileID: 0}
     - target: {fileID: 4962741132677982531, guid: bb226fcc343fe84478508a60b373f164, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.103
@@ -3476,8 +3548,32 @@ PrefabInstance:
       value: FlatScene
       objectReference: {fileID: 0}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: jumpscareTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: jumpscareEvent.Path
+      value: event:/Jumpscare
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: destinations.Array.size
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: jumpscareEvent.Guid.Data1
+      value: 1128031640
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: jumpscareEvent.Guid.Data2
+      value: 1240397267
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: jumpscareEvent.Guid.Data3
+      value: -230245228
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: jumpscareEvent.Guid.Data4
+      value: 166272784
       objectReference: {fileID: 0}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: 'destinations.Array.data[0]'
@@ -4206,7 +4302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7708725911830516477, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.127
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7708725911830516477, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4214,7 +4310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7708725911830516477, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.34
+      value: 1.022
       objectReference: {fileID: 0}
     - target: {fileID: 7708725911830516477, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4363,6 +4459,10 @@ PrefabInstance:
     - target: {fileID: 9196784389300024644, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196784389300024644, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4941427526347415154, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
@@ -6151,6 +6251,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &373863794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7418,6 +7530,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5363253}
         m_TargetAssemblyTypeName: OrderFoodButton, Assembly-CSharp
         m_MethodName: Order
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10120,6 +10244,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5363253}
         m_TargetAssemblyTypeName: OrderFoodButton, Assembly-CSharp
         m_MethodName: Order
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13286,6 +13422,79 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &852881892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 852881893}
+  - component: {fileID: 852881895}
+  - component: {fileID: 852881894}
+  m_Layer: 0
+  m_Name: FlatAmbient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &852881893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852881892}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1550733752}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &852881894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852881892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f224bd2e8b5f74aa4f4e97957fe5ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apartmentAmbientEvent:
+    Guid:
+      Data1: 284045960
+      Data2: 1340402107
+      Data3: 1535405744
+      Data4: -1744477089
+    Path: event:/FlatAmbient
+--- !u!65 &852881895
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852881892}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15.273361, y: 3.590267, z: 15.318987}
+  m_Center: {x: 0.11103535, y: 1.295134, z: 0.178051}
 --- !u!1 &855498137
 GameObject:
   m_ObjectHideFlags: 0
@@ -15606,6 +15815,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20174,6 +20395,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1196864676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20331,6 +20564,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -22759,6 +23004,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25722,6 +25979,7 @@ Transform:
   - {fileID: 295210248}
   - {fileID: 1039298493}
   - {fileID: 1598148474}
+  - {fileID: 852881893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1553130840
@@ -27148,6 +27406,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -28774,6 +29044,18 @@ MonoBehaviour:
       - m_Target: {fileID: 924378126}
         m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
         m_MethodName: EscapeComputer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31302,6 +31584,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1878480913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32910,6 +33204,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

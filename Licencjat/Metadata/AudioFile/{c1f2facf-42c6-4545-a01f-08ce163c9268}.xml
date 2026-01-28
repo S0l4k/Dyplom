@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{c1f2facf-42c6-4545-a01f-08ce163c9268}">
 		<property name="assetPath">
-			<value>590156__greg_surr__creaking-wood-5.wav</value>
+			<value>CUTSCENE/590156__greg_surr__creaking-wood-5.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
