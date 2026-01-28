@@ -151,10 +151,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639051667567125962
+  lastModified: 639051709703757852
   FileSizes:
   - Name: Desktop
-    Value: 1592
+    Value: 1634
   Exists: 1
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
@@ -242,13 +242,14 @@ MonoBehaviour:
   - {fileID: 2903434514227799775}
   - {fileID: 5162312354890099459}
   - {fileID: -4488325410982784511}
+  - {fileID: 6809530900629643176}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639051667567125962
+  cacheTime: 639051709703757852
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -282,6 +283,8 @@ MonoBehaviour:
     index: 14
   - key: event:/Computer/ComputerOff
     index: 15
+  - key: event:/MenuAmbient
+    index: 16
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +500,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2800
+--- !u!114 &6809530900629643176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MenuAmbient
+  m_EditorClassIdentifier: 
+  Path: event:/MenuAmbient
+  Guid:
+    Data1: 1686082895
+    Data2: 1149581057
+    Data3: -1583737953
+    Data4: -1814564708
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 150177
 --- !u!114 &6888540770293749724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,10 +542,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639051667567115991
+  lastModified: 639051709703737912
   FileSizes:
   - Name: Desktop
-    Value: 4072992
+    Value: 5275328
   Exists: 1
 --- !u!114 &7399275378512865689
 MonoBehaviour:
