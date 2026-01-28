@@ -5517,7 +5517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -13681,6 +13681,26 @@ PrefabInstance:
       propertyPath: localPositionOffset.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 731969220446282752, guid: d5ebb36feaa1957488fbc9f5fb722c71, type: 3}
+      propertyPath: flashlightEvent.Path
+      value: event:/FlashlightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 731969220446282752, guid: d5ebb36feaa1957488fbc9f5fb722c71, type: 3}
+      propertyPath: flashlightEvent.Guid.Data1
+      value: 732567100
+      objectReference: {fileID: 0}
+    - target: {fileID: 731969220446282752, guid: d5ebb36feaa1957488fbc9f5fb722c71, type: 3}
+      propertyPath: flashlightEvent.Guid.Data2
+      value: 1193258339
+      objectReference: {fileID: 0}
+    - target: {fileID: 731969220446282752, guid: d5ebb36feaa1957488fbc9f5fb722c71, type: 3}
+      propertyPath: flashlightEvent.Guid.Data3
+      value: 1838824888
+      objectReference: {fileID: 0}
+    - target: {fileID: 731969220446282752, guid: d5ebb36feaa1957488fbc9f5fb722c71, type: 3}
+      propertyPath: flashlightEvent.Guid.Data4
+      value: 1472832637
+      objectReference: {fileID: 0}
     - target: {fileID: 3258831963813089673, guid: d5ebb36feaa1957488fbc9f5fb722c71, type: 3}
       propertyPath: m_Range
       value: 15
@@ -16664,6 +16684,26 @@ PrefabInstance:
       propertyPath: lightOb
       value: 
       objectReference: {fileID: 1732632770}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Path
+      value: event:/FlashlightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data1
+      value: 732567100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data2
+      value: 1193258339
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data3
+      value: 1838824888
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data4
+      value: 1472832637
+      objectReference: {fileID: 0}
     - target: {fileID: 8513698060838147732, guid: f8edf665f5853c84c97129c614365867, type: 3}
       propertyPath: m_Name
       value: SwitchBedRoom
@@ -27454,6 +27494,26 @@ PrefabInstance:
       propertyPath: lightOb
       value: 
       objectReference: {fileID: 1715600002}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Path
+      value: event:/FlashlightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data1
+      value: 732567100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data2
+      value: 1193258339
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data3
+      value: 1838824888
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data4
+      value: 1472832637
+      objectReference: {fileID: 0}
     - target: {fileID: 8513698060838147732, guid: f8edf665f5853c84c97129c614365867, type: 3}
       propertyPath: m_Name
       value: SwitchBathroom
@@ -28327,6 +28387,26 @@ PrefabInstance:
       propertyPath: lightOb
       value: 
       objectReference: {fileID: 537198957}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Path
+      value: event:/FlashlightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data1
+      value: 732567100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data2
+      value: 1193258339
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data3
+      value: 1838824888
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data4
+      value: 1472832637
+      objectReference: {fileID: 0}
     - target: {fileID: 8513698060838147732, guid: f8edf665f5853c84c97129c614365867, type: 3}
       propertyPath: m_Name
       value: SwitchHallway
@@ -30020,25 +30100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1596c4af00930a74e89e67d237460c30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1833239515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833239509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a0333359f2f06640b79e7ab9f3ccaa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepEvent:
-    Guid:
-      Data1: -806012422
-      Data2: 1210251892
-      Data3: -845520222
-      Data4: 973975246
-    Path: event:/Footsteps/Footsteps
 --- !u!1 &1837827513
 GameObject:
   m_ObjectHideFlags: 0
@@ -30790,6 +30851,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016315745, y: 0.031469285, z: 0.016866656}
   m_Center: {x: 0.000030235864, y: -0.000002015965, z: 0.008469766}
+--- !u!4 &1854531504 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4709434371214608022, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+  m_PrefabInstance: {fileID: 215473338482820727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1862589817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6022639199455935822, guid: 2b6b089bab80e8b4286688410d3bc36f, type: 3}
@@ -31503,6 +31569,26 @@ PrefabInstance:
       propertyPath: lightOb
       value: 
       objectReference: {fileID: 2039277468}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Path
+      value: event:/FlashlightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data1
+      value: 732567100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data2
+      value: 1193258339
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data3
+      value: 1838824888
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data4
+      value: 1472832637
+      objectReference: {fileID: 0}
     - target: {fileID: 8513698060838147732, guid: f8edf665f5853c84c97129c614365867, type: 3}
       propertyPath: m_Name
       value: SwitchKitchen
@@ -33749,10 +33835,17 @@ MonoBehaviour:
   - {fileID: 6821504604402148946}
   dialogText: {fileID: 1319964638572009401}
   dialogueBG: {fileID: 800254446}
-  markerColor: '#FFFF0100'
+  npcMarkerColor: '#FFFFFF33'
+  playerMarkerColor: '#FFFFFF33'
   typeSpeed: 0.03
   delayBetweenAnswers: 0.3
-  happy: 0
+  npcVoiceEvent:
+    Guid:
+      Data1: -1120441123
+      Data2: 1297095145
+      Data3: 1189773750
+      Data4: 880093419
+    Path: event:/DemonTalking
 --- !u!1001 &215473338482820727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33818,6 +33911,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1893179571}
     - target: {fileID: 3691168743758794483, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1854531504}
+    - target: {fileID: 3691168743758794483, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
       propertyPath: walkStepInterval
       value: 0.5
       objectReference: {fileID: 0}
@@ -33836,10 +33933,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4287795208887740713, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1833239515}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
 --- !u!1001 &347205097191751604
 PrefabInstance:
@@ -34638,6 +34732,26 @@ PrefabInstance:
       propertyPath: lightOb
       value: 
       objectReference: {fileID: 1938813028}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Path
+      value: event:/FlashlightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data1
+      value: 732567100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data2
+      value: 1193258339
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data3
+      value: 1838824888
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238484644090944356, guid: f8edf665f5853c84c97129c614365867, type: 3}
+      propertyPath: flashlightEvent.Guid.Data4
+      value: 1472832637
+      objectReference: {fileID: 0}
     - target: {fileID: 8513698060838147732, guid: f8edf665f5853c84c97129c614365867, type: 3}
       propertyPath: m_Name
       value: SwitchLivingRoom
@@ -35212,7 +35326,6 @@ GameObject:
   - component: {fileID: 22104548965527410}
   - component: {fileID: 2882040162796427427}
   - component: {fileID: 1319964638572009401}
-  - component: {fileID: 8988261844102559252}
   m_Layer: 5
   m_Name: Dialog
   m_TagString: Untagged
@@ -35323,50 +35436,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8988261844102559252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7839192413453952558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1319964638572009401}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

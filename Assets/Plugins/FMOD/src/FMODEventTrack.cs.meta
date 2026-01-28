@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 133253f56854570409c222a87786b263
 timeCreated: 1523230466
-licenseType: Store
+licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -15,6 +15,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 161631
   packageName: FMOD for Unity (2.02)
-  packageVersion: 2.02.31
+  packageVersion: 2.02.32
   assetPath: Assets/Plugins/FMOD/src/FMODEventTrack.cs
-  uploadId: 812106
+  uploadId: 847630

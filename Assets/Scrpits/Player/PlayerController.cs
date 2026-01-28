@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")]
     private PlayerSound playerSound;
-    private float stepTimer;
+    private float lastStepTime;
     public float walkStepInterval = 0.22f;
     public float sprintStepInterval = 0.13f;
 
@@ -34,6 +34,17 @@ public class PlayerController : MonoBehaviour
     private float currentStamina;
     private bool isSprinting;
     private bool isExhausted;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckDistance = 1.3f;
+
+    private bool IsGroundedCustom()
+    {
+        return Physics.Raycast(
+            groundCheck.position,
+            Vector3.down,
+            groundCheckDistance
+        );
+    }
 
     void Start()
     {
@@ -77,30 +88,22 @@ public class PlayerController : MonoBehaviour
     }
     private void HandleFootsteps()
     {
-        if (!controller.isGrounded) return;
+        if (!IsGroundedCustom()) return;
 
-        float speed = controller.velocity.magnitude;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
-        if (speed > 0.1f)
+        bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f;
+        if (!isMoving) return;
+
+        float interval = isSprinting ? sprintStepInterval : walkStepInterval;
+
+        if (Time.time - lastStepTime >= interval)
         {
-            stepTimer += Time.deltaTime;
-
-
-            float interval = isSprinting ? sprintStepInterval : walkStepInterval;
-
-
-            if (stepTimer >= interval)
-            {
-                playerSound.PlayFootstep();
-                stepTimer = 0f;
-            }
-        }
-        else
-        {
-            stepTimer = 0f;
+            playerSound.PlayFootstep();
+            lastStepTime = Time.time;
         }
     }
-
 
 
     private void ApplyGravity()

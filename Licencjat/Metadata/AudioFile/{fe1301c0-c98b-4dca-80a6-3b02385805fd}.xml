@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{fe1301c0-c98b-4dca-80a6-3b02385805fd}">
+		<property name="assetPath">
+			<value>Footsteps/Floor/504011__joao_janz__wood-floor-classic-shoe-footstep-1_6.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.0835625</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{994e93a8-1e15-4e73-aefe-6b54654f82ba}</destination>
+		</relationship>
+	</object>
+</objects>

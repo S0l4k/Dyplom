@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 0793eda432fc5df4ab1291e6baacd771
 timeCreated: 1434430906
-licenseType: Store
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -58,6 +58,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 161631
   packageName: FMOD for Unity (2.02)
-  packageVersion: 2.02.31
+  packageVersion: 2.02.32
   assetPath: Assets/Plugins/FMOD/images/Preview.png
-  uploadId: 812106
+  uploadId: 847630

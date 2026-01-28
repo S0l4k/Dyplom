@@ -19582,6 +19582,7 @@ GameObject:
   - component: {fileID: 1234171138}
   - component: {fileID: 1234171137}
   - component: {fileID: 1234171139}
+  - component: {fileID: 1234171140}
   m_Layer: 0
   m_Name: FlatCutscene
   m_TagString: Untagged
@@ -19648,6 +19649,10 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 8ac7f0f0d1a7a154db698f70c76539d1, type: 2}
+    - {fileID: 11400000, guid: 057e49b382122df41bf315ded94ca0e9, type: 2}
+    - {fileID: 11400000, guid: e1d4ad97edb92b5408a270e7bacb367f, type: 2}
+    - {fileID: 11400000, guid: 8e94e3954e4c1cc409124611def2b6cb, type: 2}
+    - {fileID: 11400000, guid: 4a8b602ab27360948b02d70f0b42e5dd, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -19663,6 +19668,114 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1234171140}
+          m_TargetAssemblyTypeName: CutsceneAudio, Assembly-CSharp
+          m_MethodName: StopAmbient
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1234171140}
+          m_TargetAssemblyTypeName: CutsceneAudio, Assembly-CSharp
+          m_MethodName: PlayJumpScare
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1234171140}
+          m_TargetAssemblyTypeName: CutsceneAudio, Assembly-CSharp
+          m_MethodName: PlayAmbient
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1234171140}
+          m_TargetAssemblyTypeName: CutsceneAudio, Assembly-CSharp
+          m_MethodName: PlayCrawling
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1234171140}
+          m_TargetAssemblyTypeName: CutsceneAudio, Assembly-CSharp
+          m_MethodName: PlayCrossSqueak
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1234171140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234171136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a0a556cf5ce5c46b2a4d6d69532a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpscareEvent:
+    Guid:
+      Data1: -144046715
+      Data2: 1242902646
+      Data3: -1652039490
+      Data4: 1245394167
+    Path: event:/Cutscene/JumpscareCutscene
+  ambientEvent:
+    Guid:
+      Data1: 520705184
+      Data2: 1164888777
+      Data3: -1292331605
+      Data4: 1788765218
+    Path: event:/Cutscene/NightAmbient
+  crossEvent:
+    Guid:
+      Data1: -1981174688
+      Data2: 1122020131
+      Data3: 823063201
+      Data4: 1396450420
+    Path: event:/Cutscene/CrossSqueak
+  crawlingEvent:
+    Guid:
+      Data1: -864708259
+      Data2: 1291558233
+      Data3: -377477469
+      Data4: 741582361
+    Path: event:/Cutscene/MonsterCrawling
 --- !u!1 &1234171595
 GameObject:
   m_ObjectHideFlags: 0
@@ -29805,6 +29918,7 @@ MonoBehaviour:
   playerController: {fileID: 1833239512}
   playerCam: {fileID: 330585548}
   computerInteract: {fileID: 924378126}
+  consolePanel: {fileID: 0}
 --- !u!4 &1893179572
 Transform:
   m_ObjectHideFlags: 0
