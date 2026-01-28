@@ -7,6 +7,8 @@ TagManager:
   - SoundTrigger
   - Floor
   - Stone
+  - LoopTop
+  - LoopBottom
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Fence
   - Celling
   - Lamp
-  - 
+  - Obstacle
   - 
   - 
   - 

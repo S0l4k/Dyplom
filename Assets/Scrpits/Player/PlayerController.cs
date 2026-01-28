@@ -22,14 +22,14 @@ public class PlayerController : MonoBehaviour
     public TMP_Text pickupText;
     public PauseMenu pauseMenu;
 
-    [Header("Sneak Settings")]
-    public bool isSneaking = false;
+    [Header("Crouch")]
     public KeyCode sneakKey = KeyCode.LeftControl;
-    public float sneakHeight = 1f;       
-    private float normalHeight;           
-    private Vector3 normalCenter;
+    public float sneakHeight = 1f;
     public Vector3 sneakCenter = new Vector3(0, 0.5f, 0);
     public float sneakSpeedMultiplier = 0.5f;
+
+    [Header("Crouch Check")]
+    public LayerMask obstacleMask;
 
     [Header("Audio")]
     private PlayerSound playerSound;
@@ -37,110 +37,106 @@ public class PlayerController : MonoBehaviour
     public float walkStepInterval = 0.22f;
     public float sprintStepInterval = 0.13f;
 
+    [Header("Ground Check")]
+    public Transform groundCheck;
+    public float groundCheckDistance = 0.1f;
 
     private CharacterController controller;
     private Vector3 velocity;
     private float currentStamina;
     private bool isSprinting;
-    private bool isExhausted;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckDistance = 1.3f;
+    public bool isSneaking = false;
 
-    private bool IsGroundedCustom()
+    private float normalHeight;
+    private Vector3 normalCenter;
+
+    private void Start()
     {
-        return Physics.Raycast(
-            groundCheck.position,
-            Vector3.down,
-            groundCheckDistance
-        );
-    }
-
-
-    void Start()
-    {
-        playerSound = GetComponent<PlayerSound>();
         controller = GetComponent<CharacterController>();
+        playerSound = GetComponent<PlayerSound>();
         currentStamina = maxStamina;
 
         normalHeight = controller.height;
         normalCenter = controller.center;
     }
 
-    void Update()
+    private void Update()
     {
         HandleInput();
         HandleStamina();
-        ApplyGravity();
+        HandleCrouch();
         Move();
+        ApplyGravity();
         HandleFootsteps();
-        HandleSneak();
     }
 
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
-        {
             pauseMenu.OpenConsole();
-        }
-   
-        isSneaking = Input.GetKey(KeyCode.LeftControl);
-
-
     }
 
     private void Move()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 move =
-            orientation.forward * vertical +
-            orientation.right * horizontal;
-
-        move.Normalize();
-
-     
+        Vector3 move = (orientation.forward * v + orientation.right * h).normalized;
         float speed = isSprinting ? sprintSpeed : walkSpeed;
-
-        if (isSneaking)
-            speed *= sneakSpeedMultiplier;
+        if (isSneaking) speed *= sneakSpeedMultiplier;
 
         controller.Move(move * speed * Time.deltaTime);
-
     }
 
-    private void HandleSneak()
+    private void HandleCrouch()
     {
         if (Input.GetKey(sneakKey))
         {
-            isSneaking = true;
-            controller.height = sneakHeight;
-            controller.center = sneakCenter;
-           
+            if (!isSneaking)
+                Crouch();
         }
         else
         {
-            isSneaking = false;
-            controller.height = normalHeight;
-            controller.center = normalCenter;
-           
+            if (isSneaking)
+                TryStandUp();
         }
     }
+
+    private void Crouch()
+    {
+        float heightDiff = controller.height - sneakHeight;
+        controller.height = sneakHeight;
+        controller.center = sneakCenter;
+        controller.Move(Vector3.down * heightDiff / 2f); // bezpieczne opuszczenie
+        isSneaking = true;
+    }
+
+    private void TryStandUp()
+    {
+        // Sprawdzenie przestrzeni nad głową
+        float radius = controller.radius * 0.9f;
+        Vector3 bottom = transform.position + controller.center - Vector3.up * (controller.height / 2f - radius);
+        Vector3 top = bottom + Vector3.up * (normalHeight - sneakHeight);
+        if (Physics.CheckCapsule(bottom, top, radius, obstacleMask))
+            return; // nie wstawaj, coś nad głową
+
+        float heightDiff = normalHeight - controller.height;
+        controller.height = normalHeight;
+        controller.center = normalCenter;
+        controller.Move(Vector3.up * heightDiff / 2f); // bezpieczne podniesienie
+        isSneaking = false;
+    }
+
     private void HandleFootsteps()
     {
-        if (!IsGroundedCustom()) return;
+        if (!IsGrounded()) return;
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
-        bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f;
-        if (!isMoving) return;
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        if (Mathf.Abs(h) < 0.1f && Mathf.Abs(v) < 0.1f) return;
 
         float interval = isSprinting ? sprintStepInterval : walkStepInterval;
-
-
-        if (isSneaking)
-            interval *= 2f;
+        if (isSneaking) interval *= 2f;
 
         if (Time.time - lastStepTime >= interval)
         {
@@ -149,24 +145,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void ApplyGravity()
     {
-        if (controller.isGrounded && velocity.y < 0)
-            velocity.y = -2f; 
+        if (IsGrounded() && velocity.y < 0)
+            velocity.y = -2f;
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance);
+    }
+
     private void HandleStamina()
     {
-        bool wantsToSprint =
-            Input.GetKey(KeyCode.LeftShift) &&
-            !isExhausted &&
-            Input.GetAxisRaw("Vertical") > 0;
-
-        isSprinting = wantsToSprint && currentStamina > 0;
+        bool wantsSprint = Input.GetKey(KeyCode.LeftShift) && !isSneaking && currentStamina > 0;
+        isSprinting = wantsSprint;
 
         if (isSprinting)
         {
@@ -174,23 +170,15 @@ public class PlayerController : MonoBehaviour
             if (currentStamina <= 0)
             {
                 currentStamina = 0;
-                isExhausted = true;
                 isSprinting = false;
             }
         }
         else
         {
-            if (currentStamina < maxStamina)
-            {
-                currentStamina += staminaRegenRate * Time.deltaTime;
-                if (currentStamina >= maxStamina * 0.4f)
-                    isExhausted = false;
-            }
+            currentStamina += staminaRegenRate * Time.deltaTime;
+            if (currentStamina > maxStamina) currentStamina = maxStamina;
         }
     }
 
-    public float GetStamina01()
-    {
-        return currentStamina / maxStamina;
-    }
+    public float GetStamina01() => currentStamina / maxStamina;
 }

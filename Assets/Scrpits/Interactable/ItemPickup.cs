@@ -22,7 +22,9 @@ public class ItemPickup : MonoBehaviour
     public TMP_Text flashlightUIText;
     public Sprite flashlightOnSprite;
     public Sprite flashlightOffSprite;
-   
+
+    public StairLoop stairLoop;
+
 
     private Camera playerCamera;
     private bool canPickup = false;
@@ -161,8 +163,12 @@ public class ItemPickup : MonoBehaviour
             flashlightUIImage.sprite = flashlightOnSprite;
             flashlightUIText.text = "Press F";
         }
+        if (itemName == "Food" && stairLoop != null)
+        {
+            stairLoop.loopingActive = true;
+            Debug.Log("[ItemPickup] Loop klatki schodowej włączony po odebraniu jedzenia!");
+        }
 
-       
     }
 
 

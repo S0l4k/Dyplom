@@ -47,6 +47,8 @@ public class OrderFoodButton : MonoBehaviour
             pickup.handPosition = playerHand;
             pickup.pickupText = pickupTextObject.GetComponent<TMPro.TMP_Text>();
             pickup.itemName = "Food";
+
+            pickup.stairLoop = FindObjectOfType<StairLoop>();
         }
 
         Debug.Log("Jedzenie dostarczone!");
