@@ -62,6 +62,16 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (GameState.FinalChase)
+        {
+            chasing = true;
+            walking = false;
+            playerInSight = true;
+
+            ai.destination = player.position;
+            ai.speed = chaseSpeed;
+            aiAnim.SetTrigger("run");
+        }
         if (GameState.IsTalking)
         {
             ai.speed = 0;

@@ -7,6 +7,10 @@ public class DialogActivator : MonoBehaviour
     [Header("NPC Settings")]
     public string npcName = "NPC";
 
+    [Header("Dialog Settings")]
+    [Tooltip("Jeśli true, dialog jest dostępny tylko w finalnej fazie demona")]
+    public bool isFinalDialog = false;
+
     [Header("UI")]
     [Tooltip("TEXT TYLKO do interakcji z NPC (Press E to talk)")]
     public TMP_Text interactionText;
@@ -45,7 +49,7 @@ public class DialogActivator : MonoBehaviour
 
     void Update()
     {
-        // Jeśli dialog trwa → absolutnie nic nie rób
+        // --- jeśli dialog trwa → absolutnie nic nie rób
         if (isTalking)
         {
             HideInteractionText();
@@ -53,6 +57,14 @@ public class DialogActivator : MonoBehaviour
         }
 
         if (!playerCamera) return;
+
+        // --- jeśli to normalny dialog, a demon jest w finalnej fazie → nie aktywujemy
+        if (!isFinalDialog && GameState.DemonLoopPhase)
+        {
+            HideInteractionText();
+            canTalk = false;
+            return;
+        }
 
         CheckForNPC();
 
@@ -156,5 +168,12 @@ public class DialogActivator : MonoBehaviour
             playerCamScript.enabled = true;
 
         Debug.Log($"Rozmowa z {npcName} zakończona.");
+
+        // --- jeśli to finalny dialog, włączamy fazę loopową demona
+        if (isFinalDialog)
+        {
+            GameState.DemonLoopPhase = true;
+            Debug.Log("[DialogActivator] Final dialog finished. Demon loop phase activated.");
+        }
     }
 }

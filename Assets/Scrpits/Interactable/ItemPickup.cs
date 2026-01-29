@@ -163,11 +163,19 @@ public class ItemPickup : MonoBehaviour
             flashlightUIImage.sprite = flashlightOnSprite;
             flashlightUIText.text = "Press F";
         }
-        if (itemName == "Food" && stairLoop != null)
+        if (itemName == "Food")
         {
-            stairLoop.loopingActive = true;
-            Debug.Log("[ItemPickup] Loop klatki schodowej włączony po odebraniu jedzenia!");
+            // Włączamy loop sequence w GameState
+            GameState.LoopSequenceActive = true;
+
+            // Jeśli masz przypisany StairLoop, zresetuj licznik
+            if (stairLoop != null)
+            {
+                stairLoop.loopCount = 0;
+                Debug.Log("[ItemPickup] Loop sequence activated after picking up food!");
+            }
         }
+
 
     }
 
