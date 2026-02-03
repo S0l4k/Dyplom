@@ -12,8 +12,6 @@ public class ItemPickup : MonoBehaviour
     public Vector3 localRotationOffset;
     public bool isFlashlight = false;
 
-    [Header("FMOD Trigger Link")]
-    public FMODTriggerZone linkedTrigger;
 
     [Header("Pickup UI (on look)")]
     public TMP_Text pickupText;
@@ -24,7 +22,9 @@ public class ItemPickup : MonoBehaviour
     public TMP_Text flashlightUIText;
     public Sprite flashlightOnSprite;
     public Sprite flashlightOffSprite;
-   
+
+    public StairLoop stairLoop;
+
 
     private Camera playerCamera;
     private bool canPickup = false;
@@ -163,9 +163,20 @@ public class ItemPickup : MonoBehaviour
             flashlightUIImage.sprite = flashlightOnSprite;
             flashlightUIText.text = "Press F";
         }
+        if (itemName == "Food")
+        {
+            // Włączamy loop sequence w GameState
+            GameState.LoopSequenceActive = true;
 
-        if (linkedTrigger != null)
-            linkedTrigger.StopEvent();
+            // Jeśli masz przypisany StairLoop, zresetuj licznik
+            if (stairLoop != null)
+            {
+                stairLoop.loopCount = 0;
+                Debug.Log("[ItemPickup] Loop sequence activated after picking up food!");
+            }
+        }
+
+
     }
 
 

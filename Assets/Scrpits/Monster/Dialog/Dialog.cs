@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
+using FMOD.Studio;
 
 public class Dialog : MonoBehaviour
 {
@@ -12,19 +14,21 @@ public class Dialog : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public GameObject dialogueBG;
 
+    [Header("Marker Settings")]
+    public string npcMarkerColor = "#FFFFFF33";
+    public string playerMarkerColor = "#FFFFFF33";
+    public float typeSpeed = 0.08f;
+    public float delayBetweenAnswers = 0.3f;
+
+    [Header("FMOD")]
+    public EventReference npcVoiceEvent;   // ✅ NOWY SPOSÓB
+    private EventInstance npcVoiceInstance;
+
     private int currentNode = 0;
     private bool optionsActive = false;
     private Coroutine typingCoroutine;
     private bool isTyping = false;
     private bool skipTyping = false;
-
-    [Header("Marker Settings")]
-    public string markerColor = "#00000080";
-    public float typeSpeed = 0.08f;
-    public float delayBetweenAnswers = 0.3f;
-
-    [Header("Debug")]
-    public bool happy = false;
 
     void Awake()
     {
@@ -34,9 +38,7 @@ public class Dialog : MonoBehaviour
     void Update()
     {
         if (isTyping && Input.GetKeyDown(KeyCode.Space))
-        {
             skipTyping = true;
-        }
 
         if (!optionsActive) return;
 
@@ -59,10 +61,8 @@ public class Dialog : MonoBehaviour
         HideAll();
         dialogueBG.SetActive(true);
 
-        DialogNode node = dialogNodes[currentNode];
         dialogText.gameObject.SetActive(true);
-
-        typingCoroutine = StartCoroutine(FullDialogSequence(node));
+        typingCoroutine = StartCoroutine(FullDialogSequence(dialogNodes[currentNode]));
     }
 
     IEnumerator FullDialogSequence(DialogNode node)
@@ -70,24 +70,31 @@ public class Dialog : MonoBehaviour
         isTyping = true;
         skipTyping = false;
 
-        dialogText.text = "";
-        for (int i = 0; i < node.npcLine.Length; i++)
-        {
-            if (skipTyping)
-            {
-                dialogText.text = node.npcLine;
-                break;
-            }
+        // 🔊 START "UNDERTALE VOICE"
+        npcVoiceInstance = RuntimeManager.CreateInstance(npcVoiceEvent);
+        npcVoiceInstance.start();
 
-            dialogText.text = node.npcLine.Substring(0, i + 1);
-            yield return new WaitForSeconds(typeSpeed);
-        }
+        // NPC line
+        yield return StartCoroutine(TypeTextWithMarker(dialogText, node.npcLine, npcMarkerColor));
+
+        // 🔇 STOP VOICE
+        npcVoiceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        npcVoiceInstance.release();
 
         yield return new WaitForSeconds(0.4f);
 
+        // Player answers
         for (int i = 0; i < node.responses.Length && i < answers.Length; i++)
         {
-            yield return StartCoroutine(TypeAnswerText(answers[i], node.responses[i]));
+            TMP_Text answerTMP = answers[i].GetComponent<TMP_Text>();
+            answers[i].SetActive(true);
+
+            yield return StartCoroutine(TypeTextWithMarker(
+                answerTMP,
+                node.responses[i],
+                playerMarkerColor
+            ));
+
             yield return new WaitForSeconds(delayBetweenAnswers);
         }
 
@@ -95,25 +102,24 @@ public class Dialog : MonoBehaviour
         optionsActive = true;
     }
 
-    IEnumerator TypeAnswerText(GameObject answerObj, string text)
+    IEnumerator TypeTextWithMarker(TMP_Text textObj, string text, string markerColor)
     {
-        answerObj.SetActive(true);
-        TMP_Text answerText = answerObj.GetComponent<TMP_Text>();
-        answerText.text = "";
-
-        string openTag = "<mark=#00000080>";
+        string openTag = $"<mark={markerColor}>";
         string closeTag = "</mark>";
+
+        textObj.text = "";
 
         for (int i = 0; i < text.Length; i++)
         {
             if (skipTyping)
             {
-                answerText.text = openTag + text + closeTag;
+                textObj.text = openTag + text + closeTag;
                 yield break;
             }
 
             string visible = text.Substring(0, i + 1);
-            answerText.text = openTag + visible + closeTag;
+            textObj.text = openTag + visible + closeTag;
+
             yield return new WaitForSeconds(typeSpeed);
         }
     }
@@ -142,17 +148,9 @@ public class Dialog : MonoBehaviour
         ShowNode();
     }
 
-    public void Happiness()
-    {
-        happy = true;
-        Debug.Log("Krzysiu jest zadowolony!");
-    }
-
     void EndDialog()
     {
         HideAll();
-        Debug.Log("Dialog zakończony");
-        QuestManager.Instance.CompleteQuest("Talk with the Thing");
         gameObject.SetActive(false);
     }
 

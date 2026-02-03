@@ -1,10 +1,12 @@
 using UnityEngine;
+using FMODUnity;
 
 public class LightSwitch : MonoBehaviour
 {
     private Camera playerCamera;
     private bool canClick = false;
     public GameObject lightOb;
+    [SerializeField] private EventReference flashlightEvent;
     void Start()
     {
         playerCamera = Camera.main;
@@ -43,7 +45,7 @@ public class LightSwitch : MonoBehaviour
         if (lightOb == null)
             return;
 
-       
+        RuntimeManager.PlayOneShot(flashlightEvent);
         lightOb.SetActive(!lightOb.activeSelf);
     }
 }

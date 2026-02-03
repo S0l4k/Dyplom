@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 57f2836ed717c6144863df529a34e314
-  - enabled: 0
-    path: Assets/Scenes/Kinga.unity
-    guid: 3c0c82671548f2e41a500a402fbdc556
+  - enabled: 1
+    path: Assets/Scenes/Cutscene.unity
+    guid: 5cf38b352c150d346ac00cfa2a72d272
   - enabled: 1
     path: Assets/Scenes/FlatScene.unity
     guid: 3d9a87d23c66d8946bcb964ef9a87851
+  - enabled: 0
+    path: Assets/Scenes/Kinga.unity
+    guid: 3c0c82671548f2e41a500a402fbdc556
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 60fac44198526094e85843ef0f101e87, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

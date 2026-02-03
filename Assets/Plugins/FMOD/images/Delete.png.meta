@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 196080340db65c44883dd3f599556fb9
 timeCreated: 1434604329
-licenseType: Store
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -57,6 +57,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 161631
   packageName: FMOD for Unity (2.02)
-  packageVersion: 2.02.31
+  packageVersion: 2.02.32
   assetPath: Assets/Plugins/FMOD/images/Delete.png
-  uploadId: 812106
+  uploadId: 847630
