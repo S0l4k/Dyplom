@@ -28917,6 +28917,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0710beb54f3e45344b6aec5dfa7c2651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1646787370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5998764136715631841, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
+  m_PrefabInstance: {fileID: 347205097191751604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1648436396
 GameObject:
   m_ObjectHideFlags: 0
@@ -37563,7 +37568,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5998764136715631841, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4941063276686242155}
   m_SourcePrefab: {fileID: 100100000, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
 --- !u!222 &447769220208184900
 CanvasRenderer:
@@ -38161,6 +38169,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2033748306900480867, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
   m_PrefabInstance: {fileID: 347205097191751604}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4941063276686242155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646787370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: bfe703e261c72d5479a1917f859a0afc, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &4959600049633142888
 PrefabInstance:
   m_ObjectHideFlags: 0

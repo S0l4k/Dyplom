@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
@@ -40,8 +40,12 @@ public class EnemyAI : MonoBehaviour
     private int randNum;
     private float idleTime;
     private float loseSightTime = 2f;
-    private float loseSightTimer = 0f;
-    private bool playerInSight = false;
+    public float loseSightTimer = 0f;
+    public bool playerInSight = false;
+
+    [Header("Respawn Settings")]
+    public float spawnInvincibilityTime = 1.5f;
+    public float spawnInvincibilityTimer = 0f;
 
     private void Awake()
     {
@@ -56,28 +60,90 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         walking = true;
-        randNum = Random.Range(0, destinations.Count);
-        currentDest = destinations[randNum];
+        if (destinations != null && destinations.Count > 0)
+        {
+            randNum = Random.Range(0, destinations.Count);
+            currentDest = destinations[randNum];
+        }
+        else
+        {
+            Debug.LogWarning($"[EnemyAI] {name} has no patrol destinations assigned!");
+        }
     }
 
     private void Update()
     {
+        // ✅ PRIORYTET 1: FinalChase (absolutnie najwyższy priorytet)
         if (GameState.FinalChase)
         {
+            if (!ai.enabled) ai.enabled = true;
             chasing = true;
             walking = false;
             playerInSight = true;
 
-            ai.destination = player.position;
-            ai.speed = chaseSpeed;
-            aiAnim.SetTrigger("run");
+            if (ai.isOnNavMesh)
+            {
+                ai.destination = player.position;
+                ai.speed = chaseSpeed;
+                aiAnim.SetTrigger("run");
+            }
+            else
+            {
+                // Próba przywrócenia na NavMesh
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(transform.position, out navHit, 2f, NavMesh.AllAreas))
+                {
+                    ai.Warp(navHit.position);
+                    ai.destination = player.position;
+                    ai.speed = chaseSpeed;
+                    aiAnim.SetTrigger("run");
+                }
+                else
+                {
+                    Debug.LogWarning($"[EnemyAI] {name} cannot chase - not on NavMesh!");
+                    return;
+                }
+            }
+
+            float distance = Vector3.Distance(player.position, transform.position);
+            if (distance <= catchDistance && !player.GetComponent<PlayerController>().godMode)
+            {
+                player.gameObject.SetActive(false);
+                aiAnim.SetTrigger("jumpscare");
+                StartCoroutine(deathRoutine());
+            }
+            return;
         }
+
+        // ✅ PRIORYTET 2: Cooldown po respawnowaniu (blokuje detekcję i ruch)
+        if (spawnInvincibilityTimer > 0f)
+        {
+            spawnInvincibilityTimer -= Time.deltaTime;
+            playerInSight = false;
+            chasing = false;
+            walking = false;
+            ai.isStopped = true;
+            ai.speed = 0f;
+
+            // Upewnij się, że animacja jest idle
+            if (aiAnim != null)
+            {
+                aiAnim.ResetTrigger("walk");
+                aiAnim.ResetTrigger("run");
+                aiAnim.SetTrigger("idle");
+            }
+
+            return;
+        }
+
+        // ✅ PRIORYTET 3: Rozmowa z graczem
         if (GameState.IsTalking)
         {
             ai.speed = 0;
+            ai.isStopped = true;
             aiAnim.SetTrigger("idle");
 
-            // patrzenie na gracza mimo rozmowy
+            // Patrzenie na gracza mimo rozmowy
             Vector3 lookDir = (player.position - transform.position).normalized;
             lookDir.y = 0;
             if (lookDir.magnitude > 0.1f)
@@ -90,10 +156,10 @@ public class EnemyAI : MonoBehaviour
 
         // --- DETEKCJA GRACZA ---
         Vector3 direction = (player.position - transform.position).normalized;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + rayCastOffset, direction, out hit, sightDistance))
+        RaycastHit rayHit; // ✅ UNIKNIĘCIE KONFLIKTU Z NavMeshHit
+        if (Physics.Raycast(transform.position + rayCastOffset, direction, out rayHit, sightDistance))
         {
-            playerInSight = hit.collider.CompareTag("Player");
+            playerInSight = rayHit.collider.CompareTag("Player");
 
             if (playerInSight)
             {
@@ -101,16 +167,14 @@ public class EnemyAI : MonoBehaviour
                 PlayerController pc = player.GetComponent<PlayerController>();
                 if (pc != null && pc.isSneaking && !GameState.ChaseLocked)
                 {
-                    
                     float sneakFactor = 0.4f;
                     if (Vector3.Distance(player.position, transform.position) > sightDistance * sneakFactor)
                     {
-                        playerInSight = false; 
+                        playerInSight = false;
                     }
                     else
                     {
-                        
-                        if (Random.value < 0.3f) 
+                        if (Random.value < 0.3f)
                             playerInSight = false;
                     }
                 }
@@ -130,8 +194,24 @@ public class EnemyAI : MonoBehaviour
             chasing = true;
             walking = false;
 
+            // ✅ ZABEZPIECZENIE PRZED UŻYCIEM DESTINATION
+            if (!ai.isOnNavMesh)
+            {
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(transform.position, out navHit, 2f, NavMesh.AllAreas))
+                {
+                    ai.Warp(navHit.position);
+                }
+                else
+                {
+                    Debug.LogWarning($"[EnemyAI] {name} cannot chase - not on NavMesh!");
+                    return;
+                }
+            }
+
             ai.destination = player.position;
             ai.speed = chaseSpeed;
+            ai.isStopped = false;
 
             aiAnim.ResetTrigger("walk");
             aiAnim.ResetTrigger("idle");
@@ -158,8 +238,11 @@ public class EnemyAI : MonoBehaviour
             {
                 chasing = false;
                 walking = true;
-                randNum = Random.Range(0, destinations.Count);
-                currentDest = destinations[randNum];
+                if (destinations != null && destinations.Count > 0)
+                {
+                    randNum = Random.Range(0, destinations.Count);
+                    currentDest = destinations[randNum];
+                }
             }
         }
 
@@ -167,16 +250,39 @@ public class EnemyAI : MonoBehaviour
         if (walking && !chasing)
         {
             ai.speed = walkSpeed;
-            ai.destination = currentDest.position;
+            ai.isStopped = false;
+
+            // ✅ ZABEZPIECZENIE: sprawdź czy agent jest aktywny i na NavMesh
+            if (ai.isActiveAndEnabled && ai.isOnNavMesh)
+            {
+                ai.destination = currentDest.position;
+            }
+            else
+            {
+                // Jeśli nie na NavMesh, spróbuj przywrócić
+                NavMeshHit navHit; // ✅ UNIKNIĘCIE KONFLIKTU NAZW
+                if (NavMesh.SamplePosition(transform.position, out navHit, 1f, NavMesh.AllAreas))
+                {
+                    ai.Warp(navHit.position);
+                    ai.destination = currentDest.position;
+                }
+                else
+                {
+                    Debug.LogWarning($"[EnemyAI] {name} not on NavMesh! Skipping patrol.");
+                    return;
+                }
+            }
 
             aiAnim.ResetTrigger("run");
             aiAnim.SetTrigger("walk");
 
-            if (!ai.pathPending && ai.remainingDistance <= ai.stoppingDistance)
+            // ✅ ZABEZPIECZENIE dla remainingDistance
+            if (ai.isActiveAndEnabled && !ai.pathPending && ai.hasPath && ai.remainingDistance <= ai.stoppingDistance)
             {
                 aiAnim.ResetTrigger("walk");
                 aiAnim.SetTrigger("idle");
                 ai.speed = 0;
+                ai.isStopped = true;
 
                 if (!IsInvoking("dummy"))
                     StartCoroutine(stayIdle());
@@ -191,15 +297,32 @@ public class EnemyAI : MonoBehaviour
         idleTime = Random.Range(minIdleTime, maxIdleTime);
         yield return new WaitForSeconds(idleTime);
 
-        randNum = Random.Range(0, destinations.Count);
-        currentDest = destinations[randNum];
-        walking = true;
+        if (destinations != null && destinations.Count > 0)
+        {
+            randNum = Random.Range(0, destinations.Count);
+            currentDest = destinations[randNum];
+            walking = true;
+        }
     }
 
     IEnumerator deathRoutine()
     {
         yield return new WaitForSeconds(jumpscareTime);
+
+        // Reset globalnych stanów
+        GameState.LoopSequenceActive = false;
+        GameState.DemonLoopPhase = false;
+        GameState.ReadyForFinalChase = false;
+        GameState.FinalChase = false;
+        GameState.ChaseLocked = true; // zablokuj do następnego loopa
+
         SceneManager.LoadScene(deathScene);
-        GameState.ChaseLocked = true;
+    }
+
+    // ✅ PUBLICZNA METODA DO ZEWNĘTRZNEGO USTAWIENIA COOLDOWNU (np. z StairLoop)
+    public void SetSpawnInvincibility()
+    {
+        spawnInvincibilityTimer = spawnInvincibilityTime;
+        Debug.Log($"[EnemyAI] {name} spawn invincibility set for {spawnInvincibilityTime}s");
     }
 }

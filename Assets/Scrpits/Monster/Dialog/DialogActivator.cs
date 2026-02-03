@@ -169,11 +169,12 @@ public class DialogActivator : MonoBehaviour
 
         Debug.Log($"Rozmowa z {npcName} zakończona.");
 
-        // --- jeśli to finalny dialog, włączamy fazę loopową demona
+        // --- KLUCZOWA ZMIANA: ustaw tylko ReadyForFinalChase, NIE DemonLoopPhase ---
         if (isFinalDialog)
         {
-            GameState.DemonLoopPhase = true;
-            Debug.Log("[DialogActivator] Final dialog finished. Demon loop phase activated.");
+            GameState.ReadyForFinalChase = true; // ✅ NOWA FLAGA
+            GameState.DemonLoopPhase = false;    // resetujemy, by nie blokować interakcji
+            Debug.Log("[DialogActivator] Final dialog finished. ReadyForFinalChase = true");
         }
     }
 }
