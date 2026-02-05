@@ -29,6 +29,7 @@ public class EnemyAI : MonoBehaviour
     public string deathScene;
     public float jumpscareTime = 1f;
     [SerializeField] private EventReference jumpscareEvent;
+    private bool jumpscareTriggered = false;
 
     [Header("Internal State")]
     public bool walking = true;
@@ -76,26 +77,41 @@ public class EnemyAI : MonoBehaviour
         // ✅ PRIORYTET 1: FinalChase (absolutnie najwyższy priorytet)
         if (GameState.FinalChase)
         {
+            // ✅ KLUCZOWE ZABEZPIECZENIE: blokada wielokrotnego wywołania jumpscare
+            if (jumpscareTriggered)
+            {
+                // Jumpscare już aktywowany - nic nie rób (czekaj na załadowanie sceny śmierci)
+                return;
+            }
+
             if (!ai.enabled) ai.enabled = true;
             chasing = true;
             walking = false;
             playerInSight = true;
 
+            // ✅ WALIDACJA PLAYERA
+            if (player == null)
+            {
+                Debug.LogError("[EnemyAI] Player reference is null during FinalChase!");
+                return;
+            }
+
             if (ai.isOnNavMesh)
             {
                 ai.destination = player.position;
                 ai.speed = chaseSpeed;
+                ai.isStopped = false;
                 aiAnim.SetTrigger("run");
             }
             else
             {
-                // Próba przywrócenia na NavMesh
                 NavMeshHit navHit;
                 if (NavMesh.SamplePosition(transform.position, out navHit, 2f, NavMesh.AllAreas))
                 {
                     ai.Warp(navHit.position);
                     ai.destination = player.position;
                     ai.speed = chaseSpeed;
+                    ai.isStopped = false;
                     aiAnim.SetTrigger("run");
                 }
                 else
@@ -106,13 +122,33 @@ public class EnemyAI : MonoBehaviour
             }
 
             float distance = Vector3.Distance(player.position, transform.position);
-            if (distance <= catchDistance && !player.GetComponent<PlayerController>().godMode)
+
+            // ✅ WARUNEK AKTYWACJI JUMPSCARE (z blokadą)
+            if (distance <= catchDistance)
             {
+                PlayerController pc = player.GetComponent<PlayerController>();
+                if (pc != null && pc.godMode)
+                    return;
+
+                // ✅ AKTYWACJA JUMPSCARE (TYLKO RAZ!)
+                jumpscareTriggered = true; // 🔒 BLOKADA - zapobiega ponownemu wywołaniu
+
+                Debug.Log("[EnemyAI] FINAL CHASE CATCH! Triggering jumpscare sequence ONCE.");
+
                 player.gameObject.SetActive(false);
                 aiAnim.SetTrigger("jumpscare");
+                RuntimeManager.PlayOneShot(jumpscareEvent); // ✅ DŹWIĘK
+
+                chasing = false;
+                ai.isStopped = true;
+                ai.speed = 0f;
+
                 StartCoroutine(deathRoutine());
+
+                return; // ✅ ZAKOŃCZ UPDATE NATYCHMIAST - nie kontynuuj logiki
             }
-            return;
+
+            return; // ✅ ZAKOŃCZ UPDATE dla FinalChase
         }
 
         // ✅ PRIORYTET 2: Cooldown po respawnowaniu (blokuje detekcję i ruch)
@@ -314,7 +350,10 @@ public class EnemyAI : MonoBehaviour
         GameState.DemonLoopPhase = false;
         GameState.ReadyForFinalChase = false;
         GameState.FinalChase = false;
-        GameState.ChaseLocked = true; // zablokuj do następnego loopa
+        GameState.ChaseLocked = true;
+
+        // ✅ ZRESETUJ FLAGĘ JUMPSCARE (na wypadek resecu levelu bez restartu gry)
+        jumpscareTriggered = false;
 
         SceneManager.LoadScene(deathScene);
     }

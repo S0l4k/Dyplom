@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class OrderFoodButton : MonoBehaviour
@@ -9,53 +8,29 @@ public class OrderFoodButton : MonoBehaviour
     public Transform spawnPoint;
     public float deliveryTime = 5f;
 
-    [Header("References in Scene")]
+    [Header("References")]
     public Transform playerHand;
     public GameObject pickupTextObject;
-    public Button orderButton; // Przycisk w UI
-
-    private bool isOrdering = false;
 
     public void Order()
     {
-        if (isOrdering)
-        {
-            Debug.Log("[OrderFood] Zamówienie ju¿ w trakcie!");
-            return;
-        }
+        // Delegujemy WSZYSTKO do mened¿era – UI tylko wywo³uje
+        FoodDeliveryManager.Instance.OrderFood(
+            foodPrefab,
+            spawnPoint,
+            playerHand,
+            pickupTextObject,
+            deliveryTime,
+            "Food"
+        );
 
-        isOrdering = true;
-
-        QuestManager.Instance.CompleteQuest("Order Food");
-        Debug.Log("Jedzenie zamówione!");
-
-        if (orderButton != null)
-            orderButton.interactable = false;
-
-        StartCoroutine(DeliverFood());
+        // Opcjonalnie: krótki cooldown na przycisku (nie blokuj na 5s!)
+        GetComponent<Button>().interactable = false;
+        Invoke(nameof(EnableButton), 1f);
     }
 
-    private IEnumerator DeliverFood()
+    private void EnableButton()
     {
-        yield return new WaitForSeconds(deliveryTime);
-
-        GameObject food = Instantiate(foodPrefab, spawnPoint.position, spawnPoint.rotation);
-
-        ItemPickup pickup = food.GetComponent<ItemPickup>();
-        if (pickup != null)
-        {
-            pickup.handPosition = playerHand;
-            pickup.pickupText = pickupTextObject.GetComponent<TMPro.TMP_Text>();
-            pickup.itemName = "Food";
-
-            pickup.stairLoop = FindObjectOfType<StairLoop>();
-        }
-
-        Debug.Log("Jedzenie dostarczone!");
-
-        // Odblokowanie przycisku
-        isOrdering = false;
-        if (orderButton != null)
-            orderButton.interactable = true;
+        GetComponent<Button>().interactable = true;
     }
 }

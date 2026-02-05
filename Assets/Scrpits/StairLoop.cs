@@ -12,23 +12,22 @@ public class StairLoop : MonoBehaviour
     public int loopsToTriggerDemon = 5;
 
     [Header("Demon")]
-    public EnemyAI demon; // Upewnij się, że jest przypisany w Inspectorze!
+    public EnemyAI demon;
     public Transform demonWaitingPoint;
+    public DialogActivator demonDialog; // ✅ NOWA REFERENCJA!
 
     private void OnTriggerEnter(Collider other)
     {
         if (!GameState.LoopSequenceActive) return;
-        if (GameState.FinalChase) return; // już w pościgu - ignoruj
+        if (GameState.FinalChase) return;
         if (!other.CompareTag("Player")) return;
 
-        // ✅ NOWA LOGIKA: po dialogu - aktywuj pościg BEZ teleportacji
         if (GameState.ReadyForFinalChase)
         {
             TriggerFinalChase();
-            return; // NIE teleportujemy gracza!
+            return;
         }
 
-        // Normalna pętla (przed dialogiem)
         loopCount++;
         Debug.Log($"[StairLoop] Loop #{loopCount}");
 
@@ -46,7 +45,7 @@ public class StairLoop : MonoBehaviour
             other.transform.position = startSegment.position + offset;
         }
 
-        // Po 5 loopach: przenieś demona na dół
+        // Po 5 loopach: przenieś demona na dół I aktywuj finalny dialog
         if (loopCount >= loopsToTriggerDemon && !GameState.DemonLoopPhase)
         {
             TriggerDemonPhase();
@@ -61,7 +60,7 @@ public class StairLoop : MonoBehaviour
             return;
         }
 
-        // ✅ WARP na NavMesh (NIGDY nie ustawiaj ręcznie transform.position!)
+        // ✅ WARP na NavMesh
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(demonWaitingPoint.position, out navHit, 2f, NavMesh.AllAreas))
         {
@@ -74,50 +73,45 @@ public class StairLoop : MonoBehaviour
             demon.transform.position = demonWaitingPoint.position;
             demon.transform.rotation = demonWaitingPoint.rotation;
 
-            // Spróbuj znowu zwiększyć dystans szukania
             if (NavMesh.SamplePosition(demon.transform.position, out navHit, 5f, NavMesh.AllAreas))
             {
                 demon.ai.Warp(navHit.position);
             }
         }
 
-        // ✅ KLUCZOWE: ZATRZYMAJ AGENTA, ALE NIE WYŁĄCZAJ GO!
-        demon.ai.isStopped = true;  // ✅ PRAWIDŁOWY SPOSÓB NA ZATRZYMANIE
+        // ✅ ZRESETUJ STANY ENEMY
+        demon.ai.isStopped = true;
         demon.ai.speed = 0f;
-        demon.ai.destination = demon.transform.position; // zatrzymaj ruch
-
-        // ✅ ZRESETUJ WSZYSTKIE STANY ENEMY
+        demon.ai.destination = demon.transform.position;
         demon.chasing = false;
-        demon.walking = false;      // 🔴 MUSI BYĆ FALSE! To blokowało dialog
+        demon.walking = false;
         demon.playerInSight = false;
         demon.loseSightTimer = 0f;
+        demon.spawnInvincibilityTimer = demon.spawnInvincibilityTime;
 
-        // ✅ ZRESETUJ ANIMACJĘ NA IDLE
+        // ✅ ZRESETUJ ANIMACJĘ
         demon.aiAnim.ResetTrigger("walk");
         demon.aiAnim.ResetTrigger("run");
         demon.aiAnim.SetTrigger("idle");
 
-        // ✅ USTAW COOLDOWN PRZED DETEKCJĄ (zapobiega natychmiastowemu chase'owi)
-        demon.spawnInvincibilityTimer = demon.spawnInvincibilityTime;
+        // ✅ KLUCZOWE: AKTYWUJ FINALNY DIALOG PROGRAMOWO!
+        demonDialog.isFinalDialog= true;   
 
         // ✅ GLOBALNY STAN
         GameState.DemonLoopPhase = true;
 
-        Debug.Log($"[StairLoop] Demon respawned at bottom. Position: {demon.transform.position}, isOnNavMesh: {demon.ai.isOnNavMesh}, walking={demon.walking}");
+        Debug.Log($"[StairLoop] Demon respawned at bottom. Final dialog mode: {(demonDialog != null ? demonDialog.isFinalDialog.ToString() : "UNKNOWN")}");
     }
 
-    // ✅ NOWA METODA: aktywacja finałowego pościgu
     void TriggerFinalChase()
     {
         if (demon == null || demon.ai == null || demon.player == null) return;
 
-        // ✅ SPRAWDŹ CZY AGENT JEST NA NAVMESH PRZED UŻYCIEM DESTINATION
         if (!demon.ai.isOnNavMesh)
         {
             NavMeshHit hit;
             if (NavMesh.SamplePosition(demon.transform.position, out hit, 2f, NavMesh.AllAreas))
             {
-                Debug.LogWarning("[StairLoop] Demon not on NavMesh! Warping to nearest valid position.");
                 demon.ai.Warp(hit.position);
             }
             else
@@ -127,26 +121,21 @@ public class StairLoop : MonoBehaviour
             }
         }
 
-        // ✅ WZNÓW RUCH
         demon.ai.isStopped = false;
         demon.ai.speed = demon.chaseSpeed;
         demon.ai.destination = demon.player.position;
-
-        // ✅ FLAGI ENEMY
         demon.chasing = true;
         demon.walking = false;
         demon.playerInSight = true;
 
-        // ✅ GLOBALNE STANY
         GameState.FinalChase = true;
         GameState.ChaseLocked = false;
         GameState.LoopSequenceActive = false;
         GameState.ReadyForFinalChase = false;
         GameState.DemonLoopPhase = false;
 
-        // Wyłącz collider loopa by uniknąć ponownej aktywacji
         GetComponent<Collider>().enabled = false;
 
-        Debug.Log($"[StairLoop] FINAL CHASE ACTIVATED! Demon position: {demon.transform.position}, isOnNavMesh: {demon.ai.isOnNavMesh}");
+        Debug.Log($"[StairLoop] FINAL CHASE ACTIVATED!");
     }
 }

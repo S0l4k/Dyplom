@@ -8,11 +8,10 @@ public class DialogActivator : MonoBehaviour
     public string npcName = "NPC";
 
     [Header("Dialog Settings")]
-    [Tooltip("Jeśli true, dialog jest dostępny tylko w finalnej fazie demona")]
-    public bool isFinalDialog = false;
+    [Tooltip("Jeśli true, dialog jest dostępny TYLKO gdy DemonLoopPhase = true (po 5 loopach)")]
+    public bool isFinalDialog = false; // ✅ Będzie ustawiane programowo z StairLoop!
 
     [Header("UI")]
-    [Tooltip("TEXT TYLKO do interakcji z NPC (Press E to talk)")]
     public TMP_Text interactionText;
 
     [Header("References")]
@@ -36,20 +35,19 @@ public class DialogActivator : MonoBehaviour
         if (player != null)
             playerMovementScript = player.GetComponent<MonoBehaviour>();
 
-        // 🔴 TWARDY BEZPIECZNIK – bez przypisanego textu nie jedziemy dalej
         if (interactionText == null)
         {
-            Debug.LogError("[DialogActivator] interactionText NIE JEST PRZYPISANY w Inspectorze!");
+            Debug.LogError("[DialogActivator] interactionText NIE JEST PRZYPISANY!");
             enabled = false;
             return;
         }
 
         interactionText.gameObject.SetActive(false);
+        Debug.Log($"[DialogActivator] {npcName} initialized | isFinalDialog={isFinalDialog}");
     }
 
     void Update()
     {
-        // --- jeśli dialog trwa → absolutnie nic nie rób
         if (isTalking)
         {
             HideInteractionText();
@@ -58,9 +56,20 @@ public class DialogActivator : MonoBehaviour
 
         if (!playerCamera) return;
 
-        // --- jeśli to normalny dialog, a demon jest w finalnej fazie → nie aktywujemy
-        if (!isFinalDialog && GameState.DemonLoopPhase)
+        // ✅ NOWA LOGIKA: dialog zablokowany TYLKO jeśli:
+        // - To finalny dialog ALE DemonLoopPhase = false (jeszcze nie respawnowany)
+        // - To zwykły dialog ALE DemonLoopPhase = true (faza demona aktywna)
+        if (isFinalDialog && !GameState.DemonLoopPhase)
         {
+            // Czekamy na respawnowanie demona
+            HideInteractionText();
+            canTalk = false;
+            return;
+        }
+
+        if (!isFinalDialog && GameState.DemonLoopPhase && !GameState.ReadyForFinalChase)
+        {
+            // Zwykłe NPC zablokowane podczas fazy demona (ale nie po dialogu)
             HideInteractionText();
             canTalk = false;
             return;
@@ -71,13 +80,6 @@ public class DialogActivator : MonoBehaviour
         if (canTalk && Input.GetKeyDown(KeyCode.E) && !IsEnemyChasing())
         {
             StartConversation();
-        }
-
-        // Debug / awaryjne odblokowanie chase
-        if (GameState.ChaseLocked && Input.GetKeyDown(KeyCode.X))
-        {
-            GameState.ChaseLocked = false;
-            Debug.Log("Chase unlocked!");
         }
     }
 
@@ -128,9 +130,7 @@ public class DialogActivator : MonoBehaviour
 
     void StartConversation()
     {
-        // 🔥 KLUCZOWE – gasimy text NATYCHMIAST
         HideInteractionText();
-
         isTalking = true;
         GameState.IsTalking = true;
 
@@ -143,7 +143,6 @@ public class DialogActivator : MonoBehaviour
         if (dialogManager != null)
         {
             dialogManager.SetActive(true);
-
             Dialog dialog = dialogManager.GetComponent<Dialog>();
             if (dialog != null)
             {
@@ -169,12 +168,14 @@ public class DialogActivator : MonoBehaviour
 
         Debug.Log($"Rozmowa z {npcName} zakończona.");
 
-        // --- KLUCZOWA ZMIANA: ustaw tylko ReadyForFinalChase, NIE DemonLoopPhase ---
         if (isFinalDialog)
         {
-            GameState.ReadyForFinalChase = true; // ✅ NOWA FLAGA
-            GameState.DemonLoopPhase = false;    // resetujemy, by nie blokować interakcji
+            GameState.ReadyForFinalChase = true;
+            GameState.DemonLoopPhase = false;
             Debug.Log("[DialogActivator] Final dialog finished. ReadyForFinalChase = true");
         }
     }
+
+    // ✅ NOWA METODA: aktywacja finalnego dialogu PROGRAMOWO
+
 }

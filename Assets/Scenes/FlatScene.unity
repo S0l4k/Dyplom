@@ -281,7 +281,6 @@ MonoBehaviour:
   deliveryTime: 5
   playerHand: {fileID: 2039546320}
   pickupTextObject: {fileID: 1877847459}
-  orderButton: {fileID: 0}
 --- !u!1 &13934986
 GameObject:
   m_ObjectHideFlags: 0
@@ -8141,7 +8140,6 @@ MonoBehaviour:
   deliveryTime: 5
   playerHand: {fileID: 2039546320}
   pickupTextObject: {fileID: 1877847459}
-  orderButton: {fileID: 0}
 --- !u!4 &458253986 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2769490959947998726, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
@@ -10982,7 +10980,6 @@ MonoBehaviour:
   deliveryTime: 5
   playerHand: {fileID: 2039546320}
   pickupTextObject: {fileID: 1877847459}
-  orderButton: {fileID: 0}
 --- !u!1 &704958412
 GameObject:
   m_ObjectHideFlags: 0
@@ -16131,6 +16128,7 @@ MonoBehaviour:
   loopsToTriggerDemon: 5
   demon: {fileID: 1635950331}
   demonWaitingPoint: {fileID: 802865634}
+  demonDialog: {fileID: 1635950335}
 --- !u!65 &924490873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28917,6 +28915,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0710beb54f3e45344b6aec5dfa7c2651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1635950335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+  m_PrefabInstance: {fileID: 234497061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb769c496647fce4381b870cb26b8a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1646787370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5998764136715631841, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
@@ -34505,6 +34514,7 @@ GameObject:
   - component: {fileID: 1893179572}
   - component: {fileID: 1893179571}
   - component: {fileID: 1893179573}
+  - component: {fileID: 1893179574}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -34560,6 +34570,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   demon: {fileID: 1635950331}
+--- !u!114 &1893179574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893179570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba7d360d2500d741abb9253a0157ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1896517306 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6022639199455935822, guid: 2b6b089bab80e8b4286688410d3bc36f, type: 3}
