@@ -6,9 +6,6 @@ using FMOD.Studio;
 
 public class Dialog : MonoBehaviour
 {
-    [Header("Dialog Data")]
-    public DialogNode[] dialogNodes;
-
     [Header("UI Elements")]
     public GameObject[] answers;
     public TextMeshProUGUI dialogText;
@@ -21,9 +18,10 @@ public class Dialog : MonoBehaviour
     public float delayBetweenAnswers = 0.3f;
 
     [Header("FMOD")]
-    public EventReference npcVoiceEvent;   // ✅ NOWY SPOSÓB
+    public EventReference npcVoiceEvent;
     private EventInstance npcVoiceInstance;
 
+    private DialogNode[] currentNodes; // ✅ Zmienne node'y per dialog
     private int currentNode = 0;
     private bool optionsActive = false;
     private Coroutine typingCoroutine;
@@ -49,8 +47,10 @@ public class Dialog : MonoBehaviour
             SelectOption(1);
     }
 
-    public void StartDialog()
+    // ✅ NOWA METODA: ustaw node'y PRZED rozpoczęciem dialogu
+    public void StartDialog(DialogNode[] nodes)
     {
+        currentNodes = nodes; // ✅ Każdy NPC/drzwi ma swoje node'y
         currentNode = 0;
         ShowNode();
         dialogueBG.SetActive(true);
@@ -62,7 +62,7 @@ public class Dialog : MonoBehaviour
         dialogueBG.SetActive(true);
 
         dialogText.gameObject.SetActive(true);
-        typingCoroutine = StartCoroutine(FullDialogSequence(dialogNodes[currentNode]));
+        typingCoroutine = StartCoroutine(FullDialogSequence(currentNodes[currentNode]));
     }
 
     IEnumerator FullDialogSequence(DialogNode node)
@@ -70,20 +70,16 @@ public class Dialog : MonoBehaviour
         isTyping = true;
         skipTyping = false;
 
-        // 🔊 START "UNDERTALE VOICE"
         npcVoiceInstance = RuntimeManager.CreateInstance(npcVoiceEvent);
         npcVoiceInstance.start();
 
-        // NPC line
         yield return StartCoroutine(TypeTextWithMarker(dialogText, node.npcLine, npcMarkerColor));
 
-        // 🔇 STOP VOICE
         npcVoiceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         npcVoiceInstance.release();
 
         yield return new WaitForSeconds(0.4f);
 
-        // Player answers
         for (int i = 0; i < node.responses.Length && i < answers.Length; i++)
         {
             TMP_Text answerTMP = answers[i].GetComponent<TMP_Text>();
@@ -128,7 +124,7 @@ public class Dialog : MonoBehaviour
     {
         if (!optionsActive) return;
 
-        DialogNode node = dialogNodes[currentNode];
+        DialogNode node = currentNodes[currentNode];
 
         if (node.responseEvents != null &&
             optionIndex < node.responseEvents.Length &&

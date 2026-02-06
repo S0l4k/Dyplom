@@ -8,8 +8,11 @@ public class DialogActivator : MonoBehaviour
     public string npcName = "NPC";
 
     [Header("Dialog Settings")]
-    [Tooltip("Jeśli true, dialog jest dostępny TYLKO gdy DemonLoopPhase = true (po 5 loopach)")]
-    public bool isFinalDialog = false; // ✅ Będzie ustawiane programowo z StairLoop!
+    [Tooltip("Jeśli true, dialog dostępny TYLKO gdy DemonLoopPhase = true (po 5 loopach)")]
+    public bool isFinalDialog = false;
+
+    [Header("Dialog Content")] // ✅ NOWE: własne node'y dla KAŻDEGO obiektu
+    public DialogNode[] dialogNodes; // ✅ Demon ma swoje, drzwi mają swoje
 
     [Header("UI")]
     public TMP_Text interactionText;
@@ -21,7 +24,6 @@ public class DialogActivator : MonoBehaviour
     private Camera playerCamera;
     private PlayerCam playerCamScript;
     private MonoBehaviour playerMovementScript;
-
     private bool canTalk = false;
     private bool isTalking = false;
 
@@ -56,12 +58,8 @@ public class DialogActivator : MonoBehaviour
 
         if (!playerCamera) return;
 
-        // ✅ NOWA LOGIKA: dialog zablokowany TYLKO jeśli:
-        // - To finalny dialog ALE DemonLoopPhase = false (jeszcze nie respawnowany)
-        // - To zwykły dialog ALE DemonLoopPhase = true (faza demona aktywna)
         if (isFinalDialog && !GameState.DemonLoopPhase)
         {
-            // Czekamy na respawnowanie demona
             HideInteractionText();
             canTalk = false;
             return;
@@ -69,7 +67,6 @@ public class DialogActivator : MonoBehaviour
 
         if (!isFinalDialog && GameState.DemonLoopPhase && !GameState.ReadyForFinalChase)
         {
-            // Zwykłe NPC zablokowane podczas fazy demona (ale nie po dialogu)
             HideInteractionText();
             canTalk = false;
             return;
@@ -146,7 +143,8 @@ public class DialogActivator : MonoBehaviour
             Dialog dialog = dialogManager.GetComponent<Dialog>();
             if (dialog != null)
             {
-                dialog.StartDialog();
+                // ✅ KLUCZ: przekazujemy WŁASNE node'y tego obiektu
+                dialog.StartDialog(dialogNodes);
                 StartCoroutine(WaitForDialogEnd(dialog));
             }
         }
@@ -175,7 +173,4 @@ public class DialogActivator : MonoBehaviour
             Debug.Log("[DialogActivator] Final dialog finished. ReadyForFinalChase = true");
         }
     }
-
-    // ✅ NOWA METODA: aktywacja finalnego dialogu PROGRAMOWO
-
 }
