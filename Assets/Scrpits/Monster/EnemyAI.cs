@@ -150,6 +150,17 @@ public class EnemyAI : MonoBehaviour
 
             return; // ✅ ZAKOŃCZ UPDATE dla FinalChase
         }
+        if (GameState.DemonInStoryMode)
+        {
+            // Wyłączamy agenta i resetujemy stany
+            if (ai != null && ai.enabled) ai.enabled = false;
+            chasing = false;
+            walking = false;
+            playerInSight = false;
+            aiAnim?.SetTrigger("idle");
+            return; // NIC WIĘCEJ NIE ROBIMY
+        }
+
 
         // ✅ PRIORYTET 2: Cooldown po respawnowaniu (blokuje detekcję i ruch)
         if (spawnInvincibilityTimer > 0f)
