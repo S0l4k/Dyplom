@@ -2,7 +2,7 @@
 using UnityEngine;
 using TMPro;
 using FMODUnity;
-using FMOD.Studio;
+using Studio = FMOD.Studio;
 
 public class Dialog : MonoBehaviour
 {
@@ -19,9 +19,9 @@ public class Dialog : MonoBehaviour
 
     [Header("FMOD")]
     public EventReference npcVoiceEvent;
-    private EventInstance npcVoiceInstance;
+    private Studio.EventInstance npcVoiceInstance;
 
-    private DialogNode[] currentNodes; // ✅ Zmienne node'y per dialog
+    private DialogNode[] currentNodes;
     private int currentNode = 0;
     private bool optionsActive = false;
     private Coroutine typingCoroutine;
@@ -43,17 +43,18 @@ public class Dialog : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SelectOption(0);
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && answers.Length > 1)
             SelectOption(1);
     }
 
-    // ✅ NOWA METODA: ustaw node'y PRZED rozpoczęciem dialogu
+    // ✅ PROSTA METODA DLA EVENTÓW 2D (BEZ POZYCJI)
     public void StartDialog(DialogNode[] nodes)
     {
-        currentNodes = nodes; // ✅ Każdy NPC/drzwi ma swoje node'y
+        currentNodes = nodes;
         currentNode = 0;
         ShowNode();
         dialogueBG.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     void ShowNode()
@@ -61,7 +62,9 @@ public class Dialog : MonoBehaviour
         HideAll();
         dialogueBG.SetActive(true);
 
-        dialogText.gameObject.SetActive(true);
+        if (dialogText != null)
+            dialogText.gameObject.SetActive(true);
+
         typingCoroutine = StartCoroutine(FullDialogSequence(currentNodes[currentNode]));
     }
 
@@ -75,22 +78,23 @@ public class Dialog : MonoBehaviour
 
         yield return StartCoroutine(TypeTextWithMarker(dialogText, node.npcLine, npcMarkerColor));
 
-        npcVoiceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        npcVoiceInstance.release();
+        if (npcVoiceInstance.isValid())
+        {
+            npcVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
+            npcVoiceInstance.release();
+        }
 
         yield return new WaitForSeconds(0.4f);
 
         for (int i = 0; i < node.responses.Length && i < answers.Length; i++)
         {
+            if (answers[i] == null) continue;
+
             TMP_Text answerTMP = answers[i].GetComponent<TMP_Text>();
+            if (answerTMP == null) continue;
+
             answers[i].SetActive(true);
-
-            yield return StartCoroutine(TypeTextWithMarker(
-                answerTMP,
-                node.responses[i],
-                playerMarkerColor
-            ));
-
+            yield return StartCoroutine(TypeTextWithMarker(answerTMP, node.responses[i], playerMarkerColor));
             yield return new WaitForSeconds(delayBetweenAnswers);
         }
 
@@ -100,9 +104,10 @@ public class Dialog : MonoBehaviour
 
     IEnumerator TypeTextWithMarker(TMP_Text textObj, string text, string markerColor)
     {
+        if (textObj == null) yield break;
+
         string openTag = $"<mark={markerColor}>";
         string closeTag = "</mark>";
-
         textObj.text = "";
 
         for (int i = 0; i < text.Length; i++)
@@ -113,16 +118,14 @@ public class Dialog : MonoBehaviour
                 yield break;
             }
 
-            string visible = text.Substring(0, i + 1);
-            textObj.text = openTag + visible + closeTag;
-
+            textObj.text = openTag + text.Substring(0, i + 1) + closeTag;
             yield return new WaitForSeconds(typeSpeed);
         }
     }
 
     void SelectOption(int optionIndex)
     {
-        if (!optionsActive) return;
+        if (!optionsActive || currentNodes == null) return;
 
         DialogNode node = currentNodes[currentNode];
 
@@ -133,8 +136,7 @@ public class Dialog : MonoBehaviour
             node.responseEvents[optionIndex].Invoke();
         }
 
-        if (node.nextNodeIndex.Length <= optionIndex ||
-            node.nextNodeIndex[optionIndex] < 0)
+        if (node.nextNodeIndex.Length <= optionIndex || node.nextNodeIndex[optionIndex] < 0)
         {
             EndDialog();
             return;
@@ -155,14 +157,30 @@ public class Dialog : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        dialogText.gameObject.SetActive(false);
+        if (dialogText != null)
+            dialogText.gameObject.SetActive(false);
 
-        foreach (var answer in answers)
-            answer.SetActive(false);
+        if (answers != null)
+        {
+            foreach (var answer in answers)
+            {
+                if (answer != null)
+                    answer.SetActive(false);
+            }
+        }
 
         optionsActive = false;
         isTyping = false;
         skipTyping = false;
         dialogueBG.SetActive(false);
+    }
+
+    void OnDestroy()
+    {
+        if (npcVoiceInstance.isValid())
+        {
+            npcVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
+            npcVoiceInstance.release();
+        }
     }
 }

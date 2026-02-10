@@ -1,30 +1,14 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.UI;
 
 public class OrderFoodButton : MonoBehaviour
 {
-    [Header("Food Settings")]
-    public GameObject foodPrefab;
-    public Transform spawnPoint;
-    public float deliveryTime = 5f;
-
-    [Header("References")]
-    public Transform playerHand;
-    public GameObject pickupTextObject;
-
     public void Order()
     {
-        // Delegujemy WSZYSTKO do menedøera ñ UI tylko wywo≥uje
-        FoodDeliveryManager.Instance.OrderFood(
-            foodPrefab,
-            spawnPoint,
-            playerHand,
-            pickupTextObject,
-            deliveryTime,
-            "Food"
-        );
+        // ‚úÖ TYLKO WYWO≈ÅANIE BEZ PARAMETR√ìW
+        FoodDeliveryManager.Instance.OrderFood();
 
-        // Opcjonalnie: krÛtki cooldown na przycisku (nie blokuj na 5s!)
+        // Opcjonalny cooldown przycisku
         GetComponent<Button>().interactable = false;
         Invoke(nameof(EnableButton), 1f);
     }

@@ -12,6 +12,6 @@
 
     // NOWA FLAGA: dialog zakończony, czekamy na ponowne wejście w loop
     public static bool ReadyForFinalChase = false;
-
+    public static bool CourierArrived = false;
     public static bool FinalChase = false;
 }

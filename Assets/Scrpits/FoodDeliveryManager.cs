@@ -1,6 +1,4 @@
-using UnityEngine;
-using System.Collections;
-using TMPro;
+﻿using UnityEngine;
 
 public class FoodDeliveryManager : MonoBehaviour
 {
@@ -15,36 +13,19 @@ public class FoodDeliveryManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // KLUCZOWE: obiekt przetrwa wy��czenie UI i zmian� scen
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void OrderFood(GameObject foodPrefab, Transform spawnPoint, Transform playerHand,
-                         GameObject pickupTextObject, float deliveryTime, string itemName = "Food")
+    public void OrderFood()
     {
-        StartCoroutine(DeliverFoodRoutine(foodPrefab, spawnPoint, playerHand, pickupTextObject, deliveryTime, itemName));
-        Debug.Log($"[FoodDelivery] Zam�wiono {itemName}, dostawa za {deliveryTime}s");
+        // ✅ ODBLOKUJ DIALOG Z KURIEREM (od razu po naciśnięciu przycisku)
+        GameState.CourierArrived = true;
+        Debug.Log("[FoodDelivery] 🚪 Kurier dostępny do rozmowy przy drzwiach");
 
-        // Quest � je�li istnieje
+        // ✅ UKOŃCZ QUEST
         if (QuestManager.Instance != null)
             QuestManager.Instance.CompleteQuest("Order Food");
-    }
 
-    private IEnumerator DeliverFoodRoutine(GameObject foodPrefab, Transform spawnPoint, Transform playerHand,
-                                          GameObject pickupTextObject, float deliveryTime, string itemName)
-    {
-        yield return new WaitForSeconds(deliveryTime);
-
-        GameObject food = Instantiate(foodPrefab, spawnPoint.position, spawnPoint.rotation);
-        ItemPickup pickup = food.GetComponent<ItemPickup>();
-
-        if (pickup != null)
-        {
-            pickup.handPosition = playerHand;
-            pickup.pickupText = pickupTextObject.GetComponent<TMP_Text>();
-            pickup.itemName = itemName;
-            pickup.stairLoop = FindObjectOfType<StairLoop>();
-        }
-
-        Debug.Log($"[FoodDelivery] Dostarczono {itemName}!");
+        // ❌ BRAK Instantiate – NIC się nie respawnowało
     }
 }

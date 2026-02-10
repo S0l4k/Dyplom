@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8280198629979112602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CourierTalking
+  m_EditorClassIdentifier: 
+  Path: event:/CourierTalking
+  Guid:
+    Data1: -1181440884
+    Data2: 1103256494
+    Data3: 1546889872
+    Data4: -1773314002
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2009
 --- !u!114 &-8186729968247458103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +109,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-7307858520635993347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Appearence
+  m_EditorClassIdentifier: 
+  Path: event:/Appearence
+  Guid:
+    Data1: 1781667066
+    Data2: 1200891505
+    Data3: -2066682187
+    Data4: 1830001668
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &-7168797545228078532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,10 +205,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639053184051093554
+  lastModified: 639063425373363069
   FileSizes:
   - Name: Desktop
-    Value: 1634
+    Value: 1864
   Exists: 1
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
@@ -243,13 +297,18 @@ MonoBehaviour:
   - {fileID: 5162312354890099459}
   - {fileID: -4488325410982784511}
   - {fileID: 6809530900629643176}
+  - {fileID: 4379040717193178726}
+  - {fileID: -7307858520635993347}
+  - {fileID: 8869912954285218580}
+  - {fileID: 9082469593624663522}
+  - {fileID: -8280198629979112602}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639053184051093554
+  cacheTime: 639063425373363069
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -285,6 +344,16 @@ MonoBehaviour:
     index: 15
   - key: event:/MenuAmbient
     index: 16
+  - key: event:/StaircaseScream
+    index: 17
+  - key: event:/Appearence
+    index: 18
+  - key: event:/StomachGrowl
+    index: 19
+  - key: event:/vomit
+    index: 20
+  - key: event:/CourierTalking
+    index: 21
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,6 +488,33 @@ MonoBehaviour:
   - Floor
   - Stone
   Exists: 1
+--- !u!114 &4379040717193178726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/StaircaseScream
+  m_EditorClassIdentifier: 
+  Path: event:/StaircaseScream
+  Guid:
+    Data1: -691969564
+    Data2: 1196959419
+    Data3: 935845809
+    Data4: -525305113
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4214
 --- !u!114 &4683743149096448141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,10 +638,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639053184051083589
+  lastModified: 639063425373353105
   FileSizes:
   - Name: Desktop
-    Value: 5275328
+    Value: 5465408
   Exists: 1
 --- !u!114 &7399275378512865689
 MonoBehaviour:
@@ -596,6 +692,60 @@ MonoBehaviour:
   - {fileID: 6888540770293749724}
   IsStream: 0
   Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8869912954285218580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/StomachGrowl
+  m_EditorClassIdentifier: 
+  Path: event:/StomachGrowl
+  Guid:
+    Data1: 919918110
+    Data2: 1099303982
+    Data3: -1221797756
+    Data4: -49033380
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &9082469593624663522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/vomit
+  m_EditorClassIdentifier: 
+  Path: event:/vomit
+  Guid:
+    Data1: 1925617564
+    Data2: 1135482072
+    Data3: -1873888128
+    Data4: 1226295355
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1

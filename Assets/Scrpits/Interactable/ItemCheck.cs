@@ -2,25 +2,21 @@
 using TMPro;
 using System.Collections;
 using FMODUnity;
-using FMOD.Studio;
+using Studio = FMOD.Studio;
 
 public class ItemCheck : MonoBehaviour
 {
     [Header("Check Settings")]
     public string itemName = "Object";
-    public string playerThought = "You examine the object closely..."; // Myśl gracza
+    public string playerThought = "You examine the object closely...";
 
-    [Header("Demon Response")]
-    public string demonResponse = ""; // Tekst demona (pozostaw pusty aby nie wyświetlać)
-    public EventReference demonVoiceEvent; // Dźwięk głosu demona
+    [Header("Demon Response (opcjonalnie)")]
+    public string demonResponse = "";
+    public EventReference demonVoiceEvent;
 
-    [Header("UI Elements")]
-    public TMP_Text interactionText;      // Tekst "Press E to check..."
-    public GameObject thoughtBubble;      // Rodzic dla obu tekstów
-
-    [Header("Text Components")]
-    public TMP_Text playerThoughtText;    // Szara, subtelna czcionka
-    public TMP_Text demonResponseText;    // Czerwona, demonicznna czcionka
+    [Header("UI")]
+    public TMP_Text interactionText;   // "Press E to check..."
+    public TMP_Text playerThoughtText; // pojedynczy tekst na Canvasie
 
     [Header("Timing")]
     [SerializeField] private float typeSpeed = 0.07f;
@@ -35,8 +31,8 @@ public class ItemCheck : MonoBehaviour
     private Camera playerCamera;
     private bool canInteract = false;
     private bool isChecking = false;
-    private EventInstance demonVoiceInstance;
-    private Color playerOriginalColor = Color.white; // Zapamiętaj oryginalny kolor
+    private Studio.EventInstance demonVoiceInstance;
+    private Color playerOriginalColor = Color.white;
 
     void Start()
     {
@@ -45,19 +41,15 @@ public class ItemCheck : MonoBehaviour
         if (interactionText != null)
             interactionText.gameObject.SetActive(false);
 
-        if (thoughtBubble != null)
-            thoughtBubble.SetActive(false);
-
-        // Zapamiętaj oryginalny kolor tekstu gracza
         if (playerThoughtText != null)
+        {
+            playerThoughtText.gameObject.SetActive(false);
             playerOriginalColor = playerThoughtText.color;
-
-        // Fallback – jeśli nie przypisano oddzielnych tekstów
-        if (playerThoughtText == null && thoughtBubble != null)
-            playerThoughtText = thoughtBubble.GetComponentInChildren<TMP_Text>();
-
-        if (demonResponseText == null)
-            demonResponseText = playerThoughtText;
+        }
+        else
+        {
+            Debug.LogError($"[ItemCheck] playerThoughtText NIE JEST PRZYPISANY na obiekcie {name}!", this);
+        }
     }
 
     void Update()
@@ -74,30 +66,38 @@ public class ItemCheck : MonoBehaviour
 
     void CheckForInteraction()
     {
-        if (!playerCamera || interactionText == null)
-            return;
+        if (!playerCamera || interactionText == null) return;
+
+        bool wasInteracting = canInteract;
+        canInteract = false;
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 3f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 3f) && hit.collider.gameObject == gameObject)
         {
-            if (hit.collider.gameObject == gameObject)
-            {
-                ShowInteractionText();
-                canInteract = true;
-                return;
-            }
+            canInteract = true;
         }
 
-        HideInteractionText();
-        canInteract = false;
+        // ✅ OPTYMALIZACJA: aktualizuj UI tylko przy zmianie stanu (nie co klatkę!)
+        if (canInteract != wasInteracting)
+        {
+            if (canInteract)
+            {
+                ShowInteractionText();
+            }
+            else
+            {
+                HideInteractionText();
+            }
+        }
     }
 
     void ShowInteractionText()
     {
         interactionText.gameObject.SetActive(true);
-        interactionText.text = $"Press E to check {itemName}";
+        string newText = $"Press E to check {itemName}";
+        // ✅ OPTYMALIZACJA: nie ustawiaj tekstu jeśli już jest poprawny
+        if (interactionText.text != newText)
+            interactionText.text = newText;
     }
 
     void HideInteractionText()
@@ -110,96 +110,76 @@ public class ItemCheck : MonoBehaviour
         isChecking = true;
         HideInteractionText();
 
-        // ✅ KLUCZOWA NAPRAWA: Zresetuj cały stan UI przed użyciem
-        ResetUITexts();
+        Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
 
-        if (thoughtBubble != null)
-            thoughtBubble.SetActive(true);
+        // ✅ KLUCZOWE: aktywuj tekst MYŚLI przed użyciem
+        if (playerThoughtText != null)
+        {
+            playerThoughtText.gameObject.SetActive(true); // ✅ MUSI BYĆ AKTYWNY!
+            playerThoughtText.color = playerOriginalColor;
+            playerThoughtText.text = "";
+            Debug.Log($"[ItemCheck] playerThoughtText AKTYWNY, treść: '{playerThought}'");
+        }
         else
         {
-            Debug.LogError("[ItemCheck] thoughtBubble is not assigned!");
+            Debug.LogError("[ItemCheck] playerThoughtText jest NULL podczas CheckItem!");
             isChecking = false;
             yield break;
         }
 
         // === ETAP 1: Myśl gracza ===
-        if (playerThoughtText != null)
-        {
-            playerThoughtText.gameObject.SetActive(true);
-            yield return StartCoroutine(TypeTextWithMarker(
-                playerThoughtText,
-                playerThought,
-                playerMarkerColor
-            ));
+        yield return StartCoroutine(TypeTextWithMarker(
+            playerThoughtText,
+            playerThought,
+            playerMarkerColor
+        ));
 
-            yield return new WaitForSeconds(playerThoughtStayTime);
+        yield return new WaitForSeconds(playerThoughtStayTime);
 
-            yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
-        }
+        yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
 
         yield return new WaitForSeconds(delayBeforeDemon);
 
-        // === ETAP 2: Odpowiedź demona ===
-        if (!string.IsNullOrWhiteSpace(demonResponse) && demonResponseText != null)
+        // === ETAP 2: Odpowiedź demona (opcjonalnie) ===
+        if (!string.IsNullOrWhiteSpace(demonResponse))
         {
-            // ✅ Zresetuj tekst demona przed użyciem
-            demonResponseText.gameObject.SetActive(true);
-            demonResponseText.color = Color.white; // Reset koloru
+            playerThoughtText.gameObject.SetActive(true);
+            playerThoughtText.color = Color.white;
+            playerThoughtText.text = "";
 
-            demonVoiceInstance = RuntimeManager.CreateInstance(demonVoiceEvent);
-            demonVoiceInstance.start();
+            if (!demonVoiceEvent.IsNull)
+            {
+                demonVoiceInstance = RuntimeManager.CreateInstance(demonVoiceEvent);
+                demonVoiceInstance.start();
+            }
 
             yield return StartCoroutine(TypeTextWithMarker(
-                demonResponseText,
+                playerThoughtText,
                 demonResponse,
                 demonMarkerColor
             ));
 
-            demonVoiceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            demonVoiceInstance.release();
+            if (demonVoiceInstance.isValid())
+            {
+                demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
+                demonVoiceInstance.release();
+            }
+
+            yield return new WaitForSeconds(playerThoughtStayTime);
+            yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
         }
 
-        yield return new WaitForSeconds(playerThoughtStayTime);
+        // ✅ QUEST: ukończ po sprawdzeniu talerza
+        if (itemName == "Plate" && QuestManager.Instance != null)
+        {
+            QuestManager.Instance.CompleteQuest("Check your fridge");
+            Debug.Log("[Narrative] ✅ Quest completed: Check your fridge");
 
-        // ✅ Wyczyść UI po zakończeniu
-        CleanupUITexts();
-
-        thoughtBubble.SetActive(false);
+            // 🔥 NOWOŚĆ: wywołaj demona obok lodówki
+            GameNarrativeManager.Instance?.TriggerFridgeDemon();
+        }
         isChecking = false;
-    }
-
-    // ✅ NOWA METODA: Resetuje stan UI przed każdą interakcją
-    void ResetUITexts()
-    {
-        if (playerThoughtText != null)
-        {
-            playerThoughtText.gameObject.SetActive(true);
-            playerThoughtText.color = playerOriginalColor; // Przywróć oryginalny kolor
-            playerThoughtText.text = "";
-        }
-
-        if (demonResponseText != null && demonResponseText != playerThoughtText)
-        {
-            demonResponseText.gameObject.SetActive(false); // Demon zaczyna ukryty
-            demonResponseText.color = Color.white;
-            demonResponseText.text = "";
-        }
-    }
-
-    // ✅ NOWA METODA: Czyści UI po zakończeniu
-    void CleanupUITexts()
-    {
-        if (playerThoughtText != null)
-        {
-            playerThoughtText.text = "";
-            playerThoughtText.gameObject.SetActive(false);
-        }
-
-        if (demonResponseText != null && demonResponseText != playerThoughtText)
-        {
-            demonResponseText.text = "";
-            demonResponseText.gameObject.SetActive(false);
-        }
+        Debug.Log($"[ItemCheck] Interakcja z {itemName} zakończona");
     }
 
     IEnumerator TypeTextWithMarker(TMP_Text textObj, string text, string markerColor)
@@ -212,8 +192,7 @@ public class ItemCheck : MonoBehaviour
 
         for (int i = 0; i < text.Length; i++)
         {
-            string visible = text.Substring(0, i + 1);
-            textObj.text = openTag + visible + closeTag;
+            textObj.text = openTag + text.Substring(0, i + 1) + closeTag;
             yield return new WaitForSeconds(typeSpeed);
         }
     }
@@ -229,20 +208,19 @@ public class ItemCheck : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-            textObj.color = Color.Lerp(originalColor, targetColor, t);
+            textObj.color = Color.Lerp(originalColor, targetColor, elapsed / duration);
             yield return null;
         }
 
         textObj.color = targetColor;
-        textObj.gameObject.SetActive(false); // Dezaktywuj PO zaniknięciu
+        textObj.gameObject.SetActive(false);
     }
 
     void OnDestroy()
     {
         if (demonVoiceInstance.isValid())
         {
-            demonVoiceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
             demonVoiceInstance.release();
         }
     }

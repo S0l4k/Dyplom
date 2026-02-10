@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FMODUnity; // ✅ FMOD
 
 [System.Serializable]
 public class RoomPresenceData
@@ -20,7 +21,10 @@ public class DemonRoomPresence : MonoBehaviour
     public Camera mainCamera;
 
     [Header("Appearance Rules")]
-    [Range(0f, 1f)] public float appearanceChance = 0.35f; // 35% szans = raz na ~3 wejścia
+    [Range(0f, 1f)] public float appearanceChance = 0.35f;
+
+    [Header("Audio (FMOD)")]
+    public EventReference appearSound;   // przypisz event np. "event:/demon/appear"
 
     [Header("Effects")]
     [Range(0.05f, 0.3f)] public float appearDelay = 0.1f;
@@ -44,7 +48,7 @@ public class DemonRoomPresence : MonoBehaviour
     {
         if (currentRoomTag == roomTag || isBusy) return;
 
-        // ✅ RZUTUJ KOŚCIĄ – czy demon się pojawi? (35% = raz na ~3 wejścia)
+        // ✅ RZUTUJ KOŚCIĄ
         if (Random.value > appearanceChance)
         {
             Debug.Log($"[Demon] 🎲 Skipped appearance in {roomTag} (roll: {Random.value:F2})");
@@ -61,11 +65,46 @@ public class DemonRoomPresence : MonoBehaviour
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
-        // ✅ SCREEN SHAKE (jak było wcześniej – przy KAŻDYM pojawieniu)
+        // ✅ DŹWIĘK POJAWIENIA SIĘ (3D, losowość w FMOD Multi Sound)
+        if (!appearSound.IsNull)
+        {
+            RuntimeManager.PlayOneShot(appearSound, transform.position);
+        }
+
+        // ✅ SCREEN SHAKE (jak było wcześniej)
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration, shakeAmount));
 
-        // ✅ UKRYJ NA CHWILĘ
+        SetVisibility(false);
+        StartCoroutine(ShowAfterDelay(data, roomTag));
+    }
+    public void ForceAppear(string roomTag)
+    {
+        if (isBusy) return;
+
+        var data = roomPresences.FirstOrDefault(r => r.roomTag == roomTag);
+        if (data == null)
+        {
+            Debug.LogWarning($"[Demon] Brak danych dla roomTag: {roomTag}");
+            return;
+        }
+
+        Debug.Log($"[Demon] 👹 WYMUSZONE pojawienie się w: {roomTag}");
+        isBusy = true;
+
+        // 📌 TELEPORT
+        transform.position = data.spawnPoint.position;
+        transform.rotation = data.spawnPoint.rotation;
+
+        // 🔊 DŹWIĘK
+        if (!appearSound.IsNull)
+            RuntimeManager.PlayOneShot(appearSound, transform.position);
+
+        // 📷 SHAKE
+        if (mainCamera != null)
+            StartCoroutine(ShakeCamera(shakeDuration, shakeAmount));
+
+        // 👁️ POKAŻ PO OPÓŹNIENIU
         SetVisibility(false);
         StartCoroutine(ShowAfterDelay(data, roomTag));
     }
@@ -103,7 +142,9 @@ public class DemonRoomPresence : MonoBehaviour
         Debug.Log($"[Demon] ⬅️ Exiting: {currentRoomTag}");
         isBusy = true;
 
-        // ✅ SCREEN SHAKE przy znikaniu (jak było wcześniej)
+
+
+        // ✅ SCREEN SHAKE (jak było wcześniej)
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration * 0.6f, shakeAmount * 0.7f));
 
