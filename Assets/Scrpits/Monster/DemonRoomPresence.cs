@@ -1,100 +1,152 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+using System.Linq;
 
 [System.Serializable]
 public class RoomPresenceData
 {
-    public string roomTag;          // np. "Kitchen", "LivingRoom_TV"
-    public Transform spawnPoint;    // pozycja + rotacja demona
-    public string animationState;   // np. "sit_counter", "lie_bed" (trigger w Animatorze)
-    public DialogNode[] dialogNodes; // dialog specyficzny dla pokoju
+    public string roomTag;
+    public Transform spawnPoint;
+    public string animationTrigger = "idle";
+    public DialogNode[] dialogNodes;
 }
 
 public class DemonRoomPresence : MonoBehaviour
 {
-    public List<RoomPresenceData> roomPresences;
-    public EnemyAI demonAI;
+    public List<RoomPresenceData> roomPresences = new List<RoomPresenceData>();
     public DialogActivator dialogActivator;
     public Animator animator;
-    public float appearDuration = 0.3f; // płynne pojawianie
+    public Camera mainCamera;
 
-    private RoomPresenceData currentRoom;
-    private Coroutine activeRoutine;
+    [Header("Appearance Rules")]
+    [Range(0f, 1f)] public float appearanceChance = 0.35f; // 35% szans = raz na ~3 wejścia
+
+    [Header("Effects")]
+    [Range(0.05f, 0.3f)] public float appearDelay = 0.1f;
+    [Range(0.1f, 0.4f)] public float shakeDuration = 0.25f;
+    [Range(0.05f, 0.2f)] public float shakeAmount = 0.1f;
+
+    private SkinnedMeshRenderer[] renderers;
+    private string currentRoomTag = "";
+    private bool isBusy = false;
 
     private void Start()
     {
-        gameObject.SetActive(false); // demon startuje NIEWIDOCZNY
+        renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        SetVisibility(false);
+
+        if (mainCamera == null)
+            mainCamera = Camera.main;
     }
 
-    // Wywoływane przez RoomTrigger gdy gracz wejdzie do pokoju
     public void EnterRoom(string roomTag)
     {
-        if (activeRoutine != null) StopCoroutine(activeRoutine);
+        if (currentRoomTag == roomTag || isBusy) return;
 
-        var data = roomPresences.Find(r => r.roomTag == roomTag);
+        // ✅ RZUTUJ KOŚCIĄ – czy demon się pojawi? (35% = raz na ~3 wejścia)
+        if (Random.value > appearanceChance)
+        {
+            Debug.Log($"[Demon] 🎲 Skipped appearance in {roomTag} (roll: {Random.value:F2})");
+            return;
+        }
+
+        var data = roomPresences.FirstOrDefault(r => r.roomTag == roomTag);
         if (data == null) return;
 
-        currentRoom = data;
-        activeRoutine = StartCoroutine(AppearInRoom(data));
-    }
+        Debug.Log($"[Demon] 👻 APPEARING in: {roomTag}");
+        isBusy = true;
 
-    // Wywoływane gdy gracz opuści pokój
-    public void ExitRoom()
-    {
-        if (activeRoutine != null) StopCoroutine(activeRoutine);
-        gameObject.SetActive(false);
-        currentRoom = null;
-    }
-
-    private IEnumerator AppearInRoom(RoomPresenceData data)
-    {
-        // 1. Teleport na pozycję (bez kolizji)
+        // ✅ TELEPORT (TYLKO RAZ!)
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
-        // 2. Wyłącz kolizje na chwilę pojawienia
-        var colliders = GetComponentsInChildren<Collider>();
-        foreach (var col in colliders) col.enabled = false;
+        // ✅ SCREEN SHAKE (jak było wcześniej – przy KAŻDYM pojawieniu)
+        if (mainCamera != null)
+            StartCoroutine(ShakeCamera(shakeDuration, shakeAmount));
 
-        // 3. Aktywuj demona
-        gameObject.SetActive(true);
+        // ✅ UKRYJ NA CHWILĘ
+        SetVisibility(false);
+        StartCoroutine(ShowAfterDelay(data, roomTag));
+    }
 
-        // 4. Odtwórz animację aktywności
-        if (!string.IsNullOrEmpty(data.animationState) && animator != null)
+    private IEnumerator ShowAfterDelay(RoomPresenceData data, string roomTag)
+    {
+        yield return new WaitForSeconds(appearDelay);
+
+        SetVisibility(true);
+
+        // ✅ ANIMACJA (twoja sprawdzona sekwencja)
+        if (animator != null)
         {
-            animator.SetTrigger(data.animationState);
-        }
-        else
-        {
-            animator?.SetTrigger("idle");
+            animator.Rebind();
+            animator.Update(0f);
+            yield return null;
+            animator.SetTrigger(data.animationTrigger);
         }
 
-        // 5. Włącz kolizje po chwili
-        yield return new WaitForSeconds(0.1f);
-        foreach (var col in colliders) col.enabled = true;
-
-        // 6. Ustaw dialog
-        if (dialogActivator != null)
+        // ✅ DIALOG
+        if (dialogActivator != null && data.dialogNodes != null)
         {
             dialogActivator.dialogNodes = data.dialogNodes;
             dialogActivator.enabled = true;
         }
+
+        currentRoomTag = roomTag;
+        isBusy = false;
     }
 
-    // ✅ PRZEŁĄCZ W TRYB PATROLOWANIA (wywołaj z eventu fabularnego)
-    public void SwitchToPatrolMode()
+    public void ExitRoom()
     {
-        ExitRoom();
-        GameState.DemonInStoryMode = false; // odblokowuje EnemyAI
+        if (string.IsNullOrEmpty(currentRoomTag) || isBusy) return;
 
-        // Opcjonalnie: przenieś demona na punkt startowy patrolu
-        if (demonAI != null && demonAI.destinations.Count > 0)
+        Debug.Log($"[Demon] ⬅️ Exiting: {currentRoomTag}");
+        isBusy = true;
+
+        // ✅ SCREEN SHAKE przy znikaniu (jak było wcześniej)
+        if (mainCamera != null)
+            StartCoroutine(ShakeCamera(shakeDuration * 0.6f, shakeAmount * 0.7f));
+
+        SetVisibility(false);
+        currentRoomTag = "";
+        isBusy = false;
+
+        if (dialogActivator != null)
+            dialogActivator.enabled = false;
+    }
+
+    private IEnumerator ShakeCamera(float duration, float amount)
+    {
+        if (mainCamera == null) yield break;
+
+        Transform camTransform = mainCamera.transform;
+        Vector3 originalPos = camTransform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            transform.position = demonAI.destinations[0].position;
-            demonAI.ai.enabled = true;
-            demonAI.walking = true;
+            float t = elapsed / duration;
+            float shakeStrength = Mathf.Lerp(amount, 0f, t * t);
+
+            camTransform.localPosition = originalPos +
+                new Vector3(
+                    Random.Range(-1f, 1f) * shakeStrength,
+                    Random.Range(-1f, 1f) * shakeStrength,
+                    0
+                );
+
+            elapsed += Time.deltaTime;
+            yield return null;
         }
+
+        camTransform.localPosition = originalPos;
+    }
+
+    private void SetVisibility(bool visible)
+    {
+        foreach (var r in renderers)
+            if (r != null) r.enabled = visible;
+
+        gameObject.SetActive(true);
     }
 }

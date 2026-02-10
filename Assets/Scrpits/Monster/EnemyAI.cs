@@ -356,14 +356,21 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpscareTime);
 
+        // ✅ ZAMIAST player.gameObject.SetActive(false):
+        player.GetComponent<CharacterController>().enabled = false;
+        player.GetComponent<PlayerController>().enabled = false;
+        player.GetComponentInChildren<Camera>().enabled = false;
+
+        // ✅ UKRYJ GRACZA WIZUALNIE
+        var playerRenderers = player.GetComponentsInChildren<Renderer>();
+        foreach (var r in playerRenderers) r.enabled = false;
+
         // Reset globalnych stanów
         GameState.LoopSequenceActive = false;
         GameState.DemonLoopPhase = false;
         GameState.ReadyForFinalChase = false;
         GameState.FinalChase = false;
         GameState.ChaseLocked = true;
-
-        // ✅ ZRESETUJ FLAGĘ JUMPSCARE (na wypadek resecu levelu bez restartu gry)
         jumpscareTriggered = false;
 
         SceneManager.LoadScene(deathScene);

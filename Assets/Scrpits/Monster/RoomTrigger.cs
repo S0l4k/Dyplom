@@ -1,10 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class RoomTrigger : MonoBehaviour
 {
-    public string roomTag; // np. "Kitchen", "Bathroom"
-    private bool playerInside = false;
+    public string roomTag;
 
     private void Start()
     {
@@ -13,21 +12,17 @@ public class RoomTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !playerInside)
+        if (other.CompareTag("Player"))
         {
-            playerInside = true;
-            var demon = FindObjectOfType<DemonRoomPresence>();
-            demon?.EnterRoom(roomTag);
+            RoomManager.Instance?.PlayerEnteredRoom(roomTag);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && playerInside)
+        if (other.CompareTag("Player"))
         {
-            playerInside = false;
-            var demon = FindObjectOfType<DemonRoomPresence>();
-            demon?.ExitRoom();
+            RoomManager.Instance?.PlayerExitedRoom(roomTag);
         }
     }
 }
