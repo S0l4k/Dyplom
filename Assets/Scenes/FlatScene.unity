@@ -276,11 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef244e717881a04794f24c406d80911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodPrefab: {fileID: 3485561298619857997, guid: 6897735a287fc2840826505eee75a716, type: 3}
-  spawnPoint: {fileID: 802865634}
-  deliveryTime: 5
-  playerHand: {fileID: 2039546320}
-  pickupTextObject: {fileID: 1877847459}
 --- !u!1 &13934986
 GameObject:
   m_ObjectHideFlags: 0
@@ -5238,6 +5233,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1833239509}
     - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: npcName
+      value: Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: textColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: textColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: textColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: dialogManager
       value: 
       objectReference: {fileID: 2581996746297769206}
@@ -5250,8 +5261,68 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 746412895}
     - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: voiceEvent.Path
+      value: event:/DemonTalking
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: customVoiceEvent.Path
+      value: event:/CourierTalking
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: voiceEvent.Guid.Data1
+      value: -1120441123
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: voiceEvent.Guid.Data2
+      value: 1297095145
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: voiceEvent.Guid.Data3
+      value: 1189773750
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: voiceEvent.Guid.Data4
+      value: 880093419
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: courierVoiceEvent.Path
+      value: event:/CourierTalking
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: dialogNodes.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: customVoiceEvent.Guid.Data1
+      value: -1181440884
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: customVoiceEvent.Guid.Data2
+      value: 1103256494
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: customVoiceEvent.Guid.Data3
+      value: 1546889872
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: customVoiceEvent.Guid.Data4
+      value: -1773314002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: courierVoiceEvent.Guid.Data1
+      value: -1181440884
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: courierVoiceEvent.Guid.Data2
+      value: 1103256494
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: courierVoiceEvent.Guid.Data3
+      value: 1546889872
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: courierVoiceEvent.Guid.Data4
+      value: -1773314002
       objectReference: {fileID: 0}
     - target: {fileID: 5651651695953383612, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_Layer
@@ -7704,107 +7775,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2098026962}
   m_SourcePrefab: {fileID: 100100000, guid: b21d5e5d70676424bb2a17fbc60bb98b, type: 3}
---- !u!1 &394463744
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 394463745}
-  - component: {fileID: 394463749}
-  - component: {fileID: 394463748}
-  - component: {fileID: 394463747}
-  - component: {fileID: 394463746}
-  m_Layer: 5
-  m_Name: Fade
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &394463745
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394463744}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1624908336}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &394463746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394463744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef7b442cefb1bf44862938ef45e66b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!225 &394463747
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394463744}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &394463748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394463744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &394463749
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394463744}
-  m_CullTransparentMesh: 1
 --- !u!43 &395130071
 Mesh:
   m_ObjectHideFlags: 0
@@ -9115,16 +9085,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef244e717881a04794f24c406d80911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodPrefab: {fileID: 3485561298619857997, guid: 6897735a287fc2840826505eee75a716, type: 3}
-  spawnPoint: {fileID: 802865634}
-  deliveryTime: 5
-  playerHand: {fileID: 2039546320}
-  pickupTextObject: {fileID: 1877847459}
 --- !u!4 &458253986 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2769490959947998726, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
   m_PrefabInstance: {fileID: 5403890901863897544}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &458499814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 458499815}
+  m_Layer: 0
+  m_Name: VomitSpawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &458499815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458499814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.121, z: -1.073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1134489092}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &468665970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12264,11 +12260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef244e717881a04794f24c406d80911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodPrefab: {fileID: 3485561298619857997, guid: 6897735a287fc2840826505eee75a716, type: 3}
-  spawnPoint: {fileID: 802865634}
-  deliveryTime: 5
-  playerHand: {fileID: 2039546320}
-  pickupTextObject: {fileID: 1877847459}
 --- !u!1 &704958412
 GameObject:
   m_ObjectHideFlags: 0
@@ -17331,6 +17322,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900107269}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &905684853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 905684854}
+  - component: {fileID: 905684856}
+  - component: {fileID: 905684855}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &905684854
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905684853}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1624908336}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &905684855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905684853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &905684856
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905684853}
+  m_CullTransparentMesh: 1
 --- !u!1 &907434258
 GameObject:
   m_ObjectHideFlags: 0
@@ -22290,7 +22356,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 58ca3120f9ffe034fbfe4daf7455b9de, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 458499815}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
 --- !u!4 &1134489092 stripped
@@ -31085,6 +31154,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1624908336}
+  - component: {fileID: 1624908338}
+  - component: {fileID: 1624908337}
   m_Layer: 5
   m_Name: ScreenFader
   m_TagString: Untagged
@@ -31104,7 +31175,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 394463745}
+  - {fileID: 905684854}
   m_Father: {fileID: 600990516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -31112,6 +31183,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1624908337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624908335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef7b442cefb1bf44862938ef45e66b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &1624908338
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624908335}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1629141745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31397,7 +31492,107 @@ MonoBehaviour:
       - No
       - (eat it)
       nextNodeIndex: ffffffffffffffff
-      responseEvents: []
+      responseEvents:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1893179575}
+            m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+            m_MethodName: OnPlayerRefusesFood
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1893179575}
+            m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+            m_MethodName: OnPlayerAcceptsFood
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - roomTag: stairs_bottom
+    spawnPoint: {fileID: 802865634}
+    animationTrigger: idle
+    dialogNodes:
+    - npcLine: Don't trust him...
+      responses:
+      - Shut up
+      - Why?
+      nextNodeIndex: ffffffffffffffff
+      responseEvents:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1893179575}
+            m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+            m_MethodName: EnableCourierLine2
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1893179575}
+            m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+            m_MethodName: EnableCourierLine2
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - npcLine: Kill this bastard. It's not human. Use your gun.
+      responses:
+      - Maybe u are right (Take gun)
+      - I won't do it (Refuse demon)
+      nextNodeIndex: ffffffffffffffff
+      responseEvents:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1893179575}
+            m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+            m_MethodName: EndCourierDemonSequence
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1893179575}
+            m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+            m_MethodName: EndCourierDemonSequence
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   dialogActivator: {fileID: 1635950335}
   animator: {fileID: 1635950336}
   mainCamera: {fileID: 330585545}
@@ -37448,9 +37643,10 @@ MonoBehaviour:
   thoughtText: {fileID: 727417594}
   markerColor: '#00000080'
   fridgeQuest: Check your fridge
-  demonPresence: {fileID: 0}
-  bathroomSpawn: {fileID: 0}
-  screenFader: {fileID: 0}
+  orderFoodQuest: Order Food
+  demonPresence: {fileID: 1635950342}
+  bathroomSpawn: {fileID: 458499815}
+  screenFader: {fileID: 1624908337}
   vomitSound:
     Guid:
       Data1: 1925617564
@@ -37458,6 +37654,113 @@ MonoBehaviour:
       Data3: -1873888128
       Data4: 1226295355
     Path: event:/vomit
+  dialogUI: {fileID: 167703391998991310}
+  demonDialogActivator: {fileID: 1635950335}
+  courierDialogActivator: {fileID: 8886328069376292934}
+  stairsBottomSpawn: {fileID: 802865634}
+  demonLine1:
+    npcLine: Don't trust him...
+    responses:
+    - Shut up
+    - Why?
+    nextNodeIndex: ffffffffffffffff
+    responseEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: EnableCourierLine2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: EnableCourierLine2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  courierLine2:
+    npcLine: Excuse me? What did you say?
+    responses:
+    - I was not talking to you
+    - Nothing, nothing
+    nextNodeIndex: ffffffffffffffff
+    responseEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: EnableDemonLine3
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: EnableDemonLine3
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  demonLine3:
+    npcLine: Kill this bastard. It's not human. Use your gun.
+    responses:
+    - I won't do it (Refuse demon)
+    - Maybe u are right (Take gun)
+    nextNodeIndex: ffffffffffffffff
+    responseEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: EndCourierDemonSequence
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: EndCourierDemonSequence
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1896517306 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6022639199455935822, guid: 2b6b089bab80e8b4286688410d3bc36f, type: 3}
@@ -40792,7 +41095,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Krzysiu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a0e423b8308bddf468c11bb312dcf77b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9d77e88c69c976a4c949b4d7e557dc67, type: 2}
   m_sharedMaterial: {fileID: -8498298342632945578, guid: a0e423b8308bddf468c11bb312dcf77b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -40817,8 +41120,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 30
@@ -40858,7 +41161,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &1608226655316784587
@@ -41881,6 +42184,7 @@ GameObject:
   - component: {fileID: 7260558731448842200}
   - component: {fileID: 5787525400188046285}
   - component: {fileID: 7957974584416832017}
+  - component: {fileID: 8886328069376292934}
   m_Layer: 7
   m_Name: Cube.003
   m_TagString: Untagged
@@ -42009,6 +42313,79 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8886328069376292934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7463532258815507300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb769c496647fce4381b870cb26b8a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcName: Courier
+  isFinalDialog: 0
+  voiceEvent:
+    Guid:
+      Data1: -1181440884
+      Data2: 1103256494
+      Data3: 1546889872
+      Data4: -1773314002
+    Path: event:/CourierTalking
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  markerColor: '#FFFFFF33'
+  dialogNodes:
+  - npcLine: Hello, Food Delivery, I have your order
+    responses:
+    - Right, how much for this?
+    - Are you real?
+    nextNodeIndex: 0100000002000000
+    responseEvents: []
+  - npcLine: It will be 6$ sir
+    responses:
+    - Ok, give me a sec
+    - Did it send you here?
+    nextNodeIndex: ffffffffffffffff
+    responseEvents: []
+  - npcLine: What? What do you mean by that?
+    responses:
+    - Sorry, it was a hard day
+    - Are you a human?
+    nextNodeIndex: ffffffffffffffff
+    responseEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: OnCourierInitialDialogComplete
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1893179575}
+          m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
+          m_MethodName: OnCourierInitialDialogComplete
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  interactionText: {fileID: 746412895}
+  player: {fileID: 1833239509}
+  dialogManager: {fileID: 2581996746297769206}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

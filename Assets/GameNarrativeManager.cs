@@ -27,9 +27,20 @@ public class GameNarrativeManager : MonoBehaviour
     public ScreenFader screenFader;
     public EventReference vomitSound;
 
+    [Header("Courier-Demon Exchange")]
+    public Dialog dialogUI;                    // Canvas → DialogPanel
+    public DialogActivator demonDialogActivator;  // Demon GameObject z DialogActivator
+    public DialogActivator courierDialogActivator; // Drzwi GameObject z DialogActivator
+    public Transform stairsBottomSpawn;        // Pusty GameObject przy dole schodów
+
+    // ✅ DIALOGI ZDEFINIOWANE BEZPOŚREDNIO W SKRYPCIE (bez ScriptableObjects!)
+    [Header("Dialog Lines (konfiguruj w Inspectorze)")]
+    public DialogNode demonLine1;
+    public DialogNode courierLine2;
+    public DialogNode demonLine3;
+
     private PlayerController playerController;
     private PlayerCam playerCam;
-    private bool isVomiting = false;
 
     private void Awake()
     {
@@ -108,6 +119,7 @@ public class GameNarrativeManager : MonoBehaviour
         thoughtText.gameObject.SetActive(false);
     }
 
+    // ✅ WYWOŁYWANE Z ItemCheck PO SPRAWDZENIU TALERZA
     public void TriggerFridgeDemon()
     {
         if (demonPresence != null)
@@ -117,16 +129,124 @@ public class GameNarrativeManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[Narrative] demonPresence NIE PRZYPISANY w Inspectorze!");
+            Debug.LogError("[Narrative] demonPresence NIE PRZYPISANY!");
         }
     }
 
-    // ✅ OBA WYBORY DODAJĄ QUEST "Order Food" (po sekwencji dla "Eat it")
+    // ✅ WYWOŁYWANE Z DialogNode KURIERA (responseEvents po dialogu początkowym)
+    public void OnCourierInitialDialogComplete()
+    {
+        Debug.Log("[Narrative] 📦 Kurier: dialog początkowy zakończony – pojawia się demon");
+
+        // ✅ 1. UKRYJ KURIERA
+        if (courierDialogActivator != null)
+            courierDialogActivator.enabled = false;
+
+        // ✅ 2. USTAW DIALOG DEMONA NA LINE 1 W JEGO ROOM PRESENCE DANYCH
+        // (Twój DemonRoomPresence zrobi to automatycznie w ShowAfterDelay)
+        // ✅ 3. POJAW DEMON PRZY SCHODACH – użyje dialogNodes z room presence "stairs_bottom"
+        if (demonPresence != null)
+        {
+            demonPresence.ForceAppear("stairs_bottom");
+        }
+        else
+        {
+            Debug.LogError("[Narrative] demonPresence nie przypisany!");
+        }
+    }
+
+    // ✅ WYWOŁYWANE Z DemonLine1 → response "Why?"
+    public void EnableCourierLine2()
+    {
+        Debug.Log("[Narrative] 👹 Demon: gracz zapytał 'why?' – kurier odpowiada");
+
+        // ✅ 1. UKRYJ DEMONA (ale fizycznie zostaje przy schodach)
+        if (demonDialogActivator != null)
+            demonDialogActivator.enabled = false;
+
+        // ✅ 2. USTAW DIALOG KURIERA NA LINE 2 I WŁĄCZ GO
+        if (courierDialogActivator != null)
+        {
+            courierDialogActivator.dialogNodes = new DialogNode[] { courierLine2 };
+            courierDialogActivator.enabled = true;
+        }
+    }
+
+    // ✅ WYWOŁYWANE Z CourierLine2 → obie odpowiedzi
+    public void EnableDemonLine3()
+    {
+        Debug.Log("[Narrative] 📦 Kurier: odpowiedział – demon mówi ostatnią linię");
+
+        // ✅ 1. UKRYJ KURIERA
+        if (courierDialogActivator != null)
+            courierDialogActivator.enabled = false;
+
+        // ✅ 2. USTAW DIALOG DEMONA NA LINE 3 I WŁĄCZ GO (demon jest już przy schodach!)
+        if (demonDialogActivator != null)
+        {
+            demonDialogActivator.dialogNodes = new DialogNode[] { demonLine3 };
+            demonDialogActivator.enabled = true;
+        }
+    }
+
+    // ✅ WYWOŁYWANE Z DemonLine1 ("Shut up") LUB DemonLine3 (obie odpowiedzi)
+    public void EndCourierDemonSequence()
+    {
+        Debug.Log("[Narrative] 🔚 Sekwencja dialogowa demon↔kurier zakończona");
+
+        // ✅ 1. UKRYJ OBA DIALOGI
+        if (demonDialogActivator != null)
+            demonDialogActivator.enabled = false;
+
+        if (courierDialogActivator != null)
+            courierDialogActivator.enabled = false;
+
+        // ✅ 2. UKRYJ DEMONA WIZUALNIE
+        if (demonPresence != null)
+        {
+            demonPresence.ExitRoom();
+        }
+        else
+        {
+            EnemyAI demon = FindObjectOfType<EnemyAI>();
+            if (demon != null)
+            {
+                foreach (var r in demon.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                    r.enabled = false;
+            }
+        }
+
+        // ✅ 3. UKRYJ UI DIALOGU
+        if (dialogUI != null)
+            dialogUI.gameObject.SetActive(false);
+    }
+
+    // ✅ WYWOŁYWANE Z DialogActivator PO WYBORZE "Eat it"
+    public void OnPlayerAcceptsFood()
+    {
+        Debug.Log("[Narrative] Gracz zgadza się zjeść – rozpoczynam sekwencję rzygania");
+
+        if (playerController == null || playerCam == null)
+        {
+            Debug.LogError("[Narrative] Brak PlayerController lub PlayerCam!");
+            return;
+        }
+
+        // ✅ BLOKUJ KONTROLĘ
+        playerController.enabled = false;
+        playerCam.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        StartCoroutine(VomitSequence());
+    }
+
+    // ✅ WYWOŁYWANE Z DialogActivator PO WYBORZE "No"
     public void OnPlayerRefusesFood()
     {
         Debug.Log("[Narrative] Gracz odmówił jedzenia");
 
-        // 📜 DODAJ QUEST (bez blokowania UI)
+        // 📜 DODAJ QUEST (bez sekwencji rzygania)
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.AddQuest(orderFoodQuest);
@@ -134,24 +254,8 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    public void OnPlayerAcceptsFood()
-    {
-        Debug.Log("[Narrative] Gracz zgadza się zjeść – rozpoczynam sekwencję rzygania");
-
-        isVomiting = true;
-
-        // ✅ PEŁNE WYŁĄCZENIE KONTROLI
-        if (playerController != null) playerController.enabled = false;
-        if (playerCam != null) playerCam.enabled = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        StartCoroutine(VomitSequence());
-    }
-
     private IEnumerator VomitSequence()
     {
-        // ✅ WALIDACJA
         if (screenFader == null)
         {
             Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
@@ -188,7 +292,6 @@ public class GameNarrativeManager : MonoBehaviour
                 playerController.transform.rotation = targetRot;
             }
 
-            // 📷 Reset kamery
             if (playerCam != null)
                 playerCam.SyncRotationWithCamera();
         }
@@ -201,10 +304,9 @@ public class GameNarrativeManager : MonoBehaviour
         yield return new WaitForSeconds(2.2f);
 
         // ✅ FADE IN
-        yield return StartCoroutine(screenFader.FadeIn(6f));
+        yield return StartCoroutine(screenFader.FadeIn(1f));
 
         RestorePlayerControl();
-        isVomiting = false;
 
         // 📜 DODAJ QUEST PO SEKWENCJI
         if (QuestManager.Instance != null)

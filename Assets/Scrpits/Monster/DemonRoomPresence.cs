@@ -78,15 +78,20 @@ public class DemonRoomPresence : MonoBehaviour
         SetVisibility(false);
         StartCoroutine(ShowAfterDelay(data, roomTag));
     }
-    public void ForceAppear(string roomTag)
+    // ✅ ZWRACA bool czy udało się pojawić
+    public bool ForceAppear(string roomTag)
     {
-        if (isBusy) return;
+        if (isBusy)
+        {
+            Debug.LogWarning($"[Demon] ForceAppear({roomTag}) zignorowane – isBusy=true");
+            return false;
+        }
 
         var data = roomPresences.FirstOrDefault(r => r.roomTag == roomTag);
         if (data == null)
         {
-            Debug.LogWarning($"[Demon] Brak danych dla roomTag: {roomTag}");
-            return;
+            Debug.LogError($"[Demon] Brak danych dla roomTag: {roomTag} (dostępne: {string.Join(", ", roomPresences.Select(r => r.roomTag))})");
+            return false;
         }
 
         Debug.Log($"[Demon] 👹 WYMUSZONE pojawienie się w: {roomTag}");
@@ -107,6 +112,8 @@ public class DemonRoomPresence : MonoBehaviour
         // 👁️ POKAŻ PO OPÓŹNIENIU
         SetVisibility(false);
         StartCoroutine(ShowAfterDelay(data, roomTag));
+
+        return true; // ✅ sukces
     }
 
     private IEnumerator ShowAfterDelay(RoomPresenceData data, string roomTag)
