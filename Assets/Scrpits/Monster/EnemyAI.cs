@@ -429,7 +429,7 @@ public class EnemyAI : MonoBehaviour
         // ✅ KLUCZOWE: RESETUJ WSZYSTKIE STANY DEMONA PO ŚMIERCI
         GameState.DemonInStoryMode = true;          // ✅ Wróć do story mode (agent wyłączony)
         GameState.DemonRespawnedInApartment = false; // ✅ Resetuj respawn w mieszkaniu
-        GameState.DemonReadyForChase = false;        // ✅ Resetuj gotowość do chase
+        GameState.ReadyForFinalChase = false;        // ✅ Resetuj gotowość do chase
         GameState.ChaseLocked = true;                // ✅ Zablokuj chase po resecie
 
         // Reszta resetów

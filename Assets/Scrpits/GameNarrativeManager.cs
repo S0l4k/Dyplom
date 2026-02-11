@@ -87,7 +87,7 @@ public class GameNarrativeManager : MonoBehaviour
         Debug.Log("[Narrative] ➡️ Quest \"Check your fridge\" active");
     }
 
-    private IEnumerator ShowThought(string text, float speed, float stayTime)
+    public  IEnumerator ShowThought(string text, float speed, float stayTime)
     {
         if (!thoughtText)
         {

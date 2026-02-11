@@ -1,9 +1,7 @@
 ﻿public static class GameState
 {
-    public static bool DemonInStoryMode = true;   // ✅ true na starcie (blokuje ruch)
-    public static bool DemonReadyForChase = false; // ✅ NOWA FLAGA – aktywowana po "I won't do it"
-    public static bool ChaseLocked = true;         // ✅ true na starcie (blokuje chase)
-
+    public static bool DemonInStoryMode = true;
+    public static bool ChaseLocked = true;
     public static bool LoopSequenceActive = false;
     public static bool DemonLoopPhase = false;
     public static bool ReadyForFinalChase = false;
@@ -11,4 +9,9 @@
     public static bool FinalChase = false;
     public static bool IsTalking = false;
     public static bool DemonRespawnedInApartment = false;
+    
+
+    // ✅ NOWE FLAGI DLA SEKWENCJI KOŃCOWEJ
+    public static bool InteractionsLocked = false;    // ✅ Blokuje ItemCheck/ItemPickup
+    public static bool SofaSequenceActive = false;     // ✅ Sekwencja z kanapą aktywna
 }
