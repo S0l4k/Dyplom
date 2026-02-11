@@ -16,13 +16,14 @@ public class StairLoop : MonoBehaviour
     public EnemyAI demon;
     public Transform demonWaitingPoint;
     public DialogActivator demonDialog;
-
+    public GameObject entryTrigger;
     // ✅ NOWE POLE: dialog finalny zdefiniowany bezpośrednio w Inspectorze
     [Header("Final Dialog")]
     public DialogNode finalDialogNode; // ✅ Przypisz w Inspectorze!
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (!GameState.LoopSequenceActive) return;
         if (GameState.FinalChase) return;
         if (!other.CompareTag("Player")) return;
@@ -162,7 +163,7 @@ public class StairLoop : MonoBehaviour
         {
             demon.ai.Warp(navHit.position);
         }
-
+        entryTrigger.SetActive(true);
         Invoke("StartChaseAfterWarp", 0.1f);
     }
 

@@ -37,8 +37,8 @@ public class EnemyAI : MonoBehaviour
 
     public Transform player;
 
-    private Transform currentDest;
-    private int randNum;
+    public Transform currentDest;
+    public int randNum;
     private float idleTime;
     private float loseSightTime = 2f;
     public float loseSightTimer = 0f;

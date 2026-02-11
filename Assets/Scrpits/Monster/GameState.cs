@@ -10,4 +10,5 @@
     public static bool CourierArrived = false;
     public static bool FinalChase = false;
     public static bool IsTalking = false;
+    public static bool DemonRespawnedInApartment = false;
 }
