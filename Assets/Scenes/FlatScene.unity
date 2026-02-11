@@ -4648,6 +4648,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1833239510}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: chaseSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: deathScene
       value: FlatScene
       objectReference: {fileID: 0}
@@ -17773,7 +17777,7 @@ Transform:
   m_GameObject: {fileID: 924490870}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5000008, y: -0.49999925, z: -0.49999928, w: 0.5000007}
-  m_LocalPosition: {x: -0.012277219, y: -0.016793845, z: 0.063771665}
+  m_LocalPosition: {x: -0.012277219, y: -0.016793841, z: 0.009771669}
   m_LocalScale: {x: 0.005, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17798,6 +17802,13 @@ MonoBehaviour:
   demon: {fileID: 1635950331}
   demonWaitingPoint: {fileID: 802865634}
   demonDialog: {fileID: 1635950335}
+  finalDialogNode:
+    npcLine: You can't escape this hell
+    responses:
+    - Let me out
+    - Please help me
+    nextNodeIndex: ffffffffffffffff
+    responseEvents: []
 --- !u!65 &924490873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19426,7 +19437,7 @@ Transform:
   m_GameObject: {fileID: 1015157061}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5000008, y: -0.49999925, z: -0.49999928, w: 0.5000007}
-  m_LocalPosition: {x: -0.012277219, y: -0.016793843, z: 0.0077716634}
+  m_LocalPosition: {x: -0.012277219, y: -0.016793841, z: -0.04622833}
   m_LocalScale: {x: 0.005, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37658,6 +37669,22 @@ MonoBehaviour:
   demonDialogActivator: {fileID: 1635950335}
   courierDialogActivator: {fileID: 8886328069376292934}
   stairsBottomSpawn: {fileID: 802865634}
+  gunshoot:
+    Guid:
+      Data1: -696997951
+      Data2: 1267293190
+      Data3: -202976840
+      Data4: 1830343787
+    Path: event:/Gunshoot
+  staircaseScream:
+    Guid:
+      Data1: -691969564
+      Data2: 1196959419
+      Data3: 935845809
+      Data4: -525305113
+    Path: event:/StaircaseScream
+  roomTrigger: {fileID: 305370094}
+  triggers: {fileID: 163865923}
   demonLine1:
     npcLine: Don't trust him...
     responses:
@@ -37737,7 +37764,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1893179575}
           m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
-          m_MethodName: EndCourierDemonSequence
+          m_MethodName: PlayerRefuseddOffer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -37751,7 +37778,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1893179575}
           m_TargetAssemblyTypeName: GameNarrativeManager, Assembly-CSharp
-          m_MethodName: EndCourierDemonSequence
+          m_MethodName: PlayerAcceptedOffer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

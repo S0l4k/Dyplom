@@ -31,9 +31,12 @@ public class GameNarrativeManager : MonoBehaviour
     public Dialog dialogUI;                    // Canvas → DialogPanel
     public DialogActivator demonDialogActivator;  // Demon GameObject z DialogActivator
     public DialogActivator courierDialogActivator; // Drzwi GameObject z DialogActivator
-    public Transform stairsBottomSpawn;        // Pusty GameObject przy dole schodów
-
-    // ✅ DIALOGI ZDEFINIOWANE BEZPOŚREDNIO W SKRYPCIE (bez ScriptableObjects!)
+    public Transform stairsBottomSpawn;
+    public EventReference gunshoot;
+    public EventReference staircaseScream;
+    public RoomTrigger roomTrigger;
+    public GameObject triggers;
+    // ✅ DIALOGI ZDEFINIOWANE BEZPOŚREDNIO W SKRYPCIE
     [Header("Dialog Lines (konfiguruj w Inspectorze)")]
     public DialogNode demonLine1;
     public DialogNode courierLine2;
@@ -58,6 +61,7 @@ public class GameNarrativeManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         playerCam = FindObjectOfType<PlayerCam>();
         StartCoroutine(StartNarrativeSequence());
+        roomTrigger = GetComponent<RoomTrigger>();
     }
 
     private IEnumerator StartNarrativeSequence()
@@ -142,9 +146,7 @@ public class GameNarrativeManager : MonoBehaviour
         if (courierDialogActivator != null)
             courierDialogActivator.enabled = false;
 
-        // ✅ 2. USTAW DIALOG DEMONA NA LINE 1 W JEGO ROOM PRESENCE DANYCH
-        // (Twój DemonRoomPresence zrobi to automatycznie w ShowAfterDelay)
-        // ✅ 3. POJAW DEMON PRZY SCHODACH – użyje dialogNodes z room presence "stairs_bottom"
+        // ✅ 2. POJAW DEMON PRZY SCHODACH
         if (demonPresence != null)
         {
             demonPresence.ForceAppear("stairs_bottom");
@@ -160,7 +162,7 @@ public class GameNarrativeManager : MonoBehaviour
     {
         Debug.Log("[Narrative] 👹 Demon: gracz zapytał 'why?' – kurier odpowiada");
 
-        // ✅ 1. UKRYJ DEMONA (ale fizycznie zostaje przy schodach)
+        // ✅ 1. UKRYJ DEMONA
         if (demonDialogActivator != null)
             demonDialogActivator.enabled = false;
 
@@ -181,7 +183,7 @@ public class GameNarrativeManager : MonoBehaviour
         if (courierDialogActivator != null)
             courierDialogActivator.enabled = false;
 
-        // ✅ 2. USTAW DIALOG DEMONA NA LINE 3 I WŁĄCZ GO (demon jest już przy schodach!)
+        // ✅ 2. USTAW DIALOG DEMONA NA LINE 3 I WŁĄCZ GO
         if (demonDialogActivator != null)
         {
             demonDialogActivator.dialogNodes = new DialogNode[] { demonLine3 };
@@ -236,7 +238,7 @@ public class GameNarrativeManager : MonoBehaviour
         playerController.enabled = false;
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible = false;
 
         StartCoroutine(VomitSequence());
     }
@@ -266,42 +268,34 @@ public class GameNarrativeManager : MonoBehaviour
         // ✅ FADE OUT
         yield return StartCoroutine(screenFader.FadeOut(0.8f));
 
-        // ✅ TELEPORT DO ŁAZIENKI
+        // ✅ TELEPORT DO ŁAZIENKI (BEZ WYŁĄCZANIA CharacterController!)
         if (bathroomSpawn != null)
         {
             CharacterController cc = playerController.GetComponent<CharacterController>();
             Vector3 targetPos = bathroomSpawn.position;
             Quaternion targetRot = bathroomSpawn.rotation;
-
+            playerController.enabled = false;
+            playerCam.enabled = false;
             // 🔍 Szukaj podłogi
             if (Physics.Raycast(bathroomSpawn.position + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 5f, LayerMask.GetMask("Default", "Floor", "Environment")))
             {
                 targetPos = hit.point + Vector3.up * (cc ? cc.height * 0.5f : 1f);
             }
 
-            if (cc != null)
-            {
-                cc.enabled = false;
-                playerController.transform.position = targetPos;
-                playerController.transform.rotation = targetRot;
-                cc.enabled = true;
-            }
-            else
-            {
-                playerController.transform.position = targetPos;
-                playerController.transform.rotation = targetRot;
-            }
+            // ✅ BEZPIECZNY TELEPORT – NIE wyłączamy CharacterController!
+            playerController.transform.position = targetPos;
+            playerController.transform.rotation = targetRot;
 
             if (playerCam != null)
                 playerCam.SyncRotationWithCamera();
         }
 
         // 🔊 RZYGANIE
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
         if (!vomitSound.IsNull)
             RuntimeManager.PlayOneShot(vomitSound, playerController.transform.position);
 
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(6f);
 
         // ✅ FADE IN
         yield return StartCoroutine(screenFader.FadeIn(1f));
@@ -316,11 +310,90 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
+    public void PlayerAcceptedOffer()
+    {
+        // ✅ BLOKUJ KONTROLĘ
+        playerController.enabled = false;
+        playerCam.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+        StartCoroutine(KillSequence());
+
+    }
+
+    public void PlayerRefuseddOffer()
+    {
+        Debug.Log("[Narrative] 👹 Demon: gracz odmówił zabicia – demon znika");
+
+        // ✅ KLUCZOWE: ZMIANA STANU DEMONA
+        GameState.DemonInStoryMode = false;
+        GameState.ChaseLocked = true;
+        
+        // ✅ WŁĄCZ NAVMESH AGENT DLA DEMONA (dokładnie TUTAJ!)
+        EnemyAI demon = FindObjectOfType<EnemyAI>();
+        if (demon != null && demon.ai != null)
+        {
+            demon.ai.enabled = true;
+            Debug.Log("[Narrative] ✅ NavMeshAgent włączony dla demona");
+        }
+
+        // ✅ ZNIKNIĘCIE DEMONA WIZUALNIE
+        if (demonPresence != null)
+        {
+            demonPresence.ExitRoom();
+        }
+    
+
+      triggers.SetActive(false);
+
+        // ✅ KRZYK W TLE
+        if (!staircaseScream.IsNull && playerController != null)
+        {
+            RuntimeManager.PlayOneShot(staircaseScream, playerController.transform.position);
+            Debug.Log("[Narrative] 🔊 Krzyk demona w tle");
+        }
+
+        // ✅ AKTYWUJ LOOP SCHODÓW
+        GameState.LoopSequenceActive = true;
+        Debug.Log("[Narrative] 🔁 Stair loop aktywowany");
+    }
+    private IEnumerator KillSequence()
+    {
+        if (screenFader == null)
+        {
+            Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
+            RestorePlayerControl();
+            yield break;
+        }
+
+        // ✅ FADE OUT (BEZ DOTYKANIA CharacterController!)
+        yield return StartCoroutine(screenFader.FadeOut(0.8f));
+
+        // ✅ BLOKUJ KONTROLĘ (skrypt, NIE controller!)
+        playerController.enabled = false;
+        playerCam.enabled = false;
+
+        yield return new WaitForSeconds(6f);
+
+        // 🔊 WYSTRZAŁ
+        if (!gunshoot.IsNull && playerController != null)
+            RuntimeManager.PlayOneShot(gunshoot, playerController.transform.position);
+
+        yield return new WaitForSeconds(2.2f);
+
+        // ✅ FADE IN
+        yield return StartCoroutine(screenFader.FadeIn(1f));
+
+        RestorePlayerControl();
+    }
+
     private void RestorePlayerControl()
     {
         if (playerController != null) playerController.enabled = true;
         if (playerCam != null) playerCam.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
+
+        // ✅ KLUCZOWA KOLEJNOŚĆ DLA KURSORA:
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

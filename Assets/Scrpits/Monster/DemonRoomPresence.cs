@@ -190,7 +190,7 @@ public class DemonRoomPresence : MonoBehaviour
         camTransform.localPosition = originalPos;
     }
 
-    private void SetVisibility(bool visible)
+    public void SetVisibility(bool visible)
     {
         foreach (var r in renderers)
             if (r != null) r.enabled = visible;

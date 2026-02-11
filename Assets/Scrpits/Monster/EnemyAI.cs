@@ -356,14 +356,37 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpscareTime);
 
-        // ✅ ZAMIAST player.gameObject.SetActive(false):
-        player.GetComponent<CharacterController>().enabled = false;
-        player.GetComponent<PlayerController>().enabled = false;
-        player.GetComponentInChildren<Camera>().enabled = false;
+        // ✅ NULL-CHECKI – player może być null po śmierci/respawnie
+        if (player != null)
+        {
+            // ✅ Wyłącz komponenty gracza
+            CharacterController cc = player.GetComponent<CharacterController>();
+            if (cc != null)
+                cc.enabled = false;
 
-        // ✅ UKRYJ GRACZA WIZUALNIE
-        var playerRenderers = player.GetComponentsInChildren<Renderer>();
-        foreach (var r in playerRenderers) r.enabled = false;
+            PlayerController pc = player.GetComponent<PlayerController>();
+            if (pc != null)
+                pc.enabled = false;
+
+            Camera cam = player.GetComponentInChildren<Camera>();
+            if (cam != null)
+                cam.enabled = false;
+
+            // ✅ UKRYJ GRACZA WIZUALNIE
+            var playerRenderers = player.GetComponentsInChildren<Renderer>();
+            foreach (var r in playerRenderers)
+            {
+                if (r != null)
+                    r.enabled = false;
+            }
+
+            // ✅ UKRYJ CAŁY GAMEOBJECT GRACZA (dodatkowa ochrona)
+            player.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("[EnemyAI] ❌ player reference is NULL in deathRoutine!");
+        }
 
         // Reset globalnych stanów
         GameState.LoopSequenceActive = false;
@@ -373,7 +396,15 @@ public class EnemyAI : MonoBehaviour
         GameState.ChaseLocked = true;
         jumpscareTriggered = false;
 
-        SceneManager.LoadScene(deathScene);
+        // ✅ SPRAWDŹ CZY deathScene nie jest pusty
+        if (!string.IsNullOrEmpty(deathScene))
+        {
+            SceneManager.LoadScene(deathScene);
+        }
+        else
+        {
+            Debug.LogError("[EnemyAI] ❌ deathScene is empty! Cannot load death scene.");
+        }
     }
 
     // ✅ PUBLICZNA METODA DO ZEWNĘTRZNEGO USTAWIENIA COOLDOWNU (np. z StairLoop)

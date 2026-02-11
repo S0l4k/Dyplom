@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class StairLoop : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class StairLoop : MonoBehaviour
     [Header("Demon")]
     public EnemyAI demon;
     public Transform demonWaitingPoint;
-    public DialogActivator demonDialog; // ✅ NOWA REFERENCJA!
+    public DialogActivator demonDialog;
+
+    // ✅ NOWE POLE: dialog finalny zdefiniowany bezpośrednio w Inspectorze
+    [Header("Final Dialog")]
+    public DialogNode finalDialogNode; // ✅ Przypisz w Inspectorze!
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,41 +50,54 @@ public class StairLoop : MonoBehaviour
             other.transform.position = startSegment.position + offset;
         }
 
-        // Po 5 loopach: przenieś demona na dół I aktywuj finalny dialog
+        // Po 5 loopach: przenieś demona na dół
         if (loopCount >= loopsToTriggerDemon && !GameState.DemonLoopPhase)
         {
-            TriggerDemonPhase();
+            StartCoroutine(TriggerDemonPhaseSafe());
         }
     }
 
-    void TriggerDemonPhase()
+    private IEnumerator TriggerDemonPhaseSafe()
     {
         if (demon == null || demon.ai == null || demon.aiAnim == null)
         {
-            Debug.LogError("[StairLoop] Demon references not set in Inspector!");
-            return;
+            Debug.LogError("[StairLoop] Demon references not set!");
+            yield break;
         }
 
-        // ✅ WARP na NavMesh
+        Debug.Log($"[StairLoop] 📊 PRZED RESPAWNEM | gameObject.active={demon.gameObject.activeSelf}");
+
+        // ✅ AKTYWUJ DEMONA
+        demon.gameObject.SetActive(true);
+        SetVisibilityRecursive(demon.transform, true);
+
+        // ✅ ZNAJDŹ POZYCJĘ NA NAVMESH
+        Vector3 spawnPos = demonWaitingPoint.position;
         NavMeshHit navHit;
-        if (NavMesh.SamplePosition(demonWaitingPoint.position, out navHit, 2f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(demonWaitingPoint.position, out navHit, 5f, NavMesh.AllAreas))
         {
-            demon.ai.Warp(navHit.position);
-            demon.transform.rotation = demonWaitingPoint.rotation;
+            spawnPos = navHit.position;
+        }
+        else if (NavMesh.SamplePosition(demon.transform.position, out navHit, 10f, NavMesh.AllAreas))
+        {
+            spawnPos = navHit.position;
         }
         else
         {
-            Debug.LogWarning("[StairLoop] demonWaitingPoint not on NavMesh! Using fallback.");
-            demon.transform.position = demonWaitingPoint.position;
-            demon.transform.rotation = demonWaitingPoint.rotation;
-
-            if (NavMesh.SamplePosition(demon.transform.position, out navHit, 5f, NavMesh.AllAreas))
-            {
-                demon.ai.Warp(navHit.position);
-            }
+            Debug.LogError("[StairLoop] ❌ BRAK NAVMESH – sprawdź bake!");
+            yield break;
         }
 
-        // ✅ ZRESETUJ STANY ENEMY
+        // ✅ TELEPORT
+        demon.ai.updatePosition = false;
+        demon.transform.position = spawnPos;
+        demon.transform.rotation = demonWaitingPoint.rotation;
+        demon.ai.Warp(spawnPos);
+        demon.ai.updatePosition = true;
+
+        yield return null;
+
+        // ✅ ZRESETUJ STANY
         demon.ai.isStopped = true;
         demon.ai.speed = 0f;
         demon.ai.destination = demon.transform.position;
@@ -89,36 +107,72 @@ public class StairLoop : MonoBehaviour
         demon.loseSightTimer = 0f;
         demon.spawnInvincibilityTimer = demon.spawnInvincibilityTime;
 
-        // ✅ ZRESETUJ ANIMACJĘ
+        // ✅ ANIMACJA
         demon.aiAnim.ResetTrigger("walk");
         demon.aiAnim.ResetTrigger("run");
         demon.aiAnim.SetTrigger("idle");
 
-        // ✅ KLUCZOWE: AKTYWUJ FINALNY DIALOG PROGRAMOWO!
-        demonDialog.isFinalDialog= true;   
+        // ✅ KLUCZOWE: USTAW DIALOG FINALNY Z POLE finalDialogNode
+        if (demonDialog != null && finalDialogNode != null)
+        {
+            // ✅ USTAW DIALOG Z POLE StairLoop (nie z GM!)
+            demonDialog.dialogNodes = new DialogNode[] { finalDialogNode };
+            demonDialog.isFinalDialog = true; // ✅ TO JEST DIALOG FINALNY PRZED CHASEM!
+            demonDialog.enabled = true;
+            Debug.Log("[StairLoop] ✅ Dialog finalny aktywowany: \"" + finalDialogNode.npcLine + "\"");
+        }
+        else
+        {
+            Debug.LogError("[StairLoop] ❌ Brak finalDialogNode lub demonDialog!");
+        }
 
         // ✅ GLOBALNY STAN
         GameState.DemonLoopPhase = true;
+        GameState.ChaseLocked = true;
 
-        Debug.Log($"[StairLoop] Demon respawned at bottom. Final dialog mode: {(demonDialog != null ? demonDialog.isFinalDialog.ToString() : "UNKNOWN")}");
+        Debug.Log($"[StairLoop] ✅ Demon aktywny na dole – gotowy do dialogu finalnego");
+    }
+
+    // ✅ BEZPIECZNA METODA: rekurencyjne włączanie WSZYSTKICH rendererów
+    private void SetVisibilityRecursive(Transform root, bool visible)
+    {
+        SkinnedMeshRenderer[] skinned = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        MeshRenderer[] mesh = root.GetComponentsInChildren<MeshRenderer>(true);
+
+        foreach (var r in skinned)
+            if (r != null) r.enabled = visible;
+
+        foreach (var r in mesh)
+            if (r != null) r.enabled = visible;
+
+        Debug.Log($"[StairLoop] ✅ Ustawiono widoczność {visible} dla {skinned.Length} SkinnedMeshRenderer + {mesh.Length} MeshRenderer");
     }
 
     void TriggerFinalChase()
     {
         if (demon == null || demon.ai == null || demon.player == null) return;
+        DemonRoomPresence[] allPresences = FindObjectsOfType<DemonRoomPresence>();
+        foreach (var presence in allPresences)
+        {
+            presence.enabled = false;
+            Debug.Log($"[Narrative] 🔒 Wyłączono DemonRoomPresence: {presence.name}");
+        }
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(demon.transform.position, out navHit, 5f, NavMesh.AllAreas))
+        {
+            demon.ai.Warp(navHit.position);
+        }
 
+        Invoke("StartChaseAfterWarp", 0.1f);
+    }
+
+    private void StartChaseAfterWarp()
+    {
+        if (demon == null || demon.ai == null || demon.player == null) return;
         if (!demon.ai.isOnNavMesh)
         {
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(demon.transform.position, out hit, 2f, NavMesh.AllAreas))
-            {
-                demon.ai.Warp(hit.position);
-            }
-            else
-            {
-                Debug.LogError("[StairLoop] Cannot warp demon to NavMesh! Chase aborted.");
-                return;
-            }
+            Debug.LogError("[StairLoop] ❌ Chase aborted – demon not on NavMesh");
+            return;
         }
 
         demon.ai.isStopped = false;
@@ -136,6 +190,6 @@ public class StairLoop : MonoBehaviour
 
         GetComponent<Collider>().enabled = false;
 
-        Debug.Log($"[StairLoop] FINAL CHASE ACTIVATED!");
+        Debug.Log($"[StairLoop] 🔥 FINAL CHASE AKTYWOWANY!");
     }
 }

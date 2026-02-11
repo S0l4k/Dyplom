@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -23,18 +23,28 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        pausePanel.SetActive(false);
+        // ✅ NULL-CHECK przy starcie
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+        else
+            Debug.LogWarning("[PauseMenu] pausePanel is missing!");
 
-        
-        sensitivitySlider.value = playerCam.sensX;
-        UpdateSensitivityUI(sensitivitySlider.value);
-
-        sensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
+        // ✅ NULL-CHECKI dla komponentów gracza
+        if (playerCam != null && sensitivitySlider != null)
+        {
+            sensitivitySlider.value = playerCam.sensX;
+            UpdateSensitivityUI(sensitivitySlider.value);
+            sensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !computerInteract.isUsingComputer)
+        // ✅ KLUCZOWE: BLOKUJ PAUZĘ JEŚLI UI JEST ZNISZCZONE
+        if (pausePanel == null || playerController == null || playerCam == null)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Escape) && computerInteract != null && !computerInteract.isUsingComputer)
         {
             if (isPaused)
                 Resume();
@@ -45,32 +55,51 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
+        // ✅ NULL-CHECK: pausePanel może być zniszczony po przejściu sceny
+        if (pausePanel == null)
+        {
+            Debug.LogWarning("[PauseMenu] pausePanel destroyed - cannot pause");
+            return;
+        }
+
         isPaused = true;
         pausePanel.SetActive(true);
 
-        playerController.enabled = false;
-        playerCam.enabled = false;
+        // ✅ NULL-CHECKI dla komponentów gracza
+        if (playerController != null)
+            playerController.enabled = false;
+
+        if (playerCam != null)
+            playerCam.enabled = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        Time.timeScale = 0f; 
+        Time.timeScale = 0f;
     }
 
     public void Resume()
     {
-        isPaused = false;
-        pausePanel.SetActive(false);
-        settingsPanel.SetActive(false);
-        playerController.enabled = true;
-        playerCam.enabled = true;
+        // ✅ NULL-CHECKI przed przywróceniem
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        if (playerController != null)
+            playerController.enabled = true;
+
+        if (playerCam != null)
+            playerCam.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         Time.timeScale = 1f;
+        isPaused = false;
     }
-    
+
     public void Quit()
     {
         SceneManager.LoadSceneAsync("MainMenu");
@@ -78,7 +107,9 @@ public class PauseMenu : MonoBehaviour
 
     void OnSensitivityChanged(float value)
     {
-        playerCam.SetSensitivity(value);
+        if (playerCam != null)
+            playerCam.SetSensitivity(value);
+
         UpdateSensitivityUI(value);
     }
 
@@ -90,6 +121,13 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenConsole()
     {
+        // ✅ NULL-CHECKI
+        if (consolePanel == null || playerController == null || playerCam == null)
+        {
+            Debug.LogWarning("[PauseMenu] Console UI missing - cannot open console");
+            return;
+        }
+
         isPaused = true;
         consolePanel.SetActive(true);
 
@@ -101,11 +139,17 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        consolePanel.GetComponentInChildren<TMP_InputField>().ActivateInputField();
+        var inputField = consolePanel.GetComponentInChildren<TMP_InputField>();
+        if (inputField != null)
+            inputField.ActivateInputField();
     }
 
     public void CloseConsole()
     {
+        // ✅ NULL-CHECKI
+        if (consolePanel == null || playerController == null || playerCam == null)
+            return;
+
         isPaused = false;
         consolePanel.SetActive(false);
 
@@ -117,5 +161,4 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1f;
     }
-
 }

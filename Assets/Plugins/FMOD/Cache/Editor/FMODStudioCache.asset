@@ -205,10 +205,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639063425373363069
+  lastModified: 639063728376970338
   FileSizes:
   - Name: Desktop
-    Value: 1864
+    Value: 1904
   Exists: 1
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
@@ -302,13 +302,14 @@ MonoBehaviour:
   - {fileID: 8869912954285218580}
   - {fileID: 9082469593624663522}
   - {fileID: -8280198629979112602}
+  - {fileID: 7320361880124595747}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639063425373363069
+  cacheTime: 639063728376970338
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -354,6 +355,8 @@ MonoBehaviour:
     index: 20
   - key: event:/CourierTalking
     index: 21
+  - key: event:/Gunshoot
+    index: 22
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,11 +641,38 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639063425373353105
+  lastModified: 639063728376950360
   FileSizes:
   - Name: Desktop
-    Value: 5465408
+    Value: 5499840
   Exists: 1
+--- !u!114 &7320361880124595747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Gunshoot
+  m_EditorClassIdentifier: 
+  Path: event:/Gunshoot
+  Guid:
+    Data1: -696997951
+    Data2: 1267293190
+    Data3: -202976840
+    Data4: 1830343787
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &7399275378512865689
 MonoBehaviour:
   m_ObjectHideFlags: 0
