@@ -7,7 +7,8 @@ public class DemonStoryController : MonoBehaviour
     public void StartFinalChase()
     {
         GameState.FinalChase = true;
-
+        QuestManager.Instance.CompleteQuest("Go back to your flat");
+        QuestManager.Instance.AddQuest("RUN");
         demon.ai.enabled = true;
         demon.chasing = true;
 

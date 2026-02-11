@@ -9,9 +9,9 @@
     public static bool FinalChase = false;
     public static bool IsTalking = false;
     public static bool DemonRespawnedInApartment = false;
-    
 
     // ✅ NOWE FLAGI DLA SEKWENCJI KOŃCOWEJ
-    public static bool InteractionsLocked = false;    // ✅ Blokuje ItemCheck/ItemPickup
-    public static bool SofaSequenceActive = false;     // ✅ Sekwencja z kanapą aktywna
+    public static bool InteractionsLocked = false;
+    public static bool SofaSequenceActive = false;
+
 }

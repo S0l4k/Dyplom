@@ -25,7 +25,8 @@ public class FoodDeliveryManager : MonoBehaviour
         // ✅ UKOŃCZ QUEST
         if (QuestManager.Instance != null)
             QuestManager.Instance.CompleteQuest("Order Food");
+            QuestManager.Instance.AddQuest("Meet with the courier downstairs");
 
-        // ❌ BRAK Instantiate – NIC się nie respawnowało
+        // ❌ BRAK Instantiate – NIC using UnityEngine;
     }
 }

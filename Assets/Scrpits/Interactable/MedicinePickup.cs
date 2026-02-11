@@ -57,6 +57,7 @@ public class MedicinePickup : MonoBehaviour
         // ✅ UKRYJ TEKST NATYCHMIAST
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
+        QuestManager.Instance.ClearAllQuests();
 
         Debug.Log("[MedicinePickup] 💊 Leki podniesione – rozpoczynam sekwencję końcową");
 

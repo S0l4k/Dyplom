@@ -48,6 +48,7 @@ public class ApartmentTrigger : MonoBehaviour
 
             Debug.Log("[ApartmentTrigger] 👹 Demon WYŁĄCZONY fizycznie i wizualnie");
         }
+        QuestManager.Instance.CompleteQuest("RUN");
 
         // ✅ PLANUJ RESPAWN W MIESZKANIU
         if (demon != null && demonSpawnPoint != null)
@@ -69,6 +70,7 @@ public class ApartmentTrigger : MonoBehaviour
         // ✅ TELEPORT DO MIESZKANIA
         demon.transform.position = demonSpawnPoint.position;
         demon.transform.rotation = demonSpawnPoint.rotation;
+        QuestManager.Instance.AddQuest("Find flashlight");
 
         // ✅ KLUCZOWE: WŁĄCZ AGENTA ZANIM UŻYJEMY WARP (inaczej błąd!)
         if (demon.ai != null)

@@ -20,6 +20,7 @@ public class GameNarrativeManager : MonoBehaviour
     public string fridgeQuest = "Check your fridge";
     public string orderFoodQuest = "Order Food";
 
+
     [Header("Fridge Demon")]
     public DemonRoomPresence demonPresence;
 
@@ -29,9 +30,9 @@ public class GameNarrativeManager : MonoBehaviour
     public EventReference vomitSound;
 
     [Header("Courier-Demon Exchange")]
-    public Dialog dialogUI;                    // Canvas → DialogPanel
-    public DialogActivator demonDialogActivator;  // Demon GameObject z DialogActivator
-    public DialogActivator courierDialogActivator; // Drzwi GameObject z DialogActivator
+    public Dialog dialogUI;
+    public DialogActivator demonDialogActivator;
+    public DialogActivator courierDialogActivator;
     public Transform stairsBottomSpawn;
     public EventReference gunshoot;
     public EventReference staircaseScream;
@@ -40,17 +41,16 @@ public class GameNarrativeManager : MonoBehaviour
 
     public GameObject UICanvas;
 
-    // ✅ DIALOGI ZDEFINIOWANE BEZPOŚREDNIO W SKRYPCIE
     [Header("Dialog Lines (konfiguruj w Inspectorze)")]
     public DialogNode demonLine1;
     public DialogNode courierLine2;
     public DialogNode demonLine3;
-    public DialogNode demonAfterShot; // ✅ NOWY DIALOG PO ZASTRZELENiu
+    public DialogNode demonAfterShot;
 
     [Header("Second Ending")]
-    public Transform couchCameraPosition;      // ✅ Pozycja KAMERY nad kanapą (nie gracza!)
-    public Transform demonCouchPosition;       // ✅ Pozycja demona obok kanapy
-    public Animator demonAnimator;             // ✅ Animator demona
+    public Transform couchCameraPosition;
+    public Transform demonCouchPosition;
+    public Animator demonAnimator;
 
     private PlayerController playerController;
     private PlayerCam playerCam;
@@ -80,16 +80,13 @@ public class GameNarrativeManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delayAfterStart);
 
-        // 🔊 BRZUCH
         if (playerController != null && !stomachGrowl.IsNull)
         {
             RuntimeManager.PlayOneShot(stomachGrowl, playerController.transform.position);
         }
 
-        // 💭 "I'm hungry..."
         yield return StartCoroutine(ShowThought("I'm hungry...", 0.09f, 2.0f));
 
-        // 📜 QUEST
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.ClearAllQuests();
@@ -122,7 +119,6 @@ public class GameNarrativeManager : MonoBehaviour
 
         yield return new WaitForSeconds(stayTime);
 
-        // Fade out
         Color startCol = thoughtText.color;
         float elapsed = 0f;
         while (elapsed < 0.3f)
@@ -135,7 +131,6 @@ public class GameNarrativeManager : MonoBehaviour
         thoughtText.gameObject.SetActive(false);
     }
 
-    // ✅ WYWOŁYWANE Z ItemCheck PO SPRAWDZENIU TALERZA
     public void TriggerFridgeDemon()
     {
         if (demonPresence != null)
@@ -149,16 +144,14 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    // ✅ WYWOŁYWANE Z DialogNode KURIERA (responseEvents po dialogu początkowym)
     public void OnCourierInitialDialogComplete()
     {
+        QuestManager.Instance.CompleteQuest("Meet with the courier downstairs");
         Debug.Log("[Narrative] 📦 Kurier: dialog początkowy zakończony – pojawia się demon");
 
-        // ✅ 1. UKRYJ KURIERA
         if (courierDialogActivator != null)
             courierDialogActivator.enabled = false;
 
-        // ✅ 2. POJAW DEMON PRZY SCHODACH
         if (demonPresence != null)
         {
             demonPresence.ForceAppear("stairs_bottom");
@@ -169,16 +162,13 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    // ✅ WYWOŁYWANE Z DemonLine1 → response "Why?"
     public void EnableCourierLine2()
     {
         Debug.Log("[Narrative] 👹 Demon: gracz zapytał 'why?' – kurier odpowiada");
 
-        // ✅ 1. UKRYJ DEMONA
         if (demonDialogActivator != null)
             demonDialogActivator.enabled = false;
 
-        // ✅ 2. USTAW DIALOG KURIERA NA LINE 2 I WŁĄCZ GO
         if (courierDialogActivator != null)
         {
             courierDialogActivator.dialogNodes = new DialogNode[] { courierLine2 };
@@ -186,16 +176,13 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    // ✅ WYWOŁYWANE Z CourierLine2 → obie odpowiedzi
     public void EnableDemonLine3()
     {
         Debug.Log("[Narrative] 📦 Kurier: odpowiedział – demon mówi ostatnią linię");
 
-        // ✅ 1. UKRYJ KURIERA
         if (courierDialogActivator != null)
             courierDialogActivator.enabled = false;
 
-        // ✅ 2. USTAW DIALOG DEMONA NA LINE 3 I WŁĄCZ GO
         if (demonDialogActivator != null)
         {
             demonDialogActivator.dialogNodes = new DialogNode[] { demonLine3 };
@@ -203,19 +190,17 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    // ✅ WYWOŁYWANE Z DemonLine1 ("Shut up") LUB DemonLine3 (obie odpowiedzi)
     public void EndCourierDemonSequence()
     {
+        
         Debug.Log("[Narrative] 🔚 Sekwencja dialogowa demon↔kurier zakończona");
 
-        // ✅ 1. UKRYJ OBA DIALOGI
         if (demonDialogActivator != null)
             demonDialogActivator.enabled = false;
 
         if (courierDialogActivator != null)
             courierDialogActivator.enabled = false;
 
-        // ✅ 2. UKRYJ DEMONA WIZUALNIE
         if (demonPresence != null)
         {
             demonPresence.ExitRoom();
@@ -230,12 +215,10 @@ public class GameNarrativeManager : MonoBehaviour
             }
         }
 
-        // ✅ 3. UKRYJ UI DIALOGU
         if (dialogUI != null)
             dialogUI.gameObject.SetActive(false);
     }
 
-    // ✅ WYWOŁYWANE Z DialogActivator PO WYBORZE "Eat it"
     public void OnPlayerAcceptsFood()
     {
         Debug.Log("[Narrative] Gracz zgadza się zjeść – rozpoczynam sekwencję rzygania");
@@ -246,7 +229,6 @@ public class GameNarrativeManager : MonoBehaviour
             return;
         }
 
-        // ✅ BLOKUJ KONTROLĘ
         playerController.enabled = false;
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -255,12 +237,10 @@ public class GameNarrativeManager : MonoBehaviour
         StartCoroutine(VomitSequence());
     }
 
-    // ✅ WYWOŁYWANE Z DialogActivator PO WYBORZE "No"
     public void OnPlayerRefusesFood()
     {
         Debug.Log("[Narrative] Gracz odmówił jedzenia");
 
-        // 📜 DODAJ QUEST (bez sekwencji rzygania)
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.AddQuest(orderFoodQuest);
@@ -277,10 +257,8 @@ public class GameNarrativeManager : MonoBehaviour
             yield break;
         }
 
-        // ✅ FADE OUT
         yield return StartCoroutine(screenFader.FadeOut(0.8f));
 
-        // ✅ TELEPORT DO ŁAZIENKI (BEZ WYŁĄCZANIA CharacterController!)
         if (bathroomSpawn != null)
         {
             CharacterController cc = playerController.GetComponent<CharacterController>();
@@ -288,13 +266,11 @@ public class GameNarrativeManager : MonoBehaviour
             Quaternion targetRot = bathroomSpawn.rotation;
             playerController.enabled = false;
             playerCam.enabled = false;
-            // 🔍 Szukaj podłogi
             if (Physics.Raycast(bathroomSpawn.position + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 5f, LayerMask.GetMask("Default", "Floor", "Environment")))
             {
                 targetPos = hit.point + Vector3.up * (cc ? cc.height * 0.5f : 1f);
             }
 
-            // ✅ BEZPIECZNY TELEPORT – NIE wyłączamy CharacterController!
             playerController.transform.position = targetPos;
             playerController.transform.rotation = targetRot;
 
@@ -302,19 +278,16 @@ public class GameNarrativeManager : MonoBehaviour
                 playerCam.SyncRotationWithCamera();
         }
 
-        // 🔊 RZYGANIE
         yield return new WaitForSeconds(1f);
         if (!vomitSound.IsNull)
             RuntimeManager.PlayOneShot(vomitSound, playerController.transform.position);
 
         yield return new WaitForSeconds(6f);
 
-        // ✅ FADE IN
         yield return StartCoroutine(screenFader.FadeIn(1f));
 
         RestorePlayerControl();
 
-        // 📜 DODAJ QUEST PO SEKWENCJI
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.AddQuest(orderFoodQuest);
@@ -322,12 +295,10 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    // ✅ DRUGIE ZAKOŃCZENIE: GRACZ ZGADZA SIĘ ZASTRZELIĆ KURIERA
     public void PlayerAcceptedOffer()
     {
         Debug.Log("[Narrative] 🔫 Gracz zgodził się zabić kuriera – sekwencja wystrzału");
-
-        // ✅ BLOKUJ KONTROLĘ
+        QuestManager.Instance.ClearAllQuests();
         playerController.enabled = false;
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -345,24 +316,20 @@ public class GameNarrativeManager : MonoBehaviour
             yield break;
         }
 
-        // ✅ FADE OUT
         yield return StartCoroutine(screenFader.FadeOut(0.8f));
         UICanvas.SetActive(false);
         yield return new WaitForSeconds(6f);
 
-        // 🔊 WYSTRZAŁ
         if (!gunshoot.IsNull && playerController != null)
             RuntimeManager.PlayOneShot(gunshoot, playerController.transform.position);
 
         yield return new WaitForSeconds(2.2f);
         UICanvas.SetActive(true);
-        // ✅ FADE IN
+
         yield return StartCoroutine(screenFader.FadeIn(1f));
 
-        // ✅ PRZYWRÓĆ KONTROLĘ
         RestorePlayerControl();
 
-        // ✅ AKTYWUJ DIALOG DEMONA Z NOWYM NODE (bez teleportacji!)
         if (demonDialogActivator != null && demonAfterShot != null)
         {
             demonDialogActivator.dialogNodes = new DialogNode[] { demonAfterShot };
@@ -375,12 +342,10 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    // ✅ WYWOŁYWANE Z responseEvents dialogu demonAfterShot (obie odpowiedzi)
     public void StartSecondEndingFinalSequence()
     {
         Debug.Log("[Narrative] 🎬 Rozpoczynam finał drugiego zakończenia");
 
-        // ✅ BLOKUJ KONTROLĘ RUCHU (ale ZEZWÓL na kamerę przez chwilę)
         if (playerController != null) playerController.enabled = false;
         if (playerCam != null) playerCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
@@ -397,35 +362,30 @@ public class GameNarrativeManager : MonoBehaviour
             yield break;
         }
 
-        // ✅ ZAPISZ ORYGINALNĄ POZYCJĘ KAMERY
         Transform playerCamera = Camera.main.transform;
         Vector3 originalCamPos = playerCamera.position;
         Quaternion originalCamRot = playerCamera.rotation;
 
-        // ✅ FADE TO BLACK
         yield return StartCoroutine(screenFader.FadeOut(1.2f));
         UICanvas.SetActive(false);
-        // ✅ TELEPORT KAMERY NA POZYCJĘ NAD KANAPĄ (BEZ PŁYNNOSCI)
+
         if (couchCameraPosition != null)
         {
             playerCamera.position = couchCameraPosition.position;
             playerCamera.rotation = couchCameraPosition.rotation;
             Debug.Log($"[Narrative] 📷 Kamera teleportowana na pozycję: {couchCameraPosition.position}");
-            
         }
         else
         {
             Debug.LogError("[Narrative] ❌ couchCameraPosition NULL – kamera nie została przeniesiona!");
         }
 
-        // ✅ TELEPORT DEMONA NA KANAPĘ (obok miejsca gdzie "siedzi" gracz)
         if (demon != null && demonCouchPosition != null)
         {
             demon.transform.position = demonCouchPosition.position;
             demon.transform.rotation = demonCouchPosition.rotation;
             Debug.Log($"[Narrative] 👹 Demon teleportowany na pozycję: {demonCouchPosition.position}");
 
-            // ✅ ANIMACJA SIEDZENIA
             if (demonAnimator != null)
             {
                 demonAnimator.Rebind();
@@ -436,28 +396,22 @@ public class GameNarrativeManager : MonoBehaviour
             }
         }
 
-        // ✅ KLUCZOWE: ZABLOKUJ TYLKO RUCH GRACZA (WSAD), ALE ZEZWÓL NA KONTROLĘ KAMERY (MYSZKA)
         if (playerController != null)
-            playerController.enabled = false; 
-        
+            playerController.enabled = false;
 
         if (playerCam != null)
-            playerCam.enabled = true; // ✅ ZEZWÓL NA RUSZANIE MYSZKĄ
+            playerCam.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // ✅ FADE IN NA KANAPIE
         yield return StartCoroutine(screenFader.FadeIn(1.2f));
 
-        // ✅ 4 SEKUNDY SEKWENCJI – gracz może RUSZAĆ KAMERĄ (myszką), ale NIE MOŻE się poruszać (WSAD zablokowane)
         Debug.Log("[Narrative] 👁️ Gracz może teraz ruszać kamerą – 4 sekundy na obejrzenie demona");
         yield return new WaitForSeconds(4f);
 
-        // ✅ OSTATECZNY FADE TO BLACK
         yield return StartCoroutine(screenFader.FadeOut(1.5f));
 
-        // ✅ ŁADUJ MAIN MENU
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("MainMenu");
     }
@@ -466,11 +420,9 @@ public class GameNarrativeManager : MonoBehaviour
     {
         Debug.Log("[Narrative] 👹 Demon: gracz odmówił zabicia – demon znika");
 
-        // ✅ KLUCZOWE: ZMIANA STANU DEMONA
         GameState.DemonInStoryMode = false;
         GameState.ChaseLocked = true;
-
-        // ✅ WŁĄCZ NAVMESH AGENT DLA DEMONA (dokładnie TUTAJ!)
+        QuestManager.Instance.AddQuest("Go back to your flat");
         EnemyAI demon = FindObjectOfType<EnemyAI>();
         if (demon != null && demon.ai != null)
         {
@@ -478,23 +430,19 @@ public class GameNarrativeManager : MonoBehaviour
             Debug.Log("[Narrative] ✅ NavMeshAgent włączony dla demona");
         }
 
-        // ✅ ZNIKNIĘCIE DEMONA WIZUALNIE
         if (demonPresence != null)
         {
             demonPresence.ExitRoom();
         }
 
-
         triggers.SetActive(false);
 
-        // ✅ KRZYK W TLE
         if (!staircaseScream.IsNull && playerController != null)
         {
             RuntimeManager.PlayOneShot(staircaseScream, playerController.transform.position);
             Debug.Log("[Narrative] 🔊 Krzyk demona w tle");
         }
 
-        // ✅ AKTYWUJ LOOP SCHODÓW
         GameState.LoopSequenceActive = true;
         Debug.Log("[Narrative] 🔁 Stair loop aktywowany");
     }
@@ -504,7 +452,6 @@ public class GameNarrativeManager : MonoBehaviour
         if (playerController != null) playerController.enabled = true;
         if (playerCam != null) playerCam.enabled = true;
 
-        // ✅ KLUCZOWA KOLEJNOŚĆ DLA KURSORA:
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }

@@ -149,7 +149,7 @@ public class ItemPickup : MonoBehaviour
         if (isFlashlight)
         {
             Debug.Log("[Pickup] ✅ Flashlight picked up AFTER demon respawn");
-            QuestManager.Instance.CompleteQuest("Pick up flashlight");
+            QuestManager.Instance.CompleteQuest("Find flashlight");
 
             // ✅ KLUCZOWE: GASNIE ŚWIATŁA PO PODNIENIU LATARKI
             StartCoroutine(LightsFlickerAndTurnOff());
@@ -275,6 +275,7 @@ public class ItemPickup : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (medicine != null)
         {
+            QuestManager.Instance.AddQuest("Find meds");
             medicine.SetActive(true);
             Debug.Log("[ItemPickup] 💊 Leki aktywowane");
         }
