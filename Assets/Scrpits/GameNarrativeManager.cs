@@ -2,6 +2,7 @@
 using System.Collections;
 using FMODUnity;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameNarrativeManager : MonoBehaviour
 {
@@ -36,14 +37,24 @@ public class GameNarrativeManager : MonoBehaviour
     public EventReference staircaseScream;
     public RoomTrigger roomTrigger;
     public GameObject triggers;
+
+    public GameObject UICanvas;
+
     // ✅ DIALOGI ZDEFINIOWANE BEZPOŚREDNIO W SKRYPCIE
     [Header("Dialog Lines (konfiguruj w Inspectorze)")]
     public DialogNode demonLine1;
     public DialogNode courierLine2;
     public DialogNode demonLine3;
+    public DialogNode demonAfterShot; // ✅ NOWY DIALOG PO ZASTRZELENiu
+
+    [Header("Second Ending")]
+    public Transform couchCameraPosition;      // ✅ Pozycja KAMERY nad kanapą (nie gracza!)
+    public Transform demonCouchPosition;       // ✅ Pozycja demona obok kanapy
+    public Animator demonAnimator;             // ✅ Animator demona
 
     private PlayerController playerController;
     private PlayerCam playerCam;
+    private EnemyAI demon;
 
     private void Awake()
     {
@@ -60,6 +71,7 @@ public class GameNarrativeManager : MonoBehaviour
     {
         playerController = FindObjectOfType<PlayerController>();
         playerCam = FindObjectOfType<PlayerCam>();
+        demon = FindObjectOfType<EnemyAI>();
         StartCoroutine(StartNarrativeSequence());
         roomTrigger = GetComponent<RoomTrigger>();
     }
@@ -87,7 +99,7 @@ public class GameNarrativeManager : MonoBehaviour
         Debug.Log("[Narrative] ➡️ Quest \"Check your fridge\" active");
     }
 
-    public  IEnumerator ShowThought(string text, float speed, float stayTime)
+    public IEnumerator ShowThought(string text, float speed, float stayTime)
     {
         if (!thoughtText)
         {
@@ -310,15 +322,144 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
+    // ✅ DRUGIE ZAKOŃCZENIE: GRACZ ZGADZA SIĘ ZASTRZELIĆ KURIERA
     public void PlayerAcceptedOffer()
     {
+        Debug.Log("[Narrative] 🔫 Gracz zgodził się zabić kuriera – sekwencja wystrzału");
+
         // ✅ BLOKUJ KONTROLĘ
         playerController.enabled = false;
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
-        StartCoroutine(KillSequence());
 
+        StartCoroutine(KillSequenceSecondEnding());
+    }
+
+    private IEnumerator KillSequenceSecondEnding()
+    {
+        if (screenFader == null)
+        {
+            Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
+            RestorePlayerControl();
+            yield break;
+        }
+
+        // ✅ FADE OUT
+        yield return StartCoroutine(screenFader.FadeOut(0.8f));
+        UICanvas.SetActive(false);
+        yield return new WaitForSeconds(6f);
+
+        // 🔊 WYSTRZAŁ
+        if (!gunshoot.IsNull && playerController != null)
+            RuntimeManager.PlayOneShot(gunshoot, playerController.transform.position);
+
+        yield return new WaitForSeconds(2.2f);
+        UICanvas.SetActive(true);
+        // ✅ FADE IN
+        yield return StartCoroutine(screenFader.FadeIn(1f));
+
+        // ✅ PRZYWRÓĆ KONTROLĘ
+        RestorePlayerControl();
+
+        // ✅ AKTYWUJ DIALOG DEMONA Z NOWYM NODE (bez teleportacji!)
+        if (demonDialogActivator != null && demonAfterShot != null)
+        {
+            demonDialogActivator.dialogNodes = new DialogNode[] { demonAfterShot };
+            demonDialogActivator.enabled = true;
+            Debug.Log("[Narrative] ✅ Dialog po zastrzeleniu aktywowany – demon stoi na miejscu");
+        }
+        else
+        {
+            Debug.LogError("[Narrative] ❌ demonDialogActivator lub demonAfterShot NULL");
+        }
+    }
+
+    // ✅ WYWOŁYWANE Z responseEvents dialogu demonAfterShot (obie odpowiedzi)
+    public void StartSecondEndingFinalSequence()
+    {
+        Debug.Log("[Narrative] 🎬 Rozpoczynam finał drugiego zakończenia");
+
+        // ✅ BLOKUJ KONTROLĘ RUCHU (ale ZEZWÓL na kamerę przez chwilę)
+        if (playerController != null) playerController.enabled = false;
+        if (playerCam != null) playerCam.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        StartCoroutine(SecondEndingFinalSequence());
+    }
+
+    private IEnumerator SecondEndingFinalSequence()
+    {
+        if (screenFader == null)
+        {
+            Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
+            yield break;
+        }
+
+        // ✅ ZAPISZ ORYGINALNĄ POZYCJĘ KAMERY
+        Transform playerCamera = Camera.main.transform;
+        Vector3 originalCamPos = playerCamera.position;
+        Quaternion originalCamRot = playerCamera.rotation;
+
+        // ✅ FADE TO BLACK
+        yield return StartCoroutine(screenFader.FadeOut(1.2f));
+        UICanvas.SetActive(false);
+        // ✅ TELEPORT KAMERY NA POZYCJĘ NAD KANAPĄ (BEZ PŁYNNOSCI)
+        if (couchCameraPosition != null)
+        {
+            playerCamera.position = couchCameraPosition.position;
+            playerCamera.rotation = couchCameraPosition.rotation;
+            Debug.Log($"[Narrative] 📷 Kamera teleportowana na pozycję: {couchCameraPosition.position}");
+            
+        }
+        else
+        {
+            Debug.LogError("[Narrative] ❌ couchCameraPosition NULL – kamera nie została przeniesiona!");
+        }
+
+        // ✅ TELEPORT DEMONA NA KANAPĘ (obok miejsca gdzie "siedzi" gracz)
+        if (demon != null && demonCouchPosition != null)
+        {
+            demon.transform.position = demonCouchPosition.position;
+            demon.transform.rotation = demonCouchPosition.rotation;
+            Debug.Log($"[Narrative] 👹 Demon teleportowany na pozycję: {demonCouchPosition.position}");
+
+            // ✅ ANIMACJA SIEDZENIA
+            if (demonAnimator != null)
+            {
+                demonAnimator.Rebind();
+                demonAnimator.Update(0f);
+                yield return null;
+                demonAnimator.SetTrigger("sit_couch");
+                Debug.Log("[Narrative] ✅ Animacja sit_couch aktywowana");
+            }
+        }
+
+        // ✅ KLUCZOWE: ZABLOKUJ TYLKO RUCH GRACZA (WSAD), ALE ZEZWÓL NA KONTROLĘ KAMERY (MYSZKA)
+        if (playerController != null)
+            playerController.enabled = false; 
+        
+
+        if (playerCam != null)
+            playerCam.enabled = true; // ✅ ZEZWÓL NA RUSZANIE MYSZKĄ
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // ✅ FADE IN NA KANAPIE
+        yield return StartCoroutine(screenFader.FadeIn(1.2f));
+
+        // ✅ 4 SEKUNDY SEKWENCJI – gracz może RUSZAĆ KAMERĄ (myszką), ale NIE MOŻE się poruszać (WSAD zablokowane)
+        Debug.Log("[Narrative] 👁️ Gracz może teraz ruszać kamerą – 4 sekundy na obejrzenie demona");
+        yield return new WaitForSeconds(4f);
+
+        // ✅ OSTATECZNY FADE TO BLACK
+        yield return StartCoroutine(screenFader.FadeOut(1.5f));
+
+        // ✅ ŁADUJ MAIN MENU
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void PlayerRefuseddOffer()
@@ -328,7 +469,7 @@ public class GameNarrativeManager : MonoBehaviour
         // ✅ KLUCZOWE: ZMIANA STANU DEMONA
         GameState.DemonInStoryMode = false;
         GameState.ChaseLocked = true;
-        
+
         // ✅ WŁĄCZ NAVMESH AGENT DLA DEMONA (dokładnie TUTAJ!)
         EnemyAI demon = FindObjectOfType<EnemyAI>();
         if (demon != null && demon.ai != null)
@@ -342,9 +483,9 @@ public class GameNarrativeManager : MonoBehaviour
         {
             demonPresence.ExitRoom();
         }
-    
 
-      triggers.SetActive(false);
+
+        triggers.SetActive(false);
 
         // ✅ KRZYK W TLE
         if (!staircaseScream.IsNull && playerController != null)
@@ -356,35 +497,6 @@ public class GameNarrativeManager : MonoBehaviour
         // ✅ AKTYWUJ LOOP SCHODÓW
         GameState.LoopSequenceActive = true;
         Debug.Log("[Narrative] 🔁 Stair loop aktywowany");
-    }
-    private IEnumerator KillSequence()
-    {
-        if (screenFader == null)
-        {
-            Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
-            RestorePlayerControl();
-            yield break;
-        }
-
-        // ✅ FADE OUT (BEZ DOTYKANIA CharacterController!)
-        yield return StartCoroutine(screenFader.FadeOut(0.8f));
-
-        // ✅ BLOKUJ KONTROLĘ (skrypt, NIE controller!)
-        playerController.enabled = false;
-        playerCam.enabled = false;
-
-        yield return new WaitForSeconds(6f);
-
-        // 🔊 WYSTRZAŁ
-        if (!gunshoot.IsNull && playerController != null)
-            RuntimeManager.PlayOneShot(gunshoot, playerController.transform.position);
-
-        yield return new WaitForSeconds(2.2f);
-
-        // ✅ FADE IN
-        yield return StartCoroutine(screenFader.FadeIn(1f));
-
-        RestorePlayerControl();
     }
 
     private void RestorePlayerControl()
