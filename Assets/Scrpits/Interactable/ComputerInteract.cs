@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using FMODUnity;
 using System.Collections;
-using Unity.VisualScripting;
-using FMODUnity;
+using TMPro;
+using UnityEngine;
 
 public class ComputerInteract : MonoBehaviour
 {
@@ -12,14 +11,13 @@ public class ComputerInteract : MonoBehaviour
     public TMP_Text interactText;
 
     [Header("UI")]
-    public Canvas computerCanvas;  
-    public Canvas playerCanvas;    
+    public Canvas computerCanvas;
+    public Canvas playerCanvas;
 
     [Header("Settings")]
     public float useRange = 3f;
     public float moveSpeed = 3f;
-    public float returnSpeed = 3f; 
-    public LayerMask computerMask;
+    public float returnSpeed = 3f;
 
     public bool isUsingComputer = false;
     private bool canUse = false;
@@ -27,6 +25,7 @@ public class ComputerInteract : MonoBehaviour
     private Quaternion originalCamRotation;
     private MonoBehaviour playerMovementScript;
     private MonoBehaviour playerCamScript;
+    private ComputerCursor computerCursor; // ✅ Tylko referencja - nie wymaga ręcznego przypisania
 
     [Header("Audio")]
     [SerializeField] private EventReference turnOnEvent;
@@ -43,19 +42,20 @@ public class ComputerInteract : MonoBehaviour
 
         playerMovementScript = FindObjectOfType<PlayerController>();
         playerCamScript = FindObjectOfType<PlayerCam>();
-    }
 
+        // ✅ AUTOMATYCZNE ZNALEZIENIE KURSORA (działa nawet z wyłączonym canvasem!)
+        if (computerCanvas != null)
+            computerCursor = computerCanvas.GetComponent<ComputerCursor>();
+    }
 
     void Update()
     {
-        
         CheckForComputer();
 
         if (canUse && Input.GetKeyDown(KeyCode.E))
             StartCoroutine(UseComputer());
-
-     
     }
+
     public void EscapeComputer()
     {
         StartCoroutine(ExitComputerSmooth());
@@ -66,6 +66,7 @@ public class ComputerInteract : MonoBehaviour
         Ray ray = new Ray(playerCamera.position, playerCamera.forward);
         RaycastHit hit;
 
+        // ✅ ORYGINALNA LOGIKA BEZ LAYER MASK (działała wcześniej - zostawiam bez zmian)
         if (Physics.Raycast(ray, out hit, useRange))
         {
             if (hit.collider.gameObject == gameObject)
@@ -105,19 +106,32 @@ public class ComputerInteract : MonoBehaviour
             elapsed += Time.deltaTime * moveSpeed;
             playerCamera.position = Vector3.Lerp(startPos, computerViewPoint.position, elapsed);
             playerCamera.rotation = Quaternion.Slerp(startRot, computerViewPoint.rotation, elapsed);
-            RuntimeManager.PlayOneShot(turnOnEvent);
+            RuntimeManager.PlayOneShot(turnOnEvent); // ✅ ORYGINAŁ: dźwięk w pętli
             yield return null;
         }
 
         if (computerCanvas != null)
             computerCanvas.gameObject.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+
+        // ✅ DODANE: aktywacja customowego kursora (jeśli istnieje)
+        if (computerCursor != null)
+            computerCursor.Enable();
+        else
+        {
+            // Fallback na standardowy kursor (jak w oryginale)
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public IEnumerator ExitComputerSmooth()
     {
         RuntimeManager.PlayOneShot(turnOffEvent);
+
+        // ✅ DODANE: dezaktywacja customowego kursora (jeśli istnieje)
+        if (computerCursor != null)
+            computerCursor.Disable();
+
         if (computerCanvas != null)
             computerCanvas.gameObject.SetActive(false);
 
@@ -140,15 +154,14 @@ public class ComputerInteract : MonoBehaviour
 
         if (playerCanvas != null)
             playerCanvas.gameObject.SetActive(true);
+
+        // ✅ ORYGINALNE ZACHOWANIE KURSORA
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
 
     public void Click()
     {
         RuntimeManager.PlayOneShot(clickEvent);
     }
-
-
 }

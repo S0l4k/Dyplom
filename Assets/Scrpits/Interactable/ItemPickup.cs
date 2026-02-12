@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine.UI;
 using Commands;
+using System.Collections;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class ItemPickup : MonoBehaviour
     public Vector3 localPositionOffset;
     public Vector3 localRotationOffset;
     public bool isFlashlight = false;
-
 
     [Header("Pickup UI (on look)")]
     public TMP_Text pickupText;
@@ -25,6 +25,10 @@ public class ItemPickup : MonoBehaviour
 
     public StairLoop stairLoop;
 
+    // ✅ NOWE POLA DLA SYSTEMU ŚWIATŁA/LEKÓW
+    [Header("Light & Medicine System")]
+    public LightController lightController;        // ✅ Twój LightController
+    public GameObject medicine;                    // ✅ Obiekt z lekami (początkowo ukryty)
 
     private Camera playerCamera;
     private bool canPickup = false;
@@ -59,7 +63,6 @@ public class ItemPickup : MonoBehaviour
             flashlightUIImage.sprite = flashlightOffSprite;
     }
 
-
     void Update()
     {
         if (!isHeld)
@@ -86,6 +89,14 @@ public class ItemPickup : MonoBehaviour
         if (isFlashlight && heldFlashlight != null) return;
         if (!isFlashlight && heldItem != null) return;
 
+        // ✅ KLUCZOWA BLOKADA: NIE POKAZUJ TEKSTU PODNOSZENIA LATARKI PRZED RESPAWNEM DEMONA
+        if (isFlashlight && !GameState.DemonRespawnedInApartment)
+        {
+            HidePickupText();
+            canPickup = false;
+            return;
+        }
+
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
@@ -105,7 +116,6 @@ public class ItemPickup : MonoBehaviour
     }
 
     [Command("ShowText", "Shows pickup text")]
-
     public void ShowPickupText()
     {
         pickupText.gameObject.SetActive(true);
@@ -119,6 +129,13 @@ public class ItemPickup : MonoBehaviour
 
     void Pickup()
     {
+        // ✅ KLUCZOWA BLOKADA: NIE POZWÓL PODNIEŚĆ LATARKI PRZED RESPAWNEM DEMONA
+        if (isFlashlight && !GameState.DemonRespawnedInApartment)
+        {
+            Debug.Log("[Pickup] ❌ Cannot pick up flashlight yet – demon not respawned in apartment");
+            return;
+        }
+
         if (isFlashlight && heldFlashlight != null)
         {
             Debug.Log("[Pickup] Flashlight already held – skipping pickup");
@@ -128,11 +145,14 @@ public class ItemPickup : MonoBehaviour
         if (!isFlashlight && heldItem != null)
             return;
 
-        
+        // ✅ TUTAJ JEST JUŻ BEZPIECZNIE – demon się zrespawnował
         if (isFlashlight)
         {
-            Debug.Log("[Pickup] Flashlight picked up -> sending quest");
-            QuestManager.Instance.CompleteQuest("Pick up flashlight");
+            Debug.Log("[Pickup] ✅ Flashlight picked up AFTER demon respawn");
+            QuestManager.Instance.CompleteQuest("Find flashlight");
+
+            // ✅ KLUCZOWE: GASNIE ŚWIATŁA PO PODNIENIU LATARKI
+            StartCoroutine(LightsFlickerAndTurnOff());
         }
 
         transform.SetParent(handPosition);
@@ -175,12 +195,7 @@ public class ItemPickup : MonoBehaviour
                 Debug.Log("[ItemPickup] Loop sequence activated after picking up food!");
             }
         }
-
-
     }
-
-
-
 
     void Drop()
     {
@@ -229,6 +244,40 @@ public class ItemPickup : MonoBehaviour
         {
             pickupText.gameObject.SetActive(true);
             pickupText.text = $"Press G to drop {itemName}";
+        }
+    }
+
+    // ✅ NOWA METODA: GASZENIE ŚWIATŁA Z EFEKTEM TYPIENIA
+    private IEnumerator LightsFlickerAndTurnOff()
+    {
+        if (lightController == null)
+        {
+            Debug.LogError("[ItemPickup] LightController nie przypisany – pomijam gaszenie");
+            yield break;
+        }
+
+        Debug.Log("[ItemPickup] 🔌 Zaczynam gaszenie świateł po podniesieniu latarki...");
+
+        // ✅ Efekt typkania (3x)
+        for (int i = 0; i < 3; i++)
+        {
+            lightController.TurnOffAllLights();     // ✅ Gasimy
+            yield return new WaitForSeconds(0.15f);
+            lightController.RestoreLights();        // ✅ Włączamy z powrotem
+            yield return new WaitForSeconds(0.15f + (i * 0.1f)); // ✅ Dłuższe pauzy
+        }
+
+        // ✅ Ostateczne zgaszenie
+        lightController.TurnOffAllLights();
+        Debug.Log("[ItemPickup] 💡 Wszystkie światła zgaszone");
+
+        // ✅ SPAWN LEKÓW PO 1 SEKUNDZIE
+        yield return new WaitForSeconds(1f);
+        if (medicine != null)
+        {
+            QuestManager.Instance.AddQuest("Find meds");
+            medicine.SetActive(true);
+            Debug.Log("[ItemPickup] 💊 Leki aktywowane");
         }
     }
 }
