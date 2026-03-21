@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using FMODUnity;
 using System.Collections;
-using FMODUnity;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using Studio = FMOD.Studio;
 
 public class ItemCheck : MonoBehaviour
@@ -28,6 +29,9 @@ public class ItemCheck : MonoBehaviour
     [SerializeField] private string playerMarkerColor = "#00000080";
     [SerializeField] private string demonMarkerColor = "#FF000080";
 
+    [Header("Outline")]
+    public Outline outline;
+
     private Camera playerCamera;
     private bool canInteract = false;
     private bool isChecking = false;
@@ -50,6 +54,7 @@ public class ItemCheck : MonoBehaviour
         {
             Debug.LogError($"[ItemCheck] playerThoughtText NIE JEST PRZYPISANY na obiekcie {name}!", this);
         }
+        if (outline != null) outline.enabled = false;
     }
 
     void Update()
@@ -75,9 +80,16 @@ public class ItemCheck : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 3f) && hit.collider.gameObject == gameObject)
         {
             canInteract = true;
+            // ✅ HIT w TEN obiekt – włącz outline
+            if (outline != null) outline.enabled = true;
+        }
+        else
+        {
+            // ❌ MISS lub HIT w COŚ INNEGO – wyłącz outline
+            if (outline != null) outline.enabled = false;
         }
 
-        // ✅ OPTYMALIZACJA: aktualizuj UI tylko przy zmianie stanu (nie co klatkę!)
+        // ✅ OPTYMALIZACJA: aktualizuj UI tylko przy zmianie stanu
         if (canInteract != wasInteracting)
         {
             if (canInteract)
@@ -90,6 +102,7 @@ public class ItemCheck : MonoBehaviour
             }
         }
     }
+
 
     void ShowInteractionText()
     {
@@ -110,12 +123,14 @@ public class ItemCheck : MonoBehaviour
         isChecking = true;
         HideInteractionText();
 
+        // ✅ Wyłącz outline na czas interakcji
+        if (outline != null) outline.enabled = false;
+
         Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
 
-        // ✅ KLUCZOWE: aktywuj tekst MYŚLI przed użyciem
         if (playerThoughtText != null)
         {
-            playerThoughtText.gameObject.SetActive(true); // ✅ MUSI BYĆ AKTYWNY!
+            playerThoughtText.gameObject.SetActive(true);
             playerThoughtText.color = playerOriginalColor;
             playerThoughtText.text = "";
             Debug.Log($"[ItemCheck] playerThoughtText AKTYWNY, treść: '{playerThought}'");
@@ -135,9 +150,7 @@ public class ItemCheck : MonoBehaviour
         ));
 
         yield return new WaitForSeconds(playerThoughtStayTime);
-
         yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
-
         yield return new WaitForSeconds(delayBeforeDemon);
 
         // === ETAP 2: Odpowiedź demona (opcjonalnie) ===
@@ -174,8 +187,6 @@ public class ItemCheck : MonoBehaviour
         {
             QuestManager.Instance.CompleteQuest("Check your fridge");
             Debug.Log("[Narrative] ✅ Quest completed: Check your fridge");
-
-            // 🔥 NOWOŚĆ: wywołaj demona obok lodówki
             GameNarrativeManager.Instance?.TriggerFridgeDemon();
         }
         isChecking = false;

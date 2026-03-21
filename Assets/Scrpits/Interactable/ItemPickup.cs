@@ -23,6 +23,9 @@ public class ItemPickup : MonoBehaviour
     public Sprite flashlightOnSprite;
     public Sprite flashlightOffSprite;
 
+    [Header("Outline")]
+    public Outline outline;
+
     public StairLoop stairLoop;
 
     // ✅ NOWE POLA DLA SYSTEMU ŚWIATŁA/LEKÓW
@@ -61,6 +64,8 @@ public class ItemPickup : MonoBehaviour
 
         if (flashlightUIImage != null && flashlightOffSprite != null)
             flashlightUIImage.sprite = flashlightOffSprite;
+
+        if (outline != null) outline.enabled = false;
     }
 
     void Update()
@@ -94,6 +99,7 @@ public class ItemPickup : MonoBehaviour
         {
             HidePickupText();
             canPickup = false;
+            if (outline != null) outline.enabled = false;
             return;
         }
 
@@ -105,14 +111,18 @@ public class ItemPickup : MonoBehaviour
             if (hit.collider.gameObject == gameObject)
             {
                 currentTarget = this;
+                // ✅ HIT – włącz outline
+                if (outline != null) outline.enabled = true;
                 ShowPickupText();
                 canPickup = true;
                 return;
             }
         }
 
+        // ❌ MISS – wyłącz outline
         HidePickupText();
         canPickup = false;
+        if (outline != null) outline.enabled = false;
     }
 
     [Command("ShowText", "Shows pickup text")]
@@ -145,13 +155,14 @@ public class ItemPickup : MonoBehaviour
         if (!isFlashlight && heldItem != null)
             return;
 
+        // ✅ Wyłącz outline przy podnoszeniu
+        if (outline != null) outline.enabled = false;
+
         // ✅ TUTAJ JEST JUŻ BEZPIECZNIE – demon się zrespawnował
         if (isFlashlight)
         {
             Debug.Log("[Pickup] ✅ Flashlight picked up AFTER demon respawn");
             QuestManager.Instance.CompleteQuest("Find flashlight");
-
-            // ✅ KLUCZOWE: GASNIE ŚWIATŁA PO PODNIENIU LATARKI
             StartCoroutine(LightsFlickerAndTurnOff());
         }
 
@@ -185,10 +196,8 @@ public class ItemPickup : MonoBehaviour
         }
         if (itemName == "Food")
         {
-            // Włączamy loop sequence w GameState
             GameState.LoopSequenceActive = true;
 
-            // Jeśli masz przypisany StairLoop, zresetuj licznik
             if (stairLoop != null)
             {
                 stairLoop.loopCount = 0;
@@ -196,6 +205,7 @@ public class ItemPickup : MonoBehaviour
             }
         }
     }
+    
 
     void Drop()
     {
