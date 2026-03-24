@@ -24,14 +24,13 @@ public class DemonRoomPresence : MonoBehaviour
     [Range(0f, 1f)] public float appearanceChance = 0.35f;
 
     [Header("Audio (FMOD)")]
-    public EventReference appearSound;   // np. "event:/demon/appear"
-    public EventReference disappearSound; // Opcjonalnie: dźwięk przy znikaniu
+    public EventReference appearSound;
+    public EventReference disappearSound;
 
     [Header("Effects - Particles")]
-    public ParticleSystem appearParticles;   // Przypisz tutaj swój prefab lub efekt z childa
-    public ParticleSystem disappearParticles; // Przypisz tutaj efekt znikania
+    public ParticleSystem appearParticles;
+    public ParticleSystem disappearParticles;
 
-    // Jeśli nie przypiszesz w Inspectorze, skrypt spróbuje znaleźć dziecko o nazwie "VFX"
     [Tooltip("Jeśli pole powyżej jest puste, skrypt szuka dziecka o tej nazwie")]
     public string autoFindVFXName = "DemonVFX";
 
@@ -54,7 +53,6 @@ public class DemonRoomPresence : MonoBehaviour
         if (mainCamera == null)
             mainCamera = Camera.main;
 
-        // 🔍 AUTOMATYCZNE WYSZUKANIE CZĄSTECZEK, JEŚLI NIE PRZYPISANO
         if (appearParticles == null)
         {
             Transform vfxRoot = transform.Find(autoFindVFXName);
@@ -65,7 +63,6 @@ public class DemonRoomPresence : MonoBehaviour
             }
         }
 
-        // Domyślnie znikanie to ten sam efekt co pojawianie, jeśli nie ustawiono innego
         if (disappearParticles == null)
             disappearParticles = appearParticles;
 
@@ -92,14 +89,12 @@ public class DemonRoomPresence : MonoBehaviour
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
-        // 🔊 DŹWIĘK
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!appearSound.IsNull)
-            RuntimeManager.PlayOneShot(appearSound, transform.position);
+            AudioManager.Instance.PlaySFX(appearSound, transform.position);
 
-        // ✨ CZĄSTECZKI POJAWIENIA
         SpawnParticles(currentAppearVFX, transform.position);
 
-        // 📷 SHAKE
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration, shakeAmount));
 
@@ -120,8 +115,9 @@ public class DemonRoomPresence : MonoBehaviour
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!appearSound.IsNull)
-            RuntimeManager.PlayOneShot(appearSound, transform.position);
+            AudioManager.Instance.PlaySFX(appearSound, transform.position);
 
         SpawnParticles(currentAppearVFX, transform.position);
 
@@ -141,14 +137,12 @@ public class DemonRoomPresence : MonoBehaviour
         Debug.Log($"[Demon] ⬅️ Exiting: {currentRoomTag}");
         isBusy = true;
 
-        // 🔊 DŹWIĘK ZNIKANIA (opcjonalnie)
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!disappearSound.IsNull)
-            RuntimeManager.PlayOneShot(disappearSound, transform.position);
+            AudioManager.Instance.PlaySFX(disappearSound, transform.position);
 
-        // ✨ CZĄSTECZKI ZNIKANIA
         SpawnParticles(currentDisappearVFX, transform.position);
 
-        // 📷 MNIEJSZY SHAKE PRZY ZNIKA NIU
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration * 0.6f, shakeAmount * 0.7f));
 
@@ -160,29 +154,18 @@ public class DemonRoomPresence : MonoBehaviour
             dialogActivator.enabled = false;
     }
 
-    // ✅ HELPER DO WYWOŁYWANIA CZĄSTECZEK
     private void SpawnParticles(ParticleSystem ps, Vector3 pos)
     {
         if (ps == null) return;
 
-        // Upewnij się, że system jest w dobryj pozycji (jeśli nie jest dzieckiem demona)
-        // Jeśli ParticleSystem jest dzieckiem tego GameObject, pozycja jest względna, więc musimy uważać.
-        // Najbezpieczniej jest mieć VFX jako dziecko, ale wywoływać Play() lokalnie.
-
-        // Resetujemy pozycję jeśli VFX nie jest dzieckiem (rzadki przypadek przy tym setupie)
         if (ps.transform.parent != transform)
         {
             ps.transform.position = pos;
         }
 
-        // Ważne dla retro efektu: wyłącz emitowanie ciągłe, odpal raz
         var emission = ps.emission;
         emission.enabled = true;
-
         ps.Play();
-
-        // Opcjonalnie: wymuszenie emisji wszystkich cząstek naraz jeśli to burst
-        // ps.Emit(10); // Można użyć zamiast Play(), jeśli wolisz kontrolować ilość ręcznie
     }
 
     private IEnumerator ShowAfterDelay(RoomPresenceData data, string roomTag)

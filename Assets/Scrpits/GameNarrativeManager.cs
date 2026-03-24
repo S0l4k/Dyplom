@@ -20,7 +20,6 @@ public class GameNarrativeManager : MonoBehaviour
     public string fridgeQuest = "Check your fridge";
     public string orderFoodQuest = "Order Food";
 
-
     [Header("Fridge Demon")]
     public DemonRoomPresence demonPresence;
 
@@ -82,7 +81,8 @@ public class GameNarrativeManager : MonoBehaviour
 
         if (playerController != null && !stomachGrowl.IsNull)
         {
-            RuntimeManager.PlayOneShot(stomachGrowl, playerController.transform.position);
+            // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+            AudioManager.Instance.PlaySFX(stomachGrowl, playerController.transform.position);
         }
 
         yield return StartCoroutine(ShowThought("I'm hungry...", 0.09f, 2.0f));
@@ -192,7 +192,6 @@ public class GameNarrativeManager : MonoBehaviour
 
     public void EndCourierDemonSequence()
     {
-        
         Debug.Log("[Narrative] 🔚 Sekwencja dialogowa demon↔kurier zakończona");
 
         if (demonDialogActivator != null)
@@ -268,7 +267,7 @@ public class GameNarrativeManager : MonoBehaviour
             playerCam.enabled = false;
             if (Physics.Raycast(bathroomSpawn.position + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 5f, LayerMask.GetMask("Default", "Floor", "Environment")))
             {
-                targetPos = hit.point + Vector3.up * (cc ? cc.height * 0.5f : 1f);
+                targetPos = hit.point + Vector3.up * (cc ? cc.height * 0.5f : 1f) - Vector3.up * 1f;
             }
 
             playerController.transform.position = targetPos;
@@ -279,8 +278,10 @@ public class GameNarrativeManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
+
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!vomitSound.IsNull)
-            RuntimeManager.PlayOneShot(vomitSound, playerController.transform.position);
+            AudioManager.Instance.PlaySFX(vomitSound, playerController.transform.position);
 
         yield return new WaitForSeconds(6f);
 
@@ -320,8 +321,9 @@ public class GameNarrativeManager : MonoBehaviour
         UICanvas.SetActive(false);
         yield return new WaitForSeconds(6f);
 
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!gunshoot.IsNull && playerController != null)
-            RuntimeManager.PlayOneShot(gunshoot, playerController.transform.position);
+            AudioManager.Instance.PlaySFX(gunshoot, playerController.transform.position);
 
         yield return new WaitForSeconds(2.2f);
         UICanvas.SetActive(true);
@@ -437,9 +439,10 @@ public class GameNarrativeManager : MonoBehaviour
 
         triggers.SetActive(false);
 
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!staircaseScream.IsNull && playerController != null)
         {
-            RuntimeManager.PlayOneShot(staircaseScream, playerController.transform.position);
+            AudioManager.Instance.PlaySFX(staircaseScream, playerController.transform.position);
             Debug.Log("[Narrative] 🔊 Krzyk demona w tle");
         }
 

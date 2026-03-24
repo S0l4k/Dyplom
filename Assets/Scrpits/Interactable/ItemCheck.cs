@@ -3,7 +3,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Studio = FMOD.Studio;
 
 public class ItemCheck : MonoBehaviour
 {
@@ -16,8 +15,8 @@ public class ItemCheck : MonoBehaviour
     public EventReference demonVoiceEvent;
 
     [Header("UI")]
-    public TMP_Text interactionText;   // "Press E to check..."
-    public TMP_Text playerThoughtText; // pojedynczy tekst na Canvasie
+    public TMP_Text interactionText;
+    public TMP_Text playerThoughtText;
 
     [Header("Timing")]
     [SerializeField] private float typeSpeed = 0.07f;
@@ -35,7 +34,7 @@ public class ItemCheck : MonoBehaviour
     private Camera playerCamera;
     private bool canInteract = false;
     private bool isChecking = false;
-    private Studio.EventInstance demonVoiceInstance;
+    private FMOD.Studio.EventInstance demonVoiceInstance;
     private Color playerOriginalColor = Color.white;
 
     void Start()
@@ -80,35 +79,26 @@ public class ItemCheck : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 3f) && hit.collider.gameObject == gameObject)
         {
             canInteract = true;
-            // ✅ HIT w TEN obiekt – włącz outline
             if (outline != null) outline.enabled = true;
         }
         else
         {
-            // ❌ MISS lub HIT w COŚ INNEGO – wyłącz outline
             if (outline != null) outline.enabled = false;
         }
 
-        // ✅ OPTYMALIZACJA: aktualizuj UI tylko przy zmianie stanu
         if (canInteract != wasInteracting)
         {
             if (canInteract)
-            {
                 ShowInteractionText();
-            }
             else
-            {
                 HideInteractionText();
-            }
         }
     }
-
 
     void ShowInteractionText()
     {
         interactionText.gameObject.SetActive(true);
         string newText = $"Press E to check {itemName}";
-        // ✅ OPTYMALIZACJA: nie ustawiaj tekstu jeśli już jest poprawny
         if (interactionText.text != newText)
             interactionText.text = newText;
     }
@@ -123,7 +113,6 @@ public class ItemCheck : MonoBehaviour
         isChecking = true;
         HideInteractionText();
 
-        // ✅ Wyłącz outline na czas interakcji
         if (outline != null) outline.enabled = false;
 
         Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
@@ -133,7 +122,6 @@ public class ItemCheck : MonoBehaviour
             playerThoughtText.gameObject.SetActive(true);
             playerThoughtText.color = playerOriginalColor;
             playerThoughtText.text = "";
-            Debug.Log($"[ItemCheck] playerThoughtText AKTYWNY, treść: '{playerThought}'");
         }
         else
         {
@@ -160,10 +148,10 @@ public class ItemCheck : MonoBehaviour
             playerThoughtText.color = Color.white;
             playerThoughtText.text = "";
 
+            // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
             if (!demonVoiceEvent.IsNull)
             {
-                demonVoiceInstance = RuntimeManager.CreateInstance(demonVoiceEvent);
-                demonVoiceInstance.start();
+                demonVoiceInstance = AudioManager.Instance.PlayDialogVoice(demonVoiceEvent);
             }
 
             yield return StartCoroutine(TypeTextWithMarker(
@@ -172,10 +160,10 @@ public class ItemCheck : MonoBehaviour
                 demonMarkerColor
             ));
 
+            // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
             if (demonVoiceInstance.isValid())
             {
-                demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-                demonVoiceInstance.release();
+                AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
             }
 
             yield return new WaitForSeconds(playerThoughtStayTime);
@@ -229,10 +217,7 @@ public class ItemCheck : MonoBehaviour
 
     void OnDestroy()
     {
-        if (demonVoiceInstance.isValid())
-        {
-            demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-            demonVoiceInstance.release();
-        }
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
+        AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
     }
 }

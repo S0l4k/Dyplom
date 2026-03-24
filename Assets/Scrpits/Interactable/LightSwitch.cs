@@ -8,16 +8,16 @@ public class LightSwitch : MonoBehaviour
     public GameObject lightOb;
     [SerializeField] private EventReference flashlightEvent;
     public Outline outline;
+
     void Start()
     {
         playerCamera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckForRange();
-        if(canClick && Input.GetKeyDown(KeyCode.E))
+        if (canClick && Input.GetKeyDown(KeyCode.E))
         { Click(); }
     }
 
@@ -34,21 +34,18 @@ public class LightSwitch : MonoBehaviour
         {
             if (hit.collider.gameObject == gameObject)
             {
-                if (outline != null) outline.enabled = true;  // ✅ Włącz
+                if (outline != null) outline.enabled = true;
                 canClick = true;
                 return;
             }
-            // ❌ Raycast trafił, ale w COŚ INNEGO – wyłącz outline
             canClick = false;
             if (outline != null) outline.enabled = false;
         }
         else
         {
-            // ❌ Raycast NIC nie trafił – wyłącz outline
             canClick = false;
             if (outline != null) outline.enabled = false;
         }
-
     }
 
     void Click()
@@ -56,7 +53,9 @@ public class LightSwitch : MonoBehaviour
         if (lightOb == null)
             return;
 
-        RuntimeManager.PlayOneShot(flashlightEvent);
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        AudioManager.Instance.PlaySFX(flashlightEvent);
+
         lightOb.SetActive(!lightOb.activeSelf);
     }
 }
