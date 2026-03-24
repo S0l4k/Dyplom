@@ -34,11 +34,11 @@ public class EnemyAI : MonoBehaviour
     [Header("Internal State")]
     public bool walking = true;
     public bool chasing = false;
+    private bool isIdling = false;
 
     public Transform player;
-
-    private Transform currentDest;
-    private int randNum;
+    public Transform currentDest;
+    public int randNum;
     private float idleTime;
     private float loseSightTime = 2f;
     public float loseSightTimer = 0f;
@@ -47,6 +47,11 @@ public class EnemyAI : MonoBehaviour
     [Header("Respawn Settings")]
     public float spawnInvincibilityTime = 1.5f;
     public float spawnInvincibilityTimer = 0f;
+
+    // ✅ POLA DO DETEKCJI ZAPĘTLENIA (na poziomie klasy, nie w metodzie!)
+    private float lastProgressTime = 0f;
+    private Vector3 lastPosition = Vector3.zero;
+    private int stuckCounter = 0; // ✅ Licznik "zacięć" przy tym samym punkcie
 
     private void Awake()
     {
@@ -74,22 +79,16 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        // ✅ PRIORYTET 1: FinalChase (absolutnie najwyższy priorytet)
+        // ✅ PRIORYTET 1: FinalChase
         if (GameState.FinalChase)
         {
-            // ✅ KLUCZOWE ZABEZPIECZENIE: blokada wielokrotnego wywołania jumpscare
-            if (jumpscareTriggered)
-            {
-                // Jumpscare już aktywowany - nic nie rób (czekaj na załadowanie sceny śmierci)
-                return;
-            }
+            if (jumpscareTriggered) return;
 
             if (!ai.enabled) ai.enabled = true;
             chasing = true;
             walking = false;
             playerInSight = true;
 
-            // ✅ WALIDACJA PLAYERA
             if (player == null)
             {
                 Debug.LogError("[EnemyAI] Player reference is null during FinalChase!");
@@ -123,35 +122,42 @@ public class EnemyAI : MonoBehaviour
 
             float distance = Vector3.Distance(player.position, transform.position);
 
-            // ✅ WARUNEK AKTYWACJI JUMPSCARE (z blokadą)
             if (distance <= catchDistance)
             {
                 PlayerController pc = player.GetComponent<PlayerController>();
-                if (pc != null && pc.godMode)
-                    return;
+                if (pc != null && pc.godMode) return;
 
-                // ✅ AKTYWACJA JUMPSCARE (TYLKO RAZ!)
-                jumpscareTriggered = true; // 🔒 BLOKADA - zapobiega ponownemu wywołaniu
-
+                jumpscareTriggered = true;
                 Debug.Log("[EnemyAI] FINAL CHASE CATCH! Triggering jumpscare sequence ONCE.");
 
-                player.gameObject.SetActive(false);
+                if (player != null)
+                    player.gameObject.SetActive(false);
+
                 aiAnim.SetTrigger("jumpscare");
-                RuntimeManager.PlayOneShot(jumpscareEvent); // ✅ DŹWIĘK
+                RuntimeManager.PlayOneShot(jumpscareEvent);
 
                 chasing = false;
                 ai.isStopped = true;
                 ai.speed = 0f;
 
                 StartCoroutine(deathRoutine());
-
-                return; // ✅ ZAKOŃCZ UPDATE NATYCHMIAST - nie kontynuuj logiki
+                return;
             }
 
-            return; // ✅ ZAKOŃCZ UPDATE dla FinalChase
+            return;
         }
 
-        // ✅ PRIORYTET 2: Cooldown po respawnowaniu (blokuje detekcję i ruch)
+        if (GameState.DemonInStoryMode)
+        {
+            if (ai != null && ai.enabled) ai.enabled = false;
+            chasing = false;
+            walking = false;
+            playerInSight = false;
+            aiAnim?.SetTrigger("idle");
+            return;
+        }
+
+        // ✅ PRIORYTET 2: Cooldown po respawnowaniu
         if (spawnInvincibilityTimer > 0f)
         {
             spawnInvincibilityTimer -= Time.deltaTime;
@@ -161,7 +167,6 @@ public class EnemyAI : MonoBehaviour
             ai.isStopped = true;
             ai.speed = 0f;
 
-            // Upewnij się, że animacja jest idle
             if (aiAnim != null)
             {
                 aiAnim.ResetTrigger("walk");
@@ -179,7 +184,6 @@ public class EnemyAI : MonoBehaviour
             ai.isStopped = true;
             aiAnim.SetTrigger("idle");
 
-            // Patrzenie na gracza mimo rozmowy
             Vector3 lookDir = (player.position - transform.position).normalized;
             lookDir.y = 0;
             if (lookDir.magnitude > 0.1f)
@@ -192,14 +196,13 @@ public class EnemyAI : MonoBehaviour
 
         // --- DETEKCJA GRACZA ---
         Vector3 direction = (player.position - transform.position).normalized;
-        RaycastHit rayHit; // ✅ UNIKNIĘCIE KONFLIKTU Z NavMeshHit
+        RaycastHit rayHit;
         if (Physics.Raycast(transform.position + rayCastOffset, direction, out rayHit, sightDistance))
         {
             playerInSight = rayHit.collider.CompareTag("Player");
 
             if (playerInSight)
             {
-                // SPRAWDZENIE SKRADANIA
                 PlayerController pc = player.GetComponent<PlayerController>();
                 if (pc != null && pc.isSneaking && !GameState.ChaseLocked)
                 {
@@ -229,8 +232,8 @@ public class EnemyAI : MonoBehaviour
         {
             chasing = true;
             walking = false;
+            isIdling = false;
 
-            // ✅ ZABEZPIECZENIE PRZED UŻYCIEM DESTINATION
             if (!ai.isOnNavMesh)
             {
                 NavMeshHit navHit;
@@ -257,10 +260,11 @@ public class EnemyAI : MonoBehaviour
             if (distance <= catchDistance)
             {
                 PlayerController pc = player.GetComponent<PlayerController>();
-                if (pc != null && pc.godMode)
-                    return;
+                if (pc != null && pc.godMode) return;
 
-                player.gameObject.SetActive(false);
+                if (player != null)
+                    player.gameObject.SetActive(false);
+
                 aiAnim.SetTrigger("jumpscare");
                 StartCoroutine(deathRoutine());
                 chasing = false;
@@ -282,48 +286,99 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        // --- PATROL ---
-        if (walking && !chasing)
+        // --- PATROL (NAPRAWIONY – BEZ ZAPĘTLENIA) ---
+        if (walking && !chasing && !isIdling)
         {
             ai.speed = walkSpeed;
             ai.isStopped = false;
 
-            // ✅ ZABEZPIECZENIE: sprawdź czy agent jest aktywny i na NavMesh
-            if (ai.isActiveAndEnabled && ai.isOnNavMesh)
+            // ✅ SNAPUJ CEL DO NAVMESH (KLUCZOWE!)
+            Vector3 snappedDest = currentDest.position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(currentDest.position, out hit, 2f, NavMesh.AllAreas))
             {
-                ai.destination = currentDest.position;
-            }
-            else
-            {
-                // Jeśli nie na NavMesh, spróbuj przywrócić
-                NavMeshHit navHit; // ✅ UNIKNIĘCIE KONFLIKTU NAZW
-                if (NavMesh.SamplePosition(transform.position, out navHit, 1f, NavMesh.AllAreas))
-                {
-                    ai.Warp(navHit.position);
-                    ai.destination = currentDest.position;
-                }
-                else
-                {
-                    Debug.LogWarning($"[EnemyAI] {name} not on NavMesh! Skipping patrol.");
-                    return;
-                }
+                snappedDest = hit.position;
             }
 
+            ai.destination = snappedDest;
+
+            // ✅ ANIMACJA
             aiAnim.ResetTrigger("run");
             aiAnim.SetTrigger("walk");
 
-            // ✅ ZABEZPIECZENIE dla remainingDistance
-            if (ai.isActiveAndEnabled && !ai.pathPending && ai.hasPath && ai.remainingDistance <= ai.stoppingDistance)
+            // ✅ DEBUG: wizualizacja celu
+            Debug.DrawLine(transform.position, snappedDest, Color.cyan, 0f);
+            Debug.DrawRay(snappedDest, Vector3.up * 0.5f, Color.red, 0f);
+
+            // ✅ SPRZAWDŹ STATUS ŚCIEŻKI – jeśli niekompletna, przejdź do następnego punktu
+            if (ai.pathStatus != NavMeshPathStatus.PathComplete)
+            {
+                Debug.LogWarning($"[EnemyAI] {name} Path status: {ai.pathStatus} – przechodzę do następnego punktu");
+
+                if (destinations != null && destinations.Count > 0)
+                {
+                    randNum = (randNum + 1) % destinations.Count;
+                    currentDest = destinations[randNum];
+                }
+                return;
+            }
+
+            // ✅ WARUNEK DOTARCIA DO CELU (0.5m margines)
+            float distanceToDest = Vector3.Distance(transform.position, snappedDest);
+            if (distanceToDest <= 0.5f)
             {
                 aiAnim.ResetTrigger("walk");
                 aiAnim.SetTrigger("idle");
                 ai.speed = 0;
                 ai.isStopped = true;
 
-                if (!IsInvoking("dummy"))
+                if (!isIdling)
+                {
+                    isIdling = true;
                     StartCoroutine(stayIdle());
+                }
 
                 walking = false;
+                return;
+            }
+
+            // ✅ DETEKCJA ZAPĘTLENIA: jeśli demon stoi w tym samym miejscu > 2s
+            if (ai.velocity.magnitude < 0.05f) // ✅ Prawie nieruchomy
+            {
+                if (Vector3.Distance(transform.position, lastPosition) < 0.15f)
+                {
+                    if (Time.time - lastProgressTime > 2f) // ✅ Stoi > 2s = zapętlenie
+                    {
+                        stuckCounter++;
+                        Debug.LogWarning($"[EnemyAI] {name} Wykryto zapętlenie #{stuckCounter} – przechodzę do następnego punktu");
+
+                        if (stuckCounter >= 2) // ✅ Po 2 zacięciach – zmień punkt
+                        {
+                            if (destinations != null && destinations.Count > 0)
+                            {
+                                randNum = (randNum + 1) % destinations.Count;
+                                currentDest = destinations[randNum];
+                                stuckCounter = 0;
+                                Debug.Log($"[EnemyAI] {name} Nowy cel: {currentDest.name}");
+                            }
+                        }
+
+                        lastProgressTime = Time.time;
+                    }
+                }
+                else
+                {
+                    // ✅ Resetuj licznik gdy demon się porusza
+                    lastProgressTime = Time.time;
+                    lastPosition = transform.position;
+                    stuckCounter = 0;
+                }
+            }
+            else
+            {
+                // ✅ Resetuj gdy demon aktywnie się porusza
+                lastPosition = transform.position;
+                stuckCounter = 0;
             }
         }
     }
@@ -339,26 +394,61 @@ public class EnemyAI : MonoBehaviour
             currentDest = destinations[randNum];
             walking = true;
         }
+
+        isIdling = false;
     }
 
     IEnumerator deathRoutine()
     {
         yield return new WaitForSeconds(jumpscareTime);
 
-        // Reset globalnych stanów
+        if (player != null)
+        {
+            CharacterController cc = player.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+
+            PlayerController pc = player.GetComponent<PlayerController>();
+            if (pc != null) pc.enabled = false;
+
+            Camera cam = player.GetComponentInChildren<Camera>();
+            if (cam != null) cam.enabled = false;
+
+            var playerRenderers = player.GetComponentsInChildren<Renderer>();
+            foreach (var r in playerRenderers)
+            {
+                if (r != null) r.enabled = false;
+            }
+
+            player.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("[EnemyAI] ❌ player reference is NULL in deathRoutine!");
+        }
+
+        // ✅ KLUCZOWE: RESETUJ WSZYSTKIE STANY DEMONA PO ŚMIERCI
+        GameState.DemonInStoryMode = true;          // ✅ Wróć do story mode (agent wyłączony)
+        GameState.DemonRespawnedInApartment = false; // ✅ Resetuj respawn w mieszkaniu
+        GameState.ReadyForFinalChase = false;        // ✅ Resetuj gotowość do chase
+        GameState.ChaseLocked = true;                // ✅ Zablokuj chase po resecie
+
+        // Reszta resetów
         GameState.LoopSequenceActive = false;
         GameState.DemonLoopPhase = false;
         GameState.ReadyForFinalChase = false;
         GameState.FinalChase = false;
-        GameState.ChaseLocked = true;
-
-        // ✅ ZRESETUJ FLAGĘ JUMPSCARE (na wypadek resecu levelu bez restartu gry)
         jumpscareTriggered = false;
 
-        SceneManager.LoadScene(deathScene);
+        if (!string.IsNullOrEmpty(deathScene))
+        {
+            SceneManager.LoadScene(deathScene);
+        }
+        else
+        {
+            Debug.LogError("[EnemyAI] ❌ deathScene is empty! Cannot load death scene.");
+        }
     }
 
-    // ✅ PUBLICZNA METODA DO ZEWNĘTRZNEGO USTAWIENIA COOLDOWNU (np. z StairLoop)
     public void SetSpawnInvincibility()
     {
         spawnInvincibilityTimer = spawnInvincibilityTime;

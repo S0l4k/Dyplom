@@ -21,9 +21,7 @@ public class QuestManager : MonoBehaviour
     void Start()
     {
         
-        AddQuest("Talk with the Thing");
-        AddQuest("Pick up flashlight");
-        AddQuest("Order Food");
+      
     }
 
     public void AddQuest(string questName)
@@ -50,6 +48,16 @@ public class QuestManager : MonoBehaviour
         Debug.Log($"[QUEST] Ukończono quest: {questName}");
 
         CheckForChaseTrigger();
+    }
+    public void ClearAllQuests()
+    {
+        foreach (var kvp in activeQuests)
+        {
+            if (kvp.Value != null)
+                Destroy(kvp.Value);
+        }
+        activeQuests.Clear();
+        Debug.Log("[QuestManager] Wszystkie questy wyczyszczone");
     }
     private void CheckForChaseTrigger()
     {

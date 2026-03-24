@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FMODUnity;
 
 public class LightSwitch : MonoBehaviour
@@ -7,6 +7,7 @@ public class LightSwitch : MonoBehaviour
     private bool canClick = false;
     public GameObject lightOb;
     [SerializeField] private EventReference flashlightEvent;
+    public Outline outline;
     void Start()
     {
         playerCamera = Camera.main;
@@ -33,11 +34,21 @@ public class LightSwitch : MonoBehaviour
         {
             if (hit.collider.gameObject == gameObject)
             {
-                canClick= true;
+                if (outline != null) outline.enabled = true;  // ✅ Włącz
+                canClick = true;
                 return;
             }
+            // ❌ Raycast trafił, ale w COŚ INNEGO – wyłącz outline
             canClick = false;
+            if (outline != null) outline.enabled = false;
         }
+        else
+        {
+            // ❌ Raycast NIC nie trafił – wyłącz outline
+            canClick = false;
+            if (outline != null) outline.enabled = false;
+        }
+
     }
 
     void Click()

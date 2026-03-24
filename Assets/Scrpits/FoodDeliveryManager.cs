@@ -1,6 +1,4 @@
-using UnityEngine;
-using System.Collections;
-using TMPro;
+Ôªøusing UnityEngine;
 
 public class FoodDeliveryManager : MonoBehaviour
 {
@@ -15,36 +13,20 @@ public class FoodDeliveryManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // KLUCZOWE: obiekt przetrwa wy≥πczenie UI i zmianÍ scen
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void OrderFood(GameObject foodPrefab, Transform spawnPoint, Transform playerHand,
-                         GameObject pickupTextObject, float deliveryTime, string itemName = "Food")
+    public void OrderFood()
     {
-        StartCoroutine(DeliverFoodRoutine(foodPrefab, spawnPoint, playerHand, pickupTextObject, deliveryTime, itemName));
-        Debug.Log($"[FoodDelivery] ZamÛwiono {itemName}, dostawa za {deliveryTime}s");
+        // ‚úÖ ODBLOKUJ DIALOG Z KURIEREM (od razu po naci≈õniƒôciu przycisku)
+        GameState.CourierArrived = true;
+        Debug.Log("[FoodDelivery] üö™ Kurier dostƒôpny do rozmowy przy drzwiach");
 
-        // Quest ñ jeúli istnieje
+        // ‚úÖ UKO≈ÉCZ QUEST
         if (QuestManager.Instance != null)
             QuestManager.Instance.CompleteQuest("Order Food");
-    }
+            QuestManager.Instance.AddQuest("Meet with the courier downstairs");
 
-    private IEnumerator DeliverFoodRoutine(GameObject foodPrefab, Transform spawnPoint, Transform playerHand,
-                                          GameObject pickupTextObject, float deliveryTime, string itemName)
-    {
-        yield return new WaitForSeconds(deliveryTime);
-
-        GameObject food = Instantiate(foodPrefab, spawnPoint.position, spawnPoint.rotation);
-        ItemPickup pickup = food.GetComponent<ItemPickup>();
-
-        if (pickup != null)
-        {
-            pickup.handPosition = playerHand;
-            pickup.pickupText = pickupTextObject.GetComponent<TMP_Text>();
-            pickup.itemName = itemName;
-            pickup.stairLoop = FindObjectOfType<StairLoop>();
-        }
-
-        Debug.Log($"[FoodDelivery] Dostarczono {itemName}!");
+        // ‚ùå BRAK Instantiate ‚Äì NIC using UnityEngine;
     }
 }

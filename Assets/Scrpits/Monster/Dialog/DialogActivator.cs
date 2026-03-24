@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
 
 public class DialogActivator : MonoBehaviour
 {
@@ -11,8 +12,13 @@ public class DialogActivator : MonoBehaviour
     [Tooltip("Jeśli true, dialog dostępny TYLKO gdy DemonLoopPhase = true (po 5 loopach)")]
     public bool isFinalDialog = false;
 
-    [Header("Dialog Content")] // ✅ NOWE: własne node'y dla KAŻDEGO obiektu
-    public DialogNode[] dialogNodes; // ✅ Demon ma swoje, drzwi mają swoje
+    [Header("Dialog Customization (per NPC)")]
+    public EventReference voiceEvent;          // ✅ Głos tego NPC (demon LUB kurier)
+    public Color textColor = Color.white;      // ✅ Kolor tekstu NPC
+    public string markerColor = "#FFFFFF33";   // ✅ Kolor markera (tło pod tekstem)
+
+    [Header("Dialog Content")]
+    public DialogNode[] dialogNodes;
 
     [Header("UI")]
     public TMP_Text interactionText;
@@ -26,6 +32,11 @@ public class DialogActivator : MonoBehaviour
     private MonoBehaviour playerMovementScript;
     private bool canTalk = false;
     private bool isTalking = false;
+
+    // ✅ ZAPAMIĘTAJ ORYGINALNE USTAWIENIA DIALOG UI (do przywrócenia po dialogu)
+    private EventReference originalVoice;
+    private Color originalTextColor = Color.white;
+    private string originalMarkerColor = "#FFFFFF33";
 
     void Start()
     {
@@ -45,7 +56,19 @@ public class DialogActivator : MonoBehaviour
         }
 
         interactionText.gameObject.SetActive(false);
-        Debug.Log($"[DialogActivator] {npcName} initialized | isFinalDialog={isFinalDialog}");
+        Debug.Log($"[DialogActivator] {npcName} initialized | isFinalDialog={isFinalDialog} | voiceEvent={(voiceEvent.IsNull ? "NULL" : "SET")}");
+
+        // ✅ ZAPISZ ORYGINALNE USTAWIENIA DIALOG UI
+        if (dialogManager != null)
+        {
+            Dialog dialog = dialogManager.GetComponent<Dialog>();
+            if (dialog != null)
+            {
+                originalVoice = dialog.npcVoiceEvent;
+                originalTextColor = dialog.dialogText != null ? dialog.dialogText.color : Color.white;
+                originalMarkerColor = dialog.npcMarkerColor;
+            }
+        }
     }
 
     void Update()
@@ -58,6 +81,15 @@ public class DialogActivator : MonoBehaviour
 
         if (!playerCamera) return;
 
+        // ✅ BLOKADA DIALOGU KURIERA PRZED ZAMÓWIENIEM
+        if (npcName == "Courier" && !GameState.CourierArrived)
+        {
+            HideInteractionText();
+            canTalk = false;
+            return;
+        }
+
+        // ✅ BLOKADA FINALNEGO DIALOGU
         if (isFinalDialog && !GameState.DemonLoopPhase)
         {
             HideInteractionText();
@@ -65,6 +97,7 @@ public class DialogActivator : MonoBehaviour
             return;
         }
 
+        // ✅ BLOKADA ZWYKŁYCH DIALOGÓW PODCZAS FAZY DEMONA
         if (!isFinalDialog && GameState.DemonLoopPhase && !GameState.ReadyForFinalChase)
         {
             HideInteractionText();
@@ -143,8 +176,16 @@ public class DialogActivator : MonoBehaviour
             Dialog dialog = dialogManager.GetComponent<Dialog>();
             if (dialog != null)
             {
-                // ✅ KLUCZ: przekazujemy WŁASNE node'y tego obiektu
-                dialog.StartDialog(dialogNodes);
+                // ✅ PODMIEŃ USTAWIENIA DIALOGU NA TE Z TEGO NPC
+                dialog.npcVoiceEvent = voiceEvent;      // ✅ Głos kuriera LUB demona
+                dialog.npcMarkerColor = markerColor;    // ✅ Kolor markera
+
+                if (dialog.dialogText != null)
+                    dialog.dialogText.color = textColor; // ✅ Kolor tekstu
+
+                // ✅ ROZPOCZNIJ DIALOG BEZ POZYCJI (eventy 2D)
+                dialog.StartDialog(dialogNodes); // ✅ TYLKO JEDEN ARGUMENT
+
                 StartCoroutine(WaitForDialogEnd(dialog));
             }
         }
@@ -157,6 +198,13 @@ public class DialogActivator : MonoBehaviour
 
         isTalking = false;
         GameState.IsTalking = false;
+
+        // ✅ PRZYWRÓĆ ORYGINALNE USTAWIENIA DIALOG UI
+        dialog.npcVoiceEvent = originalVoice;
+        dialog.npcMarkerColor = originalMarkerColor;
+
+        if (dialog.dialogText != null)
+            dialog.dialogText.color = originalTextColor;
 
         if (playerMovementScript != null)
             playerMovementScript.enabled = true;
