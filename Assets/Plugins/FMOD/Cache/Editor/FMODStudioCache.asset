@@ -205,7 +205,7 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639099811184337766
+  lastModified: 639099965258877232
   FileSizes:
   - Name: Desktop
     Value: 1904
@@ -309,7 +309,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639099811184337766
+  cacheTime: 639099965258877232
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -641,7 +641,7 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639099811184317821
+  lastModified: 639099965258827155
   FileSizes:
   - Name: Desktop
     Value: 5499840
