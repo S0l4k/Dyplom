@@ -48,10 +48,9 @@ public class EnemyAI : MonoBehaviour
     public float spawnInvincibilityTime = 1.5f;
     public float spawnInvincibilityTimer = 0f;
 
-    // ✅ POLA DO DETEKCJI ZAPĘTLENIA (na poziomie klasy, nie w metodzie!)
     private float lastProgressTime = 0f;
     private Vector3 lastPosition = Vector3.zero;
-    private int stuckCounter = 0; // ✅ Licznik "zacięć" przy tym samym punkcie
+    private int stuckCounter = 0;
 
     private void Awake()
     {
@@ -134,7 +133,9 @@ public class EnemyAI : MonoBehaviour
                     player.gameObject.SetActive(false);
 
                 aiAnim.SetTrigger("jumpscare");
-                RuntimeManager.PlayOneShot(jumpscareEvent);
+
+                // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+                AudioManager.Instance.PlaySFX(jumpscareEvent);
 
                 chasing = false;
                 ai.isStopped = true;
@@ -268,7 +269,9 @@ public class EnemyAI : MonoBehaviour
                 aiAnim.SetTrigger("jumpscare");
                 StartCoroutine(deathRoutine());
                 chasing = false;
-                RuntimeManager.PlayOneShot(jumpscareEvent);
+
+                // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+                AudioManager.Instance.PlaySFX(jumpscareEvent);
             }
         }
         else if (chasing)
@@ -286,13 +289,12 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        // --- PATROL (NAPRAWIONY – BEZ ZAPĘTLENIA) ---
+        // --- PATROL ---
         if (walking && !chasing && !isIdling)
         {
             ai.speed = walkSpeed;
             ai.isStopped = false;
 
-            // ✅ SNAPUJ CEL DO NAVMESH (KLUCZOWE!)
             Vector3 snappedDest = currentDest.position;
             NavMeshHit hit;
             if (NavMesh.SamplePosition(currentDest.position, out hit, 2f, NavMesh.AllAreas))
@@ -302,15 +304,12 @@ public class EnemyAI : MonoBehaviour
 
             ai.destination = snappedDest;
 
-            // ✅ ANIMACJA
             aiAnim.ResetTrigger("run");
             aiAnim.SetTrigger("walk");
 
-            // ✅ DEBUG: wizualizacja celu
             Debug.DrawLine(transform.position, snappedDest, Color.cyan, 0f);
             Debug.DrawRay(snappedDest, Vector3.up * 0.5f, Color.red, 0f);
 
-            // ✅ SPRZAWDŹ STATUS ŚCIEŻKI – jeśli niekompletna, przejdź do następnego punktu
             if (ai.pathStatus != NavMeshPathStatus.PathComplete)
             {
                 Debug.LogWarning($"[EnemyAI] {name} Path status: {ai.pathStatus} – przechodzę do następnego punktu");
@@ -323,7 +322,6 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            // ✅ WARUNEK DOTARCIA DO CELU (0.5m margines)
             float distanceToDest = Vector3.Distance(transform.position, snappedDest);
             if (distanceToDest <= 0.5f)
             {
@@ -342,17 +340,16 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            // ✅ DETEKCJA ZAPĘTLENIA: jeśli demon stoi w tym samym miejscu > 2s
-            if (ai.velocity.magnitude < 0.05f) // ✅ Prawie nieruchomy
+            if (ai.velocity.magnitude < 0.05f)
             {
                 if (Vector3.Distance(transform.position, lastPosition) < 0.15f)
                 {
-                    if (Time.time - lastProgressTime > 2f) // ✅ Stoi > 2s = zapętlenie
+                    if (Time.time - lastProgressTime > 2f)
                     {
                         stuckCounter++;
                         Debug.LogWarning($"[EnemyAI] {name} Wykryto zapętlenie #{stuckCounter} – przechodzę do następnego punktu");
 
-                        if (stuckCounter >= 2) // ✅ Po 2 zacięciach – zmień punkt
+                        if (stuckCounter >= 2)
                         {
                             if (destinations != null && destinations.Count > 0)
                             {
@@ -368,7 +365,6 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    // ✅ Resetuj licznik gdy demon się porusza
                     lastProgressTime = Time.time;
                     lastPosition = transform.position;
                     stuckCounter = 0;
@@ -376,7 +372,6 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                // ✅ Resetuj gdy demon aktywnie się porusza
                 lastPosition = transform.position;
                 stuckCounter = 0;
             }
@@ -426,27 +421,24 @@ public class EnemyAI : MonoBehaviour
             Debug.LogError("[EnemyAI] ❌ player reference is NULL in deathRoutine!");
         }
 
-        // ✅ KLUCZOWE: RESETUJ WSZYSTKIE STANY DEMONA PO ŚMIERCI
-        GameState.DemonInStoryMode = true;          // ✅ Wróć do story mode (agent wyłączony)
-        GameState.DemonRespawnedInApartment = false; // ✅ Resetuj respawn w mieszkaniu
-        GameState.ReadyForFinalChase = false;        // ✅ Resetuj gotowość do chase
-        GameState.ChaseLocked = true;                // ✅ Zablokuj chase po resecie
-
-        // Reszta resetów
+        GameState.DemonInStoryMode = true;
+        GameState.DemonRespawnedInApartment = false;
+        GameState.ReadyForFinalChase = false;
+        GameState.ChaseLocked = true;
         GameState.LoopSequenceActive = false;
         GameState.DemonLoopPhase = false;
-        GameState.ReadyForFinalChase = false;
         GameState.FinalChase = false;
         jumpscareTriggered = false;
 
-        if (!string.IsNullOrEmpty(deathScene))
-        {
-            SceneManager.LoadScene(deathScene);
-        }
-        else
-        {
-            Debug.LogError("[EnemyAI] ❌ deathScene is empty! Cannot load death scene.");
-        }
+        Debug.Log("[EnemyAI] Jumpscare triggered. Closing game...");
+
+        yield return new WaitForSeconds(2.0f);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     public void SetSpawnInvincibility()

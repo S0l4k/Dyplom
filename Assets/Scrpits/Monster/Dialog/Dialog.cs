@@ -47,7 +47,6 @@ public class Dialog : MonoBehaviour
             SelectOption(1);
     }
 
-    // ✅ PROSTA METODA DLA EVENTÓW 2D (BEZ POZYCJI)
     public void StartDialog(DialogNode[] nodes)
     {
         currentNodes = nodes;
@@ -73,16 +72,13 @@ public class Dialog : MonoBehaviour
         isTyping = true;
         skipTyping = false;
 
-        npcVoiceInstance = RuntimeManager.CreateInstance(npcVoiceEvent);
-        npcVoiceInstance.start();
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        npcVoiceInstance = AudioManager.Instance.PlayDialogVoice(npcVoiceEvent);
 
         yield return StartCoroutine(TypeTextWithMarker(dialogText, node.npcLine, npcMarkerColor));
 
-        if (npcVoiceInstance.isValid())
-        {
-            npcVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-            npcVoiceInstance.release();
-        }
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
+        AudioManager.Instance.StopDialogVoice(ref npcVoiceInstance, true);
 
         yield return new WaitForSeconds(0.4f);
 
@@ -177,10 +173,7 @@ public class Dialog : MonoBehaviour
 
     void OnDestroy()
     {
-        if (npcVoiceInstance.isValid())
-        {
-            npcVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-            npcVoiceInstance.release();
-        }
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
+        AudioManager.Instance.StopDialogVoice(ref npcVoiceInstance, true);
     }
 }

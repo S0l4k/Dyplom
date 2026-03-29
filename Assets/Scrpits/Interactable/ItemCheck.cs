@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using FMODUnity;
 using System.Collections;
-using FMODUnity;
-using Studio = FMOD.Studio;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemCheck : MonoBehaviour
 {
@@ -15,8 +15,8 @@ public class ItemCheck : MonoBehaviour
     public EventReference demonVoiceEvent;
 
     [Header("UI")]
-    public TMP_Text interactionText;   // "Press E to check..."
-    public TMP_Text playerThoughtText; // pojedynczy tekst na Canvasie
+    public TMP_Text interactionText;
+    public TMP_Text playerThoughtText;
 
     [Header("Timing")]
     [SerializeField] private float typeSpeed = 0.07f;
@@ -28,10 +28,13 @@ public class ItemCheck : MonoBehaviour
     [SerializeField] private string playerMarkerColor = "#00000080";
     [SerializeField] private string demonMarkerColor = "#FF000080";
 
+    [Header("Outline")]
+    public Outline outline;
+
     private Camera playerCamera;
     private bool canInteract = false;
     private bool isChecking = false;
-    private Studio.EventInstance demonVoiceInstance;
+    private FMOD.Studio.EventInstance demonVoiceInstance;
     private Color playerOriginalColor = Color.white;
 
     void Start()
@@ -50,6 +53,7 @@ public class ItemCheck : MonoBehaviour
         {
             Debug.LogError($"[ItemCheck] playerThoughtText NIE JEST PRZYPISANY na obiekcie {name}!", this);
         }
+        if (outline != null) outline.enabled = false;
     }
 
     void Update()
@@ -75,19 +79,19 @@ public class ItemCheck : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 3f) && hit.collider.gameObject == gameObject)
         {
             canInteract = true;
+            if (outline != null) outline.enabled = true;
+        }
+        else
+        {
+            if (outline != null) outline.enabled = false;
         }
 
-        // ✅ OPTYMALIZACJA: aktualizuj UI tylko przy zmianie stanu (nie co klatkę!)
         if (canInteract != wasInteracting)
         {
             if (canInteract)
-            {
                 ShowInteractionText();
-            }
             else
-            {
                 HideInteractionText();
-            }
         }
     }
 
@@ -95,7 +99,6 @@ public class ItemCheck : MonoBehaviour
     {
         interactionText.gameObject.SetActive(true);
         string newText = $"Press E to check {itemName}";
-        // ✅ OPTYMALIZACJA: nie ustawiaj tekstu jeśli już jest poprawny
         if (interactionText.text != newText)
             interactionText.text = newText;
     }
@@ -110,15 +113,15 @@ public class ItemCheck : MonoBehaviour
         isChecking = true;
         HideInteractionText();
 
+        if (outline != null) outline.enabled = false;
+
         Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
 
-        // ✅ KLUCZOWE: aktywuj tekst MYŚLI przed użyciem
         if (playerThoughtText != null)
         {
-            playerThoughtText.gameObject.SetActive(true); // ✅ MUSI BYĆ AKTYWNY!
+            playerThoughtText.gameObject.SetActive(true);
             playerThoughtText.color = playerOriginalColor;
             playerThoughtText.text = "";
-            Debug.Log($"[ItemCheck] playerThoughtText AKTYWNY, treść: '{playerThought}'");
         }
         else
         {
@@ -135,9 +138,7 @@ public class ItemCheck : MonoBehaviour
         ));
 
         yield return new WaitForSeconds(playerThoughtStayTime);
-
         yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
-
         yield return new WaitForSeconds(delayBeforeDemon);
 
         // === ETAP 2: Odpowiedź demona (opcjonalnie) ===
@@ -147,10 +148,10 @@ public class ItemCheck : MonoBehaviour
             playerThoughtText.color = Color.white;
             playerThoughtText.text = "";
 
+            // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
             if (!demonVoiceEvent.IsNull)
             {
-                demonVoiceInstance = RuntimeManager.CreateInstance(demonVoiceEvent);
-                demonVoiceInstance.start();
+                demonVoiceInstance = AudioManager.Instance.PlayDialogVoice(demonVoiceEvent);
             }
 
             yield return StartCoroutine(TypeTextWithMarker(
@@ -159,10 +160,10 @@ public class ItemCheck : MonoBehaviour
                 demonMarkerColor
             ));
 
+            // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
             if (demonVoiceInstance.isValid())
             {
-                demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-                demonVoiceInstance.release();
+                AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
             }
 
             yield return new WaitForSeconds(playerThoughtStayTime);
@@ -174,8 +175,6 @@ public class ItemCheck : MonoBehaviour
         {
             QuestManager.Instance.CompleteQuest("Check your fridge");
             Debug.Log("[Narrative] ✅ Quest completed: Check your fridge");
-
-            // 🔥 NOWOŚĆ: wywołaj demona obok lodówki
             GameNarrativeManager.Instance?.TriggerFridgeDemon();
         }
         isChecking = false;
@@ -218,10 +217,7 @@ public class ItemCheck : MonoBehaviour
 
     void OnDestroy()
     {
-        if (demonVoiceInstance.isValid())
-        {
-            demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-            demonVoiceInstance.release();
-        }
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
+        AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
     }
 }

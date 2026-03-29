@@ -22,6 +22,7 @@ public class DialogActivator : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text interactionText;
+    
 
     [Header("References")]
     public GameObject player;

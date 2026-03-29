@@ -1,4 +1,4 @@
-using FMODUnity;
+﻿using FMODUnity;
 using UnityEngine;
 
 public class PlayerSound : MonoBehaviour
@@ -9,17 +9,14 @@ public class PlayerSound : MonoBehaviour
     public void PlayFootstep()
     {
         int surface = GetSurfaceType();
-        var instance = RuntimeManager.CreateInstance(footstepEvent);
-        instance.setParameterByName("Surface", surface);
-        instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-        instance.start();
-        instance.release();
+
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        AudioManager.Instance.PlayFootstep(footstepEvent, surface, transform.position);
     }
 
     int GetSurfaceType()
     {
         if (Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit, 1.2f))
-
         {
             Debug.Log("Surface: " + hit.collider.name);
 

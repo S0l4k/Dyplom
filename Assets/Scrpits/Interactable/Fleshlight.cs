@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FMODUnity;
 
 public class Flashlight : MonoBehaviour
@@ -20,7 +20,9 @@ public class Flashlight : MonoBehaviour
         ON.SetActive(true);
         OFF.SetActive(false);
         isON = true;
-        RuntimeManager.PlayOneShot(flashlightEvent);
+
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        AudioManager.Instance.PlaySFX(flashlightEvent);
     }
 
     public void TurnOff()
@@ -28,6 +30,8 @@ public class Flashlight : MonoBehaviour
         ON.SetActive(false);
         OFF.SetActive(true);
         isON = false;
-        RuntimeManager.PlayOneShot(flashlightEvent);
+
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        AudioManager.Instance.PlaySFX(flashlightEvent);
     }
 }

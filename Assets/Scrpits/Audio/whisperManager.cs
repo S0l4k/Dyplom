@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -18,19 +18,17 @@ public class RandomWhispers : MonoBehaviour
 
     void Update()
     {
-        
+        // Sprawdź czy poprzedni dźwięk jeszcze gra
         if (currentInstance.isValid())
         {
             PLAYBACK_STATE state;
             currentInstance.getPlaybackState(out state);
             if (state != PLAYBACK_STATE.STOPPED)
             {
-                
                 return;
             }
         }
 
-      
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
@@ -46,9 +44,7 @@ public class RandomWhispers : MonoBehaviour
 
     void PlayWhisper()
     {
-        
-        currentInstance = RuntimeManager.CreateInstance(whispersEvent);
-        currentInstance.start();
-        currentInstance.release(); 
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        currentInstance = AudioManager.Instance.PlayRandomSound(whispersEvent, transform.position);
     }
 }

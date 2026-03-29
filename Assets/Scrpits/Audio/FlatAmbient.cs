@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -11,34 +11,33 @@ public class FlatAmbient : MonoBehaviour
 
     private void Start()
     {
-        ambientInstance = RuntimeManager.CreateInstance(apartmentAmbientEvent);
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        ambientInstance = AudioManager.Instance.CreateAmbientInstance(apartmentAmbientEvent);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-
         if (isPlaying) return;
 
-        ambientInstance.set3DAttributes(
-            RuntimeUtils.To3DAttributes(gameObject)
-        );
-        ambientInstance.start();
+        // ✅ ZAMIENIONE: bezpośrednie set3DAttributes + start -> AudioManager
+        AudioManager.Instance.StartAmbientInstance(ambientInstance, transform.position);
         isPlaying = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-
         if (!isPlaying) return;
 
-        ambientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        // ✅ ZAMIENIONE: bezpośrednie stop -> AudioManager
+        AudioManager.Instance.StopAmbientInstance(ref ambientInstance, true);
         isPlaying = false;
     }
 
     private void OnDestroy()
     {
-        ambientInstance.release();
+        // ✅ ZAMIENIONE: bezpośrednie release -> AudioManager
+        AudioManager.Instance.StopAmbientInstance(ref ambientInstance, true);
     }
 }

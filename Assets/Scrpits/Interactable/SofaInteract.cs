@@ -3,34 +3,33 @@ using TMPro;
 using System.Collections;
 using FMODUnity;
 using UnityEngine.SceneManagement;
-using Studio = FMOD.Studio;
 
 public class SofaInteract : MonoBehaviour
 {
     [Header("References")]
     public Transform playerCamera;
-    public Transform sofaViewPoint;        // ✅ Punkt widoku LEŻĄCEGO na kanapie
+    public Transform sofaViewPoint;
     public TMP_Text interactText;
-    public ScreenFader screenFader;        // ✅ Do fade to black
-    public TMP_Text thoughtText;           // ✅ Tekst myśli (ten sam co w GameNarrativeManager)
+    public ScreenFader screenFader;
+    public TMP_Text thoughtText;
 
     [Header("Audio")]
-    public EventReference demonVoiceEvent; // ✅ Głos demona "You won't free yourself..."
+    public EventReference demonVoiceEvent;
 
     [Header("Visual Styling")]
-    [SerializeField] private string demonMarkerColor = "#FF000080"; // ✅ Czerwony marker
+    [SerializeField] private string demonMarkerColor = "#FF000080";
 
     [Header("Settings")]
     public float useRange = 3f;
-    public float moveSpeed = 2.5f;         // ✅ Wolniejsze przejście niż komputer
-    public float typeSpeed = 0.07f;        // ✅ Wolniejsze pisanie dla dramatyzmu
+    public float moveSpeed = 2.5f;
+    public float typeSpeed = 0.07f;
 
     private bool canUse = false;
     private Vector3 originalCamPosition;
     private Quaternion originalCamRotation;
     private PlayerController playerController;
     private PlayerCam playerCam;
-    private Studio.EventInstance demonVoiceInstance; // ✅ Instancja głosu
+    private FMOD.Studio.EventInstance demonVoiceInstance;
 
     void Start()
     {
@@ -39,12 +38,11 @@ public class SofaInteract : MonoBehaviour
 
         playerController = FindObjectOfType<PlayerController>();
         playerCam = FindObjectOfType<PlayerCam>();
-        demonVoiceInstance = new Studio.EventInstance();
+        demonVoiceInstance = new FMOD.Studio.EventInstance();
     }
 
     void Update()
     {
-        // ✅ Aktywuj Tylko PO podniesieniu leków (gdy InteractionsLocked = true)
         if (!GameState.InteractionsLocked)
         {
             canUse = false;
@@ -52,7 +50,6 @@ public class SofaInteract : MonoBehaviour
             return;
         }
 
-        // ✅ Już w trakcie sekwencji – nie pozwalaj na ponowną interakcję
         if (GameState.SofaSequenceActive)
         {
             canUse = false;
@@ -91,14 +88,12 @@ public class SofaInteract : MonoBehaviour
         canUse = false;
         if (interactText != null) interactText.gameObject.SetActive(false);
 
-        // ✅ ZABLOKUJ GRACZA
         if (playerController != null) playerController.enabled = false;
         if (playerCam != null) playerCam.enabled = false;
 
         originalCamPosition = playerCamera.position;
         originalCamRotation = playerCamera.rotation;
 
-        // ✅ PŁYNNE PRZEJŚCIE DO POZYCJI NA KANAPIE
         float elapsed = 0f;
         Vector3 startPos = playerCamera.position;
         Quaternion startRot = playerCamera.rotation;
@@ -111,31 +106,25 @@ public class SofaInteract : MonoBehaviour
             yield return null;
         }
 
-        // ✅ PO 2 SEKUNDACH: ODPOWIEDŹ DEMONA (TEKST + GŁOS ZSYNCHRONIZOWANE)
         yield return new WaitForSeconds(2f);
 
-        // ✅ POKAŻ MYŚL DEMONA Z GŁOSEM (jak w Dialog.cs)
         string demonLine = "You won't free yourself that easy...";
         yield return StartCoroutine(TypeDemonThought(demonLine));
 
-        // ✅ DODATKOWA PAUZA PO TEKŚCIE (głos może dokończyć)
         yield return new WaitForSeconds(0.8f);
 
-        // ✅ ZATRZYMAJ GŁOS (na wszelki wypadek)
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
         if (demonVoiceInstance.isValid())
         {
-            demonVoiceInstance.stop(Studio.STOP_MODE.ALLOWFADEOUT);
-            demonVoiceInstance.release();
+            AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
         }
 
-        // ✅ FADE TO BLACK
         if (screenFader != null)
         {
             yield return StartCoroutine(screenFader.FadeOut(1.2f));
         }
         else
         {
-            // ✅ Fallback: ręczny fade
             GameObject fadeObj = new GameObject("FadeOverlay");
             fadeObj.layer = LayerMask.NameToLayer("UI");
             Canvas canvas = fadeObj.AddComponent<Canvas>();
@@ -157,14 +146,12 @@ public class SofaInteract : MonoBehaviour
             image.color = Color.black;
         }
 
-        // ✅ PO 1 SEKUNDZIE CZARNOŚCI: WRÓĆ DO MAIN MENU
         yield return new WaitForSeconds(1f);
 
         Debug.Log("[SofaInteract] 🎬 Ładowanie Main Menu...");
         SceneManager.LoadScene("MainMenu");
     }
 
-    // ✅ SYNCHRONIZOWANE PISANIE TEKSTU Z GŁOSEM (jak w Dialog.cs)
     private IEnumerator TypeDemonThought(string text)
     {
         if (thoughtText == null)
@@ -173,20 +160,17 @@ public class SofaInteract : MonoBehaviour
             yield break;
         }
 
-        // ✅ AKTYWUJ TEKST
         thoughtText.gameObject.SetActive(true);
         thoughtText.color = Color.white;
         thoughtText.text = "";
 
-        // ✅ ROZPOCZNIJ GŁOS DEMONA (jak w Dialog.cs)
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!demonVoiceEvent.IsNull)
         {
-            demonVoiceInstance = RuntimeManager.CreateInstance(demonVoiceEvent);
-            demonVoiceInstance.start();
+            demonVoiceInstance = AudioManager.Instance.PlayDialogVoice(demonVoiceEvent);
             Debug.Log("[SofaInteract] 🔊 Głos demona rozpoczęty RAZEM z tekstem");
         }
 
-        // ✅ PISZ TEKST Z MARKEREM (czerwony)
         string openTag = $"<mark={demonMarkerColor}>";
         string closeTag = "</mark>";
 
@@ -196,18 +180,15 @@ public class SofaInteract : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed);
         }
 
-        // ✅ ZATRZYMAJ GŁOS PO ZAKOŃCZENIU TEKSTU (jak w Dialog.cs)
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
         if (demonVoiceInstance.isValid())
         {
-            demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-            demonVoiceInstance.release();
+            AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
             Debug.Log("[SofaInteract] 🔇 Głos demona zatrzymany po zakończeniu tekstu");
         }
 
-        // ✅ PAUZA PO TEKŚCIE
         yield return new WaitForSeconds(1.5f);
 
-        // ✅ UKRYJ TEKST
         Color startCol = thoughtText.color;
         float elapsed = 0f;
         while (elapsed < 0.3f)
@@ -222,11 +203,7 @@ public class SofaInteract : MonoBehaviour
 
     void OnDestroy()
     {
-        // ✅ ZAWSZE ZATRZYMAJ GŁOS przy niszczeniu obiektu
-        if (demonVoiceInstance.isValid())
-        {
-            demonVoiceInstance.stop(Studio.STOP_MODE.IMMEDIATE);
-            demonVoiceInstance.release();
-        }
+        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
+        AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
     }
 }

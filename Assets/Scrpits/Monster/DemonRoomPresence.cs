@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FMODUnity; // ✅ FMOD
+using FMODUnity;
 
 [System.Serializable]
 public class RoomPresenceData
@@ -24,9 +24,17 @@ public class DemonRoomPresence : MonoBehaviour
     [Range(0f, 1f)] public float appearanceChance = 0.35f;
 
     [Header("Audio (FMOD)")]
-    public EventReference appearSound;   // przypisz event np. "event:/demon/appear"
+    public EventReference appearSound;
+    public EventReference disappearSound;
 
-    [Header("Effects")]
+    [Header("Effects - Particles")]
+    public ParticleSystem appearParticles;
+    public ParticleSystem disappearParticles;
+
+    [Tooltip("Jeśli pole powyżej jest puste, skrypt szuka dziecka o tej nazwie")]
+    public string autoFindVFXName = "DemonVFX";
+
+    [Header("Timing & Shake")]
     [Range(0.05f, 0.3f)] public float appearDelay = 0.1f;
     [Range(0.1f, 0.4f)] public float shakeDuration = 0.25f;
     [Range(0.05f, 0.2f)] public float shakeAmount = 0.1f;
@@ -34,6 +42,8 @@ public class DemonRoomPresence : MonoBehaviour
     private SkinnedMeshRenderer[] renderers;
     private string currentRoomTag = "";
     private bool isBusy = false;
+    private ParticleSystem currentAppearVFX;
+    private ParticleSystem currentDisappearVFX;
 
     private void Start()
     {
@@ -42,16 +52,31 @@ public class DemonRoomPresence : MonoBehaviour
 
         if (mainCamera == null)
             mainCamera = Camera.main;
+
+        if (appearParticles == null)
+        {
+            Transform vfxRoot = transform.Find(autoFindVFXName);
+            if (vfxRoot != null)
+            {
+                var systems = vfxRoot.GetComponentsInChildren<ParticleSystem>();
+                if (systems.Length > 0) appearParticles = systems[0];
+            }
+        }
+
+        if (disappearParticles == null)
+            disappearParticles = appearParticles;
+
+        currentAppearVFX = appearParticles;
+        currentDisappearVFX = disappearParticles;
     }
 
     public void EnterRoom(string roomTag)
     {
         if (currentRoomTag == roomTag || isBusy) return;
 
-        // ✅ RZUTUJ KOŚCIĄ
         if (Random.value > appearanceChance)
         {
-            Debug.Log($"[Demon] 🎲 Skipped appearance in {roomTag} (roll: {Random.value:F2})");
+            Debug.Log($"[Demon] 🎲 Skipped appearance in {roomTag}");
             return;
         }
 
@@ -61,85 +86,48 @@ public class DemonRoomPresence : MonoBehaviour
         Debug.Log($"[Demon] 👻 APPEARING in: {roomTag}");
         isBusy = true;
 
-        // ✅ TELEPORT (TYLKO RAZ!)
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
-        // ✅ DŹWIĘK POJAWIENIA SIĘ (3D, losowość w FMOD Multi Sound)
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!appearSound.IsNull)
-        {
-            RuntimeManager.PlayOneShot(appearSound, transform.position);
-        }
+            AudioManager.Instance.PlaySFX(appearSound, transform.position);
 
-        // ✅ SCREEN SHAKE (jak było wcześniej)
+        SpawnParticles(currentAppearVFX, transform.position);
+
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration, shakeAmount));
 
         SetVisibility(false);
         StartCoroutine(ShowAfterDelay(data, roomTag));
     }
-    // ✅ ZWRACA bool czy udało się pojawić
+
     public bool ForceAppear(string roomTag)
     {
-        if (isBusy)
-        {
-            Debug.LogWarning($"[Demon] ForceAppear({roomTag}) zignorowane – isBusy=true");
-            return false;
-        }
+        if (isBusy) return false;
 
         var data = roomPresences.FirstOrDefault(r => r.roomTag == roomTag);
-        if (data == null)
-        {
-            Debug.LogError($"[Demon] Brak danych dla roomTag: {roomTag} (dostępne: {string.Join(", ", roomPresences.Select(r => r.roomTag))})");
-            return false;
-        }
+        if (data == null) return false;
 
-        Debug.Log($"[Demon] 👹 WYMUSZONE pojawienie się w: {roomTag}");
+        Debug.Log($"[Demon] 👹 FORCE APPEAR in: {roomTag}");
         isBusy = true;
 
-        // 📌 TELEPORT
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
-        // 🔊 DŹWIĘK
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!appearSound.IsNull)
-            RuntimeManager.PlayOneShot(appearSound, transform.position);
+            AudioManager.Instance.PlaySFX(appearSound, transform.position);
 
-        // 📷 SHAKE
+        SpawnParticles(currentAppearVFX, transform.position);
+
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration, shakeAmount));
 
-        // 👁️ POKAŻ PO OPÓŹNIENIU
         SetVisibility(false);
         StartCoroutine(ShowAfterDelay(data, roomTag));
 
-        return true; // ✅ sukces
-    }
-
-    private IEnumerator ShowAfterDelay(RoomPresenceData data, string roomTag)
-    {
-        yield return new WaitForSeconds(appearDelay);
-
-        SetVisibility(true);
-
-        // ✅ ANIMACJA (twoja sprawdzona sekwencja)
-        if (animator != null)
-        {
-            animator.Rebind();
-            animator.Update(0f);
-            yield return null;
-            animator.SetTrigger(data.animationTrigger);
-        }
-
-        // ✅ DIALOG
-        if (dialogActivator != null && data.dialogNodes != null)
-        {
-            dialogActivator.dialogNodes = data.dialogNodes;
-            dialogActivator.enabled = true;
-        }
-
-        currentRoomTag = roomTag;
-        isBusy = false;
+        return true;
     }
 
     public void ExitRoom()
@@ -149,9 +137,12 @@ public class DemonRoomPresence : MonoBehaviour
         Debug.Log($"[Demon] ⬅️ Exiting: {currentRoomTag}");
         isBusy = true;
 
+        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+        if (!disappearSound.IsNull)
+            AudioManager.Instance.PlaySFX(disappearSound, transform.position);
 
+        SpawnParticles(currentDisappearVFX, transform.position);
 
-        // ✅ SCREEN SHAKE (jak było wcześniej)
         if (mainCamera != null)
             StartCoroutine(ShakeCamera(shakeDuration * 0.6f, shakeAmount * 0.7f));
 
@@ -161,6 +152,44 @@ public class DemonRoomPresence : MonoBehaviour
 
         if (dialogActivator != null)
             dialogActivator.enabled = false;
+    }
+
+    private void SpawnParticles(ParticleSystem ps, Vector3 pos)
+    {
+        if (ps == null) return;
+
+        if (ps.transform.parent != transform)
+        {
+            ps.transform.position = pos;
+        }
+
+        var emission = ps.emission;
+        emission.enabled = true;
+        ps.Play();
+    }
+
+    private IEnumerator ShowAfterDelay(RoomPresenceData data, string roomTag)
+    {
+        yield return new WaitForSeconds(appearDelay);
+
+        SetVisibility(true);
+
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+            yield return null;
+            animator.SetTrigger(data.animationTrigger);
+        }
+
+        if (dialogActivator != null && data.dialogNodes != null)
+        {
+            dialogActivator.dialogNodes = data.dialogNodes;
+            dialogActivator.enabled = true;
+        }
+
+        currentRoomTag = roomTag;
+        isBusy = false;
     }
 
     private IEnumerator ShakeCamera(float duration, float amount)
