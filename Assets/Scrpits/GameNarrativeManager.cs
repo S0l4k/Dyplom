@@ -14,7 +14,7 @@ public class GameNarrativeManager : MonoBehaviour
 
     [Header("Thought UI")]
     public TMP_Text thoughtText;
-    [SerializeField] private string markerColor = "#00000080";
+    [SerializeField] private string defaultMarkerColor = "#00000080";
 
     [Header("Quests")]
     public string fridgeQuest = "Check your fridge";
@@ -51,6 +51,9 @@ public class GameNarrativeManager : MonoBehaviour
     public Transform demonCouchPosition;
     public Animator demonAnimator;
 
+    // ✅ NOWA FLAGA: Blokuje inne myśli podczas ważnych sekwencji (np. ItemCheck)
+    private bool isNarrativeBusy = false;
+
     private PlayerController playerController;
     private PlayerCam playerCam;
     private EnemyAI demon;
@@ -72,7 +75,7 @@ public class GameNarrativeManager : MonoBehaviour
         playerCam = FindObjectOfType<PlayerCam>();
         demon = FindObjectOfType<EnemyAI>();
         StartCoroutine(StartNarrativeSequence());
-        roomTrigger = GetComponent<RoomTrigger>();
+        // roomTrigger = GetComponent<RoomTrigger>(); // Odkomentuj jeśli potrzebne
     }
 
     private IEnumerator StartNarrativeSequence()
@@ -81,7 +84,6 @@ public class GameNarrativeManager : MonoBehaviour
 
         if (playerController != null && !stomachGrowl.IsNull)
         {
-            // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
             AudioManager.Instance.PlaySFX(stomachGrowl, playerController.transform.position);
         }
 
@@ -96,7 +98,14 @@ public class GameNarrativeManager : MonoBehaviour
         Debug.Log("[Narrative] ➡️ Quest \"Check your fridge\" active");
     }
 
-    public IEnumerator ShowThought(string text, float speed, float stayTime)
+    // ✅ METODA PUBLICZNA: Sprawdzenie czy system jest zajęty
+    public bool IsNarrativeBusy()
+    {
+        return isNarrativeBusy;
+    }
+
+    // ✅ GŁÓWNA METODA: Obsługuje stylowanie i blokadę
+    public IEnumerator ShowThoughtWithStyle(string text, float speed, float stayTime, string customMarkerColor)
     {
         if (!thoughtText)
         {
@@ -104,11 +113,14 @@ public class GameNarrativeManager : MonoBehaviour
             yield break;
         }
 
+        // BLOKADA: Oznaczamy system jako zajęty
+        isNarrativeBusy = true;
+
         thoughtText.gameObject.SetActive(true);
         thoughtText.text = "";
         thoughtText.color = Color.white;
 
-        string open = $"<mark={markerColor}>";
+        string open = $"<mark={customMarkerColor}>";
         string close = "</mark>";
 
         for (int i = 0; i < text.Length; i++)
@@ -119,6 +131,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         yield return new WaitForSeconds(stayTime);
 
+        // Fade out
         Color startCol = thoughtText.color;
         float elapsed = 0f;
         while (elapsed < 0.3f)
@@ -129,6 +142,15 @@ public class GameNarrativeManager : MonoBehaviour
         }
 
         thoughtText.gameObject.SetActive(false);
+
+        // ODBLOKOWANIE: Sekwencja zakończona
+        isNarrativeBusy = false;
+    }
+
+    // ✅ PRZECIĄŻENIE: Dla starych wywołań bez koloru (używa domyślnego)
+    public IEnumerator ShowThought(string text, float speed, float stayTime)
+    {
+        yield return StartCoroutine(ShowThoughtWithStyle(text, speed, stayTime, defaultMarkerColor));
     }
 
     public void TriggerFridgeDemon()
@@ -146,11 +168,12 @@ public class GameNarrativeManager : MonoBehaviour
 
     public void OnCourierInitialDialogComplete()
     {
-        QuestManager.Instance.CompleteQuest("Meet with the courier downstairs");
+        if (QuestManager.Instance != null)
+            QuestManager.Instance.CompleteQuest("Meet with the courier downstairs");
+
         Debug.Log("[Narrative] 📦 Kurier: dialog początkowy zakończony – pojawia się demon");
 
-        if (courierDialogActivator != null)
-            courierDialogActivator.enabled = false;
+        if (courierDialogActivator != null) courierDialogActivator.enabled = false;
 
         if (demonPresence != null)
         {
@@ -165,9 +188,7 @@ public class GameNarrativeManager : MonoBehaviour
     public void EnableCourierLine2()
     {
         Debug.Log("[Narrative] 👹 Demon: gracz zapytał 'why?' – kurier odpowiada");
-
-        if (demonDialogActivator != null)
-            demonDialogActivator.enabled = false;
+        if (demonDialogActivator != null) demonDialogActivator.enabled = false;
 
         if (courierDialogActivator != null)
         {
@@ -179,9 +200,7 @@ public class GameNarrativeManager : MonoBehaviour
     public void EnableDemonLine3()
     {
         Debug.Log("[Narrative] 📦 Kurier: odpowiedział – demon mówi ostatnią linię");
-
-        if (courierDialogActivator != null)
-            courierDialogActivator.enabled = false;
+        if (courierDialogActivator != null) courierDialogActivator.enabled = false;
 
         if (demonDialogActivator != null)
         {
@@ -193,12 +212,8 @@ public class GameNarrativeManager : MonoBehaviour
     public void EndCourierDemonSequence()
     {
         Debug.Log("[Narrative] 🔚 Sekwencja dialogowa demon↔kurier zakończona");
-
-        if (demonDialogActivator != null)
-            demonDialogActivator.enabled = false;
-
-        if (courierDialogActivator != null)
-            courierDialogActivator.enabled = false;
+        if (demonDialogActivator != null) demonDialogActivator.enabled = false;
+        if (courierDialogActivator != null) courierDialogActivator.enabled = false;
 
         if (demonPresence != null)
         {
@@ -206,22 +221,20 @@ public class GameNarrativeManager : MonoBehaviour
         }
         else
         {
-            EnemyAI demon = FindObjectOfType<EnemyAI>();
-            if (demon != null)
+            EnemyAI demonRef = FindObjectOfType<EnemyAI>();
+            if (demonRef != null)
             {
-                foreach (var r in demon.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                foreach (var r in demonRef.GetComponentsInChildren<SkinnedMeshRenderer>(true))
                     r.enabled = false;
             }
         }
 
-        if (dialogUI != null)
-            dialogUI.gameObject.SetActive(false);
+        if (dialogUI != null) dialogUI.gameObject.SetActive(false);
     }
 
     public void OnPlayerAcceptsFood()
     {
         Debug.Log("[Narrative] Gracz zgadza się zjeść – rozpoczynam sekwencję rzygania");
-
         if (playerController == null || playerCam == null)
         {
             Debug.LogError("[Narrative] Brak PlayerController lub PlayerCam!");
@@ -239,7 +252,6 @@ public class GameNarrativeManager : MonoBehaviour
     public void OnPlayerRefusesFood()
     {
         Debug.Log("[Narrative] Gracz odmówił jedzenia");
-
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.AddQuest(orderFoodQuest);
@@ -265,6 +277,7 @@ public class GameNarrativeManager : MonoBehaviour
             Quaternion targetRot = bathroomSpawn.rotation;
             playerController.enabled = false;
             playerCam.enabled = false;
+
             if (Physics.Raycast(bathroomSpawn.position + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 5f, LayerMask.GetMask("Default", "Floor", "Environment")))
             {
                 targetPos = hit.point + Vector3.up * (cc ? cc.height * 0.5f : 1f) - Vector3.up * 1f;
@@ -273,18 +286,12 @@ public class GameNarrativeManager : MonoBehaviour
             playerController.transform.position = targetPos;
             playerController.transform.rotation = targetRot;
 
-            if (playerCam != null)
-                playerCam.SyncRotationWithCamera();
+            if (playerCam != null) playerCam.SyncRotationWithCamera();
         }
 
         yield return new WaitForSeconds(1f);
-
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
-        if (!vomitSound.IsNull)
-            AudioManager.Instance.PlaySFX(vomitSound, playerController.transform.position);
-
+        if (!vomitSound.IsNull) AudioManager.Instance.PlaySFX(vomitSound, playerController.transform.position);
         yield return new WaitForSeconds(6f);
-
         yield return StartCoroutine(screenFader.FadeIn(1f));
 
         RestorePlayerControl();
@@ -321,13 +328,11 @@ public class GameNarrativeManager : MonoBehaviour
         UICanvas.SetActive(false);
         yield return new WaitForSeconds(6f);
 
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!gunshoot.IsNull && playerController != null)
             AudioManager.Instance.PlaySFX(gunshoot, playerController.transform.position);
 
         yield return new WaitForSeconds(2.2f);
         UICanvas.SetActive(true);
-
         yield return StartCoroutine(screenFader.FadeIn(1f));
 
         RestorePlayerControl();
@@ -336,7 +341,7 @@ public class GameNarrativeManager : MonoBehaviour
         {
             demonDialogActivator.dialogNodes = new DialogNode[] { demonAfterShot };
             demonDialogActivator.enabled = true;
-            Debug.Log("[Narrative] ✅ Dialog po zastrzeleniu aktywowany – demon stoi na miejscu");
+            Debug.Log("[Narrative] ✅ Dialog po zastrzeleniu aktywowany");
         }
         else
         {
@@ -347,7 +352,6 @@ public class GameNarrativeManager : MonoBehaviour
     public void StartSecondEndingFinalSequence()
     {
         Debug.Log("[Narrative] 🎬 Rozpoczynam finał drugiego zakończenia");
-
         if (playerController != null) playerController.enabled = false;
         if (playerCam != null) playerCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
@@ -365,8 +369,6 @@ public class GameNarrativeManager : MonoBehaviour
         }
 
         Transform playerCamera = Camera.main.transform;
-        Vector3 originalCamPos = playerCamera.position;
-        Quaternion originalCamRot = playerCamera.rotation;
 
         yield return StartCoroutine(screenFader.FadeOut(1.2f));
         UICanvas.SetActive(false);
@@ -375,18 +377,12 @@ public class GameNarrativeManager : MonoBehaviour
         {
             playerCamera.position = couchCameraPosition.position;
             playerCamera.rotation = couchCameraPosition.rotation;
-            Debug.Log($"[Narrative] 📷 Kamera teleportowana na pozycję: {couchCameraPosition.position}");
-        }
-        else
-        {
-            Debug.LogError("[Narrative] ❌ couchCameraPosition NULL – kamera nie została przeniesiona!");
         }
 
         if (demon != null && demonCouchPosition != null)
         {
             demon.transform.position = demonCouchPosition.position;
             demon.transform.rotation = demonCouchPosition.rotation;
-            Debug.Log($"[Narrative] 👹 Demon teleportowany na pozycję: {demonCouchPosition.position}");
 
             if (demonAnimator != null)
             {
@@ -394,26 +390,17 @@ public class GameNarrativeManager : MonoBehaviour
                 demonAnimator.Update(0f);
                 yield return null;
                 demonAnimator.SetTrigger("sit_couch");
-                Debug.Log("[Narrative] ✅ Animacja sit_couch aktywowana");
             }
         }
 
-        if (playerController != null)
-            playerController.enabled = false;
-
-        if (playerCam != null)
-            playerCam.enabled = true;
-
+        if (playerController != null) playerController.enabled = false;
+        if (playerCam != null) playerCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         yield return StartCoroutine(screenFader.FadeIn(1.2f));
-
-        Debug.Log("[Narrative] 👁️ Gracz może teraz ruszać kamerą – 4 sekundy na obejrzenie demona");
         yield return new WaitForSeconds(4f);
-
         yield return StartCoroutine(screenFader.FadeOut(1.5f));
-
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("MainMenu");
     }
@@ -424,22 +411,20 @@ public class GameNarrativeManager : MonoBehaviour
 
         GameState.DemonInStoryMode = false;
         GameState.ChaseLocked = true;
-        QuestManager.Instance.AddQuest("Go back to your flat");
-        EnemyAI demon = FindObjectOfType<EnemyAI>();
-        if (demon != null && demon.ai != null)
+
+        if (QuestManager.Instance != null)
+            QuestManager.Instance.AddQuest("Go back to your flat");
+
+        EnemyAI demonRef = FindObjectOfType<EnemyAI>();
+        if (demonRef != null && demonRef.ai != null)
         {
-            demon.ai.enabled = true;
+            demonRef.ai.enabled = true;
             Debug.Log("[Narrative] ✅ NavMeshAgent włączony dla demona");
         }
 
-        if (demonPresence != null)
-        {
-            demonPresence.ExitRoom();
-        }
+        if (demonPresence != null) demonPresence.ExitRoom();
+        if (triggers != null) triggers.SetActive(false);
 
-        triggers.SetActive(false);
-
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!staircaseScream.IsNull && playerController != null)
         {
             AudioManager.Instance.PlaySFX(staircaseScream, playerController.transform.position);
@@ -454,7 +439,6 @@ public class GameNarrativeManager : MonoBehaviour
     {
         if (playerController != null) playerController.enabled = true;
         if (playerCam != null) playerCam.enabled = true;
-
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }

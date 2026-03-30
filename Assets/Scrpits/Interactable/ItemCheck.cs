@@ -16,12 +16,11 @@ public class ItemCheck : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text interactionText;
-    public TMP_Text playerThoughtText;
+    // ❌ USUNIĘTO: playerThoughtText - używamy globalnego z GameNarrativeManager
 
     [Header("Timing")]
     [SerializeField] private float typeSpeed = 0.07f;
     [SerializeField] private float playerThoughtStayTime = 1.2f;
-    [SerializeField] private float fadeDuration = 0.3f;
     [SerializeField] private float delayBeforeDemon = 0.2f;
 
     [Header("Visual Styling")]
@@ -35,7 +34,6 @@ public class ItemCheck : MonoBehaviour
     private bool canInteract = false;
     private bool isChecking = false;
     private FMOD.Studio.EventInstance demonVoiceInstance;
-    private Color playerOriginalColor = Color.white;
 
     void Start()
     {
@@ -44,16 +42,10 @@ public class ItemCheck : MonoBehaviour
         if (interactionText != null)
             interactionText.gameObject.SetActive(false);
 
-        if (playerThoughtText != null)
-        {
-            playerThoughtText.gameObject.SetActive(false);
-            playerOriginalColor = playerThoughtText.color;
-        }
-        else
-        {
-            Debug.LogError($"[ItemCheck] playerThoughtText NIE JEST PRZYPISANY na obiekcie {name}!", this);
-        }
         if (outline != null) outline.enabled = false;
+
+        if (GameNarrativeManager.Instance == null)
+            Debug.LogError("[ItemCheck] Brak GameNarrativeManager w scenie!");
     }
 
     void Update()
@@ -76,10 +68,19 @@ public class ItemCheck : MonoBehaviour
         canInteract = false;
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 3f) && hit.collider.gameObject == gameObject)
+
+        // Naprawione wykrywanie (obsługa dzieci obiektu)
+        if (Physics.Raycast(ray, out RaycastHit hit, 3f))
         {
-            canInteract = true;
-            if (outline != null) outline.enabled = true;
+            if (hit.collider.gameObject == gameObject || hit.transform.IsChildOf(transform))
+            {
+                canInteract = true;
+                if (outline != null) outline.enabled = true;
+            }
+            else
+            {
+                if (outline != null) outline.enabled = false;
+            }
         }
         else
         {
@@ -88,10 +89,8 @@ public class ItemCheck : MonoBehaviour
 
         if (canInteract != wasInteracting)
         {
-            if (canInteract)
-                ShowInteractionText();
-            else
-                HideInteractionText();
+            if (canInteract) ShowInteractionText();
+            else HideInteractionText();
         }
     }
 
@@ -117,57 +116,42 @@ public class ItemCheck : MonoBehaviour
 
         Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
 
-        if (playerThoughtText != null)
+        // === ETAP 1: Myśl gracza (przez GameNarrativeManager) ===
+        if (GameNarrativeManager.Instance != null)
         {
-            playerThoughtText.gameObject.SetActive(true);
-            playerThoughtText.color = playerOriginalColor;
-            playerThoughtText.text = "";
-        }
-        else
-        {
-            Debug.LogError("[ItemCheck] playerThoughtText jest NULL podczas CheckItem!");
-            isChecking = false;
-            yield break;
+            yield return StartCoroutine(GameNarrativeManager.Instance.ShowThoughtWithStyle(
+                playerThought,
+                typeSpeed,
+                playerThoughtStayTime,
+                playerMarkerColor
+            ));
         }
 
-        // === ETAP 1: Myśl gracza ===
-        yield return StartCoroutine(TypeTextWithMarker(
-            playerThoughtText,
-            playerThought,
-            playerMarkerColor
-        ));
-
-        yield return new WaitForSeconds(playerThoughtStayTime);
-        yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
         yield return new WaitForSeconds(delayBeforeDemon);
 
         // === ETAP 2: Odpowiedź demona (opcjonalnie) ===
         if (!string.IsNullOrWhiteSpace(demonResponse))
         {
-            playerThoughtText.gameObject.SetActive(true);
-            playerThoughtText.color = Color.white;
-            playerThoughtText.text = "";
-
-            // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
-            if (!demonVoiceEvent.IsNull)
+            if (!demonVoiceEvent.IsNull && AudioManager.Instance != null)
             {
                 demonVoiceInstance = AudioManager.Instance.PlayDialogVoice(demonVoiceEvent);
             }
 
-            yield return StartCoroutine(TypeTextWithMarker(
-                playerThoughtText,
-                demonResponse,
-                demonMarkerColor
-            ));
-
-            // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
-            if (demonVoiceInstance.isValid())
+            if (GameNarrativeManager.Instance != null)
             {
-                AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
+                yield return StartCoroutine(GameNarrativeManager.Instance.ShowThoughtWithStyle(
+                    demonResponse,
+                    typeSpeed,
+                    playerThoughtStayTime,
+                    demonMarkerColor
+                ));
             }
 
-            yield return new WaitForSeconds(playerThoughtStayTime);
-            yield return StartCoroutine(FadeOutText(playerThoughtText, fadeDuration));
+            if (demonVoiceInstance.isValid())
+            {
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
+            }
         }
 
         // ✅ QUEST: ukończ po sprawdzeniu talerza
@@ -175,49 +159,19 @@ public class ItemCheck : MonoBehaviour
         {
             QuestManager.Instance.CompleteQuest("Check your fridge");
             Debug.Log("[Narrative] ✅ Quest completed: Check your fridge");
-            GameNarrativeManager.Instance?.TriggerFridgeDemon();
+            if (GameNarrativeManager.Instance != null)
+                GameNarrativeManager.Instance.TriggerFridgeDemon();
         }
+
         isChecking = false;
         Debug.Log($"[ItemCheck] Interakcja z {itemName} zakończona");
     }
 
-    IEnumerator TypeTextWithMarker(TMP_Text textObj, string text, string markerColor)
-    {
-        if (textObj == null) yield break;
-
-        string openTag = $"<mark={markerColor}>";
-        string closeTag = "</mark>";
-        textObj.text = "";
-
-        for (int i = 0; i < text.Length; i++)
-        {
-            textObj.text = openTag + text.Substring(0, i + 1) + closeTag;
-            yield return new WaitForSeconds(typeSpeed);
-        }
-    }
-
-    IEnumerator FadeOutText(TMP_Text textObj, float duration)
-    {
-        if (textObj == null) yield break;
-
-        Color originalColor = textObj.color;
-        Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
-
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            textObj.color = Color.Lerp(originalColor, targetColor, elapsed / duration);
-            yield return null;
-        }
-
-        textObj.color = targetColor;
-        textObj.gameObject.SetActive(false);
-    }
-
     void OnDestroy()
     {
-        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
-        AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
+        if (demonVoiceInstance.isValid() && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopDialogVoice(ref demonVoiceInstance, true);
+        }
     }
 }

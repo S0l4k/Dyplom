@@ -80,13 +80,17 @@ public class QuestManager : MonoBehaviour
 
     private void TryShowHint(string message)
     {
-        // Dodatkowe sprawdzenie IsTalking dla bezpieczeństwa
+        // BLOKADA 1: Dialog
         if (GameState.IsTalking) return;
 
-        // BLOKADA: Nie pokazuj, jeśli inna myśl jest akurat na ekranie
+        // ✅ BLOKADA 2: Trwa ważna sekwencja narracyjna (np. ItemCheck)
+        if (narrativeManager != null && narrativeManager.IsNarrativeBusy())
+            return;
+
+        // BLOKADA 3: Inna myśl jest akurat na ekranie
         if (isThoughtActive) return;
 
-        // BLOKADA: Odczekaj 2 sekundy od zniknięcia ostatniej myśli
+        // BLOKADA 4: Odczekaj 2 sekundy od zniknięcia ostatniej myśli
         if (Time.time - lastThoughtEndTime < 2.0f) return;
 
         isThoughtActive = true;
@@ -96,13 +100,16 @@ public class QuestManager : MonoBehaviour
     private IEnumerator RunHintSequence(string message)
     {
         // Czekaj aż narracja wyświetli i ukryje tekst
-        yield return StartCoroutine(narrativeManager.ShowThought(message, 0.05f, 4.0f));
+        if (narrativeManager != null)
+        {
+            yield return StartCoroutine(narrativeManager.ShowThought(message, 0.05f, 4.0f));
+        }
 
         // Gdy tekst zniknie:
         isThoughtActive = false;
         lastThoughtEndTime = Time.time;
 
-        // Resetujemy liczniki dla WSZYSTKICH questów
+        // Resetujemy liczniki dla WSZYSTKICH questów, żeby nie zaczęły gadać jednocześnie
         foreach (var kvp in activeQuests.Values)
         {
             kvp.lastHintTime = Time.time;
@@ -141,14 +148,6 @@ public class QuestManager : MonoBehaviour
 
         activeQuests.Add(questName, data);
         Debug.Log($"[QUEST] Added: {questName} (Time: {data.startTime})");
-
-        // ✅ NAPRAWA: Wymuś odświeżenie logiki w tej samej klatce, jeśli czas jest bardzo krótki
-        // To pomaga przy questach dodawanych w trakcie trwania gry (jak RUN)
-        if (config.timeToHint <= 0.1f)
-        {
-            // Jeśli czas jest bliski 0, od razu spróbuj pokazać hint w następnej klatce
-            // (W Twoim przypadku RUN ma czas > 0, więc to tylko zabezpieczenie)
-        }
     }
 
     public void CompleteQuest(string questName)
@@ -159,7 +158,7 @@ public class QuestManager : MonoBehaviour
         activeQuests.Remove(questName);
 
         Debug.Log($"[QUEST] Completed: {questName}");
-        CheckForChaseTrigger();
+      
     }
 
     public void ClearAllQuests()
@@ -171,12 +170,4 @@ public class QuestManager : MonoBehaviour
         activeQuests.Clear();
     }
 
-    private void CheckForChaseTrigger()
-    {
-        if (activeQuests.Count == 0)
-        {
-            GameState.ChaseLocked = false;
-            Debug.Log("[CHASE] All quests done.");
-        }
-    }
 }

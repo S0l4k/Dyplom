@@ -30,7 +30,7 @@ public class SofaInteract : MonoBehaviour
     private PlayerController playerController;
     private PlayerCam playerCam;
     private FMOD.Studio.EventInstance demonVoiceInstance;
-
+    public ItemCheck _itemCheck;
     void Start()
     {
         if (interactText != null)
@@ -84,6 +84,7 @@ public class SofaInteract : MonoBehaviour
 
     IEnumerator UseSofa()
     {
+        _itemCheck.enabled = false;
         GameState.SofaSequenceActive = true;
         canUse = false;
         if (interactText != null) interactText.gameObject.SetActive(false);
@@ -150,6 +151,9 @@ public class SofaInteract : MonoBehaviour
 
         Debug.Log("[SofaInteract] 🎬 Ładowanie Main Menu...");
         SceneManager.LoadScene("MainMenu");
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private IEnumerator TypeDemonThought(string text)

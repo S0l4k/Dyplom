@@ -15194,10 +15194,8 @@ MonoBehaviour:
       Data4: 880093419
     Path: event:/DemonTalking
   interactionText: {fileID: 1711799657}
-  playerThoughtText: {fileID: 727417594}
   typeSpeed: 0.07
   playerThoughtStayTime: 1.2
-  fadeDuration: 0.3
   delayBeforeDemon: 0.2
   playerMarkerColor: '#00000080'
   demonMarkerColor: '#FF000080'
@@ -16253,10 +16251,8 @@ MonoBehaviour:
       Data4: 880093419
     Path: event:/DemonTalking
   interactionText: {fileID: 1711799657}
-  playerThoughtText: {fileID: 727417594}
   typeSpeed: 0.07
   playerThoughtStayTime: 1.2
-  fadeDuration: 0.3
   delayBeforeDemon: 0.2
   playerMarkerColor: '#00000080'
   demonMarkerColor: '#FF000080'
@@ -23043,6 +23039,7 @@ MonoBehaviour:
     - Please help me
     nextNodeIndex: ffffffffffffffff
     responseEvents: []
+  qmanager: {fileID: 1631268707}
 --- !u!65 &924490873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42908,6 +42905,7 @@ MonoBehaviour:
   useRange: 3
   moveSpeed: 2.5
   typeSpeed: 0.07
+  _itemCheck: {fileID: 599173078}
 --- !u!4 &1862589817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6022639199455935822, guid: 2b6b089bab80e8b4286688410d3bc36f, type: 3}
@@ -43935,7 +43933,7 @@ MonoBehaviour:
     Path: event:/StomachGrowl
   delayAfterStart: 6
   thoughtText: {fileID: 727417594}
-  markerColor: '#00000080'
+  defaultMarkerColor: '#00000080'
   fridgeQuest: Check your fridge
   orderFoodQuest: Order Food
   demonPresence: {fileID: 1635950342}
