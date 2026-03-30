@@ -21,6 +21,8 @@ public class StairLoop : MonoBehaviour
     [Header("Final Dialog")]
     public DialogNode finalDialogNode; // ✅ Przypisz w Inspectorze!
 
+
+    public QuestManager qmanager;
     private void OnTriggerEnter(Collider other)
     {
         
@@ -175,6 +177,8 @@ public class StairLoop : MonoBehaviour
             Debug.LogError("[StairLoop] ❌ Chase aborted – demon not on NavMesh");
             return;
         }
+        qmanager.AddQuest("RUN");
+        qmanager.CompleteQuest("Go back to your flat");
 
         demon.ai.isStopped = false;
         demon.ai.speed = demon.chaseSpeed;
