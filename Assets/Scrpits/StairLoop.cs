@@ -62,6 +62,12 @@ public class StairLoop : MonoBehaviour
 
     private IEnumerator TriggerDemonPhaseSafe()
     {
+        if (GameNarrativeManager.Instance != null)
+        {
+            GameNarrativeManager.Instance.PlayOneShotAtPlayer(
+                GameNarrativeManager.Instance.demonStairsAppearSFX
+            );
+        }
         if (demon == null || demon.ai == null || demon.aiAnim == null)
         {
             Debug.LogError("[StairLoop] Demon references not set!");

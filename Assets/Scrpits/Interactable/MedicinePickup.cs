@@ -58,7 +58,7 @@ public class MedicinePickup : MonoBehaviour
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
         QuestManager.Instance.ClearAllQuests();
-
+        GameNarrativeManager.Instance.PlayOneShotAtPlayer(GameNarrativeManager.Instance.takingMeds);
         Debug.Log("[MedicinePickup] 💊 Leki podniesione – rozpoczynam sekwencję końcową");
 
         // ✅ Wyłącz demona
@@ -100,6 +100,12 @@ public class MedicinePickup : MonoBehaviour
         if (GameNarrativeManager.Instance != null)
         {
             Debug.Log("[MedicinePickup] ✅ GameNarrativeManager.Instance znaleziony");
+            GameNarrativeManager.Instance.ChangeBackgroundMusic(
+               GameNarrativeManager.Instance.victoryMusic,
+               GameNarrativeManager.Instance.victoryFadeTime  // ✅ Użyj pola z Inspektora
+            );
+            GameNarrativeManager.Instance.PlayOneShotAtPlayer(GameNarrativeManager.Instance.demonDefeatedSFX );
+            
 
             if (GameNarrativeManager.Instance.thoughtText != null)
             {
@@ -108,6 +114,8 @@ public class MedicinePickup : MonoBehaviour
                     GameNarrativeManager.Instance.ShowThought("He is gone...", 0.09f, 2.5f)
                 );
                 Debug.Log("[MedicinePickup] ✅ Myśl 'He is gone...' wyświetlona");
+               
+
             }
             else
             {

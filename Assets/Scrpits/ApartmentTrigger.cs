@@ -49,6 +49,14 @@ public class ApartmentTrigger : MonoBehaviour
             Debug.Log("[ApartmentTrigger] 👹 Demon WYŁĄCZONY fizycznie i wizualnie");
         }
         QuestManager.Instance.CompleteQuest("RUN");
+        if (GameNarrativeManager.Instance != null)
+        {
+            GameNarrativeManager.Instance.ChangeBackgroundMusic(
+                GameNarrativeManager.Instance.patrolMusic,
+                GameNarrativeManager.Instance.patrolFadeTime  // ✅ Użyj pola z Inspektora
+            );
+        }
+
 
         // ✅ PLANUJ RESPAWN W MIESZKANIU
         if (demon != null && demonSpawnPoint != null)

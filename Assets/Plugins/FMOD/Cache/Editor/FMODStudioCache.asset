@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9143547329413848448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music Patrol
+  m_EditorClassIdentifier: 
+  Path: event:/Music Patrol
+  Guid:
+    Data1: 43165477
+    Data2: 1095782613
+    Data3: -539953779
+    Data4: -1850756119
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 65201
 --- !u!114 &-8280198629979112602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +136,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-7411699353926356838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music Ending
+  m_EditorClassIdentifier: 
+  Path: event:/Music Ending
+  Guid:
+    Data1: -1640180336
+    Data2: 1153909059
+    Data3: -1061187151
+    Data4: 870017883
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 46560
+--- !u!114 &-7349364947868307173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music Chase
+  m_EditorClassIdentifier: 
+  Path: event:/Music Chase
+  Guid:
+    Data1: 723577471
+    Data2: 1260713235
+    Data3: -1320926068
+    Data4: -164487487
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 28656
 --- !u!114 &-7307858520635993347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +271,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 141480
+--- !u!114 &-6597263124788621035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DemonChaseScream
+  m_EditorClassIdentifier: 
+  Path: event:/DemonChaseScream
+  Guid:
+    Data1: 1389366784
+    Data2: 1149267029
+    Data3: 613198517
+    Data4: 961690258
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1992
 --- !u!114 &-6014061963843349986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,10 +313,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639104393458154542
+  lastModified: 639105300962682418
   FileSizes:
   - Name: Desktop
-    Value: 1904
+    Value: 2312
   Exists: 1
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
@@ -264,6 +372,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1820
+--- !u!114 &-4149659142748250686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music Stairs
+  m_EditorClassIdentifier: 
+  Path: event:/Music Stairs
+  Guid:
+    Data1: 531015792
+    Data2: 1128883578
+    Data3: -1068757877
+    Data4: 1975350454
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 110400
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,13 +438,22 @@ MonoBehaviour:
   - {fileID: 9082469593624663522}
   - {fileID: -8280198629979112602}
   - {fileID: 7320361880124595747}
+  - {fileID: -9143547329413848448}
+  - {fileID: -7349364947868307173}
+  - {fileID: -7411699353926356838}
+  - {fileID: -6597263124788621035}
+  - {fileID: 8399977795412720745}
+  - {fileID: 7933706578715981509}
+  - {fileID: 1084460899752771776}
+  - {fileID: 63709245643174709}
+  - {fileID: -4149659142748250686}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639104393458154542
+  cacheTime: 639105300962682418
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -357,6 +501,24 @@ MonoBehaviour:
     index: 21
   - key: event:/Gunshoot
     index: 22
+  - key: event:/Music Patrol
+    index: 23
+  - key: event:/Music Chase
+    index: 24
+  - key: event:/Music Ending
+    index: 25
+  - key: event:/DemonChaseScream
+    index: 26
+  - key: event:/DemonStairsScream
+    index: 27
+  - key: event:/DemonFinalScream
+    index: 28
+  - key: event:/Meds
+    index: 29
+  - key: event:/FlatMusic
+    index: 30
+  - key: event:/Music Stairs
+    index: 31
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +546,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3000
+--- !u!114 &63709245643174709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FlatMusic
+  m_EditorClassIdentifier: 
+  Path: event:/FlatMusic
+  Guid:
+    Data1: -1801823976
+    Data2: 1247232297
+    Data3: -2005261922
+    Data4: 968976072
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 41129
 --- !u!114 &821655527582306484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +600,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2800
+--- !u!114 &1084460899752771776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Meds
+  m_EditorClassIdentifier: 
+  Path: event:/Meds
+  Guid:
+    Data1: 1745536488
+    Data2: 1337830004
+    Data3: 1374867083
+    Data4: 1358280872
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 835
 --- !u!114 &2903434514227799775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,10 +857,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639104393458134542
+  lastModified: 639105300962672419
   FileSizes:
   - Name: Desktop
-    Value: 5499840
+    Value: 9253888
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:
@@ -700,6 +916,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &7933706578715981509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DemonFinalScream
+  m_EditorClassIdentifier: 
+  Path: event:/DemonFinalScream
+  Guid:
+    Data1: -1696707119
+    Data2: 1160151722
+    Data3: -685631844
+    Data4: -905119824
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 8000
+--- !u!114 &8399977795412720745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DemonStairsScream
+  m_EditorClassIdentifier: 
+  Path: event:/DemonStairsScream
+  Guid:
+    Data1: -197537888
+    Data2: 1095770181
+    Data3: 1579716540
+    Data4: -1635452962
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4493
 --- !u!114 &8718766592145089353
 MonoBehaviour:
   m_ObjectHideFlags: 0

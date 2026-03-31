@@ -156,7 +156,25 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance);
+        // ✅ METODA 1: SphereCast - lepsza detekcja na pochyłych powierzchniach
+        if (Physics.SphereCast(groundCheck.position, 0.15f, Vector3.down, out RaycastHit hit, 0.3f))
+        {
+            // Sprawdź kąt - ignoruj zbyt pionowe powierzchnie
+            float angle = Vector3.Angle(hit.normal, Vector3.up);
+            return angle <= 60f; // 60° = dość strome schody nadal wykryte
+        }
+
+        // ✅ METODA 2: Fallback - zwykły raycast jeśli SphereCast nie trafił
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit2, 0.3f))
+        {
+            float angle = Vector3.Angle(hit2.normal, Vector3.up);
+            return angle <= 60f;
+        }
+
+        // ✅ METODA 3: Ostateczny fallback - CheckSphere na samym dole CharacterControllera
+        // To łapie przypadki, gdy groundCheck jest lekko "w powietrzu" na krawędzi schodka
+        Vector3 spherePos = transform.position + controller.center - Vector3.up * (controller.height * 0.5f - 0.05f);
+        return Physics.CheckSphere(spherePos, 0.1f, ~LayerMask.GetMask("Player"));
     }
 
     private void HandleStamina()

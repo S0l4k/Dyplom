@@ -2,56 +2,140 @@
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections.Generic;
-using System.Collections; // Dla StartCoroutine
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    // Słownik do przechowywania aktywnych instancji muzyki/loopów
     private Dictionary<string, EventInstance> activeEventInstances = new Dictionary<string, EventInstance>();
+
+    // ============================================================
+    // VOLUME CONTROL (prosta metoda - bez busów)
+    // ============================================================
+    [Header("Volume Settings")]
+    [Range(0f, 1f)]
+    public float masterVolume = 1f;
+
+    private float lastVolumeBeforeMute = 1f;
+    private bool isMuted = false;
 
     private void Awake()
     {
-        // Singleton Pattern
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        LoadSavedVolume();
+    }
+
+    private void LoadSavedVolume()
+    {
+        // ✅ Sprawdź, czy w ogóle istnieje klucz "MasterVolume"
+        if (!PlayerPrefs.HasKey("MasterVolume"))
+        {
+            // Jeśli nie ma klucza -> ustaw domyślne 1.0 i zapisz
+            masterVolume = 1f;
+            PlayerPrefs.SetFloat("MasterVolume", masterVolume);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            // Jeśli klucz istnieje -> wczytaj zapisaną wartość
+            masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        }
+
+        lastVolumeBeforeMute = masterVolume;
+    }
+
+    public void AdjustMasterVolume(float step)
+    {
+        masterVolume = Mathf.Clamp01(masterVolume + step);
+        PlayerPrefs.SetFloat("MasterVolume", masterVolume);
+        PlayerPrefs.Save();
+        if (masterVolume > 0f) isMuted = false;
+
+        // ✅ NOWE: zaktualizuj głośność wszystkich już grających instancji
+        UpdateActiveInstancesVolume();
+    }
+
+    public void ToggleMute()
+    {
+        if (isMuted)
+        {
+            masterVolume = lastVolumeBeforeMute;
+            isMuted = false;
+        }
+        else
+        {
+            lastVolumeBeforeMute = masterVolume;
+            masterVolume = 0f;
+            isMuted = true;
+        }
+        PlayerPrefs.SetFloat("MasterVolume", masterVolume);
+        PlayerPrefs.Save();
+
+        // ✅ NOWE: zaktualizuj głośność wszystkich już grających instancji
+        UpdateActiveInstancesVolume();
     }
 
     /// <summary>
-    /// Odtwarza SFX przyjmując EventReference (przeciągane z FMOD Browser w Inspectorze).
+    /// Aktualizuje głośność wszystkich instancji w activeEventInstances.
     /// </summary>
+    private void UpdateActiveInstancesVolume()
+    {
+        foreach (var pair in activeEventInstances)
+        {
+            if (pair.Value.isValid())
+            {
+                pair.Value.setVolume(masterVolume);
+            }
+        }
+    }
+
+    public float GetMasterVolume() => masterVolume;
+    public bool IsMuted() => isMuted;
+
+    private void ApplyVolumeToInstance(EventInstance instance)
+    {
+        if (instance.isValid())
+        {
+            instance.setVolume(masterVolume);
+        }
+    }
+
+    // ============================================================
+    // AUDIO PLAYBACK METHODS
+    // ============================================================
+
     public void PlaySFX(EventReference eventRef, Vector3? position = null)
     {
         if (eventRef.IsNull) return;
 
+        var instance = RuntimeManager.CreateInstance(eventRef);
+
         if (position.HasValue)
         {
-            RuntimeManager.PlayOneShot(eventRef, position.Value);
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position.Value));
         }
-        else
-        {
-            RuntimeManager.PlayOneShot(eventRef);
-        }
+
+        ApplyVolumeToInstance(instance);
+        instance.start();
+        instance.release();
     }
-    /// <summary>
-    /// Tworzy instancję ambientu (nie startuje) - do późniejszego kontrolowania.
-    /// </summary>
+
     public EventInstance CreateAmbientInstance(EventReference eventRef)
     {
         if (eventRef.IsNull) return default;
-        return RuntimeManager.CreateInstance(eventRef);
+
+        var instance = RuntimeManager.CreateInstance(eventRef);
+        ApplyVolumeToInstance(instance);
+        return instance;
     }
 
-    /// <summary>
-    /// Startuje ambient z pozycją 3D.
-    /// </summary>
     public void StartAmbientInstance(EventInstance instance, Vector3 position)
     {
         if (!instance.isValid()) return;
@@ -59,22 +143,17 @@ public class AudioManager : MonoBehaviour
         instance.start();
     }
 
-    /// <summary>
-    /// Zatrzymuje i zwalnia ambient.
-    /// </summary>
     public void StopAmbientInstance(ref EventInstance instance, bool fadeOut = true)
     {
         if (instance.isValid())
         {
-            int mode = fadeOut ? 1 : 0; // 1=ALLOW_FADEOUT, 0=IMMEDIATE
+            int mode = fadeOut ? 1 : 0;
             instance.stop((FMOD.Studio.STOP_MODE)mode);
             instance.release();
             instance = default;
         }
     }
-    /// <summary>
-    /// Odtwarza losowy dźwięk (np. szepty) i zwraca instancję do śledzenia.
-    /// </summary>
+
     public EventInstance PlayRandomSound(EventReference eventRef, Vector3? position = null)
     {
         if (eventRef.IsNull) return default;
@@ -86,33 +165,37 @@ public class AudioManager : MonoBehaviour
             instance.set3DAttributes(RuntimeUtils.To3DAttributes(position.Value));
         }
 
+        ApplyVolumeToInstance(instance);
         instance.start();
-        instance.release(); // PlayOneShot style - auto release
+        instance.release();
         return instance;
     }
 
     /// <summary>
     /// Odtwarza muzykę lub dźwięk pętli z opcjonalnym fade-in.
     /// </summary>
-    public void PlayMusic(string eventName, float fadeIn = 0f)
+    public void PlayMusic(EventReference eventRef, float fadeIn = 0f)
     {
-        if (string.IsNullOrEmpty(eventName)) return;
+        if (eventRef.IsNull) return;
 
-        // Sprawdź czy już gra
-        if (activeEventInstances.ContainsKey(eventName))
+        // ✅ Użyj Guid jako klucza – stabilny i unikalny
+        string musicKey = eventRef.Guid.ToString();
+
+        // Sprawdź czy ta sama muzyka już gra
+        if (activeEventInstances.ContainsKey(musicKey))
         {
-            EventInstance existingInstance = activeEventInstances[eventName];
+            EventInstance existingInstance = activeEventInstances[musicKey];
             existingInstance.getPlaybackState(out PLAYBACK_STATE state);
             if (state == PLAYBACK_STATE.PLAYING) return;
         }
 
-        // Zatrzymaj inną muzykę
+        // Zatrzymaj inną muzykę (tylko te z activeEventInstances)
         StopAllMusic();
 
         // Stwórz nową instancję
-        EventInstance newInstance = RuntimeManager.CreateInstance(eventName);
+        EventInstance newInstance = RuntimeManager.CreateInstance(eventRef);
+        ApplyVolumeToInstance(newInstance);
 
-        // Fade In przez korutinę (bezpieczniejsze niż parametry FMOD)
         if (fadeIn > 0)
         {
             newInstance.start();
@@ -124,51 +207,46 @@ public class AudioManager : MonoBehaviour
             newInstance.start();
         }
 
-        // Dodaj do śledzenia
-        if (activeEventInstances.ContainsKey(eventName))
+        // Dodaj do śledzenia pod kluczem Guid
+        if (activeEventInstances.ContainsKey(musicKey))
         {
-            activeEventInstances[eventName] = newInstance;
+            activeEventInstances[musicKey] = newInstance;
         }
         else
         {
-            activeEventInstances.Add(eventName, newInstance);
+            activeEventInstances.Add(musicKey, newInstance);
         }
     }
-    /// <summary>
-    /// Odtwarza głos dialogowy i zwraca instancję do kontroli (stop/release).
-    /// </summary>
+
     public EventInstance PlayDialogVoice(EventReference eventRef)
     {
         if (eventRef.IsNull) return default;
 
-        EventInstance instance = RuntimeManager.CreateInstance(eventRef);
+        var instance = RuntimeManager.CreateInstance(eventRef);
+        ApplyVolumeToInstance(instance);
         instance.start();
         return instance;
     }
-    /// <summary>
-    /// Odtwarza krok z parametrem Surface i pozycją 3D.
-    /// </summary>
+
     public void PlayFootstep(EventReference eventRef, int surfaceType, Vector3 position)
     {
         if (eventRef.IsNull) return;
 
         var instance = RuntimeManager.CreateInstance(eventRef);
         instance.setParameterByName("Surface", surfaceType);
-
-        // ✅ POPRAWIONE: RuntimeUtils, nie RuntimeManager
         instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+
+        ApplyVolumeToInstance(instance);
 
         instance.start();
         instance.release();
     }
-    /// <summary>
-    /// Zatrzymuje i zwalnia instancję głosu dialogowego.
-    /// </summary>
+
     public void StopDialogVoice(ref EventInstance instance, bool immediate = true)
     {
         if (instance.isValid())
         {
-            int mode = immediate ? 0 : 1; // 0=IMMEDIATE, 1=ALLOW_FADEOUT
+            int mode = immediate ? 0 : 1;
             instance.stop((FMOD.Studio.STOP_MODE)mode);
             instance.release();
             instance = default;
@@ -188,28 +266,17 @@ public class AudioManager : MonoBehaviour
         instance.setVolume(1f);
     }
 
-    /// <summary>
-    /// Zatrzymuje konkretny event i zwalnia pamięć.
-    /// </summary>
-    /// <summary>
-    /// Zatrzymuje konkretny event i zwalnia pamięć.
-    /// STOP_MODE: 0 = IMMEDIATE, 1 = ALLOW_FADEOUT
-    /// </summary>
     public void StopEvent(string eventName, bool fadeOut = true)
     {
         if (activeEventInstances.TryGetValue(eventName, out EventInstance instance))
         {
-            // Używamy wartości int zamiast enuma, aby uniknąć konfliktów namespace'ów
-            int stopMode = fadeOut ? 1 : 0; // 1 = ALLOW_FADEOUT, 0 = IMMEDIATE
+            int stopMode = fadeOut ? 1 : 0;
             instance.stop((FMOD.Studio.STOP_MODE)stopMode);
             instance.release();
             activeEventInstances.Remove(eventName);
         }
     }
 
-    /// <summary>
-    /// Zatrzymuje wszystkie muzyki/loopy.
-    /// </summary>
     public void StopAllMusic()
     {
         var keys = new List<string>(activeEventInstances.Keys);
@@ -218,7 +285,6 @@ public class AudioManager : MonoBehaviour
         {
             if (activeEventInstances.TryGetValue(key, out EventInstance instance))
             {
-                // 1 = ALLOW_FADEOUT dla płynnego wyciszenia
                 instance.stop((FMOD.Studio.STOP_MODE)1);
                 instance.release();
             }
@@ -226,18 +292,11 @@ public class AudioManager : MonoBehaviour
         activeEventInstances.Clear();
     }
 
-    /// <summary>
-    /// Ustawia parametr globalny w FMOD (np. "Ammo", "Health", "Weather").
-    /// </summary>
     public void SetGlobalParameter(string paramName, float value)
     {
-        // Poprawna ścieżka do ustawiania parametrów globalnych w FMOD Unity Integration
         RuntimeManager.StudioSystem.setParameterByName(paramName, value);
     }
 
-    /// <summary>
-    /// Pobiera wartość parametru globalnego.
-    /// </summary>
     public float GetGlobalParameter(string paramName)
     {
         RuntimeManager.StudioSystem.getParameterByName(paramName, out float value);
