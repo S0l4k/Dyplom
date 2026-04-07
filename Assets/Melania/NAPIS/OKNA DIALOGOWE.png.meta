@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -34,16 +34,16 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -108,12 +108,408 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3204
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56e06822797e61d42bbeb6956945ef55
+      internalID: 1797579018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_1
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 3204
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e98add0cdf42fb429452d3ba15904a2
+      internalID: -1715203551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_2
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 3204
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43eb8aae07b5a5d42a68e9a65f85c849
+      internalID: 1766527451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_3
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 3204
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 369107f316129cd4c9a04d9c2c73fd50
+      internalID: -325603000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_4
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 3204
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b719e5baf5e8246aa8be5e4561477b
+      internalID: 2107960029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2136
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d81cb27e289c8c4080d747119aef592
+      internalID: 1251969899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_6
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 2136
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12658a7c7c591e94ba7e4a206b930af0
+      internalID: 1595355011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_7
+      rect:
+        serializedVersion: 2
+        x: 1949
+        y: 2630
+        width: 600
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed538e4e13abef14b8459d5384812bfc
+      internalID: -206092472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_8
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 2136
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f3d07328da9fcf49951a12c712ca411
+      internalID: -1225623162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_9
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 2136
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed292dac846efc6408a7acef1ab646f3
+      internalID: 2003247391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1068
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68c4be950e4c31f48817cf8ba0ce1f8d
+      internalID: 1626921804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_11
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1068
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3df0ea11e4a282459bfcfe1ddd578f5
+      internalID: 1053049767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_12
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 1068
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91997e543be42004d9c87ca4e2c56802
+      internalID: -1194744663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_13
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 1068
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cfdea6dde6776f47a8a86b73261d179
+      internalID: 1379312322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_14
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 1068
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80e6106439eea1740ae36f6676518164
+      internalID: -1010148108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46dad0781a7e62847848cff4f6b7b3f4
+      internalID: 2011212241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_16
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 0
+        width: 900
+        height: 1068
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c29e3eb3e4898264d8321cdf5b01f85f
+      internalID: -995957586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OKNA DIALOGOWE_17
+      rect:
+        serializedVersion: 2
+        x: 1951
+        y: 494
+        width: 597
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 772d4d6c13c59e24a8696a2e428c4cad
+      internalID: -1971398468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f08a62c716f577442ac87fdd27375506
     internalID: 0
     vertices: []
     indices: 
@@ -122,7 +518,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      OKNA DIALOGOWE_0: 1797579018
+      OKNA DIALOGOWE_1: -1715203551
+      OKNA DIALOGOWE_10: 1626921804
+      OKNA DIALOGOWE_11: 1053049767
+      OKNA DIALOGOWE_12: -1194744663
+      OKNA DIALOGOWE_13: 1379312322
+      OKNA DIALOGOWE_14: -1010148108
+      OKNA DIALOGOWE_15: 2011212241
+      OKNA DIALOGOWE_16: -995957586
+      OKNA DIALOGOWE_17: -1971398468
+      OKNA DIALOGOWE_2: 1766527451
+      OKNA DIALOGOWE_3: -325603000
+      OKNA DIALOGOWE_4: 2107960029
+      OKNA DIALOGOWE_5: 1251969899
+      OKNA DIALOGOWE_6: 1595355011
+      OKNA DIALOGOWE_7: -206092472
+      OKNA DIALOGOWE_8: -1225623162
+      OKNA DIALOGOWE_9: 2003247391
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
