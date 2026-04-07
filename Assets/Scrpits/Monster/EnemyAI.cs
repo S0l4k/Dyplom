@@ -81,6 +81,16 @@ public class EnemyAI : MonoBehaviour
         // ✅ PRIORYTET 1: FinalChase
         if (GameState.FinalChase)
         {
+            if (GameNarrativeManager.Instance != null)
+            {
+                GameNarrativeManager.Instance.ChangeBackgroundMusic(
+                    GameNarrativeManager.Instance.chaseMusic,
+                    GameNarrativeManager.Instance.chaseFadeTime  // ✅ Użyj pola z Inspektora
+                );
+            
+                
+            }
+           
             if (jumpscareTriggered) return;
 
             if (!ai.enabled) ai.enabled = true;
@@ -234,6 +244,7 @@ public class EnemyAI : MonoBehaviour
             chasing = true;
             walking = false;
             isIdling = false;
+         
 
             if (!ai.isOnNavMesh)
             {

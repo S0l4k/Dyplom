@@ -51,6 +51,39 @@ public class GameNarrativeManager : MonoBehaviour
     public Transform demonCouchPosition;
     public Animator demonAnimator;
 
+    [Header("Music")]
+    public EventReference ambientMusic;
+    public EventReference chaseMusic;
+    public EventReference patrolMusic;
+    public EventReference victoryMusic;
+    public EventReference stairsMusic;
+    // ✅ NOWE: One-shot SFX dla kluczowych momentów
+    [Header("One-Shot SFX")]
+    [Tooltip("Dźwięk gdy demon pojawia się na dole schodów (po 5 pętlach)")]
+    public EventReference demonStairsAppearSFX;
+    public EventReference takingMeds;
+    [Tooltip("Dźwięk gdy demon zaczyna gonić gracza (start chase)")]
+    public EventReference demonChaseStartSFX;
+
+    [Tooltip("Dźwięk gdy demon zostaje pokonany (meds taken)")]
+    public EventReference demonDefeatedSFX;
+    // ✅ NOWE: Osobne czasy fade-in dla każdej muzyki
+    [Header("Music Fade Times")]
+    [Tooltip("Czas fade-in przy starcie gry (ambient)")]
+    public float ambientFadeTime = 2f;
+
+    [Tooltip("Czas fade-in przy rozpoczęciu pościgu")]
+    public float chaseFadeTime = 0.5f;
+
+    [Tooltip("Czas fade-in przy wejściu do mieszkania (patrol)")]
+    public float patrolFadeTime = 1f;
+
+    [Tooltip("Czas fade-in po pokonaniu demona (victory)")]
+    public float victoryFadeTime = 1.5f;
+
+    private EventReference currentMusicEvent;
+  
+
     // ✅ NOWA FLAGA: Blokuje inne myśli podczas ważnych sekwencji (np. ItemCheck)
     private bool isNarrativeBusy = false;
 
@@ -69,15 +102,43 @@ public class GameNarrativeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
+    /// <summary>
+    /// Zmienia muzykę w tle przez AudioManager.
+    /// </summary>
+    public void ChangeBackgroundMusic(EventReference newMusic, float fadeTime = 1f)
+    {
+        if (AudioManager.Instance == null || newMusic.IsNull) return;
+
+        currentMusicEvent = newMusic;
+        AudioManager.Instance.PlayMusic(newMusic, fadeTime);
+        Debug.Log($"[Narrative] 🎵 Changed music to: {newMusic.Guid}");
+    }
+    public void PlayOneShotAtPlayer(EventReference sfx)
+    {
+        if (AudioManager.Instance == null || sfx.IsNull) return;
+
+        Vector3? playerPos = null;
+        if (playerController != null)
+            playerPos = playerController.transform.position;
+
+        AudioManager.Instance.PlaySFX(sfx, playerPos);
+        Debug.Log($"[Narrative] 🔊 One-shot: {sfx.Guid}");
+    }
+
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
         playerCam = FindObjectOfType<PlayerCam>();
         demon = FindObjectOfType<EnemyAI>();
         StartCoroutine(StartNarrativeSequence());
-        // roomTrigger = GetComponent<RoomTrigger>(); // Odkomentuj jeśli potrzebne
-    }
 
+        // ✅ START: uruchom domyślną muzykę z ustawionym fade-time
+        if (!ambientMusic.IsNull)
+        {
+            ChangeBackgroundMusic(ambientMusic, ambientFadeTime);
+        }
+    }
     private IEnumerator StartNarrativeSequence()
     {
         yield return new WaitForSeconds(delayAfterStart);
@@ -362,6 +423,7 @@ public class GameNarrativeManager : MonoBehaviour
 
     private IEnumerator SecondEndingFinalSequence()
     {
+        ChangeBackgroundMusic(victoryMusic, victoryFadeTime);
         if (screenFader == null)
         {
             Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
@@ -430,6 +492,7 @@ public class GameNarrativeManager : MonoBehaviour
             AudioManager.Instance.PlaySFX(staircaseScream, playerController.transform.position);
             Debug.Log("[Narrative] 🔊 Krzyk demona w tle");
         }
+        ChangeBackgroundMusic(stairsMusic);
 
         GameState.LoopSequenceActive = true;
         Debug.Log("[Narrative] 🔁 Stair loop aktywowany");

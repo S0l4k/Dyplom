@@ -11,6 +11,12 @@ public class PauseMenu : MonoBehaviour
     public Slider sensitivitySlider;
     public TMP_Text sensitivityValueText;
 
+    [Header("Audio Controls")]
+    public Button btnVolumeDown;
+    public Button btnVolumeUp;
+    public Button btnVolumeMute;
+    public TMP_Text volumeValueText;
+
     [Header("References")]
     public PlayerController playerController;
     public PlayerCam playerCam;
@@ -23,24 +29,23 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        // ✅ NULL-CHECK przy starcie
         if (pausePanel != null)
             pausePanel.SetActive(false);
         else
             Debug.LogWarning("[PauseMenu] pausePanel is missing!");
 
-        // ✅ NULL-CHECKI dla komponentów gracza
         if (playerCam != null && sensitivitySlider != null)
         {
             sensitivitySlider.value = playerCam.sensX;
             UpdateSensitivityUI(sensitivitySlider.value);
             sensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
         }
+
+        SetupVolumeButtons();
     }
 
     void Update()
     {
-        // ✅ KLUCZOWE: BLOKUJ PAUZĘ JEŚLI UI JEST ZNISZCZONE
         if (pausePanel == null || playerController == null || playerCam == null)
             return;
 
@@ -55,7 +60,6 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        // ✅ NULL-CHECK: pausePanel może być zniszczony po przejściu sceny
         if (pausePanel == null)
         {
             Debug.LogWarning("[PauseMenu] pausePanel destroyed - cannot pause");
@@ -65,7 +69,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         pausePanel.SetActive(true);
 
-        // ✅ NULL-CHECKI dla komponentów gracza
         if (playerController != null)
             playerController.enabled = false;
 
@@ -76,11 +79,12 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
 
         Time.timeScale = 0f;
+
+        UpdateVolumeUI();
     }
 
     public void Resume()
     {
-        // ✅ NULL-CHECKI przed przywróceniem
         if (pausePanel != null)
             pausePanel.SetActive(false);
 
@@ -119,9 +123,51 @@ public class PauseMenu : MonoBehaviour
             sensitivityValueText.text = value.ToString("0");
     }
 
+    private void SetupVolumeButtons()
+    {
+        if (AudioManager.Instance == null) return;
+
+        if (btnVolumeDown != null)
+            btnVolumeDown.onClick.AddListener(() =>
+            {
+                AudioManager.Instance.AdjustMasterVolume(-0.1f);
+                UpdateVolumeUI();
+            });
+
+        if (btnVolumeUp != null)
+            btnVolumeUp.onClick.AddListener(() =>
+            {
+                AudioManager.Instance.AdjustMasterVolume(+0.1f);
+                UpdateVolumeUI();
+            });
+
+        if (btnVolumeMute != null)
+            btnVolumeMute.onClick.AddListener(() =>
+            {
+                AudioManager.Instance.ToggleMute();
+                UpdateVolumeUI();
+            });
+
+        UpdateVolumeUI();
+    }
+
+    private void UpdateVolumeUI()
+    {
+        if (volumeValueText == null || AudioManager.Instance == null) return;
+
+        if (AudioManager.Instance.IsMuted())
+        {
+            volumeValueText.text = "MUTED";
+        }
+        else
+        {
+            float vol = AudioManager.Instance.GetMasterVolume();
+            volumeValueText.text = $"{Mathf.RoundToInt(vol * 100)}%";
+        }
+    }
+
     public void OpenConsole()
     {
-        // ✅ NULL-CHECKI
         if (consolePanel == null || playerController == null || playerCam == null)
         {
             Debug.LogWarning("[PauseMenu] Console UI missing - cannot open console");
@@ -146,7 +192,6 @@ public class PauseMenu : MonoBehaviour
 
     public void CloseConsole()
     {
-        // ✅ NULL-CHECKI
         if (consolePanel == null || playerController == null || playerCam == null)
             return;
 

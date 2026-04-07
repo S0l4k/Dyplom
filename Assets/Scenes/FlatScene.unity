@@ -1800,6 +1800,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 467403170087749940, guid: bb226fcc343fe84478508a60b373f164, type: 3}
   m_PrefabInstance: {fileID: 112196804}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &122546529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122546530}
+  - component: {fileID: 122546532}
+  - component: {fileID: 122546531}
+  m_Layer: 5
+  m_Name: LOGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &122546530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122546529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1815635005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 10.100098, y: 268.90002}
+  m_SizeDelta: {x: 392.5, y: 211.9}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &122546531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122546529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c701e4fde6c78e04daf12d4d648f5713, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &122546532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122546529}
+  m_CullTransparentMesh: 1
 --- !u!1 &129462569
 GameObject:
   m_ObjectHideFlags: 0
@@ -5326,12 +5401,16 @@ PrefabInstance:
       value: Demon
       objectReference: {fileID: 0}
     - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: textColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: textColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: textColor.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5643792042271447748, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: textColor.r
@@ -7623,6 +7702,142 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2098026962}
   m_SourcePrefab: {fileID: 100100000, guid: b21d5e5d70676424bb2a17fbc60bb98b, type: 3}
+--- !u!1 &388558240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 388558241}
+  - component: {fileID: 388558242}
+  - component: {fileID: 388558243}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &388558241
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388558240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2111969968}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -236.1}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &388558242
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388558240}
+  m_CullTransparentMesh: 1
+--- !u!114 &388558243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388558240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!43 &395130071
 Mesh:
   m_ObjectHideFlags: 0
@@ -8735,8 +8950,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 300}
+  m_AnchoredPosition: {x: -6.9000244, y: -7.9500732}
+  m_SizeDelta: {x: 346.4999, y: 73.5}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &442077238
 MonoBehaviour:
@@ -8751,15 +8966,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.40392157}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4df544115bec50d4c99b3821d4da5b41, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: -206092472, guid: 8963e681ac691114d870b94b17360ea3, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -19570,7 +19785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &800254447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19584,14 +19799,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0.77254903}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1971398468, guid: 8963e681ac691114d870b94b17360ea3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19628,8 +19843,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: -50, y: 300}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_SizeDelta: {x: 0.0001, y: 335}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!4 &801814774 stripped
 Transform:
@@ -24731,8 +24946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 0, y: -94.19995}
+  m_SizeDelta: {x: 300, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1016468171
 MonoBehaviour:
@@ -24764,7 +24979,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 90aa1bb31e56247409a16894bff100ad, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 32021f8a11cc4f64fb4dd96e23992119, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -24810,7 +25025,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 82c579fb7047dd8478e05080b006166f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8afd00c79bcc9f4f9b434388bb0d113, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26698,7 +26913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -50, y: 100}
+  m_AnchoredPosition: {x: -83.599976, y: 98.79999}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1086368113
@@ -26720,7 +26935,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -26765,7 +26980,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: db0786ba612954a4195556ad741f66c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2c277f1e7c0c2944492b5e3cefec6cd2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27616,7 +27831,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -27661,7 +27876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 82a20a10ab969504eacbc1c30a226201, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f17fcc6d30f6b1144aab7cc850e98bcf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27937,8 +28152,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -164}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 0, y: -403.89996}
+  m_SizeDelta: {x: 300, y: 80}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1136712949
 MonoBehaviour:
@@ -27970,7 +28185,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 6e1e134fe05492d409c68eafc3b481ab, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 32021f8a11cc4f64fb4dd96e23992119, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -28028,7 +28243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 835b8a3aa622f1b42ab0048f9e7893d9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8afd00c79bcc9f4f9b434388bb0d113, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28103,10 +28318,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: QUIT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
+  m_sharedMaterial: {fileID: 7387597531329847247, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -28130,8 +28345,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -32317,6 +32532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1319867920}
   - component: {fileID: 1319867919}
+  - component: {fileID: 1319867921}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -32336,6 +32552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dadb5c71529d26499e610130cae88f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterVolume: 1
 --- !u!4 &1319867920
 Transform:
   m_ObjectHideFlags: 0
@@ -32351,6 +32568,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1319867921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319867918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede9423741645c340b88d2c1765aeca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicEvent:
+    Guid:
+      Data1: 531015792
+      Data2: 1128883578
+      Data3: -1068757877
+      Data4: 1975350454
+    Path: event:/Music 1
+  playOnStart: 1
+  fadeInTime: 1
 --- !u!1 &1320966024
 GameObject:
   m_ObjectHideFlags: 0
@@ -34883,8 +35121,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 254.57764}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchoredPosition: {x: -4.697693, y: 254.57764}
+  m_SizeDelta: {x: -91.595, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1478437081
 MonoBehaviour:
@@ -34908,8 +35146,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mouse Sensitivity
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
+  m_sharedMaterial: {fileID: 7387597531329847247, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34933,7 +35171,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.75
+  m_fontSize: 25
   m_fontSizeBase: 75.35
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -34971,7 +35209,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 53.58136, y: 0, z: 41.12036, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -35409,7 +35647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00005340576, y: 0}
+  m_AnchoredPosition: {x: -0.000045776367, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1517930724
@@ -35474,8 +35712,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 0, y: 208}
+  m_SizeDelta: {x: 300, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1535079625
 MonoBehaviour:
@@ -35507,7 +35745,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 70e5d897fcc2fda42aba6c287d94cf0c, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 32021f8a11cc4f64fb4dd96e23992119, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -35553,7 +35791,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d0a7e3fbe54ac804490afc4a975749a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8afd00c79bcc9f4f9b434388bb0d113, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -37008,14 +37246,14 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: U are feeding body that doesnt belong to you
       responses:
-      - Then whoose it is?
-      - Shut up
+      - 1.Then whoose it is?
+      - 2.Shut up
       nextNodeIndex: 01000000ffffffff
       responseEvents: []
     - npcLine: Its ours, u just wear it better
       responses:
-      - Maybe You are right
-      - Stop saying that
+      - 1.Maybe You are right
+      - 2.Stop saying that
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: Hallway
@@ -37025,14 +37263,14 @@ MonoBehaviour:
     - npcLine: U dont need to watch all those horror movies, just stay here with
         me and watch
       responses:
-      - What do you mean?
-      - Leave me alone
+      - 1.What do you mean?
+      - 2.Leave me alone
       nextNodeIndex: 01000000ffffffff
       responseEvents: []
     - npcLine: Look at those sad faces, those depraved acts. Humanity is broken
       responses:
-      - We are not so diffrent after all
-      - How can u judge us monster
+      - 1.We are not so diffrent after all
+      - 2.How can u judge us monster
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: Bedroom
@@ -37041,20 +37279,20 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: All those nightmares? Are you not tired of them?
       responses:
-      - 'I am, I''m so tired of this. '
-      - I have them beacuse of You
+      - '1.I am, I''m so tired of this. '
+      - 2.I have them beacuse of You
       nextNodeIndex: 0100000002000000
       responseEvents: []
     - npcLine: I can help You, just listen to me
       responses:
-      - I trust you
-      - I don't trust you
+      - 1.I trust you
+      - 2.I don't trust you
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
     - npcLine: Remember, I am Your only friend
       responses:
-      - I hate You
-      - You are the only one, who didnt leave me
+      - 1.I hate You
+      - 2.You are the only one, who didnt leave me
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: Bathroom
@@ -37063,14 +37301,14 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: Try to wash those bloody hands with something sharp
       responses:
-      - Blood is not real
-      - I see blood everywhere
+      - 1.Blood is not real
+      - 2.I see blood everywhere
       nextNodeIndex: ffffffff01000000
       responseEvents: []
     - npcLine: Its all beacuse of bad things You did
       responses:
-      - It's my punishment
-      - I didn't do anything
+      - 1.It's my punishment
+      - 2.I didn't do anything
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: Staircase
@@ -37079,14 +37317,14 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: Watch ur back, u dont know what is hiding in the dark
       responses:
-      - I'm not affraid of You
-      - I can feel those eyes on my skin
+      - 1.I'm not affraid of You
+      - 2.I can feel those eyes on my skin
       nextNodeIndex: 01000000ffffffff
       responseEvents: []
     - npcLine: I'm not talking about myself, there are more of US
       responses:
-      - Just leave me alone
-      - 'Please don''t hurt me '
+      - 1.Just leave me alone
+      - '2.Please don''t hurt me '
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: LivingRoom_Table
@@ -37095,20 +37333,20 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: U used to sit here with ur family
       responses:
-      - They are all gone, I miss them sometimes
-      - They left me, I hate them
+      - 1.They are all gone, I miss them sometimes
+      - 2.They left me, I hate them
       nextNodeIndex: 0100000002000000
       responseEvents: []
     - npcLine: I can help you see them again. Just listen to me
       responses:
-      - Are you serious? I would love to
-      - I don't belive You
+      - 1.Are you serious? I would love to
+      - 2.I don't belive You
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
     - npcLine: Lets revenge on them togheter
       responses:
-      - I won't cooperate with You in any scenario
-      - We will make them beg for mercy
+      - 1.I won't cooperate with You in any scenario
+      - 2.We will make them beg for mercy
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: LivingRoom_TV
@@ -37117,14 +37355,14 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: Can u hear it? All of those whispers?
       responses:
-      - No, shut up
-      - Yes, what are those?
+      - 1.No, shut up
+      - 2.Yes, what are those?
       nextNodeIndex: ffffffff01000000
       responseEvents: []
     - npcLine: It all yours vicitims, trying to get you
       responses:
-      - Make them stop
-      - They are not real
+      - 1.Make them stop
+      - 2.They are not real
       nextNodeIndex: ffffffffffffffff
       responseEvents: []
   - roomTag: fridge
@@ -37133,8 +37371,8 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: I said EAT IT
       responses:
-      - No
-      - (eat it)
+      - 1.No
+      - 2.(eat it)
       nextNodeIndex: ffffffffffffffff
       responseEvents:
       - m_PersistentCalls:
@@ -37171,8 +37409,8 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: Don't trust him...
       responses:
-      - Shut up
-      - Why?
+      - 1.Shut up
+      - 2.Why?
       nextNodeIndex: ffffffffffffffff
       responseEvents:
       - m_PersistentCalls:
@@ -37209,8 +37447,8 @@ MonoBehaviour:
     dialogNodes:
     - npcLine: Pizza? Another junk  food? I am not suprised
       responses:
-      - Fuck off
-      - It's cheap
+      - 1.Fuck off
+      - 2.It's cheap
       nextNodeIndex: ffffffff01000000
       responseEvents:
       - m_PersistentCalls:
@@ -39071,7 +39309,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714989933}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39081,8 +39319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 21.292007, y: -31.93809}
-  m_SizeDelta: {x: 206.9034, y: 240.915}
+  m_AnchoredPosition: {x: 21.648438, y: -21.942543}
+  m_SizeDelta: {x: 306.6035, y: 30.8149}
   m_Pivot: {x: 0, y: 1}
 --- !u!4 &1715093905 stripped
 Transform:
@@ -41744,6 +41982,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 122546530}
   - {fileID: 1016468170}
   - {fileID: 1535079624}
   - {fileID: 1136712948}
@@ -41775,7 +42014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4df544115bec50d4c99b3821d4da5b41, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7437445318484ca4eb27b6a6279a9452, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -43868,6 +44107,10 @@ MonoBehaviour:
   settingsPanel: {fileID: 2111969967}
   sensitivitySlider: {fileID: 197322148}
   sensitivityValueText: {fileID: 208096048}
+  btnVolumeDown: {fileID: 2120925036}
+  btnVolumeUp: {fileID: 1086368113}
+  btnVolumeMute: {fileID: 1125010307}
+  volumeValueText: {fileID: 388558243}
   playerController: {fileID: 1833239512}
   playerCam: {fileID: 330585548}
   computerInteract: {fileID: 924378126}
@@ -43970,8 +44213,8 @@ MonoBehaviour:
   demonLine1:
     npcLine: Don't trust him...
     responses:
-    - Shut up
-    - Why?
+    - 1.Shut up
+    - 2.Why?
     nextNodeIndex: ffffffffffffffff
     responseEvents:
     - m_PersistentCalls:
@@ -44003,8 +44246,8 @@ MonoBehaviour:
   courierLine2:
     npcLine: Excuse me? What did you say?
     responses:
-    - I was not talking to you
-    - Nothing, nothing
+    - 1.I was not talking to you
+    - 2.Nothing, nothing
     nextNodeIndex: ffffffffffffffff
     responseEvents:
     - m_PersistentCalls:
@@ -44038,8 +44281,8 @@ MonoBehaviour:
   demonLine3:
     npcLine: Kill this bastard. It's not human. Use your gun.
     responses:
-    - I won't do it (Refuse demon)
-    - Maybe u are right (Take gun)
+    - 1.I won't do it (Refuse demon)
+    - 2.Maybe u are right (Take gun)
     nextNodeIndex: ffffffffffffffff
     responseEvents:
     - m_PersistentCalls:
@@ -44073,8 +44316,8 @@ MonoBehaviour:
   demonAfterShot:
     npcLine: Good job buddy, i told you it wasn't human
     responses:
-    - But he bleed
-    - If you say so...
+    - 1.But he bleed
+    - 2.If you say so...
     nextNodeIndex: ffffffffffffffff
     responseEvents:
     - m_PersistentCalls:
@@ -44108,6 +44351,73 @@ MonoBehaviour:
   couchCameraPosition: {fileID: 1553707801}
   demonCouchPosition: {fileID: 1057427899}
   demonAnimator: {fileID: 1635950336}
+  ambientMusic:
+    Guid:
+      Data1: -1801823976
+      Data2: 1247232297
+      Data3: -2005261922
+      Data4: 968976072
+    Path: event:/FlatMusic
+  chaseMusic:
+    Guid:
+      Data1: 723577471
+      Data2: 1260713235
+      Data3: -1320926068
+      Data4: -164487487
+    Path: event:/Music Chase
+  patrolMusic:
+    Guid:
+      Data1: 43165477
+      Data2: 1095782613
+      Data3: -539953779
+      Data4: -1850756119
+    Path: event:/Music Patrol
+  victoryMusic:
+    Guid:
+      Data1: -1640180336
+      Data2: 1153909059
+      Data3: -1061187151
+      Data4: 870017883
+    Path: event:/Music Ending
+  stairsMusic:
+    Guid:
+      Data1: 531015792
+      Data2: 1128883578
+      Data3: -1068757877
+      Data4: 1975350454
+    Path: event:/Music Stairs
+  demonStairsAppearSFX:
+    Guid:
+      Data1: -197537888
+      Data2: 1095770181
+      Data3: 1579716540
+      Data4: -1635452962
+    Path: event:/DemonStairsScream
+  takingMeds:
+    Guid:
+      Data1: 1745536488
+      Data2: 1337830004
+      Data3: 1374867083
+      Data4: 1358280872
+    Path: event:/Meds
+  demonChaseStartSFX:
+    Guid:
+      Data1: 1389366784
+      Data2: 1149267029
+      Data3: 613198517
+      Data4: 961690258
+    Path: event:/DemonChaseScream
+  demonDefeatedSFX:
+    Guid:
+      Data1: -1696707119
+      Data2: 1160151722
+      Data3: -685631844
+      Data4: -905119824
+    Path: event:/DemonFinalScream
+  ambientFadeTime: 2
+  chaseFadeTime: 1.5
+  patrolFadeTime: 1
+  victoryFadeTime: 2
 --- !u!114 &1893179576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44925,7 +45235,7 @@ MonoBehaviour:
   m_text: Press E to pick use Computer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 7387597531329847247, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -45975,10 +46285,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: SETTINGS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
+  m_sharedMaterial: {fileID: 7387597531329847247, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -46002,8 +46312,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -46040,7 +46350,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 9.858398, y: 10.474457, z: 18.484253, w: 22.181152}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -46527,6 +46837,7 @@ RectTransform:
   - {fileID: 1125010306}
   - {fileID: 2120925035}
   - {fileID: 1086368112}
+  - {fileID: 388558241}
   m_Father: {fileID: 1815635005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -46554,7 +46865,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4df544115bec50d4c99b3821d4da5b41, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7437445318484ca4eb27b6a6279a9452, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -46612,7 +46923,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 100}
+  m_AnchoredPosition: {x: 84.900024, y: 100}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2120925036
@@ -46634,7 +46945,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -46679,7 +46990,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 18ddb16acabb7cd45acced14335d0c6e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c609fdfe678ccf14795c596622bbcb47, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -46827,10 +47138,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: RESUME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
+  m_sharedMaterial: {fileID: 7387597531329847247, guid: 72a1d5068396ec94faf3622348a93bc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -46854,8 +47165,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -47230,8 +47541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1800, y: 150}
+  m_AnchoredPosition: {x: 0, y: -75.79999}
+  m_SizeDelta: {x: 1800, y: 101}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &167703391998991310
 MonoBehaviour:
@@ -47250,8 +47561,8 @@ MonoBehaviour:
   - {fileID: 6821504604402148946}
   dialogText: {fileID: 1319964638572009401}
   dialogueBG: {fileID: 800254446}
-  npcMarkerColor: '#FFFFFF33'
-  playerMarkerColor: '#FFFFFF33'
+  npcMarkerColor: '#3F3F3F'
+  playerMarkerColor: '#3F3F3F'
   typeSpeed: 0.03
   delayBetweenAnswers: 0.3
   npcVoiceEvent:
@@ -47329,6 +47640,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 7018238493319135185, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: maxSurfaceAngle
+      value: 75.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018238493319135185, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.329
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -47598,14 +47917,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 30
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -47665,14 +47984,14 @@ MonoBehaviour:
   m_text: Krzysiu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9d77e88c69c976a4c949b4d7e557dc67, type: 2}
-  m_sharedMaterial: {fileID: -8498298342632945578, guid: a0e423b8308bddf468c11bb312dcf77b, type: 2}
+  m_sharedMaterial: {fileID: 7387597531329847247, guid: 9d77e88c69c976a4c949b4d7e557dc67, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278716522
-  m_fontColor: {r: 0.41509432, g: 0.03328587, b: 0.03328587, a: 1}
+    rgba: 4283882751
+  m_fontColor: {r: 1, g: 0.8625607, b: 0.33647794, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -47689,8 +48008,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 30
@@ -47730,7 +48049,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &1608226655316784587
@@ -47933,14 +48252,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 30
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -48033,9 +48352,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -48077,10 +48396,10 @@ RectTransform:
   m_Father: {fileID: 800254449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -17.5, y: 0.94599915}
-  m_SizeDelta: {x: -35, y: -1.8899994}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -1.7000122, y: 6.044998}
+  m_SizeDelta: {x: 900, y: 75.11}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!4 &4941063276686242154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2033748306900480867, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
@@ -48812,11 +49131,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 800254449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: 0.9469986}
-  m_SizeDelta: {x: -76, y: -1.894001}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -180.44699}
+  m_SizeDelta: {x: 859, y: 72.906}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!59 &7957974584416832017
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -48927,14 +49246,14 @@ MonoBehaviour:
   dialogNodes:
   - npcLine: Hello, Food Delivery, I have your order
     responses:
-    - Right, how much for this?
-    - Are you real?
+    - 1.Right, how much for this?
+    - 2.Are you real?
     nextNodeIndex: 0100000002000000
     responseEvents: []
   - npcLine: It will be 6$ sir
     responses:
-    - Ok, give me a sec
-    - Did it send you here?
+    - 1.Ok, give me a sec
+    - 2.Did it send you here?
     nextNodeIndex: ffffffffffffffff
     responseEvents:
     - m_PersistentCalls:
@@ -48967,8 +49286,8 @@ MonoBehaviour:
           m_CallState: 2
   - npcLine: What? What do you mean by that?
     responses:
-    - Sorry, it was a hard day
-    - Are you a human?
+    - 1.Sorry, it was a hard day
+    - 2.Are you a human?
     nextNodeIndex: ffffffffffffffff
     responseEvents:
     - m_PersistentCalls:
