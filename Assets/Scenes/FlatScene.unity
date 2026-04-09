@@ -5569,8 +5569,28 @@ PrefabInstance:
       value: FlatScene
       objectReference: {fileID: 0}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: catchDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: jumpscareTime
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: sightDistance
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: heartbeatVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: rayCastOffset.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: heartbeatEvent.Path
+      value: event:/HeartBeat
       objectReference: {fileID: 0}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: jumpscareEvent.Path
@@ -5578,7 +5598,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: destinations.Array.size
-      value: 5
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: heartbeatEvent.Guid.Data1
+      value: -49059602
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: heartbeatEvent.Guid.Data2
+      value: 1328061690
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: heartbeatEvent.Guid.Data3
+      value: -959707510
+      objectReference: {fileID: 0}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: heartbeatEvent.Guid.Data4
+      value: -317733416
       objectReference: {fileID: 0}
     - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: jumpscareEvent.Guid.Data1
@@ -5616,6 +5652,18 @@ PrefabInstance:
       propertyPath: 'destinations.Array.data[4]'
       value: 
       objectReference: {fileID: 511456083}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: 'destinations.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1686884623}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: 'destinations.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1536873031}
+    - target: {fileID: 743771628495518687, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
+      propertyPath: sneakGuaranteedDetectDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 821495425075183519, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -8778,6 +8826,8 @@ Transform:
   - {fileID: 1872038758}
   - {fileID: 856873519}
   - {fileID: 511456083}
+  - {fileID: 1686884623}
+  - {fileID: 1536873031}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &385844226
@@ -45517,6 +45567,37 @@ Transform:
   - {fileID: 708001258}
   m_Father: {fileID: 1868027270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1536873030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1536873031}
+  m_Layer: 0
+  m_Name: Destinations (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1536873031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536873030}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.701, y: 0, z: 11.344}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 381833241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1537170094
 GameObject:
   m_ObjectHideFlags: 0
@@ -47943,6 +48024,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684953520}
   m_CullTransparentMesh: 1
+--- !u!1 &1686884622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1686884623}
+  m_Layer: 0
+  m_Name: Destinations (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1686884623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686884622}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5009999, y: 0, z: 0.84399986}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 381833241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1686947747
 Mesh:
   m_ObjectHideFlags: 0

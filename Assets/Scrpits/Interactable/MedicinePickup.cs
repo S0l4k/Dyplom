@@ -153,6 +153,10 @@ public class MedicinePickup : MonoBehaviour
             demon.ai.speed = 0f;
             demon.ai.enabled = false;
         }
+        if (demon.GetComponent<EnemyAI>() is EnemyAI ai)
+        {
+            ai.StopHeartbeat();
+        }
 
         demon.chasing = false;
         demon.walking = false;
