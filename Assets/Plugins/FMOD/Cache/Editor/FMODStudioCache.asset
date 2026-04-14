@@ -27,6 +27,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 65201
+--- !u!114 &-9028130214811803079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/HeartBeat
+  m_EditorClassIdentifier: 
+  Path: event:/HeartBeat
+  Guid:
+    Data1: -49059602
+    Data2: 1328061690
+    Data3: -959707510
+    Data4: -317733416
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 4576196561791980036}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &-8280198629979112602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,10 +341,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639112052947414066
+  lastModified: 639113777899221203
   FileSizes:
   - Name: Desktop
-    Value: 2312
+    Value: 2404
   Exists: 1
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
@@ -447,13 +475,14 @@ MonoBehaviour:
   - {fileID: 1084460899752771776}
   - {fileID: 63709245643174709}
   - {fileID: -4149659142748250686}
+  - {fileID: -9028130214811803079}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639112052947414066
+  cacheTime: 639113777899221203
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -519,6 +548,8 @@ MonoBehaviour:
     index: 30
   - key: event:/Music Stairs
     index: 31
+  - key: event:/HeartBeat
+    index: 32
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,6 +765,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 4214
+--- !u!114 &4576196561791980036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/HeartBeat/Proximity
+  m_EditorClassIdentifier: 
+  Name: Proximity
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3881514619
+    data2: 928865360
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &4683743149096448141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,10 +912,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639112052947414066
+  lastModified: 639113777899211199
   FileSizes:
   - Name: Desktop
-    Value: 9253888
+    Value: 9732640
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:
