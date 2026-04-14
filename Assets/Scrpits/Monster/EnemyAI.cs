@@ -19,6 +19,24 @@ public class EnemyAI : MonoBehaviour
     public float minIdleTime = 1f;
     public float maxIdleTime = 3f;
 
+    [Header("Stealth Settings")]
+    [Tooltip("Mnożnik zasięgu wzroku, gdy gracz kuca (0.4 = 40% normalnego zasięgu)")]
+    public float sneakSightMultiplier = 0.4f;
+
+    [Tooltip("Dystans przy którym kucający gracz ZAWSZE jest wykrywany")]
+    public float sneakGuaranteedDetectDistance = 2.5f;
+
+    [Tooltip("Maksymalna szansa na 'przeoczenie' kucającego gracza")]
+    public float sneakMaxMissChance = 0.3f;
+
+    [Header("Heartbeat Audio")]
+    public EventReference heartbeatEvent;
+    public float heartbeatDistance = 4f;
+    [Range(0f, 1f)] public float heartbeatVolume = 0.5f;
+
+    [Header("Debug")]
+    public bool showStealthDebug = false;
+
     [Header("Chase Settings")]
     public float chaseSpeed = 5f;
     public float sightDistance = 10f;
@@ -48,6 +66,10 @@ public class EnemyAI : MonoBehaviour
     public float spawnInvincibilityTime = 1.5f;
     public float spawnInvincibilityTimer = 0f;
 
+    // --- Heartbeat private fields ---
+    private FMOD.Studio.EventInstance heartbeatInstance;
+    private bool isHeartbeatPlaying = false;
+
     private float lastProgressTime = 0f;
     private Vector3 lastPosition = Vector3.zero;
     private int stuckCounter = 0;
@@ -60,6 +82,7 @@ public class EnemyAI : MonoBehaviour
     private void OnDestroy()
     {
         AllEnemies.Remove(this);
+        StopHeartbeat(); // ✅ Cleanup
     }
 
     private void Start()
@@ -78,6 +101,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+
         // ✅ PRIORYTET 1: FinalChase
         if (GameState.FinalChase)
         {
@@ -85,12 +109,10 @@ public class EnemyAI : MonoBehaviour
             {
                 GameNarrativeManager.Instance.ChangeBackgroundMusic(
                     GameNarrativeManager.Instance.chaseMusic,
-                    GameNarrativeManager.Instance.chaseFadeTime  // ✅ Użyj pola z Inspektora
+                    GameNarrativeManager.Instance.chaseFadeTime
                 );
-            
-                
             }
-           
+
             if (jumpscareTriggered) return;
 
             if (!ai.enabled) ai.enabled = true;
@@ -143,8 +165,6 @@ public class EnemyAI : MonoBehaviour
                     player.gameObject.SetActive(false);
 
                 aiAnim.SetTrigger("jumpscare");
-
-                // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
                 AudioManager.Instance.PlaySFX(jumpscareEvent);
 
                 chasing = false;
@@ -207,35 +227,76 @@ public class EnemyAI : MonoBehaviour
 
         // --- DETEKCJA GRACZA ---
         Vector3 direction = (player.position - transform.position).normalized;
-        RaycastHit rayHit;
-        if (Physics.Raycast(transform.position + rayCastOffset, direction, out rayHit, sightDistance))
-        {
-            playerInSight = rayHit.collider.CompareTag("Player");
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
-            if (playerInSight)
+        Vector3[] raycastHeights = new Vector3[]
+        {
+            rayCastOffset,
+            new Vector3(rayCastOffset.x, 0.8f, rayCastOffset.z)
+        };
+
+        bool rayHitPlayer = false;
+
+        foreach (var offset in raycastHeights)
+        {
+            if (Physics.Raycast(transform.position + offset, direction, out RaycastHit rayHit, sightDistance))
             {
-                PlayerController pc = player.GetComponent<PlayerController>();
-                if (pc != null && pc.isSneaking && !GameState.ChaseLocked)
+                if (rayHit.collider.CompareTag("Player"))
                 {
-                    float sneakFactor = 0.4f;
-                    if (Vector3.Distance(player.position, transform.position) > sightDistance * sneakFactor)
+                    rayHitPlayer = true;
+                    break;
+                }
+            }
+        }
+
+        playerInSight = rayHitPlayer;
+
+        if (playerInSight)
+        {
+            PlayerController pc = player.GetComponent<PlayerController>();
+
+            if (pc != null && pc.isSneaking && !GameState.ChaseLocked)
+            {
+                float reducedSightDistance = sightDistance * sneakSightMultiplier;
+
+                if (distanceToPlayer <= sneakGuaranteedDetectDistance)
+                {
+                    playerInSight = true;
+                    if (showStealthDebug) Debug.DrawLine(transform.position, player.position, Color.red, 0.1f);
+                }
+                else if (distanceToPlayer > reducedSightDistance)
+                {
+                    playerInSight = false;
+                    if (showStealthDebug) Debug.DrawLine(transform.position, player.position, Color.green, 0.1f);
+                }
+                else
+                {
+                    float t = Mathf.InverseLerp(sneakGuaranteedDetectDistance, reducedSightDistance, distanceToPlayer);
+                    float currentMissChance = Mathf.Lerp(0f, sneakMaxMissChance, t);
+
+                    if (Random.value < currentMissChance)
                     {
                         playerInSight = false;
+                        if (showStealthDebug) Debug.DrawLine(transform.position, player.position, Color.yellow, 0.1f);
                     }
-                    else
+                    else if (showStealthDebug)
                     {
-                        if (Random.value < 0.3f)
-                            playerInSight = false;
+                        Debug.DrawLine(transform.position, player.position, Color.cyan, 0.1f);
                     }
                 }
-
-                if (playerInSight)
-                    loseSightTimer = loseSightTime;
             }
+            else if (showStealthDebug && pc != null && !pc.isSneaking)
+            {
+                Debug.DrawLine(transform.position, player.position, Color.white, 0.1f);
+            }
+
+            if (playerInSight)
+                loseSightTimer = loseSightTime;
         }
         else
         {
             playerInSight = false;
+            if (showStealthDebug) Debug.DrawLine(transform.position, transform.position + direction * sightDistance, Color.gray, 0.1f);
         }
 
         // --- CHASE GRACZA ---
@@ -244,7 +305,7 @@ public class EnemyAI : MonoBehaviour
             chasing = true;
             walking = false;
             isIdling = false;
-         
+
 
             if (!ai.isOnNavMesh)
             {
@@ -281,7 +342,6 @@ public class EnemyAI : MonoBehaviour
                 StartCoroutine(deathRoutine());
                 chasing = false;
 
-                // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
                 AudioManager.Instance.PlaySFX(jumpscareEvent);
             }
         }
@@ -387,7 +447,88 @@ public class EnemyAI : MonoBehaviour
                 stuckCounter = 0;
             }
         }
+
+        // --- ❤️ HEARTBEAT SYSTEM ---
+        if (player != null)
+        {
+            float dist = Vector3.Distance(transform.position, player.position);
+            UpdateHeartbeat(dist);
+        }
     }
+
+    // ============================================================
+    // HEARTBEAT SYSTEM – PROSTA WERSJA
+    // ============================================================
+
+    private void UpdateHeartbeat(float distance)
+    {
+
+        // ❤️ HEARTBEAT GRA TYLKO PODCZAS PATROLU W MIESZKANIU
+        // Warunki: demon respawned w apartamencie, ale NIE w story mode / final chase / rozmowie
+
+        bool isPatrolActive = GameState.DemonRespawnedInApartment &&
+                              !GameState.DemonInStoryMode &&
+                              !GameState.FinalChase &&
+                              !GameState.IsTalking;
+
+        if (!isPatrolActive || heartbeatEvent.IsNull || player == null)
+        {
+            StopHeartbeat();
+            return;
+        }
+
+        bool demonBlisko = distance <= heartbeatDistance;
+
+        if (demonBlisko && !isHeartbeatPlaying)
+            StartHeartbeat();
+        else if (!demonBlisko && isHeartbeatPlaying)
+            StopHeartbeat();
+        Debug.Log($"[Heartbeat] PatrolActive:{isPatrolActive} | Dist:{distance:F1}m | Playing:{isHeartbeatPlaying}");
+    }
+
+    private void StartHeartbeat()
+    {
+        if (heartbeatEvent.IsNull || isHeartbeatPlaying) return;
+
+        // ✅ UŻYJ AudioManager, żeby zastosować masterVolume i tracking
+        heartbeatInstance = AudioManager.Instance.CreateAmbientInstance(heartbeatEvent);
+
+        if (heartbeatInstance.isValid())
+        {
+            // ✅ Dodatkowo: ręczne ustawienie volume (dla pewności)
+            float finalVol = heartbeatVolume * AudioManager.Instance.GetMasterVolume();
+            heartbeatInstance.setVolume(finalVol);
+
+            // ✅ Start i dodanie do trackingu (opcjonalnie, ale zalecane)
+            heartbeatInstance.start();
+
+            // 🔁 Dodaj do activeEventInstances, żeby zmiany volume działały w locie
+            string key = heartbeatEvent.Guid.ToString() + "_heartbeat_" + GetInstanceID();
+            if (!AudioManager.Instance.activeEventInstances.ContainsKey(key))
+            {
+                AudioManager.Instance.activeEventInstances.Add(key, heartbeatInstance);
+            }
+
+            isHeartbeatPlaying = true;
+            Debug.Log($"[EnemyAI] ❤️ Heartbeat STARTED | Vol: {finalVol:F2} | Valid: {heartbeatInstance.isValid()}");
+        }
+        else
+        {
+            Debug.LogError("[EnemyAI] ❌ Heartbeat instance INVALID after creation!");
+        }
+    }
+
+    public void StopHeartbeat()
+    {
+        if (!isHeartbeatPlaying || !heartbeatInstance.isValid()) return;
+
+        heartbeatInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        heartbeatInstance.release();
+        heartbeatInstance = default;
+        isHeartbeatPlaying = false;
+    }
+
+    // ============================================================
 
     IEnumerator stayIdle()
     {
@@ -406,6 +547,8 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator deathRoutine()
     {
+        StopHeartbeat(); // ✅ Wyłącz heartbeat przed jumpscare
+
         yield return new WaitForSeconds(jumpscareTime);
 
         if (player != null)

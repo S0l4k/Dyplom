@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ItemCheck : MonoBehaviour
 {
@@ -34,9 +35,11 @@ public class ItemCheck : MonoBehaviour
     private bool canInteract = false;
     private bool isChecking = false;
     private FMOD.Studio.EventInstance demonVoiceInstance;
+ 
 
     void Start()
     {
+      
         playerCamera = Camera.main;
 
         if (interactionText != null)
@@ -162,6 +165,8 @@ public class ItemCheck : MonoBehaviour
             if (GameNarrativeManager.Instance != null)
                 GameNarrativeManager.Instance.TriggerFridgeDemon();
         }
+
+       
 
         isChecking = false;
         Debug.Log($"[ItemCheck] Interakcja z {itemName} zakończona");
