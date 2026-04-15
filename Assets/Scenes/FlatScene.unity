@@ -6461,31 +6461,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.35069284
+      value: -10.607
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.110000014
+      value: -6.459
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.1908693
+      value: -10.053
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.00002780123
+      value: 0.013774921
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: 0.99990517
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6493,7 +6493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 8.527
+      value: 538.421
       objectReference: {fileID: 0}
     - target: {fileID: 7185918732814579031, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
