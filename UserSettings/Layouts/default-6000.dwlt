@@ -14,16 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 74.66667
     y: 51.333336
     width: 2478
     height: 1376
+=======
+    x: 0
+    y: 42.666668
+    width: 2560
+    height: 1349.3334
+>>>>>>> origin/Maria2
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 498}
   m_MaxSize: {x: 10000, y: 10000}
-  m_Maximized: 0
+  m_Maximized: 1
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -44,8 +51,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 2478
     height: 1376
+=======
+    width: 2560
+    height: 1349.3334
+>>>>>>> origin/Maria2
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -69,7 +81,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 2478
+    width: 2560
     height: 36
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -90,8 +102,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 1356
     width: 2478
+=======
+    y: 1329.3334
+    width: 2560
+>>>>>>> origin/Maria2
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -113,12 +130,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 36
+<<<<<<< HEAD
     width: 2478
     height: 1320
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
   controlID: 17
+=======
+    width: 2560
+    height: 1293.3334
+  m_MinSize: {x: 400, y: 100}
+  m_MaxSize: {x: 32384, y: 16192}
+  vertical: 1
+  controlID: 9210
+>>>>>>> origin/Maria2
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -141,12 +167,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 2478
     height: 1320
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
   controlID: 18
+=======
+    width: 2560
+    height: 1293.3334
+  m_MinSize: {x: 400, y: 100}
+  m_MaxSize: {x: 32384, y: 16192}
+  vertical: 0
+  controlID: 9211
+>>>>>>> origin/Maria2
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -167,12 +202,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1126
     height: 1320
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
   controlID: 19
+=======
+    width: 1495.3334
+    height: 1293.3334
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 8096, y: 16192}
+  vertical: 1
+  controlID: 9212
+>>>>>>> origin/Maria2
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -191,8 +235,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1126
     height: 688
+=======
+    width: 1495.3334
+    height: 710.6667
+>>>>>>> origin/Maria2
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 16}
@@ -202,7 +251,7 @@ MonoBehaviour:
   - {fileID: 16}
   - {fileID: 17}
   m_Selected: 2
-  m_LastSelected: 1
+  m_LastSelected: 3
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -213,23 +262,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: AnimationWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 688
     width: 1126
     height: 632
   m_MinSize: {x: 50, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
+=======
+    y: 710.6667
+    width: 1495.3334
+    height: 582.6667
+  m_MinSize: {x: 51, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 19}
+>>>>>>> origin/Maria2
   m_Panes:
   - {fileID: 18}
   - {fileID: 19}
   - {fileID: 13}
-  m_Selected: 2
+  m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -246,10 +304,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1126
+    x: 1495.3334
     y: 0
+<<<<<<< HEAD
     width: 302.66663
     height: 1320
+=======
+    width: 242.66663
+    height: 1293.3334
+>>>>>>> origin/Maria2
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 20}
@@ -272,10 +335,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1428.6666
+    x: 1738
     y: 0
+<<<<<<< HEAD
     width: 492.66675
     height: 1320
+=======
+    width: 541.33325
+    height: 1293.3334
+>>>>>>> origin/Maria2
   m_MinSize: {x: 232, y: 276}
   m_MaxSize: {x: 10002, y: 10026}
   m_ActualView: {fileID: 21}
@@ -298,10 +366,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1921.3334
+    x: 2279.3333
     y: 0
+<<<<<<< HEAD
     width: 556.6666
     height: 1320
+=======
+    width: 280.66675
+    height: 1293.3334
+>>>>>>> origin/Maria2
   m_MinSize: {x: 276, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 22}
@@ -331,10 +404,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 74.66667
     y: 775.3334
     width: 1125
     height: 606
+=======
+    x: 0
+    y: 718
+    width: 1494.3334
+    height: 628.00006
+>>>>>>> origin/Maria2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -376,8 +456,8 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 0
-    m_VSlider: 0
+    m_HSlider: 1
+    m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -388,16 +468,24 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
+<<<<<<< HEAD
       width: 1125
       height: 585
     m_Scale: {x: 0.8125, y: 0.8125}
     m_Translation: {x: 562.5, y: 292.5}
+=======
+      width: 1494.3334
+      height: 607.00006
+    m_Scale: {x: 1.4538225, y: 1.4538225}
+    m_Translation: {x: 747.1667, y: 303.50003}
+>>>>>>> origin/Maria2
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -692.3077
       y: -360
       width: 1384.6154
@@ -405,6 +493,15 @@ MonoBehaviour:
     m_MinimalGUI: 1
   m_defaultScale: 0.8125
   m_LastWindowPixelSize: {x: 1687.5, y: 909}
+=======
+      x: -513.93256
+      y: -208.76003
+      width: 1027.8651
+      height: 417.52005
+    m_MinimalGUI: 1
+  m_defaultScale: 0.84305567
+  m_LastWindowPixelSize: {x: 2241.5, y: 942.0001}
+>>>>>>> origin/Maria2
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -432,10 +529,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "VHS\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 67.333336
+    x: 0
     y: 78.66667
-    width: 1133.6666
-    height: 656
+    width: 1479
+    height: 725.3333
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1134,10 +1231,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Animator\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 74.66667
-    y: 87.333336
-    width: 1125
-    height: 665.3333
+    x: 0
+    y: 78.66667
+    width: 1494.3334
+    height: 613.3333
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1159,14 +1256,14 @@ MonoBehaviour:
     - {fileID: -5705944100365366981, guid: 1cc820d2dd71f524bb15a769e916462f, type: 2}
     - {fileID: -4154791734939496692, guid: 99853f0cec02d9440a2ef402a94c7a59, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.92383283
+    - e00: 1.024505
       e01: 0
       e02: 0
-      e03: -42.82538
+      e03: -244.53906
       e10: 0
-      e11: 0.92383283
+      e11: 1.024505
       e12: 0
-      e13: 90.851234
+      e13: 269.70026
       e20: 0
       e21: 0
       e22: 1
@@ -1255,14 +1352,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 1.035165
+    - e00: 1
       e01: 0
       e02: 0
-      e03: -36.75827
+      e03: 30.666626
       e10: 0
-      e11: 1.035165
+      e11: 1
       e12: 0
-      e13: 225.52856
+      e13: 210
       e20: 0
       e21: 0
       e22: 1
@@ -1308,10 +1405,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 74.66667
     y: 87.333336
     width: 1125
     height: 662
+=======
+    x: 0
+    y: 78.66667
+    width: 1494.3334
+    height: 684.6667
+>>>>>>> origin/Maria2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1354,10 +1458,10 @@ MonoBehaviour:
       displayed: 1
       id: unity-scene-view-toolbar
       index: 0
-      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-278.66668701171877,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":1,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-278.6666259765625,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":1,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
-      snapOffset: {x: -278.6667, y: 0}
+      snapOffset: {x: -278.66663, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 1
       layout: 1
@@ -1898,7 +2002,7 @@ MonoBehaviour:
       scrollOffset: 0
     m_OverlaysVisible: 1
   m_WindowGUID: f2c1d0236a6d16845b58ee97ece780b7
-  m_Gizmos: 1
+  m_Gizmos: 0
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
@@ -1908,9 +2012,15 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: -0.5676681, y: 1.7892798, z: 2.1224577}
     speed: 2
     m_Value: {x: -0.5676681, y: 1.7892798, z: 2.1224577}
+=======
+    m_Target: {x: -12.106691, y: -5.6937776, z: 8.963356}
+    speed: 2
+    m_Value: {x: -12.106691, y: -5.6937776, z: 8.963356}
+>>>>>>> origin/Maria2
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1926,7 +2036,7 @@ MonoBehaviour:
     showImageEffects: 1
     showParticleSystems: 1
     showVisualEffectGraphs: 1
-    m_FxEnabled: 1
+    m_FxEnabled: 0
   m_Grid:
     xGrid:
       m_Fade:
@@ -1943,7 +2053,7 @@ MonoBehaviour:
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0.1, y: 0.1}
+      m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
         m_Target: 0
@@ -1956,6 +2066,7 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
+<<<<<<< HEAD
     m_Target: {x: 0.021152385, y: -0.13140526, z: -0.0018193693, w: -0.9920899}
     speed: 2
     m_Value: {x: 0.02113168, y: -0.13127664, z: -0.0018175885, w: -0.99111885}
@@ -1963,6 +2074,15 @@ MonoBehaviour:
     m_Target: 0.26168662
     speed: 2
     m_Value: 0.26168662
+=======
+    m_Target: {x: 0.008800118, y: -0.026913129, z: 0.00066290784, w: 1.0002028}
+    speed: 2
+    m_Value: {x: 0.0067955824, y: -0.026898166, z: 0.0006085825, w: 0.99961495}
+  m_Size:
+    m_Target: 10.423295
+    speed: 2
+    m_Value: 10.914445
+>>>>>>> origin/Maria2
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -2017,10 +2137,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Timeline\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 67.333336
+    x: 0
     y: 78.66667
-    width: 1133.6666
-    height: 656
+    width: 1494.3334
+    height: 613.3333
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2064,10 +2184,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 74.66667
     y: 775.3334
     width: 1125
     height: 606
+=======
+    x: 0
+    y: 718
+    width: 1494.3334
+    height: 628.00006
+>>>>>>> origin/Maria2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2100,10 +2227,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Animation\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 74.66667
-    y: 778.6667
-    width: 1125
-    height: 608.00006
+    x: 0
+    y: 789.3334
+    width: 1494.3334
+    height: 556.6667
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2117,7 +2244,11 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
+<<<<<<< HEAD
   m_LastSelectedObjectID: -6998
+=======
+  m_LastSelectedObjectID: -1668
+>>>>>>> origin/Maria2
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2139,10 +2270,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1200.6667
     y: 87.333336
     width: 300.66663
     height: 1294
+=======
+    x: 1495.3334
+    y: 78.66667
+    width: 240.66663
+    height: 1267.3334
+>>>>>>> origin/Maria2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2156,10 +2294,17 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
+<<<<<<< HEAD
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 32d00000
       m_LastClickedID: 0
       m_ExpandedIDs: 82d9ffff8ce0ffff1cefffffeafaffff22e4000026e40000
+=======
+      scrollPos: {x: 0, y: 321.66663}
+      m_SelectedIDs: 7cf9ffff
+      m_LastClickedID: -1668
+      m_ExpandedIDs: b2f8ffffdef8ffffe2f8ffffe6f8ffffeaf8fffffef8ffff16f9ffffeafaffff46c00000b2c6000010c800005ec80000a0c800004cc90000
+>>>>>>> origin/Maria2
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2205,10 +2350,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1503.3334
     y: 87.333336
     width: 490.66675
     height: 1294
+=======
+    x: 1738
+    y: 78.66667
+    width: 539.33325
+    height: 1267.3334
+>>>>>>> origin/Maria2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2231,7 +2383,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/Scenes
+=======
+    - Assets/Maria/Monster
+>>>>>>> origin/Maria2
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -2241,16 +2397,26 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 82
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/Scenes
+=======
+  - Assets/Maria/Monster
+>>>>>>> origin/Maria2
   m_LastFoldersGridSize: 82
-  m_LastProjectPath: C:\Users\User\Documents\Gitkraken\Dyplom
+  m_LastProjectPath: C:\Users\Admin\Documents\gitkraken\Dyplom
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 20d40000
     m_LastClickedID: 54304
     m_ExpandedIDs: 000000007ad200007cd200007ed2000080d2000082d2000084d2000000ca9a3b
+=======
+    m_SelectedIDs: dcd70000
+    m_LastClickedID: 55260
+    m_ExpandedIDs: 0000000076d2000068d3000000ca9a3b
+>>>>>>> origin/Maria2
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2279,7 +2445,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 000000007ad200007cd200007ed2000080d2000082d2000084d20000
+=======
+    m_ExpandedIDs: 0000000076d2000000ca9a3b
+>>>>>>> origin/Maria2
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2307,8 +2477,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: 8ed9000022c80000e8030100e6030100eac400000000000090ce000038d20000e2d200007ad30000bad000001c030000a6d00000a6cc000056950100
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: 8ed9000022c80000e8030100e6030100eac400000000000090ce000038d20000e2d200007ad30000bad000001c030000a6d00000a6cc00005695010018bd0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2336,7 +2506,7 @@ MonoBehaviour:
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 82
   m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 192
+  m_DirectoriesAreaWidth: 118
 --- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2358,10 +2528,17 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1996
     y: 87.333336
     width: 555.6666
     height: 1294
+=======
+    x: 2279.3335
+    y: 78.66667
+    width: 279.66675
+    height: 1267.3334
+>>>>>>> origin/Maria2
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
