@@ -10,6 +10,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
     public Camera playerCamera;
     public PlayerController playerController;
     public CanvasGroup gameplayUI;
+    public Transform playerTransform;
 
     [Header("UI")]
     public TMP_Text interactionText;
@@ -26,29 +27,40 @@ public class NarrativeInspectTrigger : MonoBehaviour
     [TextArea] public string beforeText = "You examine the object...";
     [TextArea] public string afterText = "Something feels off...";
 
+    [Header("Flashback")]
+    public Transform flashbackLocation;
+    public GameObject flashbackScene;
+    public bool enableFlashback = true;
+    public ScreenFader screenFader;  // ✅ TEN SAM komponent co w GameNarrativeManager!
+
     [Header("Settings")]
     public float typeSpeed = 0.05f;
+    public float fadeSpeed = 0.8f;   // ✅ Domyślny czas fade (jak w VomitSequence)
 
     private Camera _inspectCamera;
     private InspectSystem _inspectSystem;
     private bool _canInteract = false;
     private bool _isInInspect = false;
+    private bool _isInFlashback = false;
 
-    // ✅ NOWE: Statyczna referencja do AKTYWNEGO inspektora
+    private Vector3 _playerReturnPosition;
+    private Quaternion _playerReturnRotation;
+
     private static NarrativeInspectTrigger _activeInspector;
 
     void Start()
     {
+        if (playerCamera == null) playerCamera = Camera.main;
+
         _inspectCamera = inspectScene?.GetComponentInChildren<Camera>();
         _inspectSystem = inspectScene?.GetComponentInChildren<InspectSystem>();
 
         if (interactionText != null) interactionText.gameObject.SetActive(false);
         if (outline != null) outline.enabled = false;
         if (inspectScene != null) inspectScene.SetActive(false);
-
+        if (flashbackScene != null) flashbackScene.SetActive(false);
         if (childModelToEnable != null) childModelToEnable.gameObject.SetActive(false);
 
-        // ✅ FIX: Każdy obiekt dodaje listener, ale ExitInspect() reaguje TYLKO dla aktywnego
         if (endInspectButton != null)
         {
             endInspectButton.onClick.AddListener(ExitInspect);
@@ -58,7 +70,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     void Update()
     {
-        if (_isInInspect) return;
+        if (_isInInspect || _isInFlashback) return;
 
         CheckInteraction();
 
@@ -91,7 +103,14 @@ public class NarrativeInspectTrigger : MonoBehaviour
     IEnumerator EnterInspect()
     {
         _isInInspect = true;
-        _activeInspector = this; // ✅ Zarejestruj się jako aktywny inspektor
+        _activeInspector = this;
+
+        Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
+        if (playerTrans != null)
+        {
+            _playerReturnPosition = playerTrans.position;
+            _playerReturnRotation = playerTrans.rotation;
+        }
 
         interactionText.gameObject.SetActive(false);
         if (outline != null) outline.enabled = false;
@@ -111,8 +130,8 @@ public class NarrativeInspectTrigger : MonoBehaviour
         if (gameplayUI != null) gameplayUI.blocksRaycasts = false;
         if (gameplayUI != null) StartCoroutine(FadeUI(gameplayUI, 0f));
 
-        playerCamera.gameObject.SetActive(false);
-        inspectScene.SetActive(true);
+        if (playerCamera != null) playerCamera.gameObject.SetActive(false);
+        if (inspectScene != null) inspectScene.SetActive(true);
 
         if (childModelToEnable != null)
         {
@@ -125,40 +144,228 @@ public class NarrativeInspectTrigger : MonoBehaviour
         if (inspectUIPanel != null) inspectUIPanel.SetActive(true);
     }
 
-    // ✅ Publiczna metoda - wywoływana przez Button.onClick
     public void ExitInspect()
     {
-        // ✅ KLUCZOWE: Reaguj TYLKO jeśli to TY jesteś aktywnym inspektorem
         if (_activeInspector != this) return;
 
+        // 🔑 Włącz kamerę gracza NATYCHMIAST
+        if (playerCamera != null && !playerCamera.gameObject.activeSelf)
+            playerCamera.gameObject.SetActive(true);
+
         _isInInspect = false;
-        _activeInspector = null; // ✅ Wyczyść referencję
+        _activeInspector = null;
 
-        if (!string.IsNullOrEmpty(afterText) && GameNarrativeManager.Instance != null)
-        {
-            StartCoroutine(GameNarrativeManager.Instance.ShowThoughtWithStyle(
-                afterText, typeSpeed, 1.5f, "#AAAAFF80"));
-        }
-
-        if (playerController != null) playerController.enabled = true;
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        if (gameplayUI != null) StartCoroutine(FadeUI(gameplayUI, 1f));
-        if (gameplayUI != null) gameplayUI.interactable = true;
-        if (gameplayUI != null) gameplayUI.blocksRaycasts = true;
-
-        if (childModelToEnable != null)
-            childModelToEnable.gameObject.SetActive(false);
-
+        // Wyłącz inspect UI
+        if (inspectScene != null) inspectScene.SetActive(false);
+        if (childModelToEnable != null) childModelToEnable.gameObject.SetActive(false);
         if (endInspectButton != null) endInspectButton.gameObject.SetActive(false);
         if (inspectUIPanel != null) inspectUIPanel.SetActive(false);
 
-        inspectScene.SetActive(false);
-        playerCamera.gameObject.SetActive(true);
+        if (gameplayUI != null)
+        {
+            gameplayUI.alpha = 1f;
+            gameplayUI.interactable = true;
+            gameplayUI.blocksRaycasts = true;
+        }
+
+        // 🔤 Pokaż tekst po inspekcji
+        if (!string.IsNullOrEmpty(afterText) && GameNarrativeManager.Instance != null)
+        {
+            StartCoroutine(ShowAfterTextAndContinue());
+        }
+        else
+        {
+            ContinueAfterInspect();
+        }
     }
 
+    private IEnumerator ShowAfterTextAndContinue()
+    {
+        yield return StartCoroutine(GameNarrativeManager.Instance.ShowThoughtWithStyle(
+            afterText, typeSpeed, 0.8f, "#AAAAFF80"));
+
+        yield return new WaitForSeconds(0.3f);
+        ContinueAfterInspect();
+    }
+
+    private void ContinueAfterInspect()
+    {
+        if (enableFlashback && flashbackLocation != null)
+        {
+            StartFlashback();
+        }
+        else
+        {
+            RestorePlayerControl();
+        }
+    }
+
+    // ✅ PROSTY TELEPORT – VOMIT SEQUENCE STYLE
+    private void StartFlashback()
+    {
+        Debug.Log($"[Flashback] 🌀 Starting flashback for {gameObject.name}");
+        _isInFlashback = true;
+
+        StartCoroutine(FlashbackTeleportSequence());
+    }
+
+    // ✅ KORUTINA TELEPORTU – dokładna kopia logiki z VomitSequence
+    private IEnumerator FlashbackTeleportSequence()
+    {
+        // 🔒 Zablokuj gracza (jak w VomitSequence)
+        if (playerController != null) playerController.enabled = false;
+        if (playerCamera != null) playerCamera.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+
+        // 🌑 Fade OUT
+        if (screenFader != null)
+        {
+            yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
+        }
+        else
+        {
+            // Fallback: prosta pauza jeśli nie ma ScreenFader
+            yield return new WaitForSeconds(fadeSpeed);
+        }
+
+        // 🌀 TELEPORT GRACZA (z CharacterController handling jak w VomitSequence)
+        if (flashbackLocation != null)
+        {
+            Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
+
+            if (playerTrans != null)
+            {
+                CharacterController cc = playerController?.GetComponent<CharacterController>();
+                Vector3 targetPos = flashbackLocation.position;
+                Quaternion targetRot = flashbackLocation.rotation;
+
+                // ✅ Raycast do podłogi (jak w VomitSequence) – żeby gracz nie wisiał w powietrzu
+                if (cc != null && Physics.Raycast(
+                    flashbackLocation.position + Vector3.up * 2f,
+                    Vector3.down,
+                    out RaycastHit hit,
+                    5f,
+                    LayerMask.GetMask("Default", "Floor", "Environment")))
+                {
+                    targetPos = hit.point + Vector3.up * (cc.height * 0.5f) - Vector3.up * 1f;
+                }
+
+                // ✅ Wykonaj teleport
+                playerTrans.position = targetPos;
+                playerTrans.rotation = targetRot;
+
+                // ✅ Jeśli kamera jest childem gracza – zaktualizuj jej rotację
+                if (playerCamera != null && playerCamera.transform.parent == playerTrans)
+                {
+                    // Kamera już podąży za graczem, ale dla pewności:
+                    playerCamera.transform.rotation = targetRot;
+                }
+
+                Debug.Log($"[Flashback] 🚀 Teleported to {flashbackLocation.name} at {targetPos}");
+            }
+        }
+
+        // 🎬 Aktywuj scenę flashbacku
+        if (flashbackScene != null) flashbackScene.SetActive(true);
+
+        // 🌕 Fade IN
+        if (screenFader != null)
+        {
+            yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
+        }
+        else
+        {
+            yield return new WaitForSeconds(fadeSpeed);
+        }
+
+        // 🔓 Odblokuj gracza w flashbacku
+        RestorePlayerControl();
+    }
+
+    // ✅ POWRÓT Z FLASHBACKU – identyczna logika
+    public void EndFlashback()
+    {
+        if (!_isInFlashback) return;
+
+        Debug.Log($"[Flashback] 🔙 Returning from flashback for {gameObject.name}");
+        _isInFlashback = false;
+
+        StartCoroutine(ReturnFromFlashbackSequence());
+    }
+
+    private IEnumerator ReturnFromFlashbackSequence()
+    {
+        // 🔒 Zablokuj gracza
+        if (playerController != null) playerController.enabled = false;
+        if (playerCamera != null) playerCamera.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+
+        // 🌑 Fade OUT
+        if (screenFader != null)
+        {
+            yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
+        }
+        else
+        {
+            yield return new WaitForSeconds(fadeSpeed);
+        }
+
+        // 🌀 TELEPORT POWROTNY
+        Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
+        if (playerTrans != null)
+        {
+            CharacterController cc = playerController?.GetComponent<CharacterController>();
+            Vector3 targetPos = _playerReturnPosition;
+            Quaternion targetRot = _playerReturnRotation;
+
+            // ✅ Raycast do podłogi dla bezpieczeństwa
+            if (cc != null && Physics.Raycast(
+                _playerReturnPosition + Vector3.up * 2f,
+                Vector3.down,
+                out RaycastHit hit,
+                5f,
+                LayerMask.GetMask("Default", "Floor", "Environment")))
+            {
+                targetPos = hit.point + Vector3.up * (cc.height * 0.5f) - Vector3.up * 1f;
+            }
+
+            playerTrans.position = targetPos;
+            playerTrans.rotation = targetRot;
+
+            Debug.Log($"[Flashback] 🔙 Returned to saved position: {targetPos}");
+        }
+
+        // 🎬 Wyłącz scenę flashbacku
+        if (flashbackScene != null) flashbackScene.SetActive(false);
+
+        // 🌕 Fade IN
+        if (screenFader != null)
+        {
+            yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
+        }
+        else
+        {
+            yield return new WaitForSeconds(fadeSpeed);
+        }
+
+        // 🔓 Przywróć normalną grę
+        RestorePlayerControl();
+    }
+
+    // ✅ JEDNA METODA DO ODBLOKOWANIA – jak w GameNarrativeManager
+    private void RestorePlayerControl()
+    {
+        if (playerController != null) playerController.enabled = true;
+        if (playerCamera != null) playerCamera.enabled = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        Debug.Log($"[RestorePlayerControl] ✅ Player unlocked");
+    }
+
+    // ✅ Helper do fade UI (tylko dla gameplayUI, nie ekranu)
     IEnumerator FadeUI(CanvasGroup cg, float targetAlpha)
     {
         float start = cg.alpha;
@@ -171,6 +378,4 @@ public class NarrativeInspectTrigger : MonoBehaviour
         }
         cg.alpha = targetAlpha;
     }
-
- 
 }
