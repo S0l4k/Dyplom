@@ -212,7 +212,8 @@ public class DialogActivator : MonoBehaviour
 
         if (playerCamScript != null)
             playerCamScript.enabled = true;
-
+        
+        _dialogJustFinished = true;
         Debug.Log($"Rozmowa z {npcName} zakończona.");
 
         if (isFinalDialog)
@@ -222,4 +223,18 @@ public class DialogActivator : MonoBehaviour
             Debug.Log("[DialogActivator] Final dialog finished. ReadyForFinalChase = true");
         }
     }
+    // Flag: czy dialog właśnie się skończył
+    private bool _dialogJustFinished = false;
+
+    // ✅ Publiczna metoda dla SchoolQuestController
+    public bool HasDialogJustFinished()
+    {
+        if (_dialogJustFinished)
+        {
+            _dialogJustFinished = false;
+            return true;
+        }
+        return false;
+    }
+
 }

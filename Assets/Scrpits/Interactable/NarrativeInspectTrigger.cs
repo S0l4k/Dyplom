@@ -267,8 +267,15 @@ public class NarrativeInspectTrigger : MonoBehaviour
         }
 
         // 🎬 Aktywuj scenę flashbacku
-        if (flashbackScene != null) flashbackScene.SetActive(true);
-
+        if (flashbackScene != null)
+        {
+            flashbackScene.SetActive(true);
+            if (QuestManager.Instance != null && QuestManager.Instance.questPanel != null)
+            {
+                QuestManager.Instance.questPanel.SetActive(false);
+                Debug.Log("[Narrative] 📋 Quest UI hidden during flashback");
+            }
+        }
         // 🌕 Fade IN
         if (screenFader != null)
         {
@@ -281,6 +288,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
         // 🔓 Odblokuj gracza w flashbacku
         RestorePlayerControl();
+
     }
 
     // ✅ POWRÓT Z FLASHBACKU – identyczna logika
@@ -301,7 +309,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
         if (playerCamera != null) playerCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
-
+        StopFlashbackAmbience();
         // 🌑 Fade OUT
         if (screenFader != null)
         {
@@ -350,10 +358,27 @@ public class NarrativeInspectTrigger : MonoBehaviour
             yield return new WaitForSeconds(fadeSpeed);
         }
 
+        if (QuestManager.Instance != null && QuestManager.Instance.questPanel != null)
+        {
+            QuestManager.Instance.questPanel.SetActive(true);
+            Debug.Log("[Narrative] 📋 Quest UI restored after flashback");
+        }
         // 🔓 Przywróć normalną grę
         RestorePlayerControl();
     }
-
+    private void StopFlashbackAmbience()
+    {
+        // Jeśli flashbackScene ma SchoolAmbienceController, zatrzymaj go
+        if (flashbackScene != null)
+        {
+            var ambience = flashbackScene.GetComponentInChildren<SchoolAmbienceController>();
+            if (ambience != null)
+            {
+                ambience.StopVoices(true); // fade out
+                Debug.Log("[Narrative] 🔇 Flashback ambience stopped");
+            }
+        }
+    }
     // ✅ JEDNA METODA DO ODBLOKOWANIA – jak w GameNarrativeManager
     private void RestorePlayerControl()
     {

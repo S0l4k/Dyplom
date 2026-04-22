@@ -13,5 +13,6 @@
     // ✅ NOWE FLAGI DLA SEKWENCJI KOŃCOWEJ
     public static bool InteractionsLocked = false;
     public static bool SofaSequenceActive = false;
+    public static bool IsInFlashback = false;
 
 }

@@ -55,6 +55,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
+--- !u!114 &-8431728688285078284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GlassEating
+  m_EditorClassIdentifier: 
+  Path: event:/GlassEating
+  Guid:
+    Data1: 1565434017
+    Data2: 1152668847
+    Data3: -1481279306
+    Data4: 1919415542
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 10000
 --- !u!114 &-8280198629979112602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,10 +368,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639117799314430225
+  lastModified: 639124962538139583
   FileSizes:
   - Name: Desktop
-    Value: 2404
+    Value: 2512
   Exists: 1
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
@@ -427,6 +454,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 110400
+--- !u!114 &-3063502100851265798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SchoolAmbient
+  m_EditorClassIdentifier: 
+  Path: event:/SchoolAmbient
+  Guid:
+    Data1: 382575079
+    Data2: 1076478079
+    Data3: -364102217
+    Data4: 866281208
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 63000
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,13 +530,15 @@ MonoBehaviour:
   - {fileID: 63709245643174709}
   - {fileID: -4149659142748250686}
   - {fileID: -9028130214811803079}
+  - {fileID: -8431728688285078284}
+  - {fileID: -3063502100851265798}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639117799314430225
+  cacheTime: 639124962538139583
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -550,6 +606,10 @@ MonoBehaviour:
     index: 31
   - key: event:/HeartBeat
     index: 32
+  - key: event:/GlassEating
+    index: 33
+  - key: event:/SchoolAmbient
+    index: 34
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -912,10 +972,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639117799314420193
+  lastModified: 639124962538119583
   FileSizes:
   - Name: Desktop
-    Value: 9732640
+    Value: 10697248
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:
