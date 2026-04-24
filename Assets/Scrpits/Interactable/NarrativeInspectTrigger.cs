@@ -42,6 +42,10 @@ public class NarrativeInspectTrigger : MonoBehaviour
     private bool _canInteract = false;
     private bool _isInInspect = false;
     private bool _isInFlashback = false;
+    private bool _hasBeenUsed = false;
+    // ✅ W [Header("Flashback")] dodaj:
+    [Tooltip("ID questa do trackowania postępu (np. 'SchoolFlashback')")]
+    public string flashbackQuestID;  // ✅ Nowe pole
 
     private Vector3 _playerReturnPosition;
     private Quaternion _playerReturnRotation;
@@ -70,7 +74,8 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     void Update()
     {
-        if (_isInInspect || _isInFlashback) return;
+        // ✅ NOWE: Jeśli obiekt był już użyty – zablokuj wszelką interakcję
+        if (_isInInspect || _isInFlashback || _hasBeenUsed) return;
 
         CheckInteraction();
 
@@ -80,6 +85,33 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     void CheckInteraction()
     {
+        // ✅ W CheckInteraction(), na początku metody dodaj:
+    
+        
+            // ✅ NOWE: Blokada jeśli flashbacki nie są jeszcze odblokowane
+            if (!GameState.ApartmentExplorationUnlocked && enableFlashback)
+            {
+                if (interactionText != null && interactionText.gameObject.activeSelf)
+                    interactionText.gameObject.SetActive(false);
+                if (outline != null) outline.enabled = false;
+                _canInteract = false;
+                return;
+            }
+
+            // ✅ Jeśli obiekt był już użyty – nie pokazuj promptu
+            if (_hasBeenUsed)
+            {
+                if (interactionText != null && interactionText.gameObject.activeSelf)
+                    interactionText.gameObject.SetActive(false);
+                if (outline != null) outline.enabled = false;
+                _canInteract = false;
+                return;
+            }
+
+           
+        
+
+
         if (!playerCamera || interactionText == null) return;
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
@@ -310,6 +342,12 @@ public class NarrativeInspectTrigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
         StopFlashbackAmbience();
+        _hasBeenUsed = true;
+        if (enableFlashback && !string.IsNullOrEmpty(flashbackQuestID))
+        {
+            GameNarrativeManager.Instance?.OnFlashbackCompleted(flashbackQuestID);
+            Debug.Log($"[Narrative] 📢 Flashback completed: {flashbackQuestID}");
+        }
         // 🌑 Fade OUT
         if (screenFader != null)
         {
@@ -380,14 +418,39 @@ public class NarrativeInspectTrigger : MonoBehaviour
         }
     }
     // ✅ JEDNA METODA DO ODBLOKOWANIA – jak w GameNarrativeManager
+    // ✅ POPRAWIONA METODA – przywraca PEŁNĄ kontrolę
     private void RestorePlayerControl()
     {
-        if (playerController != null) playerController.enabled = true;
-        if (playerCamera != null) playerCamera.enabled = true;
+        Debug.Log("[RestorePlayerControl] 🔓 Restoring full player control...");
+
+        // 🎮 Odblokuj ruch gracza
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+            Debug.Log("  ├─ PlayerController.enabled = true");
+        }
+
+        // 🎥 Odblokuj kamerę (GameObject)
+        if (playerCamera != null)
+        {
+            playerCamera.enabled = true;
+            Debug.Log("  ├─ playerCamera GameObject.enabled = true");
+        }
+
+        // 🖱️ Odblokuj PlayerCam (skrypt obsługi myszki) – ✅ TO BYŁO BRAKUJĄCE!
+        PlayerCam playerCamScript = playerCamera?.GetComponent<PlayerCam>();
+        if (playerCamScript != null)
+        {
+            playerCamScript.enabled = true;
+            Debug.Log("  ├─ PlayerCam script.enabled = true");
+        }
+
+        // 🔦 Przywróć kursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log("  └─ Cursor locked, hidden");
 
-        Debug.Log($"[RestorePlayerControl] ✅ Player unlocked");
+        Debug.Log("[RestorePlayerControl] ✅ Player fully unlocked");
     }
 
     // ✅ Helper do fade UI (tylko dla gameplayUI, nie ekranu)

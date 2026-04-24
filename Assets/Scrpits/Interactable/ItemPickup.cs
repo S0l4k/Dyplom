@@ -30,17 +30,25 @@ public class ItemPickup : MonoBehaviour
 
     // ✅ NOWE POLA DLA SYSTEMU ŚWIATŁA/LEKÓW
     [Header("Light & Medicine System")]
-    public LightController lightController;        // ✅ Twój LightController
-    public GameObject medicine;                    // ✅ Obiekt z lekami (początkowo ukryty)
+    public LightController lightController;
+    public GameObject medicine;
 
-    private Camera playerCamera;
-    private bool canPickup = false;
-    private bool isHeld = false;
-    private bool isHidden = false;
+    // ✅ ATTIC QUEST INTEGRATION
+    [Header("Attic Quest Integration")]
+    public AtticQuestController atticQuestController;
 
+    // ✅ STATYCZNE REFERENCJE DO ŚLEDZENIA TRZYMANEGO PRZEDMIOTU
     private static ItemPickup heldItem = null;
     private static ItemPickup heldFlashlight = null;
     private static ItemPickup currentTarget = null;
+
+    // ✅ NOWE: Statyczna referencja do trzymanej świeczki attica
+    private static ItemPickup _heldAtticCandle = null;
+
+    private Camera playerCamera;
+    private bool canPickup = false;
+    public bool isHeld = false;
+    private bool isHidden = false;
 
     private Flashlight flashlight;
 
@@ -194,18 +202,24 @@ public class ItemPickup : MonoBehaviour
             flashlightUIImage.sprite = flashlightOnSprite;
             flashlightUIText.text = "Press F";
         }
+
         if (itemName == "Food")
         {
             GameState.LoopSequenceActive = true;
-
             if (stairLoop != null)
             {
                 stairLoop.loopCount = 0;
                 Debug.Log("[ItemPickup] Loop sequence activated after picking up food!");
             }
         }
+
+        // ✅ ATTIC QUEST: Jeśli to świeczka z attica – zapisz referencję
+        if (atticQuestController != null && gameObject.CompareTag("AtticCandle"))
+        {
+            _heldAtticCandle = this;
+            Debug.Log($"[ItemPickup] 🕯️ Attic candle picked up – quest notified | item={itemName}");
+        }
     }
-    
 
     void Drop()
     {
@@ -219,7 +233,15 @@ public class ItemPickup : MonoBehaviour
         }
 
         isHeld = false;
-        heldItem = null;
+
+        // ✅ Jeśli to była świeczka attica – wyczyść referencję
+        if (_heldAtticCandle == this)
+            _heldAtticCandle = null;
+
+        if (isFlashlight)
+            heldFlashlight = null;
+        else
+            heldItem = null;
 
         HidePickupText();
     }
@@ -271,10 +293,10 @@ public class ItemPickup : MonoBehaviour
         // ✅ Efekt typkania (3x)
         for (int i = 0; i < 3; i++)
         {
-            lightController.TurnOffAllLights();     // ✅ Gasimy
+            lightController.TurnOffAllLights();
             yield return new WaitForSeconds(0.15f);
-            lightController.RestoreLights();        // ✅ Włączamy z powrotem
-            yield return new WaitForSeconds(0.15f + (i * 0.1f)); // ✅ Dłuższe pauzy
+            lightController.RestoreLights();
+            yield return new WaitForSeconds(0.15f + (i * 0.1f));
         }
 
         // ✅ Ostateczne zgaszenie
@@ -289,5 +311,12 @@ public class ItemPickup : MonoBehaviour
             medicine.SetActive(true);
             Debug.Log("[ItemPickup] 💊 Leki aktywowane");
         }
+    }
+
+    // ✅ ✅ ✅ NOWA STATYCZNA METODA DLA CANDLECONTROLLER ✅ ✅ ✅
+    // Sprawdź czy gracz trzyma świeczkę z attica
+    public static bool HeldItemIsAtticCandle()
+    {
+        return _heldAtticCandle != null && _heldAtticCandle.isHeld;
     }
 }

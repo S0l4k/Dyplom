@@ -368,11 +368,38 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639124962538139583
+  lastModified: 639126613278180590
   FileSizes:
   - Name: Desktop
-    Value: 2512
+    Value: 2634
   Exists: 1
+--- !u!114 &-5710785234417663064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Candle
+  m_EditorClassIdentifier: 
+  Path: event:/Candle
+  Guid:
+    Data1: 1783737929
+    Data2: 1169360483
+    Data3: 564351368
+    Data4: -2076010679
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 999
 --- !u!114 &-5592497763983646787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,13 +559,16 @@ MonoBehaviour:
   - {fileID: -9028130214811803079}
   - {fileID: -8431728688285078284}
   - {fileID: -3063502100851265798}
+  - {fileID: 3535279584807567414}
+  - {fileID: -5710785234417663064}
+  - {fileID: 7792810737935306822}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639124962538139583
+  cacheTime: 639126613278180590
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -610,6 +640,12 @@ MonoBehaviour:
     index: 33
   - key: event:/SchoolAmbient
     index: 34
+  - key: event:/DemonAttic
+    index: 35
+  - key: event:/Candle
+    index: 36
+  - key: event:/Doorbell
+    index: 37
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,6 +808,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &3535279584807567414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DemonAttic
+  m_EditorClassIdentifier: 
+  Path: event:/DemonAttic
+  Guid:
+    Data1: -82623182
+    Data2: 1313303420
+    Data3: -229383258
+    Data4: -1614588199
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 30000
 --- !u!114 &4057196472653241213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,10 +1035,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639124962538119583
+  lastModified: 639126613278160659
   FileSizes:
   - Name: Desktop
-    Value: 10697248
+    Value: 11253856
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:
@@ -1031,6 +1094,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &7792810737935306822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Doorbell
+  m_EditorClassIdentifier: 
+  Path: event:/Doorbell
+  Guid:
+    Data1: 2056805952
+    Data2: 1169539198
+    Data3: -784756833
+    Data4: 795291276
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 10421
 --- !u!114 &7933706578715981509
 MonoBehaviour:
   m_ObjectHideFlags: 0

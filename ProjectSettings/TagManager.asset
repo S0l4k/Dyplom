@@ -9,6 +9,7 @@ TagManager:
   - Stone
   - LoopTop
   - LoopBottom
+  - AtticCandle
   layers:
   - Default
   - TransparentFX

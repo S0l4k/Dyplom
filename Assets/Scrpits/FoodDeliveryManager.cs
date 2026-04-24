@@ -18,15 +18,22 @@ public class FoodDeliveryManager : MonoBehaviour
 
     public void OrderFood()
     {
-        // ✅ ODBLOKUJ DIALOG Z KURIEREM (od razu po naciśnięciu przycisku)
+        // ✅ ODBLOKUJ DIALOG Z KURIEREM
         GameState.CourierArrived = true;
         Debug.Log("[FoodDelivery] 🚪 Kurier dostępny do rozmowy przy drzwiach");
 
-        // ✅ UKOŃCZ QUEST
+        // ✅ UKOŃCZ QUEST "Order Food"
         if (QuestManager.Instance != null)
+        {
             QuestManager.Instance.CompleteQuest("Order Food");
-            QuestManager.Instance.AddQuest("Meet with the courier downstairs");
 
-        // ❌ BRAK Instantiate – NIC using UnityEngine;
+            // ✅ NOWE: Rozpocznij quest "rozglądnij się po mieszkaniu"
+            if (GameNarrativeManager.Instance != null)
+            {
+                GameNarrativeManager.Instance.UnlockApartmentExploration();
+            }
+        }
+
+        Debug.Log("[FoodDelivery] 🎯 Apartment exploration quest unlocked!");
     }
 }
