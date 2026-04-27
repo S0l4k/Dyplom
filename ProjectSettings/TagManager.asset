@@ -9,6 +9,8 @@ TagManager:
   - Stone
   - LoopTop
   - LoopBottom
+  - AtticCandle
+  - Crosshair
   layers:
   - Default
   - TransparentFX
@@ -27,7 +29,7 @@ TagManager:
   - Lamp
   - Obstacle
   - Computer
-  - 
+  - Player
   - 
   - 
   - 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class ManagerIK : MonoBehaviour
 {
 
-    Animator animator;
+    public Animator animator;
     public bool ikActive = false;
     public Transform objTarget;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

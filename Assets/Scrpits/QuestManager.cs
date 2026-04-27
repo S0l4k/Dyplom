@@ -50,7 +50,7 @@ public class QuestManager : MonoBehaviour
 
         // ✅ BLOKADA GLOBALNA: Jeśli trwa dialog, nie pokazuj myśli i nie odliczaj czasu
         if (GameState.IsTalking) return;
-
+        if (GameState.IsTalking || GameState.IsInFlashback) return;
         float currentTime = Time.time;
 
         foreach (var kvp in activeQuests.Values)

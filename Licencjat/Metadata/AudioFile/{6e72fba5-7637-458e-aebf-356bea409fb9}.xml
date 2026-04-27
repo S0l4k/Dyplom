@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{6e72fba5-7637-458e-aebf-356bea409fb9}">
+		<property name="assetPath">
+			<value>SchoolAmbient.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>63</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{994e93a8-1e15-4e73-aefe-6b54654f82ba}</destination>
+		</relationship>
+	</object>
+</objects>

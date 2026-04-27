@@ -80,6 +80,13 @@ public class GameNarrativeManager : MonoBehaviour
 
     [Tooltip("Czas fade-in po pokonaniu demona (victory)")]
     public float victoryFadeTime = 1.5f;
+    [Header("Apartment Exploration Quest")]
+    [Tooltip("Quest ID dla 'rozglądnij się po mieszkaniu'")]
+    public string explorationQuestID = "Look around the apartment";
+    [Tooltip("Prompt gdy gracz nie wie co robić")]
+    public string explorationHint = "I should look around the apartment while waiting...";
+    [Tooltip("Dźwięk dzwonka do drzwi")]
+    public EventReference doorbellSound;
 
     private EventReference currentMusicEvent;
   
@@ -363,7 +370,68 @@ public class GameNarrativeManager : MonoBehaviour
             Debug.Log("[Narrative] ✅ Quest \"Order Food\" aktywowany po rzyganiu");
         }
     }
+    public void UnlockApartmentExploration()
+    {
+        Debug.Log("[Narrative] 🔓 Unlocking apartment exploration quest");
 
+        GameState.ApartmentExplorationUnlocked = true;
+
+        if (QuestManager.Instance != null)
+        {
+            // ✅ Dodaj quest "rozglądnij się"
+            QuestManager.Instance.AddQuest(explorationQuestID);
+            Debug.Log($"[Narrative] ➕ Quest added: {explorationQuestID}");
+        }
+
+        // ✅ Opcjonalnie: pokaż podpowiedź od razu
+        if (!string.IsNullOrEmpty(explorationHint))
+        {
+            StartCoroutine(ShowThought(explorationHint, 0.05f, 3f));
+        }
+    }
+    public void OnFlashbackCompleted(string questID)
+    {
+        Debug.Log($"[Narrative] 🎯 Flashback completed: {questID}");
+
+        GameState.FlashbacksCompleted++;
+        Debug.Log($"[Narrative] 📊 Progress: {GameState.FlashbacksCompleted}/{GameState.TotalFlashbacksRequired}");
+
+        // ✅ Sprawdź czy wszystkie flashbacki są ukończone
+        if (GameState.AllFlashbacksCompleted)
+        {
+            Debug.Log("[Narrative] ✅ All flashbacks completed! Triggering doorbell...");
+            StartCoroutine(TriggerDoorbellSequence());
+        }
+    }
+    private IEnumerator TriggerDoorbellSequence()
+    {
+        // ✅ Ukończ quest "rozglądnij się"
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.CompleteQuest(explorationQuestID);
+            Debug.Log($"[Narrative] ✅ Quest completed: {explorationQuestID}");
+        }
+
+        // 🔊 Odtwórz dźwięk dzwonka
+        if (!doorbellSound.IsNull && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(doorbellSound);
+            Debug.Log("[Narrative] 🔔 Doorbell sound played");
+        }
+
+        // ⏱️ Krótka pauza na reakcję gracza
+        yield return new WaitForSeconds(1f);
+
+        // ✅ Dodaj nowy quest: spotkaj się z kurierem
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.AddQuest("Meet with the courier downstairs");
+            Debug.Log("[Narrative] ➕ Quest added: Meet with the courier downstairs");
+        }
+
+        // 💭 Pokaż myśl dla gracza
+        yield return StartCoroutine(ShowThought("Someone's at the door...", 0.05f, 2.5f));
+    }
     public void PlayerAcceptedOffer()
     {
         Debug.Log("[Narrative] 🔫 Gracz zgodził się zabić kuriera – sekwencja wystrzału");
