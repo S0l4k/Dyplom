@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
-  controlID: 96
+  controlID: 396
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 97
+  controlID: 397
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 19
+  controlID: 279
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -222,8 +222,8 @@ MonoBehaviour:
     y: 702
     width: 1382.6666
     height: 639.3334
-  m_MinSize: {x: 50, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 51, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 18}
@@ -250,8 +250,8 @@ MonoBehaviour:
     y: 0
     width: 228
     height: 1341.3334
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -302,8 +302,8 @@ MonoBehaviour:
     y: 0
     width: 482
     height: 1341.3334
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -1919,15 +1919,15 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 1
+  m_2DMode: 0
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 518.2052, y: 747.35925, z: 0}
+    m_Target: {x: -23.583923, y: 44.459755, z: -21.729832}
     speed: 2
-    m_Value: {x: 518.2052, y: 747.35925, z: 0}
+    m_Value: {x: -23.583923, y: 44.459755, z: -21.729832}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1955,17 +1955,17 @@ MonoBehaviour:
       m_Size: {x: 0, y: 0}
     yGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 0.1, y: 0.1}
     zGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 0.1, y: 0.1}
@@ -1973,17 +1973,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0, y: 0, z: 0, w: 1}
+    m_Target: {x: 0.22589777, y: -0.42953697, z: 0.111867435, w: 0.8672338}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: 0.22588189, y: -0.42950675, z: 0.11185957, w: 0.86717284}
   m_Size:
-    m_Target: 187.87657
+    m_Target: 8.783796
     speed: 2
-    m_Value: 187.87657
+    m_Value: 8.783796
   m_Ortho:
-    m_Target: 1
+    m_Target: 0
     speed: 2
-    m_Value: 1
+    m_Value: 0
   m_CameraSettings:
     m_Speed: 0.6467999
     m_SpeedNormalized: 0.31999996
@@ -1997,7 +1997,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0.010041673, y: -0.3488954, z: 0.004013297, w: 0.93734676}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
     m_SceneView: {fileID: 16}
@@ -2134,7 +2134,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -7934
+  m_LastSelectedObjectID: -151630
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2176,21 +2176,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: be79ffff5a9bffffb6acfffffaacffff12adffff26adffff24b3ffff38b3ffff3cbdffff14c7ffff9ec7ffffa0c9ffff02e1ffff98edffffeafaffff8ec1000056c2000068c60000
+      m_ExpandedIDs: 4498fdff7a9afdff8cadfdffb2affdff40b9fdffb8c2fdfffecdfdffbeddfdffd6ddfdff6ae8fdffe0ecfdffeeecfdff64f3fdff6efdfdffec16feffb219feff8822feffa022feff342dfeffaa31feffb831feff2e38feff7e4bfeffa654feffbe54feff525ffeffc863feffd663feff4c6afeff92e5fefffec6ffff16caffff2ecdffff50f4ffffeafaffff90c0000094c30000f0c3000082c40000aac70000d0c700000cc8000036c9000054c90000a2c90000e8c900002aca000004a20300aafe030010030400bc040400885e04002a640400b8690400106c0400886c040048a304001ca804002eb10400
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Viewport
-        m_OriginalName: Viewport
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -19676
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 10}
@@ -2248,7 +2248,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Maria/obiekty interaktywne/paper
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -2258,16 +2258,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 82
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Maria/obiekty interaktywne/paper
   m_LastFoldersGridSize: 82
   m_LastProjectPath: C:\Users\User\Documents\Gitkraken\Dyplom
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ded40000
-    m_LastClickedID: 54494
-    m_ExpandedIDs: 0000000054d3000056d3000058d300005ad30000d6d4000000ca9a3b
+    m_SelectedIDs: 02ea0000
+    m_LastClickedID: 59906
+    m_ExpandedIDs: 0000000010d4000012d4000014d4000016d4000018d400004cd5000096d50000b2e90000dce9000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2296,7 +2296,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000054d3000056d3000058d300005ad300005cd300005ed30000
+    m_ExpandedIDs: 0000000010d4000012d4000014d4000016d4000018d4000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
