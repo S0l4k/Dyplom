@@ -331,8 +331,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 62
-    y: 780.6667
+    x: 0
+    y: 726
     width: 1381.6666
     height: 613.3334
   m_SerializedDataModeController:
@@ -404,7 +404,7 @@ MonoBehaviour:
       height: 720
     m_MinimalGUI: 1
   m_defaultScale: 0.82268524
-  m_LastWindowPixelSize: {x: 2072.5, y: 920.00006}
+  m_LastWindowPixelSize: {x: 1381.6666, y: 613.3334}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1325,8 +1325,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 62
-    y: 78.66667
+    x: 0
+    y: 24
     width: 1381.6666
     height: 676
   m_SerializedDataModeController:
@@ -2156,8 +2156,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1444.6667
-    y: 78.66667
+    x: 1383.6666
+    y: 24
     width: 226
     height: 1315.3334
   m_SerializedDataModeController:
@@ -2222,8 +2222,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1672.6667
-    y: 78.66667
+    x: 1611.6666
+    y: 24
     width: 403.33337
     height: 1315.3334
   m_SerializedDataModeController:
@@ -2265,9 +2265,15 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 02ea0000
     m_LastClickedID: 59906
     m_ExpandedIDs: 0000000010d4000012d4000014d4000016d4000018d400004cd5000096d50000b2e90000dce9000000ca9a3b
+=======
+    m_SelectedIDs: ded40000
+    m_LastClickedID: 54494
+    m_ExpandedIDs: 0000000010d4000012d4000014d4000016d4000018d40000
+>>>>>>> origin/main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2296,7 +2302,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 0000000010d4000012d4000014d4000016d4000018d4000000ca9a3b
+=======
+    m_ExpandedIDs: 0000000010d4000012d4000014d4000016d4000018d40000
+>>>>>>> origin/main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2375,8 +2385,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 2078
-    y: 78.66667
+    x: 2017
+    y: 24
     width: 481
     height: 1315.3334
   m_SerializedDataModeController:
