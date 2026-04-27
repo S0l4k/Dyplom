@@ -9,10 +9,13 @@ public class ComputerInteract : MonoBehaviour
     public Transform playerCamera;
     public Transform computerViewPoint;
     public TMP_Text interactText;
+    public GameObject crossair;
+    public Outline outline;
 
     [Header("UI")]
     public Canvas computerCanvas;
     public Canvas playerCanvas;
+
 
     [Header("Settings")]
     public float useRange = 3f;
@@ -46,6 +49,7 @@ public class ComputerInteract : MonoBehaviour
         // ✅ AUTOMATYCZNE ZNALEZIENIE KURSORA (działa nawet z wyłączonym canvasem!)
         if (computerCanvas != null)
             computerCursor = computerCanvas.GetComponent<ComputerCursor>();
+        if (outline != null) outline.enabled = false;
     }
 
     void Update()
@@ -71,14 +75,15 @@ public class ComputerInteract : MonoBehaviour
         {
             if (hit.collider.gameObject == gameObject)
             {
-                interactText.gameObject.SetActive(true);
-                interactText.text = "Press E to use computer";
+                crossair.SetActive(true);
                 canUse = true;
+                if (outline != null) outline.enabled = true;
                 return;
             }
         }
 
-        interactText.gameObject.SetActive(false);
+        crossair.SetActive(false);
+        if (outline != null) outline.enabled = false;
         canUse = false;
     }
 

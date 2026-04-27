@@ -10,6 +10,7 @@ TagManager:
   - LoopTop
   - LoopBottom
   - AtticCandle
+  - Crosshair
   layers:
   - Default
   - TransparentFX
