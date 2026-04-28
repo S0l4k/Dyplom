@@ -14,7 +14,7 @@ public class ItemPickup : MonoBehaviour
     public bool isFlashlight = false;
 
     [Header("Pickup UI (on look)")]
-    public TMP_Text pickupText;
+    public GameObject pickupText;
 
     [Header("Flashlight UI (after pickup)")]
     public GameObject flashlightUIRoot;
@@ -81,8 +81,7 @@ public class ItemPickup : MonoBehaviour
         if (!isHeld)
             CheckForPickup();
 
-        if (isHeld)
-            ShowItemUI();
+     
 
         if (canPickup && Input.GetKeyDown(KeyCode.E))
             Pickup();
@@ -137,7 +136,7 @@ public class ItemPickup : MonoBehaviour
     public void ShowPickupText()
     {
         pickupText.gameObject.SetActive(true);
-        pickupText.text = $"Press E to pick up {itemName}";
+        
     }
 
     void HidePickupText()
@@ -270,14 +269,6 @@ public class ItemPickup : MonoBehaviour
         flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
     }
 
-    void ShowItemUI()
-    {
-        if (!isFlashlight)
-        {
-            pickupText.gameObject.SetActive(true);
-            pickupText.text = $"Press G to drop {itemName}";
-        }
-    }
 
     // ✅ NOWA METODA: GASZENIE ŚWIATŁA Z EFEKTEM TYPIENIA
     private IEnumerator LightsFlickerAndTurnOff()

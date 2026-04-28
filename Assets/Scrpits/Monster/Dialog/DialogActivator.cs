@@ -21,8 +21,9 @@ public class DialogActivator : MonoBehaviour
     public DialogNode[] dialogNodes;
 
     [Header("UI")]
-    public TMP_Text interactionText;
     
+    public GameObject crossair;
+
 
     [Header("References")]
     public GameObject player;
@@ -49,15 +50,8 @@ public class DialogActivator : MonoBehaviour
         if (player != null)
             playerMovementScript = player.GetComponent<MonoBehaviour>();
 
-        if (interactionText == null)
-        {
-            Debug.LogError("[DialogActivator] interactionText NIE JEST PRZYPISANY!");
-            enabled = false;
-            return;
-        }
 
-        interactionText.gameObject.SetActive(false);
-        Debug.Log($"[DialogActivator] {npcName} initialized | isFinalDialog={isFinalDialog} | voiceEvent={(voiceEvent.IsNull ? "NULL" : "SET")}");
+
 
         // ✅ ZAPISZ ORYGINALNE USTAWIENIA DIALOG UI
         if (dialogManager != null)
@@ -149,14 +143,12 @@ public class DialogActivator : MonoBehaviour
 
     void ShowInteractionText()
     {
-        interactionText.gameObject.SetActive(true);
-        interactionText.text = $"Press E to talk with {npcName}";
+        crossair.SetActive(true);
     }
 
     void HideInteractionText()
     {
-        if (interactionText.gameObject.activeSelf)
-            interactionText.gameObject.SetActive(false);
+       crossair?.SetActive(false);
     }
 
     void StartConversation()
@@ -212,7 +204,7 @@ public class DialogActivator : MonoBehaviour
 
         if (playerCamScript != null)
             playerCamScript.enabled = true;
-        
+
         _dialogJustFinished = true;
         Debug.Log($"Rozmowa z {npcName} zakończona.");
 

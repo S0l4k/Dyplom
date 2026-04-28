@@ -16,8 +16,8 @@ public class ItemCheck : MonoBehaviour
     public EventReference demonVoiceEvent;
 
     [Header("UI")]
-    public TMP_Text interactionText;
-    // ❌ USUNIĘTO: playerThoughtText - używamy globalnego z GameNarrativeManager
+
+    public GameObject crossair;
 
     [Header("Timing")]
     [SerializeField] private float typeSpeed = 0.07f;
@@ -35,15 +35,14 @@ public class ItemCheck : MonoBehaviour
     private bool canInteract = false;
     private bool isChecking = false;
     private FMOD.Studio.EventInstance demonVoiceInstance;
- 
+
 
     void Start()
     {
-      
+
         playerCamera = Camera.main;
 
-        if (interactionText != null)
-            interactionText.gameObject.SetActive(false);
+
 
         if (outline != null) outline.enabled = false;
 
@@ -65,7 +64,7 @@ public class ItemCheck : MonoBehaviour
 
     void CheckForInteraction()
     {
-        if (!playerCamera || interactionText == null) return;
+      
 
         bool wasInteracting = canInteract;
         canInteract = false;
@@ -79,43 +78,33 @@ public class ItemCheck : MonoBehaviour
             {
                 canInteract = true;
                 if (outline != null) outline.enabled = true;
+                crossair.SetActive(true);
             }
             else
             {
                 if (outline != null) outline.enabled = false;
+                crossair.SetActive(false);
             }
         }
         else
         {
             if (outline != null) outline.enabled = false;
+            crossair.SetActive(false);
         }
 
-        if (canInteract != wasInteracting)
-        {
-            if (canInteract) ShowInteractionText();
-            else HideInteractionText();
-        }
+
     }
 
-    void ShowInteractionText()
-    {
-        interactionText.gameObject.SetActive(true);
-        string newText = $"Press E to check {itemName}";
-        if (interactionText.text != newText)
-            interactionText.text = newText;
-    }
 
-    void HideInteractionText()
-    {
-        interactionText.gameObject.SetActive(false);
-    }
+
 
     IEnumerator CheckItem()
     {
         isChecking = true;
-        HideInteractionText();
+
 
         if (outline != null) outline.enabled = false;
+        crossair.SetActive(false);
 
         Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
 
@@ -166,7 +155,7 @@ public class ItemCheck : MonoBehaviour
                 GameNarrativeManager.Instance.TriggerFridgeDemon();
         }
 
-       
+
 
         isChecking = false;
         Debug.Log($"[ItemCheck] Interakcja z {itemName} zakończona");
