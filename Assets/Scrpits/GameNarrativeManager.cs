@@ -37,7 +37,7 @@ public class GameNarrativeManager : MonoBehaviour
     public EventReference staircaseScream;
     public RoomTrigger roomTrigger;
     public GameObject triggers;
-
+    
     public GameObject UICanvas;
 
     [Header("Dialog Lines (konfiguruj w Inspectorze)")]
@@ -50,7 +50,14 @@ public class GameNarrativeManager : MonoBehaviour
     public Transform couchCameraPosition;
     public Transform demonCouchPosition;
     public Animator demonAnimator;
+    [Tooltip("Pozycja kamery po wstaniu z kanapy (powrót do normalnej gry)")]
+    public Transform normalPlayerCameraPosition;
 
+    [Tooltip("Punkt, w którym gracz staje przy oknie (trigger jumpscare)")]
+    public Transform windowJumpscareStandPoint;
+
+    [Tooltip("Pozycja demona przy jumpscare (ZA graczem)")]
+    public Transform demonJumpscarePosition;
     [Header("Music")]
     public EventReference ambientMusic;
     public EventReference chaseMusic;
@@ -64,7 +71,8 @@ public class GameNarrativeManager : MonoBehaviour
     public EventReference takingMeds;
     [Tooltip("Dźwięk gdy demon zaczyna gonić gracza (start chase)")]
     public EventReference demonChaseStartSFX;
-
+    public EventReference policeSirenSFX;
+    public EventReference demonJumpscareRevealSFX;
     [Tooltip("Dźwięk gdy demon zostaje pokonany (meds taken)")]
     public EventReference demonDefeatedSFX;
     // ✅ NOWE: Osobne czasy fade-in dla każdej muzyki
@@ -88,8 +96,58 @@ public class GameNarrativeManager : MonoBehaviour
     [Tooltip("Dźwięk dzwonka do drzwi")]
     public EventReference doorbellSound;
 
+    [Header("Second Ending - Extended")]
+    [Tooltip("Demon pojawiający się w oknie (iluzja, osobny obiekt, domyślnie WYŁĄCZONY)")]
+    public GameObject demonWindowObject;
+
+    [Tooltip("Demon do finalnego jumpscare (stoi ZA graczem przy oknie, domyślnie WYŁĄCZONY)")]
+    public GameObject demonFinalJumpscareObject;
+
+    [Tooltip("Punkt, w który kamera ma spojrzeć przy oknie")]
+    public Transform windowLookAtPoint;
+
+    [Tooltip("Pozycja gracza przy oknie (gdzie ma 'podejść')")]
+    public Transform playerAtWindowPosition;
+
+    [Tooltip("Punkt, w który kamera ma spojrzeć przy jumpscare (ZA graczem)")]
+    public Transform jumpscareLookAtPoint;
+
+    [Header("Second Ending - SFX")]
+    [Tooltip("Dźwięk gdy gracz zobaczy demona w oknie (szmer/szept/napięcie)")]
+    public EventReference windowDemonRevealSFX;
+
+    [Tooltip("JEDEN event FMOD: rozbite okno + upadek ciała (Timeline)")]
+    public EventReference windowBreakAndFallSFX;
+
     private EventReference currentMusicEvent;
-  
+
+    [Header("Second Ending - Timing")]
+    [Tooltip("Czas fade in/out przy siadaniu na kanapie")]
+    public float couchFadeDuration = 1.5f;
+    [Tooltip("Czas siedzenia na kanapie przed pojawieniem się iluzji")]
+    public float couchSitTime = 6f;
+    [Tooltip("Czas widoczności demona w oknie")]
+    public float windowDemonVisibleTime = 4f;
+    [Tooltip("Czas płynnego obrotu kamery w stronę okna")]
+    public float cameraLookAtWindowDuration = 3f;
+    [Tooltip("Czas patrzenia w okno po obrocie kamery")]
+    public float lookAtWindowPause = 2.5f;
+    [Tooltip("Czas 'chodzenia' gracza do okna")]
+    public float walkToWindowDuration = 3f;
+    [Tooltip("Pauza przy oknie przed jumpscare")]
+    public float preJumpscarePause = 1.5f;
+    [Tooltip("Czas widoczności jumpscare przed fade out")]
+    public float jumpscareVisibleTime = 0.5f;
+    [Tooltip("Czas fade out do czerni przy jumpscare")]
+    public float jumpscareFadeDuration = 1f;
+    [Tooltip("Czas czarnego ekranu z dźwiękami")]
+    public float blackScreenDuration = 4f;
+    public float postTurnRevealPause = 2f;
+    [Tooltip("Czas powrotu kamery do normalnej pozycji po wstaniu z kanapy")]
+    public float cameraReturnDuration = 1.5f;
+
+    [Tooltip("Czas płynnego obrotu kamery na demona przy jumpscare")]
+    public float cameraTurnToDemonDuration = 0.8f;
 
     // ✅ NOWA FLAGA: Blokuje inne myśli podczas ważnych sekwencji (np. ItemCheck)
     private bool isNarrativeBusy = false;
@@ -97,6 +155,7 @@ public class GameNarrativeManager : MonoBehaviour
     private PlayerController playerController;
     private PlayerCam playerCam;
     private EnemyAI demon;
+    public GameObject windowTrigger;
 
     private void Awake()
     {
@@ -478,29 +537,31 @@ public class GameNarrativeManager : MonoBehaviour
         }
     }
 
-    public void StartSecondEndingFinalSequence()
+    // ✅ ZAMIENIENIE: public void zamiast IEnumerator
+    // ✅ Przyjmuje pozycję i rotację kamery do powrotu
+    public void StartSecondEndingFinalSequence(Vector3 returnCamPos, Quaternion returnCamRot)
     {
         Debug.Log("[Narrative] 🎬 Rozpoczynam finał drugiego zakończenia");
+
         if (playerController != null) playerController.enabled = false;
-        if (playerCam != null) playerCam.enabled = true;
+        if (playerCam != null) playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        StartCoroutine(SecondEndingFinalSequence());
+        // ✅ Przekaż pozycje do korutiny
+        StartCoroutine(SecondEndingFinalSequence(returnCamPos, returnCamRot));
     }
 
-    private IEnumerator SecondEndingFinalSequence()
+    // ✅ Prywatna korutina z właściwą logiką
+    private IEnumerator SecondEndingFinalSequence(Vector3 returnCamPos, Quaternion returnCamRot)
     {
         ChangeBackgroundMusic(victoryMusic, victoryFadeTime);
-        if (screenFader == null)
-        {
-            Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!");
-            yield break;
-        }
+        if (screenFader == null) { Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!"); yield break; }
 
         Transform playerCamera = Camera.main.transform;
 
-        yield return StartCoroutine(screenFader.FadeOut(1.2f));
+        // === FAZA 1: Gracz SAM siedzi na kanapie ===
+        yield return StartCoroutine(screenFader.FadeOut(couchFadeDuration));
         UICanvas.SetActive(false);
 
         if (couchCameraPosition != null)
@@ -509,30 +570,93 @@ public class GameNarrativeManager : MonoBehaviour
             playerCamera.rotation = couchCameraPosition.rotation;
         }
 
-        if (demon != null && demonCouchPosition != null)
-        {
-            demon.transform.position = demonCouchPosition.position;
-            demon.transform.rotation = demonCouchPosition.rotation;
+        if (playerController != null) playerController.enabled = false;
+        if (playerCam != null) playerCam.enabled = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
-            if (demonAnimator != null)
-            {
-                demonAnimator.Rebind();
-                demonAnimator.Update(0f);
-                yield return null;
-                demonAnimator.SetTrigger("sit_couch");
-            }
+        yield return StartCoroutine(screenFader.FadeIn(couchFadeDuration));
+        yield return new WaitForSeconds(couchSitTime);
+
+        // === FAZA 2: Demon w oknie (iluzja) ===
+        if (demonWindowObject != null)
+        {
+            demonWindowObject.SetActive(true);
+            Debug.Log("[Ending2] 👹 Iluzja demona w oknie AKTYWNA");
+        }
+        if (!windowDemonRevealSFX.IsNull)
+            AudioManager.Instance.PlaySFX(windowDemonRevealSFX, windowLookAtPoint?.position ?? playerCamera.position);
+
+        yield return new WaitForSeconds(windowDemonVisibleTime);
+
+        // === FAZA 3: Kamera PŁYNNIE do okna ===
+        if (windowLookAtPoint != null)
+            yield return StartCoroutine(SmoothLookAt(playerCamera, windowLookAtPoint, cameraLookAtWindowDuration));
+
+        yield return new WaitForSeconds(lookAtWindowPause);
+
+        // === FAZA 4: Iluzja znika ===
+        if (demonWindowObject != null)
+            demonWindowObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+
+        // === FAZA 5: Gracz WSTAJE + POWRÓT KAMERY + aktywacja triggera ===
+        Debug.Log("[Ending2] 🔄 Restoring player control & camera position");
+
+        // 🔄 Kamera wraca do ZAPISANEJ pozycji i rotacji (jak w ComputerInteract)
+        Vector3 camStartPos = playerCamera.position;
+        Quaternion camStartRot = playerCamera.rotation;
+        float elapsed = 0f;
+        float returnDuration = cameraReturnDuration; // np. 1.5s
+
+        while (elapsed < returnDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / returnDuration;
+
+            // ✅ Interpoluj POZYCJĘ i ROTACJĘ (nie tylko rotację!)
+            playerCamera.position = Vector3.Lerp(camStartPos, returnCamPos, t);
+            playerCamera.rotation = Quaternion.Slerp(camStartRot, returnCamRot, t);
+            yield return null;
         }
 
-        if (playerController != null) playerController.enabled = false;
+        // Upewnij się, że kamera jest dokładnie w celu
+        playerCamera.position = returnCamPos;
+        playerCamera.rotation = returnCamRot;
+
+        // Przywróć kontrolę gracza
+        if (playerController != null) playerController.enabled = true;
         if (playerCam != null) playerCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        yield return StartCoroutine(screenFader.FadeIn(1.2f));
-        yield return new WaitForSeconds(4f);
-        yield return StartCoroutine(screenFader.FadeOut(1.5f));
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("MainMenu");
+        // 🔓 Aktywuj collider jumpscare przy oknie
+        windowTrigger.SetActive(true);
+
+        Debug.Log("[Ending2] ✅ Player control restored - camera returned to original position");
+        // ✅ KONIEC – reszta w WindowJumpscareTrigger
+    }
+
+    /// <summary>
+    /// Płynnie obraca transform w kierunku targetu przez określony czas.
+    /// </summary>
+    public IEnumerator SmoothLookAt(Transform source, Transform target, float duration)
+    {
+        Debug.Log($"[SmoothLookAt] START | From: {source.name} | To: {target.name} | Duration: {duration}s");
+
+        Quaternion startRot = source.rotation;
+        Quaternion targetRot = Quaternion.LookRotation(target.position - source.position, Vector3.up);
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            source.rotation = Quaternion.Slerp(startRot, targetRot, elapsed / duration);
+            yield return null;
+        }
+        source.rotation = targetRot;
+
+        Debug.Log($"[SmoothLookAt] DONE | Final rot: {source.rotation.eulerAngles}");
     }
 
     public void PlayerRefuseddOffer()
@@ -573,4 +697,73 @@ public class GameNarrativeManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+    // === 🧪 DEBUG SKIP - tylko w Editorze ===
+#if UNITY_EDITOR
+    [Header("Debug")]
+    [Tooltip("DEBUG: Pozycja, do której teleportować gracza po F12 (opcjonalnie)")]
+    public Transform debugTeleportPosition;
+
+    [Tooltip("DEBUG: Reference do SofaInteract (przeciągnij w Inspectorze)")]
+    public SofaInteract debugSofaInteractReference;
+
+    void Update()
+    {
+        // ✅ F12 = odblokuj SofaInteract i przygotuj grę do testu finału
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            Debug.Log("[DEBUG] 🚀 F12 pressed - unlocking SofaInteract!");
+            DebugUnlockSofaEnding();
+        }
+    }
+
+    private void DebugUnlockSofaEnding()
+    {
+        // 1. 🔓 Odblokuj interakcje i sofę
+        GameState.InteractionsLocked = true;  // Wymagane dla SofaInteract
+        GameState.SofaSequenceActive = false; // Żeby można było użyć sofy
+
+        // 2. 🛋️ Aktywuj SofaInteract
+        if (debugSofaInteractReference != null)
+        {
+            debugSofaInteractReference.enabled = true;
+            debugSofaInteractReference.gameObject.SetActive(true);
+            Debug.Log("[DEBUG] ✅ SofaInteract enabled");
+        }
+        else
+        {
+            // Fallback: znajdź po nazwie/tagu
+            var sofa = FindObjectOfType<SofaInteract>();
+            if (sofa != null)
+            {
+                sofa.enabled = true;
+                sofa.gameObject.SetActive(true);
+                Debug.Log("[DEBUG] ✅ SofaInteract found and enabled");
+            }
+            else
+            {
+                Debug.LogWarning("[DEBUG] ⚠️ SofaInteract not found!");
+            }
+        }
+
+        // 3. 👤 Opcjonalnie: teleportuj gracza blisko sofy
+        if (playerController != null && debugTeleportPosition != null)
+        {
+            playerController.transform.position = debugTeleportPosition.position;
+            playerController.transform.rotation = debugTeleportPosition.rotation;
+            Debug.Log($"[DEBUG] 📍 Player teleported to: {debugTeleportPosition.name}");
+        }
+
+        // 4. 🎵 Opcjonalnie: wyczyść questy i ustaw muzykę
+        if (QuestManager.Instance != null)
+            QuestManager.Instance.ClearAllQuests();
+
+        if (!victoryMusic.IsNull)
+            ChangeBackgroundMusic(victoryMusic, 0.5f);
+
+        // 5. 🎮 Przywróć kontrolę (gracz sam podejdzie do sofy)
+        RestorePlayerControl();
+
+        Debug.Log("[DEBUG] ✅ Ready! Walk to sofa and press E to trigger ending");
+    }
+#endif
 }

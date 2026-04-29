@@ -21,6 +21,8 @@ public class PhotoViewer : MonoBehaviour
     [SerializeField] private float screenShakeMagnitude = 0.02f; // w lokalnych jednostkach Canvasa
     [SerializeField] private float photoShakeMagnitude = 5f;     // w pikselach dla zdjęcia
 
+    [SerializeField] private EventReference glitch;
+
     private bool isDemonShowing = false;
     private Vector3 originalPhotoPos;
     private Vector3 originalScreenPos; // 👈 zapamiętana pozycja ekranu
@@ -87,6 +89,7 @@ public class PhotoViewer : MonoBehaviour
 
         if (photoDisplay != null)
             StartCoroutine(ShakePhoto());
+        RuntimeManager.PlayOneShot(glitch);
     }
 
     // 👇 NOWA METODA: shake całego panelu/ekranu

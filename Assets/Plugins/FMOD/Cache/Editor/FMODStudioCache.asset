@@ -55,6 +55,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
+--- !u!114 &-8528606256684695329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Police
+  m_EditorClassIdentifier: 
+  Path: event:/Police
+  Guid:
+    Data1: 750432434
+    Data2: 1305445807
+    Data3: 56807353
+    Data4: 668261602
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 16800
 --- !u!114 &-8431728688285078284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,10 +395,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639127585212095815
+  lastModified: 639130534562400377
   FileSizes:
   - Name: Desktop
-    Value: 2634
+    Value: 2720
   Exists: 1
 --- !u!114 &-5710785234417663064
 MonoBehaviour:
@@ -427,6 +454,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 69436
+--- !u!114 &-5584457689763810930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ComputerGlitch
+  m_EditorClassIdentifier: 
+  Path: event:/ComputerGlitch
+  Guid:
+    Data1: 1335727667
+    Data2: 1130949051
+    Data3: 1884501950
+    Data4: -1431375985
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1200
 --- !u!114 &-4488325410982784511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,13 +616,15 @@ MonoBehaviour:
   - {fileID: 3535279584807567414}
   - {fileID: -5710785234417663064}
   - {fileID: 7792810737935306822}
+  - {fileID: -5584457689763810930}
+  - {fileID: -8528606256684695329}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639127585212095815
+  cacheTime: 639130534562400377
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -646,6 +702,10 @@ MonoBehaviour:
     index: 36
   - key: event:/Doorbell
     index: 37
+  - key: event:/ComputerGlitch
+    index: 38
+  - key: event:/Police
+    index: 39
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,10 +1095,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639127585212055918
+  lastModified: 639130534562380367
   FileSizes:
   - Name: Desktop
-    Value: 11253856
+    Value: 11564864
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:
