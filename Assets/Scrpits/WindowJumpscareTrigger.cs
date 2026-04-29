@@ -107,7 +107,7 @@ public class WindowJumpscareTrigger : MonoBehaviour
 
         // 7. ⏱️ Czarny ekran z dźwiękami
         yield return new WaitForSeconds(narrativeManager.blackScreenDuration);
-
+        EndingSaveManager.SaveEnding(EndingSaveManager.EndingType.Defeat);
         // 8. 🔚 Exit gry
         Debug.Log("[Narrative] 🔚 Second ending complete - exiting game");
 #if UNITY_EDITOR

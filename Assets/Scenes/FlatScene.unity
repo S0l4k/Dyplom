@@ -76571,11 +76571,11 @@ MonoBehaviour:
     Path: event:/DemonChaseScream
   policeSirenSFX:
     Guid:
-      Data1: 750432434
-      Data2: 1305445807
-      Data3: 56807353
-      Data4: 668261602
-    Path: event:/Police
+      Data1: -1312072434
+      Data2: 1077791231
+      Data3: -1088393590
+      Data4: -1468425123
+    Path: event:/PoliceSiren
   demonJumpscareRevealSFX:
     Guid:
       Data1: 1389366784
@@ -76617,21 +76617,21 @@ MonoBehaviour:
     Path: event:/Appearence
   windowBreakAndFallSFX:
     Guid:
-      Data1: -696997951
-      Data2: 1267293190
-      Data3: -202976840
-      Data4: 1830343787
-    Path: event:/Gunshoot
+      Data1: 449465666
+      Data2: 1268962530
+      Data3: -312825943
+      Data4: -918510398
+    Path: event:/WindowBreak
   couchFadeDuration: 1.5
   couchSitTime: 6
   windowDemonVisibleTime: 4
   cameraLookAtWindowDuration: 3
   lookAtWindowPause: 2.5
   walkToWindowDuration: 3
-  preJumpscarePause: 1.5
+  preJumpscarePause: 2
   jumpscareVisibleTime: 0.5
-  jumpscareFadeDuration: 1
-  blackScreenDuration: 4
+  jumpscareFadeDuration: 0.5
+  blackScreenDuration: 6
   postTurnRevealPause: 2
   cameraReturnDuration: 1.5
   cameraTurnToDemonDuration: 0.8

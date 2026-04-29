@@ -5270,6 +5270,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2041930077}
+        m_TargetAssemblyTypeName: MainMenuCameraController, Assembly-CSharp
+        m_MethodName: OnNewGameClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &387785566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5327,7 +5339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &390817065
 Transform:
   m_ObjectHideFlags: 0
@@ -9272,7 +9284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &652447002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11460,7 +11472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &829911462
 Transform:
   m_ObjectHideFlags: 0
@@ -31122,6 +31134,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8986573645388410588, guid: 2b6b089bab80e8b4286688410d3bc36f, type: 3}
   m_PrefabInstance: {fileID: 59944334}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2041930076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2041930078}
+  - component: {fileID: 2041930077}
+  m_Layer: 0
+  m_Name: MainMenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2041930077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041930076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db5753bba68b0e4ca7efe6c440c9e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCameraGroup: {fileID: 652447001}
+  prisonCameraGroup: {fileID: 829911461}
+  hospitalCameraGroup: {fileID: 390817064}
+  switchOnStart: 1
+--- !u!4 &2041930078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041930076}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1367774, y: 1.8618245, z: 4.9406214}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2044618134 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b7325ca666a61b74fa08f17803d4ae67, type: 3}
@@ -31690,3 +31750,4 @@ SceneRoots:
   - {fileID: 40192343}
   - {fileID: 1495931242}
   - {fileID: 1483728850}
+  - {fileID: 2041930078}

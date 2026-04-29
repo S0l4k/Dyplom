@@ -493,17 +493,27 @@ public class GameNarrativeManager : MonoBehaviour
     }
     public void PlayerAcceptedOffer()
     {
-        Debug.Log("[Narrative] 🔫 Gracz zgodził się zabić kuriera – sekwencja wystrzału");
-        QuestManager.Instance.ClearAllQuests();
-        playerController.enabled = false;
-        playerCam.enabled = false;
+        Debug.Log("[Narrative] 🤝 Gracz zaakceptował ofertę demona – Ending 1 (Cooperate)");
+
+        // 🔒 Zablokuj kontrolę
+        QuestManager.Instance?.ClearAllQuests();
+        if (playerController != null) playerController.enabled = false;
+        if (playerCam != null) playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
 
-        StartCoroutine(KillSequenceSecondEnding());
+        // 🎬 Uruchom kill sequence, a PO DIALOGU przejdź do kanapy
+        StartCoroutine(KillSequenceSecondEnding(() => {
+            Debug.Log("[Narrative] 🔁 Callback: starting couch sequence");
+            StartCoroutine(FirstEndingCooperateSequence());
+        }));
     }
 
-    private IEnumerator KillSequenceSecondEnding()
+    /// <summary>
+    /// Sekwencja strzału + dialog z demonem.
+    /// Po skończonym dialogu wywołuje onDialogComplete (jeśli podane).
+    /// </summary>
+    private IEnumerator KillSequenceSecondEnding(System.Action onDialogComplete = null)
     {
         if (screenFader == null)
         {
@@ -530,11 +540,100 @@ public class GameNarrativeManager : MonoBehaviour
             demonDialogActivator.dialogNodes = new DialogNode[] { demonAfterShot };
             demonDialogActivator.enabled = true;
             Debug.Log("[Narrative] ✅ Dialog po zastrzeleniu aktywowany");
+
+            // ✅ Czekaj, aż dialog się skończy (proste yield + check)
+            // Zakładamy, że DialogActivator ma publiczną właściwość 'isTalking' lub podobną
+            // Jeśli nie masz – użyj szacunkowego czasu (np. 8-10 sekund)
+            float dialogEstimatedTime = 10f; // ✅ Dostosuj do długości Twojego dialogu!
+            yield return new WaitForSeconds(dialogEstimatedTime);
+
+            // ✅ Wywołaj callback, jeśli podany (przejście do kanapy)
+            if (onDialogComplete != null)
+            {
+                Debug.Log("[Narrative] ✅ Post-shot dialog finished – calling callback");
+                onDialogComplete.Invoke();
+            }
         }
         else
         {
             Debug.LogError("[Narrative] ❌ demonDialogActivator lub demonAfterShot NULL");
+            // Jeśli nie ma dialogu, i tak wywołaj callback (żeby nie zablokować endingu)
+            if (onDialogComplete != null) onDialogComplete.Invoke();
         }
+    }
+    /// <summary>
+    /// ENDING 1: Gracz współpracuje z demonem → siedzą razem na kanapie → policyjne syreny → exit
+    /// </summary>
+    private IEnumerator FirstEndingCooperateSequence()
+    {
+        Debug.Log("[Ending1] 🎬 Starting cooperate ending cutscene");
+
+        ChangeBackgroundMusic(victoryMusic, victoryFadeTime);
+
+        if (screenFader == null) { Debug.LogError("[Ending1] screenFader NULL!"); yield break; }
+        Transform playerCamera = Camera.main.transform;
+
+        // === FAZA 1: Fade out + teleport na kanapę ===
+        yield return StartCoroutine(screenFader.FadeOut(couchFadeDuration));
+        UICanvas.SetActive(false);
+
+        // Kamera na pozycję kanapy
+        if (couchCameraPosition != null)
+        {
+            playerCamera.position = couchCameraPosition.position;
+            playerCamera.rotation = couchCameraPosition.rotation;
+        }
+
+        // Demon na pozycję kanapy (siedzi obok gracza)
+        if (demon != null && demonCouchPosition != null && demonAnimator != null)
+        {
+            demon.gameObject.SetActive(true);
+            demon.transform.position = demonCouchPosition.position;
+            demon.transform.rotation = demonCouchPosition.rotation;
+
+            // Reset i trigger animacji siedzenia
+            demonAnimator.Rebind();
+            demonAnimator.Update(0f);
+            yield return null;
+            demonAnimator.SetTrigger("sit_couch");
+            Debug.Log("[Ending1] 👹 Demon seated on couch");
+        }
+
+        // 🔒 Blokada kontroli
+        if (playerController != null) playerController.enabled = false;
+        if (playerCam != null) playerCam.enabled = true; // Kamera aktywna, ale bez inputu
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // === FAZA 2: Fade in + siedzenie razem ===
+        yield return StartCoroutine(screenFader.FadeIn(couchFadeDuration));
+        yield return new WaitForSeconds(5f); // Gracz i demon siedzą razem (cisza/napięcie)
+
+        // === FAZA 3: Policyjne syreny w tle ===
+        Debug.Log("[Ending1] 🚨 Playing police sirens");
+        if (!policeSirenSFX.IsNull)
+        {
+            AudioManager.Instance.PlaySFX(policeSirenSFX, playerCamera.position);
+        }
+
+        // Krótka pauza na "wejście" syren w klimat
+        yield return new WaitForSeconds(2f);
+
+        // === FAZA 4: Fade out + exit ===
+        yield return StartCoroutine(screenFader.FadeOut(2f));
+        yield return new WaitForSeconds(1f);
+
+        // 💾 ZAPISZ Ending 1 przed wyjściem
+        EndingSaveManager.SaveEnding(EndingSaveManager.EndingType.Cooperate);
+        Debug.Log("[Ending1] 💾 Saved Cooperate ending");
+
+        // 🔚 Wyjście z gry
+        Debug.Log("[Ending1] 🔚 Exiting game");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
     }
 
     // ✅ ZAMIENIENIE: public void zamiast IEnumerator
@@ -706,64 +805,7 @@ public class GameNarrativeManager : MonoBehaviour
     [Tooltip("DEBUG: Reference do SofaInteract (przeciągnij w Inspectorze)")]
     public SofaInteract debugSofaInteractReference;
 
-    void Update()
-    {
-        // ✅ F12 = odblokuj SofaInteract i przygotuj grę do testu finału
-        if (Input.GetKeyDown(KeyCode.F12))
-        {
-            Debug.Log("[DEBUG] 🚀 F12 pressed - unlocking SofaInteract!");
-            DebugUnlockSofaEnding();
-        }
-    }
 
-    private void DebugUnlockSofaEnding()
-    {
-        // 1. 🔓 Odblokuj interakcje i sofę
-        GameState.InteractionsLocked = true;  // Wymagane dla SofaInteract
-        GameState.SofaSequenceActive = false; // Żeby można było użyć sofy
-
-        // 2. 🛋️ Aktywuj SofaInteract
-        if (debugSofaInteractReference != null)
-        {
-            debugSofaInteractReference.enabled = true;
-            debugSofaInteractReference.gameObject.SetActive(true);
-            Debug.Log("[DEBUG] ✅ SofaInteract enabled");
-        }
-        else
-        {
-            // Fallback: znajdź po nazwie/tagu
-            var sofa = FindObjectOfType<SofaInteract>();
-            if (sofa != null)
-            {
-                sofa.enabled = true;
-                sofa.gameObject.SetActive(true);
-                Debug.Log("[DEBUG] ✅ SofaInteract found and enabled");
-            }
-            else
-            {
-                Debug.LogWarning("[DEBUG] ⚠️ SofaInteract not found!");
-            }
-        }
-
-        // 3. 👤 Opcjonalnie: teleportuj gracza blisko sofy
-        if (playerController != null && debugTeleportPosition != null)
-        {
-            playerController.transform.position = debugTeleportPosition.position;
-            playerController.transform.rotation = debugTeleportPosition.rotation;
-            Debug.Log($"[DEBUG] 📍 Player teleported to: {debugTeleportPosition.name}");
-        }
-
-        // 4. 🎵 Opcjonalnie: wyczyść questy i ustaw muzykę
-        if (QuestManager.Instance != null)
-            QuestManager.Instance.ClearAllQuests();
-
-        if (!victoryMusic.IsNull)
-            ChangeBackgroundMusic(victoryMusic, 0.5f);
-
-        // 5. 🎮 Przywróć kontrolę (gracz sam podejdzie do sofy)
-        RestorePlayerControl();
-
-        Debug.Log("[DEBUG] ✅ Ready! Walk to sofa and press E to trigger ending");
-    }
+   
 #endif
 }

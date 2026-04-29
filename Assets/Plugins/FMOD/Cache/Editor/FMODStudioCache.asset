@@ -55,33 +55,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
---- !u!114 &-8528606256684695329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Police
-  m_EditorClassIdentifier: 
-  Path: event:/Police
-  Guid:
-    Data1: 750432434
-    Data2: 1305445807
-    Data3: 56807353
-    Data4: 668261602
-  Banks:
-  - {fileID: 6888540770293749724}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 16800
 --- !u!114 &-8431728688285078284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +82,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 10000
+--- !u!114 &-8382554938387245874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/PoliceSiren
+  m_EditorClassIdentifier: 
+  Path: event:/PoliceSiren
+  Guid:
+    Data1: -1312072434
+    Data2: 1077791231
+    Data3: -1088393590
+    Data4: -1468425123
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 28632
 --- !u!114 &-8280198629979112602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,10 +395,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639130534562400377
+  lastModified: 639131071646547708
   FileSizes:
   - Name: Desktop
-    Value: 2720
+    Value: 2778
   Exists: 1
 --- !u!114 &-5710785234417663064
 MonoBehaviour:
@@ -617,14 +617,15 @@ MonoBehaviour:
   - {fileID: -5710785234417663064}
   - {fileID: 7792810737935306822}
   - {fileID: -5584457689763810930}
-  - {fileID: -8528606256684695329}
+  - {fileID: 2223882262744474297}
+  - {fileID: -8382554938387245874}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639130534562400377
+  cacheTime: 639131071646547708
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -704,8 +705,10 @@ MonoBehaviour:
     index: 37
   - key: event:/ComputerGlitch
     index: 38
-  - key: event:/Police
+  - key: event:/WindowBreak
     index: 39
+  - key: event:/PoliceSiren
+    index: 40
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,6 +817,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 835
+--- !u!114 &2223882262744474297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/WindowBreak
+  m_EditorClassIdentifier: 
+  Path: event:/WindowBreak
+  Guid:
+    Data1: 449465666
+    Data2: 1268962530
+    Data3: -312825943
+    Data4: -918510398
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4193
 --- !u!114 &2903434514227799775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,10 +1125,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639130534562380367
+  lastModified: 639131071646527764
   FileSizes:
   - Name: Desktop
-    Value: 11564864
+    Value: 11614240
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:
