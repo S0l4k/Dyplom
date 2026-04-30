@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Photo 3
   m_EditorClassIdentifier: 
   photoName: School
-  normalVersion: {fileID: 2800000, guid: efca549ea9192be4cade5e115b764c8d, type: 3}
-  demonVersion: {fileID: 2800000, guid: 59f4370bd618bfe4ea8cc1dd3d59f206, type: 3}
+  normalVersion: {fileID: 2800000, guid: 65b68c52af27738488f30c4ec88367d9, type: 3}
+  demonVersion: {fileID: 2800000, guid: f10c0c65ef05c8146b65b78cc25331ae, type: 3}
   demonChance: 0.354
