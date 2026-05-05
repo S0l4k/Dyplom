@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsPanel;
     public Slider sensitivitySlider;
     public TMP_Text sensitivityValueText;
+    public GameObject crosshair;
 
     [Header("Audio Controls")]
     public Button btnVolumeDown;
@@ -68,6 +69,7 @@ public class PauseMenu : MonoBehaviour
 
         isPaused = true;
         pausePanel.SetActive(true);
+        crosshair.SetActive(false);
 
         if (playerController != null)
             playerController.enabled = false;
@@ -99,6 +101,7 @@ public class PauseMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        crosshair.SetActive(true);
 
         Time.timeScale = 1f;
         isPaused = false;

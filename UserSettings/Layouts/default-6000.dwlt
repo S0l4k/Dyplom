@@ -288,8 +288,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Addressables Report\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1341.3334
-    y: 793.3334
+    x: 0
+    y: 26
     width: 321.33334
     height: 552
   m_SerializedDataModeController:
@@ -330,8 +330,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Build Profiles\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 822
-    y: 424.6667
+    x: 0
+    y: 26
     width: 726
     height: 552
   m_SerializedDataModeController:
@@ -366,10 +366,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 62
-    y: 78.66667
+    x: 0
+    y: 36
     width: 2498
-    height: 1317.3334
+    height: 1341.3334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.00019855409, y: 0.9966972, z: -0.08172073, w: 0.0022925036}
     speed: 2
-    m_Value: {x: 0.00011683307, y: 0.99665475, z: -0.08171727, w: 0.0012958086}
+    m_Value: {x: 0.00019855407, y: 0.9966972, z: -0.08172073, w: 0.0022925036}
   m_Size:
     m_Target: 18.362577
     speed: 2
