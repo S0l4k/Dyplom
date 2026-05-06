@@ -14,6 +14,11 @@ public class MainMenu : MonoBehaviour
     [Header("UI Panels")]
     public GameObject mainMenuPanel;
     public GameObject settingsPanel;
+    public GameObject settingsOverlay;
+    public GameObject transitionOverlay; // ← DODAJ TO
+
+    [Header("Transition Settings")]
+    public float transitionDuration = 0.8f;
 
     [Header("Audio Settings")]
     [Range(0f, 1f)]
@@ -59,6 +64,8 @@ public class MainMenu : MonoBehaviour
 
     private Vector3 originalCamPosition;
     private Coroutine shakeCoroutine;
+    private Coroutine overlayFadeCoroutine;
+    private Coroutine transitionCoroutine;
 
     private void Start()
     {
@@ -92,16 +99,79 @@ public class MainMenu : MonoBehaviour
     }
 
     // --- SCENE ---
+    // --- SCENE TRANSITION ---
+
     public void PlayGame()
     {
+        // 🔒 Zablokuj input, żeby nie kliknąć dwa razy
+        enabled = false;
+
         if (menuAmbientInstance.isValid())
         {
             menuAmbientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             menuAmbientInstance.release();
         }
 
+        // 🔒 Ukryj cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // 🎬 Start transition: pokaż overlay i fade-out do czerni
+        if (transitionOverlay != null)
+        {
+            transitionOverlay.SetActive(true);
+            var img = transitionOverlay.GetComponent<Image>();
+            if (img != null)
+            {
+                // Najpierw ustaw na przezroczysty, potem fade do czarnego
+                img.color = new Color(0f, 0f, 0f, 0f);
+                transitionCoroutine = StartCoroutine(FadeTransition(img, 0f, 1f, transitionDuration, OnTransitionComplete));
+            }
+            else
+            {
+                // Fallback: jeśli nie ma Image, po prostu załaduj scenę
+                OnTransitionComplete();
+            }
+        }
+        else
+        {
+            // Fallback: jeśli nie przypisano overlaya
+            OnTransitionComplete();
+        }
+    }
+
+    // 🎞️ Korutina fade transition z callbackiem
+    private IEnumerator FadeTransition(Image img, float startAlpha, float endAlpha, float duration, System.Action onComplete)
+    {
+        if (img == null) yield break;
+
+        float elapsed = 0f;
+        Color baseColor = img.color;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float currentAlpha = Mathf.Lerp(startAlpha, endAlpha, t);
+            img.color = new Color(baseColor.r, baseColor.g, baseColor.b, currentAlpha);
+            yield return null;
+        }
+
+        // Wymuś dokładny końcowy kolor
+        img.color = new Color(baseColor.r, baseColor.g, baseColor.b, endAlpha);
+
+        // 🔥 Wywołaj callback po zakończeniu
+        onComplete?.Invoke();
+    }
+
+    // ✅ Callback: gdy transition się skończy → załaduj scenę
+    private void OnTransitionComplete()
+    {
         if (!string.IsNullOrEmpty(sceneName))
-            SceneManager.LoadSceneAsync(sceneName);
+        {
+            // Używamy LoadScene, nie Async, bo transition już ukrył ładowanie
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        }
     }
 
     /// <summary>
@@ -251,9 +321,90 @@ public class MainMenu : MonoBehaviour
     }
 
     // --- UI PANELS ---
-    public void ShowMainMenu() { mainMenuPanel.SetActive(true); settingsPanel.SetActive(false); }
-    public void ShowSettings() { mainMenuPanel.SetActive(false); settingsPanel.SetActive(true); }
 
+    public void ShowSettings()
+    {
+        // 🔴 ZATRZYMAJ + WYCZYŚĆ referencję do korutiny
+        if (overlayFadeCoroutine != null)
+        {
+            StopCoroutine(overlayFadeCoroutine);
+            overlayFadeCoroutine = null; // ← TO JEST KLUCZOWE!
+        }
+
+        // 🔄 Hard reset overlaya
+        if (settingsOverlay != null)
+        {
+            var img = settingsOverlay.GetComponent<Image>();
+            if (img != null)
+            {
+                img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
+                settingsOverlay.SetActive(true);
+            }
+        }
+
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+
+        // ✅ Start fade-in
+        if (settingsOverlay != null)
+        {
+            var img = settingsOverlay.GetComponent<Image>();
+            if (img != null)
+            {
+                overlayFadeCoroutine = StartCoroutine(FadeOverlay(img, 0f, 0.5f, 0.2f));
+            }
+        }
+
+        Debug.Log("[UI] ShowSettings: panels switched, fade-in started");
+    }
+
+    public void ShowMainMenu()
+    {
+        // 🔴 ZATRZYMAJ + WYCZYŚĆ referencję do korutiny
+        if (overlayFadeCoroutine != null)
+        {
+            StopCoroutine(overlayFadeCoroutine);
+            overlayFadeCoroutine = null; // ← TO JEST KLUCZOWE!
+        }
+
+        // ✅ Natychmiastowy reset overlaya (bez korutiny, dla pewności)
+        if (settingsOverlay != null)
+        {
+            var img = settingsOverlay.GetComponent<Image>();
+            if (img != null)
+            {
+                img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
+            }
+            settingsOverlay.SetActive(false);
+        }
+
+        settingsPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
+
+        Debug.Log("[UI] ShowMainMenu: panels switched, overlay hidden");
+    }
+
+    // 🎞️ Helper: smooth fade dla overlaya
+    private IEnumerator FadeOverlay(Image img, float startAlpha, float endAlpha, float duration)
+    {
+        if (img == null) yield break;
+
+        float elapsed = 0f;
+        Color baseColor = img.color;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float currentAlpha = Mathf.Lerp(startAlpha, endAlpha, t);
+            img.color = new Color(baseColor.r, baseColor.g, baseColor.b, currentAlpha);
+            yield return null;
+        }
+
+        // ✅ Wymuś końcowy kolor + wyczyść referencję
+        img.color = new Color(baseColor.r, baseColor.g, baseColor.b, endAlpha);
+        overlayFadeCoroutine = null; // ← Bezpieczne zakończenie
+    }
     // --- AUDIO ---
     public void VolumePlus() { if (isMuted) return; currentVolume = Mathf.Clamp01(currentVolume + volumeStep); ApplyVolume(); }
     public void VolumeMinus() { if (isMuted) return; currentVolume = Mathf.Clamp01(currentVolume - volumeStep); ApplyVolume(); }
