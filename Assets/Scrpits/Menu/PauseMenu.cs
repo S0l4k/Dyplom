@@ -109,7 +109,19 @@ public class PauseMenu : MonoBehaviour
 
     public void Quit()
     {
-        SceneManager.LoadSceneAsync("MainMenu");
+        
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f; 
+
+        
+        StopAllCoroutines();
+
+      
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+
     }
 
     void OnSensitivityChanged(float value)

@@ -62,6 +62,12 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        if (Time.timeScale <= 0f)
+        {
+            Debug.LogWarning("[MainMenu] ⚠️ timeScale was paused! Resetting to 1f");
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
+        }
         if (mouseSensitivitySlider != null)
         {
             mouseSensitivitySlider.minValue = 0.1f;
