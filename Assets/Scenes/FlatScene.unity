@@ -13091,6 +13091,11 @@ MonoBehaviour:
   contentText: {fileID: 1910099080}
   emailButtonPrefab: {fileID: 7475930987586617657, guid: f175be0682b62af4f98d2f048afcb6f1, type: 3}
   rightScroll: {fileID: 1954091172}
+  playerColor: {r: 0.4, g: 0.8, b: 1, a: 1}
+  npcColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  systemColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  playerAlign: right
+  npcAlign: left
 --- !u!114 &307050354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30753,14 +30758,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95686275, g: 0.95686275, b: 0.95686275, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8745098}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6e7ce94c5036c044c9779c784283f9cc, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -68994,7 +68999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1815635005
 RectTransform:
   m_ObjectHideFlags: 0
@@ -80561,8 +80566,8 @@ MonoBehaviour:
   - {fileID: 6821504604402148946}
   dialogText: {fileID: 1319964638572009401}
   dialogueBG: {fileID: 800254446}
-  npcMarkerColor: '#3F3F3F'
-  playerMarkerColor: '#3F3F3F'
+  npcMarkerColor: 
+  playerMarkerColor: 
   typeSpeed: 0.03
   delayBetweenAnswers: 0.3
   npcVoiceEvent:
@@ -80923,8 +80928,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288453788
-  m_fontColor: {r: 0.6117647, g: 0.6117647, b: 0.6117647, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -80948,8 +80953,8 @@ MonoBehaviour:
   m_fontSizeMin: 30
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -80979,7 +80984,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 50, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -81040,7 +81045,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -81283,8 +81288,8 @@ MonoBehaviour:
   m_fontSizeMin: 30
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -81314,7 +81319,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 50, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -81421,8 +81426,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -1.7000122, y: 6.044998}
-  m_SizeDelta: {x: 900, y: 75.11}
+  m_AnchoredPosition: {x: -0.000061035, y: 6.044998}
+  m_SizeDelta: {x: 1920, y: 75.602}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!4 &4941063276686242154 stripped
 Transform:
@@ -82362,8 +82367,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -180.44699}
-  m_SizeDelta: {x: 859, y: 72.906}
+  m_AnchoredPosition: {x: 0.000061035, y: -176.8}
+  m_SizeDelta: {x: 1920, y: 76.553}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!59 &7957974584416832017
 HingeJoint:
