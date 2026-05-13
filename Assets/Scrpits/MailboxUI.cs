@@ -38,8 +38,8 @@ public class MailboxUI : MonoBehaviour
             var label = btnObj.GetComponentInChildren<TMP_Text>();
 
             label.text = currentEmails[i].isRead
-                ? currentEmails[i].preview
-                : $"<b>{currentEmails[i].preview}</b>"; // pogrubienie nieprzeczytanych
+            ? currentEmails[i].subject
+            : $"<b>{currentEmails[i].subject}</b>";
 
             int index = i;
             btn.onClick.AddListener(() => SelectEmail(index));
@@ -78,7 +78,11 @@ public class MailboxUI : MonoBehaviour
             }
 
             // Treść wiadomości
-            sb.Append($"<align={align}>{msg.text}</align>\n\n");
+            sb.Append($"<align={align}>{msg.text}</align>\n");
+
+            // większy odstęp między wiadomościami
+            sb.Append("<size=8>\n</size>");
+            sb.Append("<color=#444444>────────────────────────</color>\n\n");
         }
 
         // Specjalny styl dla systemowych powiadomień (np. Delivery Failure)

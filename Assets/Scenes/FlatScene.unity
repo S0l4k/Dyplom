@@ -13092,7 +13092,7 @@ MonoBehaviour:
   emailButtonPrefab: {fileID: 7475930987586617657, guid: f175be0682b62af4f98d2f048afcb6f1, type: 3}
   rightScroll: {fileID: 1954091172}
   playerColor: {r: 0.4, g: 0.8, b: 1, a: 1}
-  npcColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  npcColor: {r: 0.9811321, g: 0.5601341, b: 0.15735123, a: 1}
   systemColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
   playerAlign: right
   npcAlign: left
@@ -40107,7 +40107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4641830734165147115, guid: 0287956da25069b4e80cd492d2b0e273, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 8.09314
+      value: 8.093262
       objectReference: {fileID: 0}
     - target: {fileID: 4641830734165147115, guid: 0287956da25069b4e80cd492d2b0e273, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

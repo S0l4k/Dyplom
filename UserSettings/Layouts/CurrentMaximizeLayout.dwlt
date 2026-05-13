@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
-  controlID: 1423
+  controlID: 361
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -94,7 +94,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 1424
+  controlID: 362
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 1425
+  controlID: 363
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -1994,7 +1994,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 77264
+  m_LastSelectedObjectID: 49422
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2060,9 +2060,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f6460100
-      m_LastClickedID: 83702
-      m_ExpandedIDs: 26aeffffc2baffff6cc4ffff10d5ffffeafaffffe63e01002c3f0100
+      m_SelectedIDs: 0ec10000
+      m_LastClickedID: 49422
+      m_ExpandedIDs: eafaffff0ec1000012c200000ac30000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2160,7 +2160,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Melania/nowe rzeczy 2D
+    - Assets/Scrpits
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -2170,15 +2170,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 82
   m_LastFolders:
-  - Assets/Melania/nowe rzeczy 2D
+  - Assets/Scrpits
   m_LastFoldersGridSize: 82
   m_LastProjectPath: C:\Users\User\Documents\Gitkraken\Dyplom
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 5ad70000
-    m_LastClickedID: 55130
+    m_SelectedIDs: 76d70000
+    m_LastClickedID: 55158
     m_ExpandedIDs: 000000008cd500008ed5000090d5000092d5000094d5000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -2234,9 +2234,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: f6460100
-    m_LastClickedInstanceID: 83702
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 0ec10000
+    m_LastClickedInstanceID: 49422
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 8ed9000022c80000e8030100e6030100eac4000090ce000038d20000e2d200007ad30000bad000001c030000a6d00000a6cc0000569501003ccf000064d6000048d6000090db02009edb02008ad80000a2d8000050d80000000000000e5001001af00000dc4f010054cf0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -2262,7 +2262,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 384.66663}
     m_GridSize: 82
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 162
