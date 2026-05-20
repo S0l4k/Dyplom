@@ -70,14 +70,61 @@ public class SchoolAmbienceController : MonoBehaviour
     }
 
     // ✅ Start odtwarzania z pozycją 3D
+    // === W SchoolAmbienceController.cs ===
+
+    // ✅ Zmień StartPlaying() na taką wersję z retry:
     public void StartPlaying(Vector3 position)
     {
-        if (_voiceInstance.isValid() && !_isStarted && AudioManager.Instance != null)
+        // 1️⃣ Jeśli instancja jeszcze nie istnieje – spróbuj ją stworzyć TERAZ
+        if (!_voiceInstance.isValid() && !childrenVoicesEvent.IsNull && AudioManager.Instance != null)
+        {
+            Debug.Log("[SchoolAmbience] 🔄 Creating voice instance on-demand...");
+            _voiceInstance = AudioManager.Instance.CreateAmbientInstance(childrenVoicesEvent);
+            _localVolume = maxVolume;
+            UpdateCombinedVolume();
+        }
+
+        // 2️⃣ Jeśli nadal nievalid – spróbuj ponownie za 0.1s (max 3 próby)
+        if (!_voiceInstance.isValid())
+        {
+            Debug.LogWarning("[SchoolAmbience] ⏳ Voice instance not ready, retrying...");
+            StartCoroutine(TryStartPlayingDelayed(position, 3));
+            return;
+        }
+
+        // 3️⃣ Start odtwarzania
+        if (!_isStarted && AudioManager.Instance != null)
         {
             AudioManager.Instance.StartAmbientInstance(_voiceInstance, position);
             _isStarted = true;
+            _voiceInstance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
             UpdateCombinedVolume();
+            Debug.Log("[SchoolAmbience] 🎵 Voices STARTED at: " + position);
         }
+    }
+
+    // ✅ NOWA metoda: opóźnione próby startu
+    private IEnumerator TryStartPlayingDelayed(Vector3 position, int maxRetries)
+    {
+        int attempts = 0;
+        while (attempts < maxRetries && (!_voiceInstance.isValid() || !_isStarted))
+        {
+            yield return new WaitForSeconds(0.1f);
+            attempts++;
+
+            if (_voiceInstance.isValid() && !_isStarted && AudioManager.Instance != null)
+            {
+                AudioManager.Instance.StartAmbientInstance(_voiceInstance, position);
+                _isStarted = true;
+                _voiceInstance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+                UpdateCombinedVolume();
+                Debug.Log($"[SchoolAmbience] 🎵 Voices STARTED after {attempts} retries");
+                yield break;
+            }
+        }
+
+        if (!_voiceInstance.isValid())
+            Debug.LogError("[SchoolAmbience] ❌ Failed to start voices after " + maxRetries + " attempts!");
     }
 
     // ✅ Fade out local volume (nie wpływa na master!)

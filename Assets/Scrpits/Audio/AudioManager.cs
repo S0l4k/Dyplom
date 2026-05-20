@@ -50,7 +50,26 @@ public class AudioManager : MonoBehaviour
 
         lastVolumeBeforeMute = masterVolume;
     }
+    // === DODAJ TE DWIE METODY DO SWOJEGO AudioManager.cs ===
 
+    public void SetMasterVolumeDirect(float volume)
+    {
+        volume = Mathf.Clamp01(volume);
+        masterVolume = volume;
+        PlayerPrefs.SetFloat("MasterVolume", volume);
+        PlayerPrefs.Save();
+        if (volume > 0.01f) { isMuted = false; lastVolumeBeforeMute = volume; }
+        UpdateActiveInstancesVolume();
+    }
+
+    public void SetMuteStateDirect(bool mute)
+    {
+        if (mute) { lastVolumeBeforeMute = masterVolume; masterVolume = 0f; isMuted = true; }
+        else { masterVolume = lastVolumeBeforeMute; isMuted = false; }
+        PlayerPrefs.SetFloat("MasterVolume", masterVolume);
+        PlayerPrefs.Save();
+        UpdateActiveInstancesVolume();
+    }
     public void AdjustMasterVolume(float step)
     {
         masterVolume = Mathf.Clamp01(masterVolume + step);
@@ -302,6 +321,7 @@ public class AudioManager : MonoBehaviour
         RuntimeManager.StudioSystem.getParameterByName(paramName, out float value);
         return value;
     }
+
 
     private void OnDestroy()
     {

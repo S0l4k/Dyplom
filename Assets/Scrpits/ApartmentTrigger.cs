@@ -67,8 +67,9 @@ public class ApartmentTrigger : MonoBehaviour
 
     private IEnumerator RespawnDemonAfterDelay()
     {
-        flashlight.SetActive(true);
+      
         yield return new WaitForSeconds(respawnDelay);
+        if (flashlight != null) flashlight.SetActive(true);
         lightController.ActivateDemonLights();
         if (demon == null || demonSpawnPoint == null) yield break;
         if (GameState.DemonRespawnedInApartment) yield break;

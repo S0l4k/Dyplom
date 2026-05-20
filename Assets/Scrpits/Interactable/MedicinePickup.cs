@@ -7,7 +7,7 @@ public class MedicinePickup : MonoBehaviour
     [Header("References")]
     public LightController lightController;
     public EnemyAI demon;
-    public TMP_Text pickupText;
+    public GameObject pickupText;
     public GameObject sofaInteractObject; // ✅ Obiekt z SofaInteract (kanapa)
 
     private Camera playerCamera;
@@ -38,7 +38,7 @@ public class MedicinePickup : MonoBehaviour
         {
             canInteract = true;
             pickupText.gameObject.SetActive(true);
-            pickupText.text = "Press E to take the medicine";
+    
 
             if (Input.GetKeyDown(KeyCode.E))
             {

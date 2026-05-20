@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using System.Collections;
+
+using UnityEngine.UI;
 
 public class NarrativeInspectTrigger : MonoBehaviour
 {
@@ -13,7 +13,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
     public Transform playerTransform;
 
     [Header("UI")]
-    public TMP_Text interactionText;
     public Outline outline;
 
     [Header("Inspect UI")]
@@ -31,11 +30,11 @@ public class NarrativeInspectTrigger : MonoBehaviour
     public Transform flashbackLocation;
     public GameObject flashbackScene;
     public bool enableFlashback = true;
-    public ScreenFader screenFader;  // ✅ TEN SAM komponent co w GameNarrativeManager!
+    public ScreenFader screenFader;
 
     [Header("Settings")]
     public float typeSpeed = 0.05f;
-    public float fadeSpeed = 0.8f;   // ✅ Domyślny czas fade (jak w VomitSequence)
+    public float fadeSpeed = 0.8f;
 
     private Camera _inspectCamera;
     private InspectSystem _inspectSystem;
@@ -43,13 +42,13 @@ public class NarrativeInspectTrigger : MonoBehaviour
     private bool _isInInspect = false;
     private bool _isInFlashback = false;
     private bool _hasBeenUsed = false;
-    // ✅ W [Header("Flashback")] dodaj:
+
+    // ✅ ID questa do trackowania
     [Tooltip("ID questa do trackowania postępu (np. 'SchoolFlashback')")]
-    public string flashbackQuestID;  // ✅ Nowe pole
+    public string flashbackQuestID;
 
     private Vector3 _playerReturnPosition;
     private Quaternion _playerReturnRotation;
-
     private static NarrativeInspectTrigger _activeInspector;
 
     void Start()
@@ -59,7 +58,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
         _inspectCamera = inspectScene?.GetComponentInChildren<Camera>();
         _inspectSystem = inspectScene?.GetComponentInChildren<InspectSystem>();
 
-        if (interactionText != null) interactionText.gameObject.SetActive(false);
         if (outline != null) outline.enabled = false;
         if (inspectScene != null) inspectScene.SetActive(false);
         if (flashbackScene != null) flashbackScene.SetActive(false);
@@ -70,11 +68,14 @@ public class NarrativeInspectTrigger : MonoBehaviour
             endInspectButton.onClick.AddListener(ExitInspect);
             endInspectButton.gameObject.SetActive(false);
         }
+
+        // ✅ DEBUG: Sprawdź stan na start
+        Debug.Log($"[NarrativeInspect] {gameObject.name} | enableFlashback={enableFlashback}, questID={flashbackQuestID}");
     }
 
     void Update()
     {
-        // ✅ NOWE: Jeśli obiekt był już użyty – zablokuj wszelką interakcję
+        // Jeśli obiekt był już użyty lub w trakcie interakcji – zablokuj
         if (_isInInspect || _isInFlashback || _hasBeenUsed) return;
 
         CheckInteraction();
@@ -85,34 +86,33 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     void CheckInteraction()
     {
-        // ✅ W CheckInteraction(), na początku metody dodaj:
-    
-        
-            // ✅ NOWE: Blokada jeśli flashbacki nie są jeszcze odblokowane
-            if (!GameState.ApartmentExplorationUnlocked && enableFlashback)
-            {
-                if (interactionText != null && interactionText.gameObject.activeSelf)
-                    interactionText.gameObject.SetActive(false);
-                if (outline != null) outline.enabled = false;
-                _canInteract = false;
-                return;
-            }
+        // ✅ DEBUG: Loguj stan checka
+        Debug.Log($"[CheckInteraction] {gameObject.name} | unlocked={GameState.ApartmentExplorationUnlocked}, used={_hasBeenUsed}");
 
-            // ✅ Jeśli obiekt był już użyty – nie pokazuj promptu
-            if (_hasBeenUsed)
-            {
-                if (interactionText != null && interactionText.gameObject.activeSelf)
-                    interactionText.gameObject.SetActive(false);
-                if (outline != null) outline.enabled = false;
-                _canInteract = false;
-                return;
-            }
+        // ✅ Blokada jeśli flashbacki nie są jeszcze odblokowane
+        if (enableFlashback && !GameState.ApartmentExplorationUnlocked)
+        {
+            Debug.Log($"[CheckInteraction] ❌ BLOCKED: ApartmentExplorationUnlocked={GameState.ApartmentExplorationUnlocked}");
+            if (outline != null) outline.enabled = false;
+            _canInteract = false;
+            return;
+        }
 
-           
-        
+        // ✅ Jeśli obiekt był już użyty – zablokuj
+        if (_hasBeenUsed)
+        {
+            Debug.Log($"[CheckInteraction] ❌ BLOCKED: Object already used");
+            if (outline != null) outline.enabled = false;
+            _canInteract = false;
+            return;
+        }
 
-
-        if (!playerCamera || interactionText == null) return;
+        // ✅ FIX: Poprawny check kamery (było: !playerCamera== false)
+        if (playerCamera == null)
+        {
+            Debug.LogWarning($"[CheckInteraction] ❌ playerCamera is NULL on {gameObject.name}");
+            return;
+        }
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         bool wasCan = _canInteract;
@@ -121,14 +121,16 @@ public class NarrativeInspectTrigger : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 3f))
         {
             if (hit.collider.gameObject == gameObject || hit.transform.IsChildOf(transform))
+            {
                 _canInteract = true;
+                Debug.Log($"[CheckInteraction] ✅ Raycast HIT on {gameObject.name}");
+            }
         }
 
         if (_canInteract != wasCan)
         {
-            interactionText.gameObject.SetActive(_canInteract);
-            interactionText.text = "Press E to examine";
             if (outline != null) outline.enabled = _canInteract;
+            Debug.Log($"[CheckInteraction] outline.enabled = {_canInteract}");
         }
     }
 
@@ -144,7 +146,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
             _playerReturnRotation = playerTrans.rotation;
         }
 
-        interactionText.gameObject.SetActive(false);
         if (outline != null) outline.enabled = false;
 
         if (!string.IsNullOrEmpty(beforeText) && GameNarrativeManager.Instance != null)
@@ -180,14 +181,12 @@ public class NarrativeInspectTrigger : MonoBehaviour
     {
         if (_activeInspector != this) return;
 
-        // 🔑 Włącz kamerę gracza NATYCHMIAST
         if (playerCamera != null && !playerCamera.gameObject.activeSelf)
             playerCamera.gameObject.SetActive(true);
 
         _isInInspect = false;
         _activeInspector = null;
 
-        // Wyłącz inspect UI
         if (inspectScene != null) inspectScene.SetActive(false);
         if (childModelToEnable != null) childModelToEnable.gameObject.SetActive(false);
         if (endInspectButton != null) endInspectButton.gameObject.SetActive(false);
@@ -200,7 +199,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
             gameplayUI.blocksRaycasts = true;
         }
 
-        // 🔤 Pokaż tekst po inspekcji
         if (!string.IsNullOrEmpty(afterText) && GameNarrativeManager.Instance != null)
         {
             StartCoroutine(ShowAfterTextAndContinue());
@@ -232,36 +230,25 @@ public class NarrativeInspectTrigger : MonoBehaviour
         }
     }
 
-    // ✅ PROSTY TELEPORT – VOMIT SEQUENCE STYLE
     private void StartFlashback()
     {
         Debug.Log($"[Flashback] 🌀 Starting flashback for {gameObject.name}");
         _isInFlashback = true;
-
         StartCoroutine(FlashbackTeleportSequence());
     }
 
-    // ✅ KORUTINA TELEPORTU – dokładna kopia logiki z VomitSequence
     private IEnumerator FlashbackTeleportSequence()
     {
-        // 🔒 Zablokuj gracza (jak w VomitSequence)
         if (playerController != null) playerController.enabled = false;
         if (playerCamera != null) playerCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
 
-        // 🌑 Fade OUT
         if (screenFader != null)
-        {
             yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
-        }
         else
-        {
-            // Fallback: prosta pauza jeśli nie ma ScreenFader
             yield return new WaitForSeconds(fadeSpeed);
-        }
 
-        // 🌀 TELEPORT GRACZA (z CharacterController handling jak w VomitSequence)
         if (flashbackLocation != null)
         {
             Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
@@ -272,7 +259,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
                 Vector3 targetPos = flashbackLocation.position;
                 Quaternion targetRot = flashbackLocation.rotation;
 
-                // ✅ Raycast do podłogi (jak w VomitSequence) – żeby gracz nie wisiał w powietrzu
                 if (cc != null && Physics.Raycast(
                     flashbackLocation.position + Vector3.up * 2f,
                     Vector3.down,
@@ -283,14 +269,11 @@ public class NarrativeInspectTrigger : MonoBehaviour
                     targetPos = hit.point + Vector3.up * (cc.height * 0.5f) - Vector3.up * 1f;
                 }
 
-                // ✅ Wykonaj teleport
                 playerTrans.position = targetPos;
                 playerTrans.rotation = targetRot;
 
-                // ✅ Jeśli kamera jest childem gracza – zaktualizuj jej rotację
                 if (playerCamera != null && playerCamera.transform.parent == playerTrans)
                 {
-                    // Kamera już podąży za graczem, ale dla pewności:
                     playerCamera.transform.rotation = targetRot;
                 }
 
@@ -298,32 +281,23 @@ public class NarrativeInspectTrigger : MonoBehaviour
             }
         }
 
-        // 🎬 Aktywuj scenę flashbacku
         if (flashbackScene != null)
         {
             flashbackScene.SetActive(true);
             if (QuestManager.Instance != null && QuestManager.Instance.questPanel != null)
             {
                 QuestManager.Instance.questPanel.SetActive(false);
-                Debug.Log("[Narrative] 📋 Quest UI hidden during flashback");
             }
         }
-        // 🌕 Fade IN
+
         if (screenFader != null)
-        {
             yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
-        }
         else
-        {
             yield return new WaitForSeconds(fadeSpeed);
-        }
 
-        // 🔓 Odblokuj gracza w flashbacku
         RestorePlayerControl();
-
     }
 
-    // ✅ POWRÓT Z FLASHBACKU – identyczna logika
     public void EndFlashback()
     {
         if (!_isInFlashback) return;
@@ -336,29 +310,25 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     private IEnumerator ReturnFromFlashbackSequence()
     {
-        // 🔒 Zablokuj gracza
         if (playerController != null) playerController.enabled = false;
         if (playerCamera != null) playerCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
+
         StopFlashbackAmbience();
         _hasBeenUsed = true;
+
         if (enableFlashback && !string.IsNullOrEmpty(flashbackQuestID))
         {
             GameNarrativeManager.Instance?.OnFlashbackCompleted(flashbackQuestID);
             Debug.Log($"[Narrative] 📢 Flashback completed: {flashbackQuestID}");
         }
-        // 🌑 Fade OUT
-        if (screenFader != null)
-        {
-            yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
-        }
-        else
-        {
-            yield return new WaitForSeconds(fadeSpeed);
-        }
 
-        // 🌀 TELEPORT POWROTNY
+        if (screenFader != null)
+            yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
+        else
+            yield return new WaitForSeconds(fadeSpeed);
+
         Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
         if (playerTrans != null)
         {
@@ -366,7 +336,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
             Vector3 targetPos = _playerReturnPosition;
             Quaternion targetRot = _playerReturnRotation;
 
-            // ✅ Raycast do podłogi dla bezpieczeństwa
             if (cc != null && Physics.Raycast(
                 _playerReturnPosition + Vector3.up * 2f,
                 Vector3.down,
@@ -379,65 +348,53 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
             playerTrans.position = targetPos;
             playerTrans.rotation = targetRot;
-
             Debug.Log($"[Flashback] 🔙 Returned to saved position: {targetPos}");
         }
 
-        // 🎬 Wyłącz scenę flashbacku
         if (flashbackScene != null) flashbackScene.SetActive(false);
 
-        // 🌕 Fade IN
         if (screenFader != null)
-        {
             yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
-        }
         else
-        {
             yield return new WaitForSeconds(fadeSpeed);
-        }
 
         if (QuestManager.Instance != null && QuestManager.Instance.questPanel != null)
         {
             QuestManager.Instance.questPanel.SetActive(true);
-            Debug.Log("[Narrative] 📋 Quest UI restored after flashback");
         }
-        // 🔓 Przywróć normalną grę
+
         RestorePlayerControl();
     }
+
     private void StopFlashbackAmbience()
     {
-        // Jeśli flashbackScene ma SchoolAmbienceController, zatrzymaj go
         if (flashbackScene != null)
         {
             var ambience = flashbackScene.GetComponentInChildren<SchoolAmbienceController>();
             if (ambience != null)
             {
-                ambience.StopVoices(true); // fade out
+                ambience.StopVoices(true);
                 Debug.Log("[Narrative] 🔇 Flashback ambience stopped");
             }
         }
     }
-    // ✅ JEDNA METODA DO ODBLOKOWANIA – jak w GameNarrativeManager
-    // ✅ POPRAWIONA METODA – przywraca PEŁNĄ kontrolę
+
     private void RestorePlayerControl()
     {
         Debug.Log("[RestorePlayerControl] 🔓 Restoring full player control...");
 
-        // 🎮 Odblokuj ruch gracza
         if (playerController != null)
         {
             playerController.enabled = true;
             Debug.Log("  ├─ PlayerController.enabled = true");
         }
 
-        // 🎥 Odblokuj kamerę (GameObject)
         if (playerCamera != null)
         {
             playerCamera.enabled = true;
             Debug.Log("  ├─ playerCamera GameObject.enabled = true");
         }
 
-        // 🖱️ Odblokuj PlayerCam (skrypt obsługi myszki) – ✅ TO BYŁO BRAKUJĄCE!
         PlayerCam playerCamScript = playerCamera?.GetComponent<PlayerCam>();
         if (playerCamScript != null)
         {
@@ -445,7 +402,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
             Debug.Log("  ├─ PlayerCam script.enabled = true");
         }
 
-        // 🔦 Przywróć kursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Debug.Log("  └─ Cursor locked, hidden");
@@ -453,7 +409,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
         Debug.Log("[RestorePlayerControl] ✅ Player fully unlocked");
     }
 
-    // ✅ Helper do fade UI (tylko dla gameplayUI, nie ekranu)
     IEnumerator FadeUI(CanvasGroup cg, float targetAlpha)
     {
         float start = cg.alpha;
