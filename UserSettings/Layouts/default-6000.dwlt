@@ -219,11 +219,19 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< Updated upstream
     y: 676.6667
     width: 1327.3334
     height: 616.6667
   m_MinSize: {x: 51, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
+=======
+    y: 702
+    width: 1382.6666
+    height: 639.3334
+  m_MinSize: {x: 50, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> Stashed changes
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 18}
@@ -2208,9 +2216,15 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< Updated upstream
       m_SelectedIDs: 86ed0000
       m_LastClickedID: 60806
       m_ExpandedIDs: 70dcffff12e4ffff72efffffeafaffff84e7000086ed0000
+=======
+      m_SelectedIDs: 64c20000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 82f2ffffeafaffff
+>>>>>>> Stashed changes
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2299,9 +2313,15 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< Updated upstream
     m_SelectedIDs: 78cd0000
     m_LastClickedID: 52600
     m_ExpandedIDs: 0000000014cc000016cc000018cc000000ca9a3b
+=======
+    m_SelectedIDs: 92c30000
+    m_LastClickedID: 50066
+    m_ExpandedIDs: 0000000056c2000058c200005ac200005cc200005ec2000000ca9a3b
+>>>>>>> Stashed changes
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2330,7 +2350,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< Updated upstream
     m_ExpandedIDs: 0000000014cc000016cc000018cc0000
+=======
+    m_ExpandedIDs: 0000000056c2000058c200005ac200005cc200005ec20000
+>>>>>>> Stashed changes
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2359,7 +2383,11 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
+<<<<<<< Updated upstream
     m_ExpandedInstanceIDs: 8ed9000022c80000e8030100e6030100eac4000090ce000038d20000e2d200007ad30000bad000001c030000a6d00000a6cc0000569501003ccf000064d6000048d6000090db02009edb02008ad80000a2d8000050d80000000000000e5001001af00000dc4f010054cf000066170100a0d10000
+=======
+    m_ExpandedInstanceIDs: 8ed9000022c80000e8030100e6030100eac4000090ce000038d20000e2d200007ad30000bad000001c030000a6d00000a6cc0000569501003ccf000064d6000048d6000090db02009edb02008ad80000a2d8000050d80000000000000e5001001af00000dc4f010054cf0000
+>>>>>>> Stashed changes
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
