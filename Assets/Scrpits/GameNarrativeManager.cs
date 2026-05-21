@@ -27,6 +27,7 @@ public class GameNarrativeManager : MonoBehaviour
     public Transform bathroomSpawn;
     public ScreenFader screenFader;
     public EventReference vomitSound;
+    public GameObject plate;
 
     [Header("Courier-Demon Exchange")]
     public Dialog dialogUI;
@@ -367,11 +368,12 @@ public class GameNarrativeManager : MonoBehaviour
             Debug.LogError("[Narrative] Brak PlayerController lub PlayerCam!");
             return;
         }
-
+        plate.SetActive(false);
         playerController.enabled = false;
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
+        
 
         StartCoroutine(VomitSequence());
     }

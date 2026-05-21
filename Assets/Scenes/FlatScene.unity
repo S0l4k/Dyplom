@@ -1336,6 +1336,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e6a3e9bc0f2eee34e966d47b7b65016b, type: 3}
   m_PrefabInstance: {fileID: 791952243}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &44596883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+  m_PrefabInstance: {fileID: 1134489091}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &45204485
 GameObject:
   m_ObjectHideFlags: 0
@@ -14298,7 +14303,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: a60f90d147e89e342ac92970f85a0ba0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 702872726}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a60f90d147e89e342ac92970f85a0ba0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 943997601}
   m_SourcePrefab: {fileID: 100100000, guid: a60f90d147e89e342ac92970f85a0ba0, type: 3}
 --- !u!4 &364256806 stripped
 Transform:
@@ -26298,8 +26306,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: TV
-  playerThought: I used to watch szkolna on it
-  demonResponse: I liked the fat one
+  playerThought: We used to watch movies togheter with my parents
+  demonResponse: They abandoned You
   demonVoiceEvent:
     Guid:
       Data1: -1120441123
@@ -27278,7 +27286,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3844297096152821549, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_WarningMessage
-      value: 
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightLeg'\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightLeg'\n\tFrom animation clip 'Jumpscare_cuts'"
       objectReference: {fileID: 0}
     - target: {fileID: 3844297096152821549, guid: f66e0952bbde37c4bbbe6db6d350c715, type: 3}
       propertyPath: m_ApplyRootMotion
@@ -35516,6 +35528,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935208340}
   m_CullTransparentMesh: 1
+--- !u!1 &943997598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a60f90d147e89e342ac92970f85a0ba0, type: 3}
+  m_PrefabInstance: {fileID: 364256805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &943997601
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943997598}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.004844514, y: 0.007469232, z: 0.007705971}
+  m_Center: {x: -0.0015342988, y: 4.237498e-10, z: 0.003811775}
 --- !u!1 &944462165
 GameObject:
   m_ObjectHideFlags: 0
@@ -40474,7 +40512,7 @@ Transform:
   m_GameObject: {fileID: 1057427898}
   serializedVersion: 2
   m_LocalRotation: {x: -0.046602096, y: 0.70556945, z: 0.046602096, w: 0.70556945}
-  m_LocalPosition: {x: -0.675, y: -0.49, z: 0.80000013}
+  m_LocalPosition: {x: -1.11, y: -0.548, z: 0.80000013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47601,19 +47639,75 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 58ca3120f9ffe034fbfe4daf7455b9de, type: 2}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.521
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.232
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000005637135
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00000001722168
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898394801674235841, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 458499815}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1134489093}
   m_SourcePrefab: {fileID: 100100000, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
 --- !u!4 &1134489092 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9ad49e157b088d749a43d08517880b2b, type: 3}
   m_PrefabInstance: {fileID: 1134489091}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1134489093
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44596883}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.51237524, y: 0.5940399, z: 0.8857319}
+  m_Center: {x: 0.0105231255, y: 0.20298004, z: 0.057134062}
 --- !u!1001 &1135214600
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61386,7 +61480,7 @@ Transform:
   m_GameObject: {fileID: 1504204975}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.706, y: -0.6, z: -2.284}
+  m_LocalPosition: {x: -1.853, y: -0.6, z: -1.905}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63476,6 +63570,10 @@ MonoBehaviour:
     repeatInterval: 12000
   - questName: Look around the apartment
     hintMessage: There must be something interesting here while I wait...
+    timeToHint: 20
+    repeatInterval: 60
+  - questName: AtticFlashback
+    hintMessage: 
     timeToHint: 20
     repeatInterval: 60
   narrativeManager: {fileID: 1893179575}
@@ -76937,6 +77035,7 @@ MonoBehaviour:
       Data3: -1873888128
       Data4: 1226295355
     Path: event:/vomit
+  plate: {fileID: 549526303}
   dialogUI: {fileID: 167703391998991310}
   demonDialogActivator: {fileID: 1635950335}
   courierDialogActivator: {fileID: 8886328069376292934}
