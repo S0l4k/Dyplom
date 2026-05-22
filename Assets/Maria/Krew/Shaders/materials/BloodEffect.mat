@@ -42,14 +42,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionStrength: 3
-    - _Fade: 3.2
+    - _DistortionStrength: 2.07
+    - _Fade: 0.33
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 0.15
-    - _Speed: 0.1
+    - _Scale: 0.124
+    - _Speed: 0.52
     m_Colors:
-    - _Color: {r: 0.16352195, g: 0, b: 0.052450404, a: 0}
+    - _Color: {r: 0.40784314, g: 0, b: 0.16516839, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8128092111744904899
