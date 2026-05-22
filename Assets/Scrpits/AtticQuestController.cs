@@ -46,6 +46,7 @@ public class AtticQuestController : MonoBehaviour
     private PlayerController _player;
     private Camera _mainCamera;
     private PlayerCam _playerCam;
+    public GameObject[] bloods;
 
     // ✅ Do zarządzania dźwiękiem
     private FMOD.Studio.EventInstance _demonSoundInstance;
@@ -204,7 +205,7 @@ public class AtticQuestController : MonoBehaviour
         // 🎬 KROK 4: Świeczki się zapalają, demona nie ma (3 sekundy)
         // ─────────────────────────────────────────────
         Debug.Log("[Cutscene] 🕯️ Step 4: Candles on, demon hidden (3s)");
-
+     
         foreach (var c in candles) if (c != null) c.SetLit(true);
         yield return new WaitForSeconds(3f);
 
