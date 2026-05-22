@@ -158,6 +158,7 @@ public class GameNarrativeManager : MonoBehaviour
     private EnemyAI demon;
     public GameObject windowTrigger;
     public GameObject blood;
+    public GameObject bloodStaircase;
 
     private void Awake()
     {
@@ -531,7 +532,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         if (!gunshoot.IsNull && playerController != null)
             AudioManager.Instance.PlaySFX(gunshoot, playerController.transform.position);
-
+        bloodStaircase.SetActive(true);
         yield return new WaitForSeconds(2.2f);
         UICanvas.SetActive(true);
         yield return StartCoroutine(screenFader.FadeIn(1f));
