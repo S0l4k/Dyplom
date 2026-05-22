@@ -27,6 +27,7 @@ public class GameNarrativeManager : MonoBehaviour
     public Transform bathroomSpawn;
     public ScreenFader screenFader;
     public EventReference vomitSound;
+    public GameObject plate;
 
     [Header("Courier-Demon Exchange")]
     public Dialog dialogUI;
@@ -156,6 +157,8 @@ public class GameNarrativeManager : MonoBehaviour
     private PlayerCam playerCam;
     private EnemyAI demon;
     public GameObject windowTrigger;
+    public GameObject blood;
+    public GameObject bloodStaircase;
 
     private void Awake()
     {
@@ -367,11 +370,12 @@ public class GameNarrativeManager : MonoBehaviour
             Debug.LogError("[Narrative] Brak PlayerController lub PlayerCam!");
             return;
         }
-
+        plate.SetActive(false);
         playerController.enabled = false;
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
+        
 
         StartCoroutine(VomitSequence());
     }
@@ -528,7 +532,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         if (!gunshoot.IsNull && playerController != null)
             AudioManager.Instance.PlaySFX(gunshoot, playerController.transform.position);
-
+        bloodStaircase.SetActive(true);
         yield return new WaitForSeconds(2.2f);
         UICanvas.SetActive(true);
         yield return StartCoroutine(screenFader.FadeIn(1f));
@@ -654,6 +658,7 @@ public class GameNarrativeManager : MonoBehaviour
     // ✅ Prywatna korutina z właściwą logiką
     private IEnumerator SecondEndingFinalSequence(Vector3 returnCamPos, Quaternion returnCamRot)
     {
+        
         ChangeBackgroundMusic(victoryMusic, victoryFadeTime);
         if (screenFader == null) { Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!"); yield break; }
 
@@ -787,6 +792,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         GameState.LoopSequenceActive = true;
         Debug.Log("[Narrative] 🔁 Stair loop aktywowany");
+        blood.SetActive(true);
     }
 
     private void RestorePlayerControl()

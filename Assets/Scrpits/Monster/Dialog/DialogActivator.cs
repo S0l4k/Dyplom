@@ -15,7 +15,7 @@ public class DialogActivator : MonoBehaviour
     [Header("Dialog Customization (per NPC)")]
     public EventReference voiceEvent;          // ✅ Głos tego NPC (demon LUB kurier)
     public Color textColor = Color.white;      // ✅ Kolor tekstu NPC
-    public string markerColor = "#FFFFFF33";   // ✅ Kolor markera (tło pod tekstem)
+    // ✅ Kolor markera (tło pod tekstem)
 
     [Header("Dialog Content")]
     public DialogNode[] dialogNodes;
@@ -38,7 +38,7 @@ public class DialogActivator : MonoBehaviour
     // ✅ ZAPAMIĘTAJ ORYGINALNE USTAWIENIA DIALOG UI (do przywrócenia po dialogu)
     private EventReference originalVoice;
     private Color originalTextColor = Color.white;
-    private string originalMarkerColor = "#FFFFFF33";
+   
 
     void Start()
     {
@@ -61,7 +61,7 @@ public class DialogActivator : MonoBehaviour
             {
                 originalVoice = dialog.npcVoiceEvent;
                 originalTextColor = dialog.dialogText != null ? dialog.dialogText.color : Color.white;
-                originalMarkerColor = dialog.npcMarkerColor;
+                
             }
         }
     }
@@ -170,8 +170,7 @@ public class DialogActivator : MonoBehaviour
             if (dialog != null)
             {
                 // ✅ PODMIEŃ USTAWIENIA DIALOGU NA TE Z TEGO NPC
-                dialog.npcVoiceEvent = voiceEvent;      // ✅ Głos kuriera LUB demona
-                dialog.npcMarkerColor = markerColor;    // ✅ Kolor markera
+               // ✅ Kolor markera
 
                 if (dialog.dialogText != null)
                     dialog.dialogText.color = textColor; // ✅ Kolor tekstu
@@ -194,7 +193,7 @@ public class DialogActivator : MonoBehaviour
 
         // ✅ PRZYWRÓĆ ORYGINALNE USTAWIENIA DIALOG UI
         dialog.npcVoiceEvent = originalVoice;
-        dialog.npcMarkerColor = originalMarkerColor;
+       
 
         if (dialog.dialogText != null)
             dialog.dialogText.color = originalTextColor;

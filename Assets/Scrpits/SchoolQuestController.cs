@@ -33,7 +33,8 @@ public class SchoolQuestController : MonoBehaviour
     private Camera _playerCamera;
     private PlayerController _player;
     private PlayerCam _playerCamScript;
-
+    public GameObject glass;
+    public GameObject blood;
     // Camera backup
     private bool _wasCameraFollowEnabled;
     private Transform _originalCameraParent;
@@ -171,6 +172,8 @@ public class SchoolQuestController : MonoBehaviour
             yield return StartCoroutine(screenFader.FadeOut(cutsceneFadeSpeed));
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
+        glass.SetActive(false);
+        blood.SetActive(true);
 
         yield return new WaitForSeconds(delayBeforeReturn);
 

@@ -67,6 +67,8 @@ public class StoryCrawl : MonoBehaviour
     // ✅ Setup panelu sterowania
     private void SetupControlsPanel()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         if (controlsPanel != null)
         {
             controlsPanel.SetActive(true); // ✅ Upewnij się, że panel jest widoczny na start
@@ -97,6 +99,8 @@ public class StoryCrawl : MonoBehaviour
     // ✅ Callback: przycisk kliknięty
     private void OnStartButtonClicked()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         // 🔊 Odtwórz dźwięk kliknięcia (opcjonalnie)
         if (!buttonClickSFX.IsNull && AudioManager.Instance != null)
         {
