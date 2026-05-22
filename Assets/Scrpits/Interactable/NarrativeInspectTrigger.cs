@@ -310,6 +310,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     private IEnumerator ReturnFromFlashbackSequence()
     {
+        // 🔒 Zablokuj gracza
         if (playerController != null) playerController.enabled = false;
         if (playerCamera != null) playerCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -324,11 +325,18 @@ public class NarrativeInspectTrigger : MonoBehaviour
             Debug.Log($"[Narrative] 📢 Flashback completed: {flashbackQuestID}");
         }
 
+        // 🌑 Fade OUT – już jest czarno, więc to tylko dla pewności
         if (screenFader != null)
+        {
+            // Upewnij się że ekran jest czarny przed teleportem
             yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
+        }
         else
+        {
             yield return new WaitForSeconds(fadeSpeed);
+        }
 
+        // 🌀 TELEPORT POWROTNY
         Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
         if (playerTrans != null)
         {
@@ -351,18 +359,26 @@ public class NarrativeInspectTrigger : MonoBehaviour
             Debug.Log($"[Flashback] 🔙 Returned to saved position: {targetPos}");
         }
 
+        // 🎬 Wyłącz scenę flashbacku
         if (flashbackScene != null) flashbackScene.SetActive(false);
 
+        // ✅ NOWE: Fade IN – dopiero TERAZ, po teleportacji do mieszkania!
+        Debug.Log("[ReturnFromFlashback] 🌕 Fading IN after teleport to apartment...");
         if (screenFader != null)
+        {
             yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
+        }
         else
+        {
             yield return new WaitForSeconds(fadeSpeed);
+        }
 
         if (QuestManager.Instance != null && QuestManager.Instance.questPanel != null)
         {
             QuestManager.Instance.questPanel.SetActive(true);
         }
 
+        // 🔓 Przywróć normalną grę
         RestorePlayerControl();
     }
 

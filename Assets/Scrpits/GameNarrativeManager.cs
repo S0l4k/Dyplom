@@ -157,6 +157,7 @@ public class GameNarrativeManager : MonoBehaviour
     private PlayerCam playerCam;
     private EnemyAI demon;
     public GameObject windowTrigger;
+    public GameObject blood;
 
     private void Awake()
     {
@@ -656,6 +657,7 @@ public class GameNarrativeManager : MonoBehaviour
     // ✅ Prywatna korutina z właściwą logiką
     private IEnumerator SecondEndingFinalSequence(Vector3 returnCamPos, Quaternion returnCamRot)
     {
+        
         ChangeBackgroundMusic(victoryMusic, victoryFadeTime);
         if (screenFader == null) { Debug.LogError("[Narrative] screenFader NIE PRZYPISANY!"); yield break; }
 
@@ -789,6 +791,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         GameState.LoopSequenceActive = true;
         Debug.Log("[Narrative] 🔁 Stair loop aktywowany");
+        blood.SetActive(true);
     }
 
     private void RestorePlayerControl()

@@ -255,11 +255,11 @@ public class AtticQuestController : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         // ─────────────────────────────────────────────
-        // 🎬 KROK 6: Fade out → zniszcz świeczki → powrót
+        // 🎬 KROK 6: Fade out → zniszcz świeczki → powrót (BEZ FadeIn!)
         // ─────────────────────────────────────────────
         Debug.Log("[Cutscene] 🗑️ Step 6: Fade out + destroy candles + return");
 
-        // 🌑 Fade out przed powrotem
+        // 🌑 Fade out przed powrotem – i ZOSTAW EKRAN CZARNY
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeOut(cutsceneFadeSpeed));
         else
@@ -267,7 +267,7 @@ public class AtticQuestController : MonoBehaviour
 
         // ✅ Dłuższa pauza w czerni przed teleportem
         Debug.Log("[Cutscene] ⏱️ Holding fade out for 3s before return...");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         // 🗑️ ZNISZCZ WSZYSTKIE ŚWIECZKI Z SCENY
         foreach (var c in candles)
@@ -279,7 +279,7 @@ public class AtticQuestController : MonoBehaviour
             }
         }
 
-        // ✅ NOWE: ZNISZCZ GŁÓWNĄ ŚWIECZKĘ PRZYPISANĄ W INSPECTORZE
+        // ✅ ZNISZCZ GŁÓWNĄ ŚWIECZKĘ PRZYPISANĄ W INSPECTORZE
         if (mainCandleToDestroy != null && mainCandleToDestroy.gameObject != null)
         {
             Destroy(mainCandleToDestroy.gameObject);
@@ -297,7 +297,17 @@ public class AtticQuestController : MonoBehaviour
             Debug.Log($"[AtticQuest] ✅ Quest COMPLETED: {questID}");
         }
 
-        // 🎥 Przywróć kamerę gracza
+
+
+        // 🔙 Powrót do mieszkania – FadeIn będzie w ReturnFromFlashbackSequence!
+        if (linkedTrigger != null)
+        {
+            Debug.Log("[AtticQuest] 🔙 Triggering return to apartment");
+            linkedTrigger.EndFlashback();
+        }
+
+        Debug.Log("[AtticQuest] 🎬 Cutscene FINISHED");
+        // 🎥 Przywróć kamerę gracza (ale NIE rób FadeIn!)
         if (_mainCamera != null)
         {
             _mainCamera.enabled = false;
@@ -311,14 +321,5 @@ public class AtticQuestController : MonoBehaviour
             _mainCamera.enabled = true;
             Debug.Log("[Cutscene] 🎥 PlayerCamera restored");
         }
-
-        // 🔙 Powrót do mieszkania
-        if (linkedTrigger != null)
-        {
-            Debug.Log("[AtticQuest] 🔙 Triggering return to apartment");
-            linkedTrigger.EndFlashback();
-        }
-
-        Debug.Log("[AtticQuest] 🎬 Cutscene FINISHED");
     }
 }
