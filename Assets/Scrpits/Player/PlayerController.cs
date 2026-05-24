@@ -102,28 +102,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // 🔧 ZMIANA 1: zamiast Move(down) → Move(up * 0.01f) – nie wbijamy się w podłogę
     private void Crouch()
     {
         float heightDiff = controller.height - sneakHeight;
         controller.height = sneakHeight;
         controller.center = sneakCenter;
-        controller.Move(Vector3.down * heightDiff / 2f); // bezpieczne opuszczenie
+        controller.Move(Vector3.up * 0.01f);
         isSneaking = true;
     }
 
+    // 🔧 ZMIANA 2: dodany micro-nudge po wstaniu – pomaga Unity rozwiązać kolizję w buildzie
     private void TryStandUp()
     {
-        // Sprawdzenie przestrzeni nad głową
         float radius = controller.radius * 0.9f;
         Vector3 bottom = transform.position + controller.center - Vector3.up * (controller.height / 2f - radius);
         Vector3 top = bottom + Vector3.up * (normalHeight - sneakHeight);
         if (Physics.CheckCapsule(bottom, top, radius, obstacleMask))
-            return; // nie wstawaj, coś nad głową
+            return;
 
         float heightDiff = normalHeight - controller.height;
         controller.height = normalHeight;
         controller.center = normalCenter;
-        controller.Move(Vector3.up * heightDiff / 2f); // bezpieczne podniesienie
+        controller.Move(Vector3.up * heightDiff / 2f);
+        controller.Move(Vector3.up * 0.01f);
         isSneaking = false;
     }
 
@@ -145,34 +147,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // 🔧 ZMIANA 3: łagodne przyklejenie zamiast sztywnego -2f – brak walki z kolizją
     private void ApplyGravity()
     {
         if (IsGrounded() && velocity.y < 0)
-            velocity.y = -2f;
+            velocity.y = Mathf.Min(velocity.y, -0.5f);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
+    // 🔧 ZMIANA 4: najpierw ufamy controller.isGrounded – najstabilniejsze w buildzie
     private bool IsGrounded()
     {
-        // ✅ METODA 1: SphereCast - lepsza detekcja na pochyłych powierzchniach
+        if (controller.isGrounded) return true;
+
         if (Physics.SphereCast(groundCheck.position, 0.15f, Vector3.down, out RaycastHit hit, 0.3f))
         {
-            // Sprawdź kąt - ignoruj zbyt pionowe powierzchnie
             float angle = Vector3.Angle(hit.normal, Vector3.up);
-            return angle <= 60f; // 60° = dość strome schody nadal wykryte
+            return angle <= 60f;
         }
 
-        // ✅ METODA 2: Fallback - zwykły raycast jeśli SphereCast nie trafił
         if (Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit2, 0.3f))
         {
             float angle = Vector3.Angle(hit2.normal, Vector3.up);
             return angle <= 60f;
         }
 
-        // ✅ METODA 3: Ostateczny fallback - CheckSphere na samym dole CharacterControllera
-        // To łapie przypadki, gdy groundCheck jest lekko "w powietrzu" na krawędzi schodka
         Vector3 spherePos = transform.position + controller.center - Vector3.up * (controller.height * 0.5f - 0.05f);
         return Physics.CheckSphere(spherePos, 0.1f, ~LayerMask.GetMask("Player"));
     }
