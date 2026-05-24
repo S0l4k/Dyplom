@@ -170,14 +170,12 @@ public class DialogActivator : MonoBehaviour
             if (dialog != null)
             {
                 // ✅ PODMIEŃ USTAWIENIA DIALOGU NA TE Z TEGO NPC
-               // ✅ Kolor markera
+                dialog.npcVoiceEvent = voiceEvent;  // 🔥 TO BYŁO BRAKUJĄCE!
 
                 if (dialog.dialogText != null)
-                    dialog.dialogText.color = textColor; // ✅ Kolor tekstu
+                    dialog.dialogText.color = textColor;
 
-                // ✅ ROZPOCZNIJ DIALOG BEZ POZYCJI (eventy 2D)
-                dialog.StartDialog(dialogNodes); // ✅ TYLKO JEDEN ARGUMENT
-
+                dialog.StartDialog(dialogNodes);
                 StartCoroutine(WaitForDialogEnd(dialog));
             }
         }

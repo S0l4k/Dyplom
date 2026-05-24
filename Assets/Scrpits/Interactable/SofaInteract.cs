@@ -62,13 +62,19 @@ public class SofaInteract : MonoBehaviour
         {
             interactText.gameObject.SetActive(true);
             canUse = true;
+
+            // ✅ NOWE: Włącz outline gdy gracz patrzy na sofę
+            if (outline != null) outline.enabled = true;
+
             return;
         }
 
         interactText.gameObject.SetActive(false);
         canUse = false;
-    }
 
+        // ✅ NOWE: Wyłącz outline gdy gracz nie patrzy na sofę
+        if (outline != null) outline.enabled = false;
+    }
     IEnumerator UseSofa()
     {
         // === BLOKADA ===

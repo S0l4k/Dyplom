@@ -12,8 +12,7 @@ public class Dialog : MonoBehaviour
     public GameObject dialogueBG;
 
     [Header("Marker Settings")]
-    public string npcMarkerColor = "#FFFFFF33";
-    public string playerMarkerColor = "#FFFFFF33";
+
     public float typeSpeed = 0.08f;
     public float delayBetweenAnswers = 0.3f;
 
@@ -75,7 +74,7 @@ public class Dialog : MonoBehaviour
         // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         npcVoiceInstance = AudioManager.Instance.PlayDialogVoice(npcVoiceEvent);
 
-        yield return StartCoroutine(TypeTextWithMarker(dialogText, node.npcLine, npcMarkerColor));
+        yield return StartCoroutine(TypeText(dialogText, node.npcLine));
 
         // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
         AudioManager.Instance.StopDialogVoice(ref npcVoiceInstance, true);
@@ -90,7 +89,7 @@ public class Dialog : MonoBehaviour
             if (answerTMP == null) continue;
 
             answers[i].SetActive(true);
-            yield return StartCoroutine(TypeTextWithMarker(answerTMP, node.responses[i], playerMarkerColor));
+            yield return StartCoroutine(TypeText(answerTMP, node.responses[i]));
             yield return new WaitForSeconds(delayBetweenAnswers);
         }
 
@@ -98,23 +97,21 @@ public class Dialog : MonoBehaviour
         optionsActive = true;
     }
 
-    IEnumerator TypeTextWithMarker(TMP_Text textObj, string text, string markerColor)
+    IEnumerator TypeText(TMP_Text textObj, string text)
     {
         if (textObj == null) yield break;
 
-        string openTag = $"<mark={markerColor}>";
-        string closeTag = "</mark>";
         textObj.text = "";
 
         for (int i = 0; i < text.Length; i++)
         {
             if (skipTyping)
             {
-                textObj.text = openTag + text + closeTag;
+                textObj.text = text;
                 yield break;
             }
 
-            textObj.text = openTag + text.Substring(0, i + 1) + closeTag;
+            textObj.text = text.Substring(0, i + 1);
             yield return new WaitForSeconds(typeSpeed);
         }
     }

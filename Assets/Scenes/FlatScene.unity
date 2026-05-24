@@ -55832,7 +55832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1212248408
 RectTransform:
   m_ObjectHideFlags: 0
@@ -70484,6 +70484,10 @@ MonoBehaviour:
     repeatInterval: 60
   - questName: AtticFlashback
     hintMessage: 
+    timeToHint: 20
+    repeatInterval: 60
+  - questName: Rest on Sofa
+    hintMessage: He is gone now, I can finally rest
     timeToHint: 20
     repeatInterval: 60
   narrativeManager: {fileID: 1893179575}
@@ -85630,6 +85634,7 @@ MonoBehaviour:
   sensitivitySlider: {fileID: 197322148}
   sensitivityValueText: {fileID: 208096048}
   crosshair: {fileID: 1960944541}
+  main: {fileID: 1587370007}
   volumeSlider: {fileID: 1430633242}
   volumeValueText: {fileID: 1709943535}
   playerController: {fileID: 1833239512}

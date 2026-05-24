@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     public Slider sensitivitySlider;          // Zakres: 0-1200 (ustaw w Inspectorze!)
     public TMP_Text sensitivityValueText;
     public GameObject crosshair;
+    public GameObject main;
 
     [Header("Audio Controls")]
     public Slider volumeSlider;               // Zakres: 0-1 (Slider głośności)
@@ -84,6 +85,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (pausePanel != null) pausePanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
+        main.SetActive(true);
 
         if (playerController != null) playerController.enabled = true;
         if (playerCam != null) playerCam.enabled = true;

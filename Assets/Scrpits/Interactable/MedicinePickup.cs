@@ -58,6 +58,8 @@ public class MedicinePickup : MonoBehaviour
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
         QuestManager.Instance.ClearAllQuests();
+        QuestManager.Instance.AddQuest("Rest on Sofa");
+        Debug.Log("[MedicinePickup] ➕ Quest added: Rest on Sofa");
         GameNarrativeManager.Instance.PlayOneShotAtPlayer(GameNarrativeManager.Instance.takingMeds);
         Debug.Log("[MedicinePickup] 💊 Leki podniesione – rozpoczynam sekwencję końcową");
 
