@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameNarrativeManager : MonoBehaviour
 {
     public static GameNarrativeManager Instance { get; private set; }
-
+    private bool hasStartedNarrative = false;
     [Header("Hunger Sequence")]
     public EventReference stomachGrowl;
     public float delayAfterStart = 3.0f;
@@ -162,15 +162,18 @@ public class GameNarrativeManager : MonoBehaviour
 
     private void Awake()
     {
+        // ✅ Singleton tylko w ramach sceny – bez DontDestroyOnLoad!
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
+        // ❌ USUNIĘTE: DontDestroyOnLoad(gameObject);
+
+        Debug.Log("[GameNarrativeManager] ✅ Initialized (scene-bound)");
+    }
 
     /// <summary>
     /// Zmienia muzykę w tle przez AudioManager.
@@ -197,16 +200,21 @@ public class GameNarrativeManager : MonoBehaviour
 
     private void Start()
     {
+        // ✅ Znajdź referencje przy każdym starcie sceny
         playerController = FindObjectOfType<PlayerController>();
         playerCam = FindObjectOfType<PlayerCam>();
         demon = FindObjectOfType<EnemyAI>();
+
+        // ✅ Uruchom sekwencję narracyjną – zawsze przy starcie sceny
         StartCoroutine(StartNarrativeSequence());
 
-        // ✅ START: uruchom domyślną muzykę z ustawionym fade-time
-        if (!ambientMusic.IsNull)
+        // ✅ Uruchom muzykę ambient z fade-in
+        if (!ambientMusic.IsNull && AudioManager.Instance != null)
         {
             ChangeBackgroundMusic(ambientMusic, ambientFadeTime);
         }
+
+        Debug.Log("[GameNarrativeManager] ▶️ StartNarrativeSequence triggered");
     }
     private IEnumerator StartNarrativeSequence()
     {

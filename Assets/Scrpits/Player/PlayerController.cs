@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    public GameObject console;
     public Transform hand;
     public TMP_Text pickupText;
     public PauseMenu pauseMenu;
@@ -78,8 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-            pauseMenu.OpenConsole();
+    
     }
 
     private void Move()

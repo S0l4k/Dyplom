@@ -7,7 +7,7 @@ public class SettingsManager : MonoBehaviour
     private const string KEY_SENSITIVITY = "Settings_MouseSensitivity";
 
     [Header("Defaults")]
-    [Range(0f, 1200f)]  // ← ZMIANA: 10f → 1200f
+    [Range(0f, 2000f)]  // ← ZMIANA: 10f → 1200f
     public float defaultSensitivity = 2f;
 
     private void Awake()

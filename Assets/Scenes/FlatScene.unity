@@ -31648,6 +31648,7 @@ GameObject:
   - component: {fileID: 702872726}
   - component: {fileID: 702872728}
   - component: {fileID: 702872727}
+  - component: {fileID: 702872729}
   m_Layer: 0
   m_Name: Medicine
   m_TagString: Untagged
@@ -31708,6 +31709,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0010000003, y: 0.001, z: 0.00083405914}
   m_Center: {x: 0, y: -5.0640886e-19, z: 0.000082970786}
+--- !u!114 &702872729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702872725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &704958412
 GameObject:
   m_ObjectHideFlags: 0
@@ -50993,7 +51012,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3532949182260042473, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       propertyPath: m_Motor.force
-      value: 15
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042049600910077200, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4531871050075241065, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       propertyPath: m_LocalScale.x
@@ -62345,7 +62368,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3532949182260042473, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       propertyPath: m_Motor.force
-      value: 16
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042049600910077200, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4531871050075241065, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       propertyPath: m_LocalScale.y
@@ -76531,7 +76558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3532949182260042473, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       propertyPath: m_Motor.force
-      value: 15
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042049600910077200, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4531871050075241065, guid: 020fce72f5ef5f24580624e79c6313bb, type: 3}
       propertyPath: m_LocalScale.x
@@ -91974,19 +92005,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 835799407492710211, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
       propertyPath: m_Size.x
-      value: 1.6460822
+      value: 1.5221465
       objectReference: {fileID: 0}
     - target: {fileID: 835799407492710211, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
       propertyPath: m_Center.x
-      value: 0.2499533
+      value: 0.18798545
       objectReference: {fileID: 0}
     - target: {fileID: 835799407492710211, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
       propertyPath: m_Center.y
-      value: 9.269219e-10
+      value: -9.199097e-10
       objectReference: {fileID: 0}
     - target: {fileID: 835799407492710211, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
       propertyPath: m_Center.z
-      value: 2.397468
+      value: 2.3974674
       objectReference: {fileID: 0}
     - target: {fileID: 1495755811993318275, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
       propertyPath: m_Layer
@@ -92906,11 +92937,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2797734232609909388, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_Motor.force
-      value: 15
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3363030659425842571, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886660979091141569, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5270691364691650024, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_Motor.force
-      value: 15
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6784114974456500139, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_IsActive
@@ -92974,6 +93013,10 @@ PrefabInstance:
     - target: {fileID: 644435403639016915, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 69.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 999792364642358334, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+      propertyPath: m_MaxValue
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 1291786385150763088, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_Color.a

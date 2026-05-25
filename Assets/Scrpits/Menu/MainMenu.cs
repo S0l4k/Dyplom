@@ -215,25 +215,16 @@ public class MainMenu : MonoBehaviour
 
     private void SetupSensitivityUI()
     {
-        if (mouseSensitivitySlider == null)
-        {
-            return;
-        }
+        if (mouseSensitivitySlider == null) return;
 
-        // Load saved sensitivity
-        float savedSens = defaultSensitivity;
-        if (settingsManager != null)
-        {
-            savedSens = settingsManager.GetSavedSensitivity();
-        }
+        float savedSens = PlayerPrefs.GetFloat("MouseSensitivity", defaultSensitivity);
+        Debug.Log($"[MainMenu] 🔽 Loaded sensitivity: {savedSens}");
 
-        // Setup slider
         mouseSensitivitySlider.minValue = 0.1f;
-        mouseSensitivitySlider.maxValue = 10f;
+        mouseSensitivitySlider.maxValue = 2000f;
         mouseSensitivitySlider.value = savedSens;
         mouseSensitivity = savedSens;
 
-        // Setup listener
         mouseSensitivitySlider.onValueChanged.RemoveAllListeners();
         mouseSensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
     }
@@ -255,6 +246,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        ResetGameSession();
         // Block double-clicks
         enabled = false;
 
@@ -296,7 +288,28 @@ public class MainMenu : MonoBehaviour
             menuAmbientInstance = default; // Reset
         }
     }
+    private void ResetGameSession()
+    {
+        Debug.Log("[MainMenu] 🔄 Resetting game session...");
 
+        // 1. Reset GameState
+        GameState.ResetAll();
+
+        // 2. Reset QuestManager
+        if (QuestManager.Instance != null)
+            QuestManager.Instance.ResetAllQuests();
+
+       
+
+        // 4. Opcjonalnie: reset innych managerów (np. AudioManager – jeśli trzeba)
+        // if (AudioManager.Instance != null) AudioManager.Instance.Reset();
+
+        // 5. Reset Time.timeScale na wszelki wypadek
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        Debug.Log("[MainMenu] ✅ Game session reset complete");
+    }
     private IEnumerator FadeTransition(Image img, float startAlpha, float endAlpha, float duration, System.Action onComplete)
     {
         if (img == null)

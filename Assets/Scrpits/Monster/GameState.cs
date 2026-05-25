@@ -21,5 +21,23 @@
 
     // ✅ Helper: czy wszystkie flashbacki są ukończone?
     public static bool AllFlashbacksCompleted => FlashbacksCompleted >= TotalFlashbacksRequired;
+    public static void ResetAll()
+    {
+        // ✅ Reset wszystkich flag narracyjnych
+        DemonInStoryMode = true;
+        ChaseLocked = true;
+        LoopSequenceActive = false;
+        FinalChase = false;
+        ReadyForFinalChase = false;
+        IsTalking = false;
+        IsInFlashback = false;
+        ApartmentExplorationUnlocked = false;
+        FlashbacksCompleted = 0;
+        CourierArrived = false;
+        DemonRespawnedInApartment = false;
+        SofaSequenceActive = false;
+        InteractionsLocked = false;
 
+       
+    }
 }

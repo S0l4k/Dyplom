@@ -105,7 +105,7 @@ public class PauseMenu : MonoBehaviour
         StopAllCoroutines();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        Application.Quit();
     }
 
     // ════════════════════════════════════════════════════
@@ -140,7 +140,16 @@ public class PauseMenu : MonoBehaviour
         UpdateSensitivityUI(clampedValue);
 
         if (settingsManager != null)
-            settingsManager.SaveSensitivity(clampedValue);
+        {
+            settingsManager.SaveSensitivity(clampedValue); // ✅ Ta metoda już woła PlayerPrefs.Save()
+        }
+        // ✅ Fallback jeśli nie ma SettingsManager:
+        else
+        {
+            PlayerPrefs.SetFloat("MouseSensitivity", clampedValue);
+            PlayerPrefs.Save(); // ✅ Bezpośredni zapis
+            Debug.Log($"[PauseMenu] 💾 Sensitivity saved (fallback): {clampedValue}");
+        }
     }
 
     private void UpdateSensitivityUI(float value)
@@ -177,16 +186,12 @@ public class PauseMenu : MonoBehaviour
     {
         if (AudioManager.Instance == null) return;
 
-        // ✅ Logika Mute na sliderze:
-        // Jeśli suwak jest bliski 0 -> wycisz. Jeśli ruszasz w górę -> przywróć ostatnią głośność.
         if (value <= 0.01f)
         {
-            // Wyciszanie
             AudioManager.Instance.SetMuteStateDirect(true);
         }
         else
         {
-            // Włączanie dźwięku (jeśli był wyciszony) lub zmiana głośności
             if (AudioManager.Instance.IsMuted())
             {
                 AudioManager.Instance.SetMuteStateDirect(false);
@@ -196,6 +201,8 @@ public class PauseMenu : MonoBehaviour
         }
 
         UpdateVolumeUI();
+
+        // ✅ Upewnij się, że AudioManager woła PlayerPrefs.Save() wewnątrz SetMasterVolumeDirect!
     }
 
     private void UpdateVolumeUI()

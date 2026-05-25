@@ -160,6 +160,11 @@ public class QuestManager : MonoBehaviour
         Debug.Log($"[QUEST] Completed: {questName}");
       
     }
+    public void ResetAllQuests()
+    {
+        ClearAllQuests();
+        Debug.Log("[QuestManager] 🔄 All quests cleared");
+    }
 
     public void ClearAllQuests()
     {

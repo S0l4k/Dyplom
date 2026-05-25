@@ -52,23 +52,32 @@ public class AudioManager : MonoBehaviour
     }
     // === DODAJ TE DWIE METODY DO SWOJEGO AudioManager.cs ===
 
+    // AudioManager.cs – popraw metody:
+
     public void SetMasterVolumeDirect(float volume)
     {
         volume = Mathf.Clamp01(volume);
         masterVolume = volume;
         PlayerPrefs.SetFloat("MasterVolume", volume);
-        PlayerPrefs.Save();
+        PlayerPrefs.Save(); // ✅ KLUCZOWE!
+
         if (volume > 0.01f) { isMuted = false; lastVolumeBeforeMute = volume; }
         UpdateActiveInstancesVolume();
+
+        Debug.Log($"[AudioManager] 💾 Volume saved: {volume}");
     }
 
     public void SetMuteStateDirect(bool mute)
     {
         if (mute) { lastVolumeBeforeMute = masterVolume; masterVolume = 0f; isMuted = true; }
         else { masterVolume = lastVolumeBeforeMute; isMuted = false; }
+
         PlayerPrefs.SetFloat("MasterVolume", masterVolume);
-        PlayerPrefs.Save();
+        PlayerPrefs.Save(); // ✅ KLUCZOWE!
+
         UpdateActiveInstancesVolume();
+
+        Debug.Log($"[AudioManager] 💾 Mute state saved: {mute}");
     }
     public void AdjustMasterVolume(float step)
     {
