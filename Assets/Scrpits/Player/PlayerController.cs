@@ -58,6 +58,12 @@ public class PlayerController : MonoBehaviour
 
         normalHeight = controller.height;
         normalCenter = controller.center;
+
+        // ✅ FIX: Zmniejsz skinWidth – kluczowe dla buildu!
+        controller.skinWidth = 0.01f;
+
+        // ✅ FIX: Upewnij się, że slopeLimit nie blokuje ruchu
+        controller.slopeLimit = 89f;
     }
 
     private void Update()
@@ -105,27 +111,36 @@ public class PlayerController : MonoBehaviour
     // 🔧 ZMIANA 1: zamiast Move(down) → Move(up * 0.01f) – nie wbijamy się w podłogę
     private void Crouch()
     {
+        // ✅ Najpierw zmierz różnicę
         float heightDiff = controller.height - sneakHeight;
+
+        // ✅ Zmień parametry
         controller.height = sneakHeight;
         controller.center = sneakCenter;
-        controller.Move(Vector3.up * 0.01f);
+
+        // ✅ FIX: Wypchnij postać minimalnie w górę, żeby nie "wbiła się" w podłogę
+        // Użyj 0.05f zamiast 0.01f – w buildzie potrzeba więcej "luzu"
+        controller.Move(Vector3.up * 0.05f);
+
         isSneaking = true;
     }
-
     // 🔧 ZMIANA 2: dodany micro-nudge po wstaniu – pomaga Unity rozwiązać kolizję w buildzie
     private void TryStandUp()
     {
         float radius = controller.radius * 0.9f;
         Vector3 bottom = transform.position + controller.center - Vector3.up * (controller.height / 2f - radius);
         Vector3 top = bottom + Vector3.up * (normalHeight - sneakHeight);
+
         if (Physics.CheckCapsule(bottom, top, radius, obstacleMask))
             return;
 
         float heightDiff = normalHeight - controller.height;
         controller.height = normalHeight;
         controller.center = normalCenter;
-        controller.Move(Vector3.up * heightDiff / 2f);
-        controller.Move(Vector3.up * 0.01f);
+
+        // ✅ FIX: Wypchnij o pełną różnicę + mały buffer
+        controller.Move(Vector3.up * (heightDiff + 0.02f));
+
         isSneaking = false;
     }
 
@@ -150,8 +165,9 @@ public class PlayerController : MonoBehaviour
     // 🔧 ZMIANA 3: łagodne przyklejenie zamiast sztywnego -2f – brak walki z kolizją
     private void ApplyGravity()
     {
-        if (IsGrounded() && velocity.y < 0)
-            velocity.y = Mathf.Min(velocity.y, -0.5f);
+        // ✅ Łagodne przyklejenie – tylko jeśli naprawdę jesteśmy na ziemi
+        if (IsGrounded() && velocity.y < -1f)
+            velocity.y = -2f; // ✅ Zamiast -0.5f – bardziej stabilne w buildzie
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
@@ -160,22 +176,24 @@ public class PlayerController : MonoBehaviour
     // 🔧 ZMIANA 4: najpierw ufamy controller.isGrounded – najstabilniejsze w buildzie
     private bool IsGrounded()
     {
+        // ✅ Najpierw ufamy controller.isGrounded, ale z bufferem
         if (controller.isGrounded) return true;
 
-        if (Physics.SphereCast(groundCheck.position, 0.15f, Vector3.down, out RaycastHit hit, 0.3f))
+        // ✅ SphereCast z większym dystansem dla buildu
+        if (Physics.SphereCast(groundCheck.position, 0.15f, Vector3.down, out RaycastHit hit, 0.4f))
         {
             float angle = Vector3.Angle(hit.normal, Vector3.up);
             return angle <= 60f;
         }
 
-        if (Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit2, 0.3f))
+        // ✅ Raycast jako fallback
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit2, 0.4f))
         {
             float angle = Vector3.Angle(hit2.normal, Vector3.up);
             return angle <= 60f;
         }
 
-        Vector3 spherePos = transform.position + controller.center - Vector3.up * (controller.height * 0.5f - 0.05f);
-        return Physics.CheckSphere(spherePos, 0.1f, ~LayerMask.GetMask("Player"));
+        return false; // ✅ Usuń CheckSphere – powoduje false positives w buildzie
     }
 
     private void HandleStamina()

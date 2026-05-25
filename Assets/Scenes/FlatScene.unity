@@ -565,8 +565,15 @@ MonoBehaviour:
   cutsceneFadeSpeed: 3
   linkedTrigger: {fileID: 193969340}
   delayBeforeReturn: 2
+  childrenScreamSound:
+    Guid:
+      Data1: 807970962
+      Data2: 1302863136
+      Data3: -133447799
+      Data4: -2042535156
+    Path: event:/KidsScream
+  schoolBlood: {fileID: 1774565086}
   glass: {fileID: 1498371093}
-  blood: {fileID: 1774565086}
 --- !u!114 &9912428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3116,8 +3123,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0271924, y: 0.003928129, z: 0.0031436647}
-  m_Center: {x: 0, y: -0.00000011920929, z: 0.001494888}
+  m_Size: {x: 0.029006232, y: 0.005115563, z: 0.0043394323}
+  m_Center: {x: -0.00040212405, y: -0.00010039478, z: 0.0020927712}
 --- !u!1001 &112196804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27010,8 +27017,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0271924, y: 0.003928129, z: 0.0031436647}
-  m_Center: {x: 0, y: -0.00000011920929, z: 0.001494888}
+  m_Size: {x: 0.028805291, y: 0.0049856813, z: 0.0050267163}
+  m_Center: {x: 0.00044164027, y: 0.0005286513, z: 0.0024364085}
 --- !u!1 &569911850
 GameObject:
   m_ObjectHideFlags: 0
@@ -44775,7 +44782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7325ca666a61b74fa08f17803d4ae67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.435
+      value: -5.68
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7325ca666a61b74fa08f17803d4ae67, type: 3}
       propertyPath: m_LocalPosition.z
@@ -63875,8 +63882,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0271924, y: 0.003928129, z: 0.0031436647}
-  m_Center: {x: 0, y: -0.00000011920929, z: 0.001494888}
+  m_Size: {x: 0.029312925, y: 0.00557891, z: 0.0043488815}
+  m_Center: {x: -0.00037339007, y: -0.0008255076, z: 0.0020974958}
 --- !u!1 &1384419386
 GameObject:
   m_ObjectHideFlags: 0
@@ -68848,7 +68855,7 @@ Transform:
   m_GameObject: {fileID: 1553707800}
   serializedVersion: 2
   m_LocalRotation: {x: 0.50051075, y: -0.49948165, z: -0.5005313, w: 0.49947533}
-  m_LocalPosition: {x: -0.00000003531504, y: -0.006025028, z: 0.016369998}
+  m_LocalPosition: {x: -0.00205, y: -0.00603, z: 0.01637}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69719,7 +69726,7 @@ MonoBehaviour:
     Path: event:/Jumpscare
   cutsceneFadeSpeed: 1
   linkedTrigger: {fileID: 601463405}
-  delayBeforeReturn: 1
+  delayBeforeReturn: 0.5
   cutsceneTrigger: {fileID: 45204487}
   demonGameObject: {fileID: 864858987}
   cutsceneCollider: {fileID: 45204485}
@@ -91823,8 +91830,6 @@ MonoBehaviour:
   - {fileID: 6821504604402148946}
   dialogText: {fileID: 1319964638572009401}
   dialogueBG: {fileID: 800254446}
-  npcMarkerColor: 
-  playerMarkerColor: 
   typeSpeed: 0.03
   delayBetweenAnswers: 0.3
   npcVoiceEvent:
@@ -91902,6 +91907,18 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1893179571}
+    - target: {fileID: 3691168743758794483, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 1327760347}
+    - target: {fileID: 3691168743758794483, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691168743758794483, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: groundCheckDistance
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 4156500660170553060, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
       propertyPath: m_Layer
       value: 17
@@ -91918,6 +91935,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 6369856301153719152, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369856301153719152, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 89
+      objectReference: {fileID: 0}
     - target: {fileID: 7000872478299827693, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
       propertyPath: m_Layer
       value: 17
@@ -93895,6 +93920,7 @@ MonoBehaviour:
   crossair: {fileID: 1881660735}
   player: {fileID: 1833239509}
   dialogManager: {fileID: 2581996746297769206}
+  isTalking: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

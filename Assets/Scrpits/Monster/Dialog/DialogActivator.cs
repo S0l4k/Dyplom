@@ -33,7 +33,7 @@ public class DialogActivator : MonoBehaviour
     private PlayerCam playerCamScript;
     private MonoBehaviour playerMovementScript;
     private bool canTalk = false;
-    private bool isTalking = false;
+    public bool isTalking = false;
 
     // ✅ ZAPAMIĘTAJ ORYGINALNE USTAWIENIA DIALOG UI (do przywrócenia po dialogu)
     private EventReference originalVoice;

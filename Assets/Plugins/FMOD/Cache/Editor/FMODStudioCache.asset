@@ -395,10 +395,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639152284727883024
+  lastModified: 639152676477792035
   FileSizes:
   - Name: Desktop
-    Value: 2778
+    Value: 2818
   Exists: 1
 --- !u!114 &-5710785234417663064
 MonoBehaviour:
@@ -619,13 +619,14 @@ MonoBehaviour:
   - {fileID: -5584457689763810930}
   - {fileID: 2223882262744474297}
   - {fileID: -8382554938387245874}
+  - {fileID: 6017602568547574596}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639152284727883024
+  cacheTime: 639152676477792035
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -709,6 +710,8 @@ MonoBehaviour:
     index: 39
   - key: event:/PoliceSiren
     index: 40
+  - key: event:/KidsScream
+    index: 41
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1083,6 +1086,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2800
+--- !u!114 &6017602568547574596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/KidsScream
+  m_EditorClassIdentifier: 
+  Path: event:/KidsScream
+  Guid:
+    Data1: 807970962
+    Data2: 1302863136
+    Data3: -133447799
+    Data4: -2042535156
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5000
 --- !u!114 &6809530900629643176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,10 +1155,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639152284727873027
+  lastModified: 639152676477782068
   FileSizes:
   - Name: Desktop
-    Value: 11614240
+    Value: 11677760
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:

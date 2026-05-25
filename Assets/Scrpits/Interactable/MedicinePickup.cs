@@ -63,6 +63,9 @@ public class MedicinePickup : MonoBehaviour
         GameNarrativeManager.Instance.PlayOneShotAtPlayer(GameNarrativeManager.Instance.takingMeds);
         Debug.Log("[MedicinePickup] 💊 Leki podniesione – rozpoczynam sekwencję końcową");
 
+        GameNarrativeManager.Instance.blood.SetActive(false);
+
+
         // ✅ Wyłącz demona
         if (demon != null)
         {

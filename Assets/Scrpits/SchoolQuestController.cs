@@ -24,6 +24,13 @@ public class SchoolQuestController : MonoBehaviour
     public NarrativeInspectTrigger linkedTrigger;
     public float delayBeforeReturn = 2f;
 
+    [Header("Blood & SFX")]
+    [Tooltip("Dźwięk krzyku dzieci po zjedzeniu szkła")]
+    public EventReference childrenScreamSound;
+
+    [Tooltip("Obiekt krwi w szkole (aktywowany po cutscence)")]
+    public GameObject schoolBlood;
+
     // References
     private QuestManager _questManager;
     private bool _dialogFinished = false;
@@ -34,7 +41,7 @@ public class SchoolQuestController : MonoBehaviour
     private PlayerController _player;
     private PlayerCam _playerCamScript;
     public GameObject glass;
-    public GameObject blood;
+    
     // Camera backup
     private bool _wasCameraFollowEnabled;
     private Transform _originalCameraParent;
@@ -165,7 +172,18 @@ public class SchoolQuestController : MonoBehaviour
             yield return StartCoroutine(screenFader.FadeIn(cutsceneFadeSpeed));
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
-
+        if (schoolBlood != null)
+        {
+            schoolBlood.SetActive(true);
+            Debug.Log("[SchoolQuest] 🩸 School blood activated");
+        }
+        // ✅ NOWE: Odtwórz krzyk dzieci
+        if (!childrenScreamSound.IsNull && AudioManager.Instance != null)
+        {
+            Vector3 playPos = _player != null ? _player.transform.position : transform.position;
+            AudioManager.Instance.PlaySFX(childrenScreamSound, playPos);
+            Debug.Log("[SchoolQuest] 🔊 Children scream played");
+        }
         yield return new WaitForSeconds(2f);
 
         if (screenFader != null)
@@ -173,7 +191,11 @@ public class SchoolQuestController : MonoBehaviour
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
         glass.SetActive(false);
-        blood.SetActive(true);
+
+        // ✅ NOWE: Aktywuj obiekt krwi w szkole (jeśli przypisany)
+   
+
+        yield return new WaitForSeconds(delayBeforeReturn);
 
         yield return new WaitForSeconds(delayBeforeReturn);
 

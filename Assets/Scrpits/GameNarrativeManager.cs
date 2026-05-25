@@ -545,16 +545,28 @@ public class GameNarrativeManager : MonoBehaviour
             demonDialogActivator.enabled = true;
             Debug.Log("[Narrative] ✅ Dialog po zastrzeleniu aktywowany");
 
-            // ✅ Czekaj, aż dialog się skończy (proste yield + check)
-            // Zakładamy, że DialogActivator ma publiczną właściwość 'isTalking' lub podobną
-            // Jeśli nie masz – użyj szacunkowego czasu (np. 8-10 sekund)
-            float dialogEstimatedTime = 10f; // ✅ Dostosuj do długości Twojego dialogu!
-            yield return new WaitForSeconds(dialogEstimatedTime);
+            // ✅ NOWE: Czekaj na FAKTYCZNE zakończenie dialogu
+            Debug.Log("[Narrative] ⏳ Waiting for post-shot dialog to finish...");
 
-            // ✅ Wywołaj callback, jeśli podany (przejście do kanapy)
+            float timeout = 60f; // ✅ Bezpiecznik: max 60 sekund czekania
+            float elapsed = 0f;
+
+            // Czekaj aż dialog się skończy LUB timeout
+            while (demonDialogActivator.isTalking && elapsed < timeout)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            // Dodatkowe opóźnienie, żeby gracz mógł "przetrawić" ostatnią linię
+            yield return new WaitForSeconds(1.5f);
+
+            Debug.Log($"[Narrative] ✅ Post-shot dialog finished (waited: {elapsed:F1}s)");
+
+            // ✅ Wywołaj callback (przejście do kanapy) TYLKO po dialogu
             if (onDialogComplete != null)
             {
-                Debug.Log("[Narrative] ✅ Post-shot dialog finished – calling callback");
+                Debug.Log("[Narrative] 🔁 Calling couch sequence callback");
                 onDialogComplete.Invoke();
             }
         }
@@ -565,7 +577,7 @@ public class GameNarrativeManager : MonoBehaviour
             if (onDialogComplete != null) onDialogComplete.Invoke();
         }
     }
-    /// <summary>
+    // <summary>
     /// ENDING 1: Gracz współpracuje z demonem → siedzą razem na kanapie → policyjne syreny → exit
     /// </summary>
     private IEnumerator FirstEndingCooperateSequence()
@@ -605,13 +617,15 @@ public class GameNarrativeManager : MonoBehaviour
 
         // 🔒 Blokada kontroli
         if (playerController != null) playerController.enabled = false;
-        if (playerCam != null) playerCam.enabled = true; // Kamera aktywna, ale bez inputu
+        if (playerCam != null) playerCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         // === FAZA 2: Fade in + siedzenie razem ===
         yield return StartCoroutine(screenFader.FadeIn(couchFadeDuration));
-        yield return new WaitForSeconds(5f); // Gracz i demon siedzą razem (cisza/napięcie)
+
+        // ✅ PRZEDŁUŻONE: Siedzenie razem (cisza/napięcie) – z 5s na 12s
+        yield return new WaitForSeconds(12f);
 
         // === FAZA 3: Policyjne syreny w tle ===
         Debug.Log("[Ending1] 🚨 Playing police sirens");
@@ -620,12 +634,12 @@ public class GameNarrativeManager : MonoBehaviour
             AudioManager.Instance.PlaySFX(policeSirenSFX, playerCamera.position);
         }
 
-        // Krótka pauza na "wejście" syren w klimat
-        yield return new WaitForSeconds(2f);
+        // ✅ PRZEDŁUŻONE: Pauza na "wejście" syren w klimat – z 2s na 5s
+        yield return new WaitForSeconds(5f);
 
         // === FAZA 4: Fade out + exit ===
-        yield return StartCoroutine(screenFader.FadeOut(2f));
-        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(screenFader.FadeOut(2.5f)); // ✅ Nieco wolniejszy fade
+        yield return new WaitForSeconds(2f); // ✅ Dłuższa pauza przed exit
 
         // 💾 ZAPISZ Ending 1 przed wyjściem
         EndingSaveManager.SaveEnding(EndingSaveManager.EndingType.Cooperate);
@@ -636,7 +650,7 @@ public class GameNarrativeManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+    Application.Quit();
 #endif
     }
 
