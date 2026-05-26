@@ -149,8 +149,7 @@ public class ItemCheck : MonoBehaviour
         // ✅ QUEST: ukończ po sprawdzeniu talerza
         if (itemName == "Plate" && QuestManager.Instance != null)
         {
-            QuestManager.Instance.CompleteQuest("Check your fridge");
-            Debug.Log("[Narrative] ✅ Quest completed: Check your fridge");
+           
             if (GameNarrativeManager.Instance != null)
                 GameNarrativeManager.Instance.TriggerFridgeDemon();
         }

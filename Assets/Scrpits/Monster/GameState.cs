@@ -9,6 +9,7 @@
     public static bool FinalChase = false;
     public static bool IsTalking = false;
     public static bool DemonRespawnedInApartment = false;
+    public static bool FridgeDemonDialogCompleted = false;
 
     // ✅ NOWE FLAGI DLA SEKWENCJI KOŃCOWEJ
     public static bool InteractionsLocked = false;

@@ -18,6 +18,12 @@ public class FoodDeliveryManager : MonoBehaviour
 
     public void OrderFood()
     {
+        // ✅ BLOKADA: Nie można zamówić jedzenia przed rozmową z demonem przy lodówce
+        if (!GameState.FridgeDemonDialogCompleted)
+        {
+            return; // ✅ ZATRZYMAJ – nie wykonuj reszty metody!
+        }
+
         // ✅ ODBLOKUJ DIALOG Z KURIEREM
         GameState.CourierArrived = true;
         Debug.Log("[FoodDelivery] 🚪 Kurier dostępny do rozmowy przy drzwiach");

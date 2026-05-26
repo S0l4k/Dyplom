@@ -1267,7 +1267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storyText: {fileID: 1190756131}
-  scrollSpeed: 50
+  scrollSpeed: 25
   nextScene: Cutscene
   delayAfterFinish: 0.5
   fadeGroup: {fileID: 1556447336}

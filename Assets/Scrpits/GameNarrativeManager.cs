@@ -22,6 +22,7 @@ public class GameNarrativeManager : MonoBehaviour
 
     [Header("Fridge Demon")]
     public DemonRoomPresence demonPresence;
+    private bool waitingForFridgeDemonDialog = false;
 
     [Header("Vomit Sequence")]
     public Transform bathroomSpawn;
@@ -296,7 +297,11 @@ public class GameNarrativeManager : MonoBehaviour
         if (demonPresence != null)
         {
             demonPresence.ForceAppear("fridge");
-            Debug.Log("[Narrative] 👹 Demon pojawia się obok lodówki");
+
+            // ✅ ZACZNIJ CZEKAĆ na koniec dialogu z demonem
+            waitingForFridgeDemonDialog = true;
+
+            Debug.Log("[Narrative] 👹 Demon appears at fridge – waiting for dialog completion");
         }
         else
         {
@@ -383,16 +388,18 @@ public class GameNarrativeManager : MonoBehaviour
         playerCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
-        
-
+        GameState.FridgeDemonDialogCompleted = true;
+        CompleteFridgeQuest();
         StartCoroutine(VomitSequence());
     }
 
     public void OnPlayerRefusesFood()
     {
+        GameState.FridgeDemonDialogCompleted = true;
         Debug.Log("[Narrative] Gracz odmówił jedzenia");
         if (QuestManager.Instance != null)
         {
+            CompleteFridgeQuest();
             QuestManager.Instance.AddQuest(orderFoodQuest);
             Debug.Log("[Narrative] ✅ Quest \"Order Food\" aktywowany");
         }
@@ -517,7 +524,7 @@ public class GameNarrativeManager : MonoBehaviour
         // 🎬 Uruchom kill sequence, a PO DIALOGU przejdź do kanapy
         StartCoroutine(KillSequenceSecondEnding(() => {
             Debug.Log("[Narrative] 🔁 Callback: starting couch sequence");
-            StartCoroutine(FirstEndingCooperateSequence());
+           
         }));
     }
 
@@ -525,7 +532,7 @@ public class GameNarrativeManager : MonoBehaviour
     /// Sekwencja strzału + dialog z demonem.
     /// Po skończonym dialogu wywołuje onDialogComplete (jeśli podane).
     /// </summary>
-    private IEnumerator KillSequenceSecondEnding(System.Action onDialogComplete = null)
+    public IEnumerator KillSequenceSecondEnding(System.Action onDialogComplete = null)
     {
         if (screenFader == null)
         {
@@ -556,7 +563,7 @@ public class GameNarrativeManager : MonoBehaviour
             // ✅ NOWE: Czekaj na FAKTYCZNE zakończenie dialogu
             Debug.Log("[Narrative] ⏳ Waiting for post-shot dialog to finish...");
 
-            float timeout = 60f; // ✅ Bezpiecznik: max 60 sekund czekania
+            float timeout = 180f; // ✅ Bezpiecznik: max 60 sekund czekania
             float elapsed = 0f;
 
             // Czekaj aż dialog się skończy LUB timeout
@@ -585,10 +592,12 @@ public class GameNarrativeManager : MonoBehaviour
             if (onDialogComplete != null) onDialogComplete.Invoke();
         }
     }
-    // <summary>
-    /// ENDING 1: Gracz współpracuje z demonem → siedzą razem na kanapie → policyjne syreny → exit
-    /// </summary>
-    private IEnumerator FirstEndingCooperateSequence()
+
+    public void FirstEnding()
+    {
+        StartCoroutine(FirstEndingCooperateSequence());
+    }
+    public IEnumerator FirstEndingCooperateSequence()
     {
         Debug.Log("[Ending1] 🎬 Starting cooperate ending cutscene");
 
@@ -815,6 +824,17 @@ public class GameNarrativeManager : MonoBehaviour
         GameState.LoopSequenceActive = true;
         Debug.Log("[Narrative] 🔁 Stair loop aktywowany");
         blood.SetActive(true);
+    }
+    private void CompleteFridgeQuest()
+    {
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.CompleteQuest("Check your fridge");
+            Debug.Log("[Narrative] ✅ Quest completed: Check your fridge (after demon dialog)");
+        }
+
+        // ✅ Reset flagi – quest już zakończony
+        waitingForFridgeDemonDialog = false;
     }
 
     private void RestorePlayerControl()
