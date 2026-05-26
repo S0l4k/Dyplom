@@ -153,6 +153,7 @@ public class GameNarrativeManager : MonoBehaviour
 
     // ✅ NOWA FLAGA: Blokuje inne myśli podczas ważnych sekwencji (np. ItemCheck)
     private bool isNarrativeBusy = false;
+    private bool isDisplayingText = false;
 
     private PlayerController playerController;
     private PlayerCam playerCam;
@@ -251,7 +252,10 @@ public class GameNarrativeManager : MonoBehaviour
             Debug.LogError("[Narrative] thoughtText nie przypisany!");
             yield break;
         }
+        if (GameState.IsTalking || isDisplayingText)
+            yield break;
 
+        isDisplayingText = true;
         // BLOKADA: Oznaczamy system jako zajęty
         isNarrativeBusy = true;
 
@@ -282,7 +286,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         thoughtText.gameObject.SetActive(false);
 
-        // ODBLOKOWANIE: Sekwencja zakończona
+        isDisplayingText = false;  // ✅ ZWOLNIJ miejsce
         isNarrativeBusy = false;
     }
 

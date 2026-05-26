@@ -207,6 +207,7 @@ public class SchoolQuestController : MonoBehaviour
         }
 
         RestorePlayerCamera();
+        GameState.IsInFlashback = false;
         linkedTrigger?.EndFlashback();
     }
 

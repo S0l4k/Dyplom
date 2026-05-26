@@ -290,6 +290,7 @@ public class AtticQuestController : MonoBehaviour
         Debug.Log("[AtticQuest] 🗑️ All candles destroyed");
 
         yield return new WaitForSeconds(delayBeforeReturn);
+        GameState.IsInFlashback = false;
 
         // ✅ Quest ukończony
         if (!string.IsNullOrEmpty(questID) && _questManager != null)

@@ -3,18 +3,61 @@
 public class InspectSystem : MonoBehaviour
 {
     public float rotationSpeed = 100f;
+   // ✅ Klawisz do wyjścia (domyślnie ESC)
 
-    // ✅ Dodaj to:
     private Transform _target;
+    private bool isInspecting = false;
 
-    // ✅ Dodaj tę metodę:
-    public void SetTarget(Transform target) => _target = target;
+    // ✅ STARA METODA – dla kompatybilności z NarrativeInspectTrigger
+    public void SetTarget(Transform target)
+    {
+        if (target == null) return;
+
+        _target = target;
+        isInspecting = true;
+
+        // ✅ NOWE: Ustaw flagę przy wejściu w inspect
+        GameState.IsInspecting = true;
+
+        Debug.Log("[InspectSystem] 🔍 SetTarget + IsInspecting = true");
+    }
+
+    // ✅ NOWA METODA – wyjście z inspect (przejście do flashbacku)
+    // Wywołuj ją z przycisku UI lub przy ESC
+    public void ExitInspectMode()
+    {
+        if (!isInspecting) return;
+
+        _target = null;
+        isInspecting = false;
+
+        // ✅ PRZEŁĄCZ FLAGI: koniec inspect, start flashbacku
+        GameState.IsInspecting = false;
+        GameState.IsInFlashback = true;
+
+        Debug.Log("[InspectSystem] 🔓 ExitInspectMode → IsInFlashback = true");
+    }
+
+    // ✅ ALTERNATYWA: Proste wyłączenie inspect bez przechodzenia w flashback
+    // (jeśli chcesz tylko zamknąć inspect, a nie startować flashbacku)
+    public void CloseInspectOnly()
+    {
+        if (!isInspecting) return;
+
+        _target = null;
+        isInspecting = false;
+        GameState.IsInspecting = false;
+
+        Debug.Log("[InspectSystem] ❌ CloseInspectOnly → IsInspecting = false");
+    }
 
     void Update()
     {
-        // ✅ Jeśli nie ma targetu, nie rób nic
         if (_target == null) return;
 
+  
+
+        // ✅ Obracanie myszką
         if (Input.GetMouseButtonDown(0))
             previousMousePosition = Input.mousePosition;
 
@@ -25,12 +68,11 @@ public class InspectSystem : MonoBehaviour
             float rotY = -delta.x * rotationSpeed * Time.deltaTime;
 
             Quaternion rotation = Quaternion.Euler(rotX, rotY, 0);
-            _target.rotation = rotation * _target.rotation;  // ✅ Obracamy target, nie siebie!
+            _target.rotation = rotation * _target.rotation;
 
             previousMousePosition = Input.mousePosition;
         }
     }
 
-    // ✅ To już masz, zostaw:
     private Vector3 previousMousePosition;
 }

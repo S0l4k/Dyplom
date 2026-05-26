@@ -89,9 +89,18 @@ public class PauseMenu : MonoBehaviour
 
         if (playerController != null) playerController.enabled = true;
         if (playerCam != null) playerCam.enabled = true;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (GameState.IsInspecting)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("[PauseMenu] ▶️ Resume: inspect mode active → cursor kept visible");
+        }
+        else
+        {
+            // Normalny tryb gry – przywróć zablokowany kursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         crosshair.SetActive(true);
         Time.timeScale = 1f;
         isPaused = false;

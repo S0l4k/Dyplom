@@ -82,6 +82,8 @@ public class QuestManager : MonoBehaviour
     {
         // BLOKADA 1: Dialog
         if (GameState.IsTalking) return;
+        if (GameState.IsInspecting || GameState.IsInFlashback)
+            return;
 
         // ✅ BLOKADA 2: Trwa ważna sekwencja narracyjna (np. ItemCheck)
         if (narrativeManager != null && narrativeManager.IsNarrativeBusy())
