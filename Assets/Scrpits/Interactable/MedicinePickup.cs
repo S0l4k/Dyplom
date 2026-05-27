@@ -9,6 +9,7 @@ public class MedicinePickup : MonoBehaviour
     public EnemyAI demon;
     public GameObject pickupText;
     public GameObject sofaInteractObject; // ✅ Obiekt z SofaInteract (kanapa)
+    public Outline outline;
 
     private Camera playerCamera;
     private bool canInteract = false;
@@ -18,7 +19,7 @@ public class MedicinePickup : MonoBehaviour
         playerCamera = Camera.main;
         if (pickupText != null)
             pickupText.gameObject.SetActive(false);
-
+        if (outline != null) outline.enabled = false;
         Debug.Log($"[MedicinePickup] Start | sofaInteractObject={(sofaInteractObject != null ? "OK" : "MISSING!")}");
     }
 
@@ -27,6 +28,7 @@ public class MedicinePickup : MonoBehaviour
         if (GameState.InteractionsLocked)
         {
             canInteract = false;
+            if (outline != null) outline.enabled = false; 
             if (pickupText != null) pickupText.gameObject.SetActive(false);
             return;
         }
@@ -38,7 +40,7 @@ public class MedicinePickup : MonoBehaviour
         {
             canInteract = true;
             pickupText.gameObject.SetActive(true);
-    
+            if (outline != null) outline.enabled = true;
 
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -48,6 +50,7 @@ public class MedicinePickup : MonoBehaviour
         else
         {
             canInteract = false;
+            if (outline != null) outline.enabled = false;
             pickupText.gameObject.SetActive(false);
         }
     }

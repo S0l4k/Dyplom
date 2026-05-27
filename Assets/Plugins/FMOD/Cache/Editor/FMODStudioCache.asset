@@ -395,10 +395,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639152676477792035
+  lastModified: 639154970354618028
   FileSizes:
   - Name: Desktop
-    Value: 2818
+    Value: 2856
   Exists: 1
 --- !u!114 &-5710785234417663064
 MonoBehaviour:
@@ -562,6 +562,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 63000
+--- !u!114 &-3062017186784759393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Toilet
+  m_EditorClassIdentifier: 
+  Path: event:/Toilet
+  Guid:
+    Data1: 1601079917
+    Data2: 1247781669
+    Data3: -206597468
+    Data4: 902713554
+  Banks:
+  - {fileID: 6888540770293749724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3861
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,13 +647,14 @@ MonoBehaviour:
   - {fileID: 2223882262744474297}
   - {fileID: -8382554938387245874}
   - {fileID: 6017602568547574596}
+  - {fileID: -3062017186784759393}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6888540770293749724}
   StringsBanks:
   - {fileID: -6014061963843349986}
   cacheVersion: 131858
-  cacheTime: 639152676477792035
+  cacheTime: 639154970354618028
   SerializableEventsDict:
   - key: event:/FlashlightClick
     index: 0
@@ -712,6 +740,8 @@ MonoBehaviour:
     index: 40
   - key: event:/KidsScream
     index: 41
+  - key: event:/Toilet
+    index: 42
 --- !u!114 &44706305977781416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,10 +1185,10 @@ MonoBehaviour:
   Path: Licencjat/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639152676477782068
+  lastModified: 639154970354608036
   FileSizes:
   - Name: Desktop
-    Value: 11677760
+    Value: 11715872
   Exists: 1
 --- !u!114 &7320361880124595747
 MonoBehaviour:

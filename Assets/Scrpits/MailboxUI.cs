@@ -59,33 +59,41 @@ public class MailboxUI : MonoBehaviour
 
         foreach (var msg in messages)
         {
-            // Kolor i align w zależności od nadawcy
+            // === KOLOR I ALIGN ===
             string colorHex = ColorUtility.ToHtmlStringRGB(
                 msg.isPlayer ? playerColor :
                 msg.sender == "System" || msg.sender.Contains("AUTOMATED") ? systemColor : npcColor);
 
             string align = msg.isPlayer ? playerAlign : "left";
 
-            // Nagłówek wiadomości (nadawca + czas)
-            if (!string.IsNullOrEmpty(msg.sender))
+            // === NAGŁÓWEK: Nadawca + czas ===
+            sb.Append($"<align={align}><color=#{colorHex}><b>{msg.sender}</b></color>");
+            if (!string.IsNullOrEmpty(msg.timestamp))
             {
-                sb.Append($"<align={align}><color=#{colorHex}><b>{msg.sender}</b></color>");
-                if (!string.IsNullOrEmpty(msg.timestamp))
-                {
-                    sb.Append($" <color=#666><size=80%>[{msg.timestamp}]</size></color>");
-                }
-                sb.Append("</align>\n");
+                sb.Append($" <color=#666><size=80%>[{msg.timestamp}]</size></color>");
             }
+            sb.Append("</align>\n");
 
-            // Treść wiadomości
-            sb.Append($"<align={align}>{msg.text}</align>\n");
+            // === ODRĘBNIK GÓRNY ===
+            sb.Append("<color=#333333>━━━━━━━━━━━━━━━━━━━━━━━━</color>\n");
 
-            // większy odstęp między wiadomościami
-            sb.Append("<size=8>\n</size>");
-            sb.Append("<color=#444444>────────────────────────</color>\n\n");
+            // === TREŚĆ: zamiana \r\n na <br> + lepsze line-height ===
+            string formattedText = msg.text
+                .Replace("\r\n", "<br>")  // Windows line breaks
+                .Replace("\n", "<br>")    // Unix line breaks
+                .Replace("\r", "<br>");   // Mac line breaks
+
+            // Dodaj odstęp między akapitami (podwójne <br>)
+            formattedText = formattedText.Replace("<br><br>", "<br><br><br>");
+
+            sb.Append($"<align={align}><line-height=1.4em>{formattedText}</line-height></align>");
+
+            // === ODRĘBNIK DOLNY + DUŻY ODSTĘP ===
+            sb.Append("\n<color=#333333>━━━━━━━━━━━━━━━━━━━━━━━━</color>");
+            sb.Append("\n<size=20></size>\n\n");  // ✅ DUŻY odstęp między wiadomościami
         }
 
-        // Specjalny styl dla systemowych powiadomień (np. Delivery Failure)
+        // === SPECJALNE STYLE DLA SYSTEM ===
         string result = sb.ToString();
         result = result.Replace("[AUTOMATED]", "<color=#666><i>[AUTOMATED]</i></color>");
         result = result.Replace("AUTOMATED DELIVERY FAILURE NOTICE",

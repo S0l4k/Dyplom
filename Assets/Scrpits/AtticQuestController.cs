@@ -43,6 +43,7 @@ public class AtticQuestController : MonoBehaviour
     private QuestManager _questManager;
     private int _litCount = 0;
     private bool _cutscenePlayed = false;
+    private bool _cameraLockedOnDemon = false;
     private PlayerController _player;
     private Camera _mainCamera;
     private PlayerCam _playerCam;
@@ -121,7 +122,21 @@ public class AtticQuestController : MonoBehaviour
 
         // 🔒 Zablokuj gracza i kamerę
         if (_player != null) _player.enabled = false;
-        if (_playerCam != null) _playerCam.enabled = false;
+        // 🎥 Kamera na demona (pozycja startowa)
+        if (_mainCamera != null && demonCutscenePosition != null)
+        {
+            _mainCamera.transform.SetParent(null, true);
+            _mainCamera.transform.position = demonCutscenePosition.position + cameraOffset;
+            _mainCamera.transform.LookAt(demonCutscenePosition);
+            Debug.Log($"[Cutscene] 🎥 Camera locked on demon at {demonCutscenePosition.position}");
+
+            // ✅ ZABLOKUJ KAMERĘ NA CZAS CUTSCENKI
+            _cameraLockedOnDemon = true;
+
+            // ✅ Wyłącz PlayerCam, żeby nie nadpisywał rotacji
+            if (_playerCam != null)
+                _playerCam.enabled = false;
+        }
 
         // 🌑 Fade out na start
         if (screenFader != null)
@@ -300,7 +315,14 @@ public class AtticQuestController : MonoBehaviour
         }
 
 
+        _cameraLockedOnDemon = false;
 
+        // ✅ Przywróć PlayerCam (ale nie włączaj jeszcze – zrobi to NarrativeInspectTrigger)
+        if (_playerCam != null && _camWasEnabled)
+        {
+            _playerCam.enabled = true;
+            _playerCam.SyncRotationWithCamera(); // ✅ Zsynczuj rotację po odblokowaniu
+        }
         // 🔙 Powrót do mieszkania – FadeIn będzie w ReturnFromFlashbackSequence!
         if (linkedTrigger != null)
         {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{713447b6-0d01-4082-ad98-98e4334bf22b}">
+		<property name="assetPath">
+			<value>108413__kyle1katarn__toilet.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>3.8613333333333335</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{994e93a8-1e15-4e73-aefe-6b54654f82ba}</destination>
+		</relationship>
+	</object>
+</objects>
