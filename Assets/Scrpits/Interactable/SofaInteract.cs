@@ -89,7 +89,7 @@ public class SofaInteract : MonoBehaviour
         // === 📷 ZAPISZ aktualną pozycję kamery PRZED cutscenką (jak w ComputerInteract) ===
         originalCamPosition = playerCamera.position;
         originalCamRotation = playerCamera.rotation;
-
+        outline.enabled = false;
         // === KAMERA: płynne przejście do pozycji na kanapie ===
         Vector3 startPos = playerCamera.position;
         Quaternion startRot = playerCamera.rotation;

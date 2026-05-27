@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Components")]
     public NavMeshAgent ai;
     public Animator aiAnim;
+    public ManagerIK managerik;
 
     [Header("Patrol Settings")]
     public List<Transform> destinations;
@@ -184,6 +185,7 @@ public class EnemyAI : MonoBehaviour
             chasing = false;
             walking = false;
             playerInSight = false;
+            managerik.enabled= true;
             aiAnim?.SetTrigger("idle");
             return;
         }
@@ -214,7 +216,7 @@ public class EnemyAI : MonoBehaviour
             ai.speed = 0;
             ai.isStopped = true;
             aiAnim.SetTrigger("idle");
-
+            managerik.enabled = true;
             Vector3 lookDir = (player.position - transform.position).normalized;
             lookDir.y = 0;
             if (lookDir.magnitude > 0.1f)
@@ -228,7 +230,7 @@ public class EnemyAI : MonoBehaviour
         // --- DETEKCJA GRACZA ---
         Vector3 direction = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-
+        
         Vector3[] raycastHeights = new Vector3[]
         {
             rayCastOffset,
@@ -305,7 +307,7 @@ public class EnemyAI : MonoBehaviour
             chasing = true;
             walking = false;
             isIdling = false;
-
+            managerik.enabled = true;
 
             if (!ai.isOnNavMesh)
             {
@@ -365,7 +367,7 @@ public class EnemyAI : MonoBehaviour
         {
             ai.speed = walkSpeed;
             ai.isStopped = false;
-
+            managerik.enabled = false;
             Vector3 snappedDest = currentDest.position;
             NavMeshHit hit;
             if (NavMesh.SamplePosition(currentDest.position, out hit, 2f, NavMesh.AllAreas))

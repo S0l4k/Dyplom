@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -105,14 +106,24 @@ public class MailboxUI : MonoBehaviour
     private void SelectEmail(int index)
     {
         if (index < 0 || index >= currentEmails.Count) return;
-
         var email = currentEmails[index];
-        contentText.text = FormatConversation(email.messages); // 🔹 Tu zmieniamy!
+
+        // ✅ 1. Ustaw treść maila
+        contentText.text = FormatConversation(email.messages);
 
         email.isRead = true;
-        rightScroll.verticalScrollbar.value = 1f; // scroll na górę
-        BuildList(); // odśwież kolory na liście
+        BuildList();
+
+        // ✅ 2. NATYCHMIASTOWA przebudowa layoutu – KLUCZOWE!
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentText.rectTransform);
+
+        // ✅ 3. Scroll na górę – użyj normalizedPosition (nie scrollbar.value!)
+        if (rightScroll != null)
+        {
+            // ✅ normalizedPosition: (x, y) gdzie y=1 to GÓRA
+            rightScroll.normalizedPosition = new Vector2(0, 1);
+            Debug.Log($"[MailboxUI] 📜 Scrolled to top | normalizedPosition: {rightScroll.normalizedPosition}");
+        }
     }
 
- 
 }

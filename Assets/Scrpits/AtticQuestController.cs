@@ -283,7 +283,7 @@ public class AtticQuestController : MonoBehaviour
 
         // ✅ Dłuższa pauza w czerni przed teleportem
         Debug.Log("[Cutscene] ⏱️ Holding fade out for 3s before return...");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         // 🗑️ ZNISZCZ WSZYSTKIE ŚWIECZKI Z SCENY
         foreach (var c in candles)
