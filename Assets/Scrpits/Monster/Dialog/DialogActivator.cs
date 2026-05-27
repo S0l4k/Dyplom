@@ -22,7 +22,6 @@ public class DialogActivator : MonoBehaviour
 
     [Header("UI")]
     
-    public GameObject crossair;
 
 
     [Header("References")]
@@ -70,7 +69,7 @@ public class DialogActivator : MonoBehaviour
     {
         if (isTalking)
         {
-            HideInteractionText();
+           
             return;
         }
 
@@ -79,7 +78,7 @@ public class DialogActivator : MonoBehaviour
         // ✅ BLOKADA DIALOGU KURIERA PRZED ZAMÓWIENIEM
         if (npcName == "Courier" && !GameState.CourierArrived)
         {
-            HideInteractionText();
+           
             canTalk = false;
             return;
         }
@@ -87,7 +86,7 @@ public class DialogActivator : MonoBehaviour
         // ✅ BLOKADA FINALNEGO DIALOGU
         if (isFinalDialog && !GameState.DemonLoopPhase)
         {
-            HideInteractionText();
+           
             canTalk = false;
             return;
         }
@@ -95,7 +94,7 @@ public class DialogActivator : MonoBehaviour
         // ✅ BLOKADA ZWYKŁYCH DIALOGÓW PODCZAS FAZY DEMONA
         if (!isFinalDialog && GameState.DemonLoopPhase && !GameState.ReadyForFinalChase)
         {
-            HideInteractionText();
+           
             canTalk = false;
             return;
         }
@@ -112,7 +111,7 @@ public class DialogActivator : MonoBehaviour
     {
         if (IsEnemyChasing())
         {
-            HideInteractionText();
+          
             canTalk = false;
             return;
         }
@@ -125,13 +124,13 @@ public class DialogActivator : MonoBehaviour
         {
             if (hit.collider.gameObject == gameObject)
             {
-                ShowInteractionText();
+               
                 canTalk = true;
                 return;
             }
         }
 
-        HideInteractionText();
+ 
         canTalk = false;
     }
 
@@ -141,19 +140,11 @@ public class DialogActivator : MonoBehaviour
         return ai != null && ai.chasing;
     }
 
-    void ShowInteractionText()
-    {
-        crossair.SetActive(true);
-    }
 
-    void HideInteractionText()
-    {
-       crossair?.SetActive(false);
-    }
 
     void StartConversation()
     {
-        HideInteractionText();
+    
         isTalking = true;
         GameState.IsTalking = true;
 
