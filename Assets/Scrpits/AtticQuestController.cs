@@ -35,9 +35,11 @@ public class AtticQuestController : MonoBehaviour
     public GameObject demonGameObject;
     public GameObject cutsceneCollider;
 
-    // ✅ NOWE: Przypisz główną świeczkę do zniszczenia po cutscence
     [Header("Candles to Destroy")]
-    public GameObject mainCandleToDestroy;  // ✅ Przeciągnij główną świeczkę z ItemPickup
+    public GameObject mainCandleToDestroy;
+
+    [Header("Blood Effects")]
+    public GameObject[] bloods;  // ✅ Przeciągnij wszystkie obiekty z cząsteczkami krwi
 
     // ✅ References
     private QuestManager _questManager;
@@ -47,7 +49,6 @@ public class AtticQuestController : MonoBehaviour
     private PlayerController _player;
     private Camera _mainCamera;
     private PlayerCam _playerCam;
-    public GameObject[] bloods;
 
     // ✅ Do zarządzania dźwiękiem
     private FMOD.Studio.EventInstance _demonSoundInstance;
@@ -58,7 +59,7 @@ public class AtticQuestController : MonoBehaviour
     private Quaternion _camOriginalLocalRot;
     private bool _camWasEnabled;
 
-    // ✅ PUBLICZNE GETTERY dla CandleController
+    // ✅ PUBLICZNE GETTERY
     public PlayerController GetPlayer() => _player;
     public int GetLitCount() => _litCount;
 
@@ -85,6 +86,9 @@ public class AtticQuestController : MonoBehaviour
 
         if (cutsceneTrigger != null)
             cutsceneTrigger.enabled = false;
+
+        // ✅ Na start wyłącz krew (włączy się w cutscence)
+        SetBloodParticlesActive(false);
 
         if (demonAnimator != null)
         {
@@ -115,6 +119,29 @@ public class AtticQuestController : MonoBehaviour
         StartCoroutine(PlayCutscene());
     }
 
+    // ✅ NOWA METODA: Włącz/wyłącz wszystkie obiekty z krwią
+    private void SetBloodParticlesActive(bool active)
+    {
+        if (bloods == null) return;
+
+        foreach (var blood in bloods)
+        {
+            if (blood != null)
+            {
+                blood.SetActive(active);
+
+                // ✅ Dodatkowo: zatrzymaj/emisję cząsteczek dla pewności
+                var particle = blood.GetComponent<ParticleSystem>();
+                if (particle != null)
+                {
+                    if (active) particle.Play();
+                    else particle.Stop();
+                }
+            }
+        }
+        Debug.Log($"[AtticQuest] 🩸 Blood particles: {(active ? "ON" : "OFF")}");
+    }
+
     IEnumerator PlayCutscene()
     {
         _cutscenePlayed = true;
@@ -122,6 +149,7 @@ public class AtticQuestController : MonoBehaviour
 
         // 🔒 Zablokuj gracza i kamerę
         if (_player != null) _player.enabled = false;
+
         // 🎥 Kamera na demona (pozycja startowa)
         if (_mainCamera != null && demonCutscenePosition != null)
         {
@@ -130,12 +158,8 @@ public class AtticQuestController : MonoBehaviour
             _mainCamera.transform.LookAt(demonCutscenePosition);
             Debug.Log($"[Cutscene] 🎥 Camera locked on demon at {demonCutscenePosition.position}");
 
-            // ✅ ZABLOKUJ KAMERĘ NA CZAS CUTSCENKI
             _cameraLockedOnDemon = true;
-
-            // ✅ Wyłącz PlayerCam, żeby nie nadpisywał rotacji
-            if (_playerCam != null)
-                _playerCam.enabled = false;
+            if (_playerCam != null) _playerCam.enabled = false;
         }
 
         // 🌑 Fade out na start
@@ -144,15 +168,6 @@ public class AtticQuestController : MonoBehaviour
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
 
-        // 🎥 Kamera na demona (pozycja startowa)
-        if (_mainCamera != null && demonCutscenePosition != null)
-        {
-            _mainCamera.transform.SetParent(null, true);
-            _mainCamera.transform.position = demonCutscenePosition.position + cameraOffset;
-            _mainCamera.transform.LookAt(demonCutscenePosition);
-            Debug.Log($"[Cutscene] 🎥 Camera locked on demon at {demonCutscenePosition.position}");
-        }
-
         // 🌕 Fade in – gracz widzi scenę
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeIn(cutsceneFadeSpeed));
@@ -160,9 +175,12 @@ public class AtticQuestController : MonoBehaviour
             yield return new WaitForSeconds(cutsceneFadeSpeed);
 
         // ─────────────────────────────────────────────
-        // 🎬 KROK 1: Demon się pojawia + dźwięk (5 sekund)
+        // 🎬 KROK 1: Demon się pojawia + krew ON + dźwięk (5 sekund)
         // ─────────────────────────────────────────────
-        Debug.Log("[Cutscene] 👹 Step 1: Demon appear + sound (5s)");
+        Debug.Log("[Cutscene] 👹 Step 1: Demon appear + blood ON + sound (5s)");
+
+        // ✅ WŁĄCZ KREW przy pierwszym pojawieniu się demona
+        SetBloodParticlesActive(true);
 
         if (demonGameObject != null)
         {
@@ -220,7 +238,7 @@ public class AtticQuestController : MonoBehaviour
         // 🎬 KROK 4: Świeczki się zapalają, demona nie ma (3 sekundy)
         // ─────────────────────────────────────────────
         Debug.Log("[Cutscene] 🕯️ Step 4: Candles on, demon hidden (3s)");
-     
+
         foreach (var c in candles) if (c != null) c.SetLit(true);
         yield return new WaitForSeconds(3f);
 
@@ -235,7 +253,10 @@ public class AtticQuestController : MonoBehaviour
         // ─────────────────────────────────────────────
         // 🎬 KROK 5b: DEMON JUMPSCARE – teleport + animacja + dźwięk (3 sekundy)
         // ─────────────────────────────────────────────
-        Debug.Log("[Cutscene] 👹 Step 5b: JUMPSCARE! (3s)");
+        Debug.Log("[Cutscene] 👹 Step 5b: JUMPSCARE! (blood OFF) (3s)");
+
+        // ✅ WYŁĄCZ KREW przed jumpscare'em
+        SetBloodParticlesActive(false);
 
         if (demonGameObject != null)
         {
@@ -268,24 +289,28 @@ public class AtticQuestController : MonoBehaviour
             Debug.Log("[Cutscene] 🔊 demonJumpscareSound playing");
         }
 
-        yield return new WaitForSeconds(3f);
+        // ✅ POKAŻ JUMPSCARE przez 1.5 sekundy (krócej = bardziej intensywnie)
+        yield return new WaitForSeconds(1.5f);
 
         // ─────────────────────────────────────────────
-        // 🎬 KROK 6: Fade out → zniszcz świeczki → powrót (BEZ FadeIn!)
+        // 🎬 KROK 6: NATYCHMIASTOWY FADE OUT → czarny ekran → cleanup → powrót
         // ─────────────────────────────────────────────
-        Debug.Log("[Cutscene] 🗑️ Step 6: Fade out + destroy candles + return");
+        Debug.Log("[Cutscene] 🌑 Step 6: IMMEDIATE fade out after jumpscare");
 
-        // 🌑 Fade out przed powrotem – i ZOSTAW EKRAN CZARNY
+        // ✅ NATYCHMIASTOWY FADE OUT po jumpscare'ze (bez fade in!)
         if (screenFader != null)
-            yield return StartCoroutine(screenFader.FadeOut(cutsceneFadeSpeed));
+        {
+            yield return StartCoroutine(screenFader.FadeOut(0.3f)); // ✅ Szybki fade out
+        }
         else
-            yield return new WaitForSeconds(cutsceneFadeSpeed);
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
 
-        // ✅ Dłuższa pauza w czerni przed teleportem
-        Debug.Log("[Cutscene] ⏱️ Holding fade out for 3s before return...");
-        yield return new WaitForSeconds(3f);
+        // ✅ Wszystko poniżej dzieje się NA CZARNYM EKRANIE:
+        Debug.Log("[Cutscene] ⚙️ Cleaning up on black screen...");
 
-        // 🗑️ ZNISZCZ WSZYSTKIE ŚWIECZKI Z SCENY
+        // 🗑️ ZNISZCZ WSZYSTKIE ŚWIECZKI
         foreach (var c in candles)
         {
             if (c != null && c.gameObject != null)
@@ -295,7 +320,7 @@ public class AtticQuestController : MonoBehaviour
             }
         }
 
-        // ✅ ZNISZCZ GŁÓWNĄ ŚWIECZKĘ PRZYPISANĄ W INSPECTORZE
+        // ✅ ZNISZCZ GŁÓWNĄ ŚWIECZKĘ
         if (mainCandleToDestroy != null && mainCandleToDestroy.gameObject != null)
         {
             Destroy(mainCandleToDestroy.gameObject);
@@ -304,8 +329,8 @@ public class AtticQuestController : MonoBehaviour
 
         Debug.Log("[AtticQuest] 🗑️ All candles destroyed");
 
-        yield return new WaitForSeconds(delayBeforeReturn);
-        GameState.IsInFlashback = false;
+        // ✅ Krótka pauza w czerni przed teleportem
+        yield return new WaitForSeconds(0.5f);
 
         // ✅ Quest ukończony
         if (!string.IsNullOrEmpty(questID) && _questManager != null)
@@ -314,24 +339,26 @@ public class AtticQuestController : MonoBehaviour
             Debug.Log($"[AtticQuest] ✅ Quest COMPLETED: {questID}");
         }
 
-
+        GameState.IsInFlashback = false;
         _cameraLockedOnDemon = false;
 
         // ✅ Przywróć PlayerCam (ale nie włączaj jeszcze – zrobi to NarrativeInspectTrigger)
         if (_playerCam != null && _camWasEnabled)
         {
             _playerCam.enabled = true;
-            _playerCam.SyncRotationWithCamera(); // ✅ Zsynczuj rotację po odblokowaniu
+            _playerCam.SyncRotationWithCamera();
         }
+
         // 🔙 Powrót do mieszkania – FadeIn będzie w ReturnFromFlashbackSequence!
         if (linkedTrigger != null)
         {
-            Debug.Log("[AtticQuest] 🔙 Triggering return to apartment");
+            Debug.Log("[AtticQuest] 🔙 Triggering return to apartment (on black screen)");
             linkedTrigger.EndFlashback();
         }
 
-        Debug.Log("[AtticQuest] 🎬 Cutscene FINISHED");
-        // 🎥 Przywróć kamerę gracza (ale NIE rób FadeIn!)
+        Debug.Log("[AtticQuest] 🎬 Cutscene FINISHED – returned on black screen");
+
+        // 🎥 Przywróć kamerę gracza (ale NIE rób FadeIn tutaj!)
         if (_mainCamera != null)
         {
             _mainCamera.enabled = false;
@@ -343,7 +370,7 @@ public class AtticQuestController : MonoBehaviour
             }
             if (_playerCam != null && _camWasEnabled) _playerCam.enabled = true;
             _mainCamera.enabled = true;
-            Debug.Log("[Cutscene] 🎥 PlayerCamera restored");
+            Debug.Log("[Cutscene] 🎥 PlayerCamera restored (still black screen)");
         }
     }
 }

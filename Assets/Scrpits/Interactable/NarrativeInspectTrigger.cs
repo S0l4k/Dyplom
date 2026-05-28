@@ -325,18 +325,11 @@ public class NarrativeInspectTrigger : MonoBehaviour
             Debug.Log($"[Narrative] 📢 Flashback completed: {flashbackQuestID}");
         }
 
-        // 🌑 Fade OUT – już jest czarno, więc to tylko dla pewności
-        if (screenFader != null)
-        {
-            // Upewnij się że ekran jest czarny przed teleportem
-            yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
-        }
-        else
-        {
-            yield return new WaitForSeconds(fadeSpeed);
-        }
+        // ❌ USUNIĘTE: FadeOut na początku – ekran JEST już czarny z AtticQuest!
+        // 🌑 Fade OUT – już jest czarno, więc to tylko dla pewności  ← USUŃ TO CAŁKOWICIE!
+        // if (screenFader != null) yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
 
-        // 🌀 TELEPORT POWROTNY
+        // 🌀 TELEPORT POWROTNY (nadal na czarnym ekranie)
         Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
         if (playerTrans != null)
         {
@@ -362,10 +355,17 @@ public class NarrativeInspectTrigger : MonoBehaviour
         // 🎬 Wyłącz scenę flashbacku
         if (flashbackScene != null) flashbackScene.SetActive(false);
 
-        // ✅ NOWE: Fade IN – dopiero TERAZ, po teleportacji do mieszkania!
+        // ✅ TERAZ: Fade IN – dopiero po teleportacji do mieszkania!
         Debug.Log("[ReturnFromFlashback] 🌕 Fading IN after teleport to apartment...");
+
+        // ✅ Najpierw upewnij się, że ekran jest CZARNY przed FadeIn
         if (screenFader != null)
         {
+            // Ustaw alpha na 1 (czarny) na wszelki wypadek
+            var img = screenFader.GetComponent<UnityEngine.UI.Image>();
+            if (img != null) img.color = new Color(0, 0, 0, 1);
+
+            // Teraz FadeIn
             yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
         }
         else
@@ -380,8 +380,9 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
         // 🔓 Przywróć normalną grę
         RestorePlayerControl();
-    }
 
+        Debug.Log("[ReturnFromFlashback] ✅ FadeIn complete – player back in apartment");
+    }
     private void StopFlashbackAmbience()
     {
         if (flashbackScene != null)
