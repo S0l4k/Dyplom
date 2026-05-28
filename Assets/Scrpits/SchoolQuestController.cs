@@ -151,52 +151,83 @@ public class SchoolQuestController : MonoBehaviour
 
         Debug.Log("[SchoolQuest] 🎬 PlayCutscene() started");
 
-        if (_player != null) _player.enabled = false;
-        ambience?.FadeOutVoices(0.5f);
+        // ✅ 1. Wyłącz ambient dzieci (natychmiast, bez fade)
+        if (ambience != null)
+        {
+            ambience.StopVoices(false);
+            Debug.Log("[SchoolQuest] 🔇 Ambience stopped");
+        }
 
+        // ✅ 2. Ukryj szkło
+        if (glass != null)
+        {
+            glass.SetActive(false);
+            Debug.Log("[SchoolQuest] 🪟 Glass hidden");
+        }
+
+        // ✅ 3. Zablokuj ponowną interakcję z demonem
+        if (demonDialog != null)
+        {
+            demonDialog.enabled = false;
+            Debug.Log("[SchoolQuest] 🔒 Demon dialog disabled");
+        }
+
+        // ✅ Zablokuj gracza
+        if (_player != null) _player.enabled = false;
+
+        // ✅ Fade out przed cutscenką
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeOut(cutsceneFadeSpeed));
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
 
+        // ✅ Dźwięk jedzenia szkła
         if (!glassEatingSound.IsNull && AudioManager.Instance != null && _player != null)
         {
             AudioManager.Instance.PlaySFX(glassEatingSound, _player.transform.position);
             Debug.Log("[SchoolQuest] 🔊 Glass eating sound played");
         }
 
+        // ✅ Czekaj 10 sekund (jedzenie szkła)
         yield return new WaitForSeconds(10f);
+
+        // ✅ Ustaw kamerę cutscenki
         SetupCutsceneCamera();
 
+        // ✅ Fade in – gracz widzi scenę
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeIn(cutsceneFadeSpeed));
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
+
+        // ✅ Aktywuj krew w szkole
         if (schoolBlood != null)
         {
             schoolBlood.SetActive(true);
             Debug.Log("[SchoolQuest] 🩸 School blood activated");
         }
-        // ✅ NOWE: Odtwórz krzyk dzieci
+
+        // ✅ Odtwórz krzyk dzieci
         if (!childrenScreamSound.IsNull && AudioManager.Instance != null)
         {
             Vector3 playPos = _player != null ? _player.transform.position : transform.position;
             AudioManager.Instance.PlaySFX(childrenScreamSound, playPos);
             Debug.Log("[SchoolQuest] 🔊 Children scream played");
         }
+
+        // ✅ Pauza na krzyk
         yield return new WaitForSeconds(2f);
 
+        // ✅ Fade out przed powrotem
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeOut(cutsceneFadeSpeed));
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
-        glass.SetActive(false);
 
-        // ✅ NOWE: Aktywuj obiekt krwi w szkole (jeśli przypisany)
-   
+        // ✅ Upewnij się, że szkło jest ukryte (dla pewności)
+        if (glass != null) glass.SetActive(false);
 
-        yield return new WaitForSeconds(delayBeforeReturn);
-
+        // ✅ Pauza przed powrotem
         yield return new WaitForSeconds(delayBeforeReturn);
 
         // ✅ UKOŃCZ QUEST
@@ -206,9 +237,18 @@ public class SchoolQuestController : MonoBehaviour
             Debug.Log($"[SchoolQuest] ✅ Quest COMPLETED: {questID}");
         }
 
+        // ✅ Przywróć kamerę i odblokuj flashback flag
         RestorePlayerCamera();
         GameState.IsInFlashback = false;
-        linkedTrigger?.EndFlashback();
+
+        // ✅ Powrót do mieszkania
+        if (linkedTrigger != null)
+        {
+            Debug.Log("[SchoolQuest] 🔙 Triggering EndFlashback");
+            linkedTrigger.EndFlashback();
+        }
+
+        Debug.Log("[SchoolQuest] 🎬 Cutscene FINISHED");
     }
 
     private void SetupCutsceneCamera()

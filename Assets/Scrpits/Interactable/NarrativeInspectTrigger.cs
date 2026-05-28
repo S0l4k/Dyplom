@@ -106,6 +106,13 @@ public class NarrativeInspectTrigger : MonoBehaviour
             _canInteract = false;
             return;
         }
+        // ✅ Jeśli w trakcie inspect/flashback – zablokuj
+        if (_isInInspect || _isInFlashback)
+        {
+            if (outline != null) outline.enabled = false;
+            _canInteract = false;
+            return;
+        }
 
         // ✅ FIX: Poprawny check kamery (było: !playerCamera== false)
         if (playerCamera == null)
@@ -181,6 +188,10 @@ public class NarrativeInspectTrigger : MonoBehaviour
     {
         if (_activeInspector != this) return;
 
+        // ✅ KLUCZOWE: Zablokuj ponowną interakcję NATYCHMIAST, zanim korutyna się zacznie!
+        _hasBeenUsed = true;
+        Debug.Log($"[NarrativeInspect] 🔒 {gameObject.name} marked as used (immediate)");
+
         if (playerCamera != null && !playerCamera.gameObject.activeSelf)
             playerCamera.gameObject.SetActive(true);
 
@@ -198,6 +209,9 @@ public class NarrativeInspectTrigger : MonoBehaviour
             gameplayUI.interactable = true;
             gameplayUI.blocksRaycasts = true;
         }
+
+        // ✅ Wyłącz outline po wyjściu z inspect
+        if (outline != null) outline.enabled = false;
 
         if (!string.IsNullOrEmpty(afterText) && GameNarrativeManager.Instance != null)
         {
@@ -220,6 +234,10 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     private void ContinueAfterInspect()
     {
+        // ✅ KLUCZOWE: Oznacz obiekt jako użyty, żeby nie można było wejść ponownie!
+        _hasBeenUsed = true;
+        Debug.Log($"[NarrativeInspect] 🔒 {gameObject.name} marked as used");
+
         if (enableFlashback && flashbackLocation != null)
         {
             StartFlashback();
