@@ -110,6 +110,24 @@ public class ItemPickup : MonoBehaviour
             return;
         }
 
+        // ✅ NOWY CHECK: Jeśli interakcje zablokowane (po lekach) → seizure effect
+        if (GameState.InteractionsLocked && !isHeld)
+        {
+            if (outline != null) outline.enabled = false;
+            HidePickupText();
+            canPickup = false;
+
+            // ✅ Użyj UNIKALNYCH nazw zmiennych – bez konfliktu z późniejszym ray/hit!
+            Ray seizureRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            if (Physics.Raycast(seizureRay, out RaycastHit seizureHit, 3f)
+                && seizureHit.collider.gameObject == gameObject)
+            {
+                GameState.TriggerSeizureEffect = true;
+            }
+            return;
+        }
+
+        // ✅ Reszta metody BEZ ZMIAN – oryginalny kod:
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
@@ -118,7 +136,6 @@ public class ItemPickup : MonoBehaviour
             if (hit.collider.gameObject == gameObject)
             {
                 currentTarget = this;
-                // ✅ HIT – włącz outline
                 if (outline != null) outline.enabled = true;
                 ShowPickupText();
                 canPickup = true;
@@ -126,7 +143,6 @@ public class ItemPickup : MonoBehaviour
             }
         }
 
-        // ❌ MISS – wyłącz outline
         HidePickupText();
         canPickup = false;
         if (outline != null) outline.enabled = false;

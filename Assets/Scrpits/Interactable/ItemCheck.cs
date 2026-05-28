@@ -64,14 +64,31 @@ public class ItemCheck : MonoBehaviour
 
     void CheckForInteraction()
     {
-      
+        // ✅ NOWY CHECK: Jeśli interakcje zablokowane → seizure
+        if (GameState.InteractionsLocked)
+        {
+            if (outline != null) outline.enabled = false;
+            crossair.SetActive(false);
+            canInteract = false;
+
+            // ✅ Użyj UNIKALNYCH nazw zmiennych – bez konfliktu!
+            Ray seizureRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            if (Physics.Raycast(seizureRay, out RaycastHit seizureHit, 3f)
+                && (seizureHit.collider.gameObject == gameObject || seizureHit.transform.IsChildOf(transform)))
+            {
+                GameState.TriggerSeizureEffect = true;
+            }
+            return;
+        }
+
+        if (isChecking) return;
 
         bool wasInteracting = canInteract;
         canInteract = false;
 
+        // ✅ Reszta metody BEZ ZMIAN – oryginalny kod:
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
-        // Naprawione wykrywanie (obsługa dzieci obiektu)
         if (Physics.Raycast(ray, out RaycastHit hit, 3f))
         {
             if (hit.collider.gameObject == gameObject || hit.transform.IsChildOf(transform))
@@ -91,8 +108,6 @@ public class ItemCheck : MonoBehaviour
             if (outline != null) outline.enabled = false;
             crossair.SetActive(false);
         }
-
-
     }
 
 

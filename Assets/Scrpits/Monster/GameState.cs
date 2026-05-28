@@ -11,6 +11,7 @@
     public static bool DemonRespawnedInApartment = false;
     public static bool FridgeDemonDialogCompleted = false;
     public static bool IsInspecting = false;
+    public static bool TriggerSeizureEffect = false;
     // ✅ NOWE FLAGI DLA SEKWENCJI KOŃCOWEJ
     public static bool InteractionsLocked = false;
     public static bool SofaSequenceActive = false;

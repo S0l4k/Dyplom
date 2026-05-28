@@ -67,10 +67,27 @@ public class ComputerInteract : MonoBehaviour
 
     void CheckForComputer()
     {
+        // ✅ NOWY CHECK: Jeśli interakcje zablokowane → seizure
+        if (GameState.InteractionsLocked)
+        {
+            crossair.SetActive(false);
+            if (outline != null) outline.enabled = false;
+            canUse = false;
+
+            // ✅ Użyj UNIKALNYCH nazw zmiennych – bez konfliktu!
+            Ray seizureRay = new Ray(playerCamera.position, playerCamera.forward);
+            if (Physics.Raycast(seizureRay, out RaycastHit seizureHit, useRange)
+                && seizureHit.collider.gameObject == gameObject)
+            {
+                GameState.TriggerSeizureEffect = true;
+            }
+            return;
+        }
+
+        // ✅ Reszta metody BEZ ZMIAN – oryginalny kod:
         Ray ray = new Ray(playerCamera.position, playerCamera.forward);
         RaycastHit hit;
-
-        // ✅ ORYGINALNA LOGIKA BEZ LAYER MASK (działała wcześniej - zostawiam bez zmian)
+        
         if (Physics.Raycast(ray, out hit, useRange))
         {
             if (hit.collider.gameObject == gameObject)
