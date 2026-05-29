@@ -11,11 +11,12 @@ public class SofaInteract : MonoBehaviour
     public GameObject interactText;
     public TMP_Text thoughtText;
     public Outline outline;
-
+    public GameObject flashlightObject;
     [Header("Settings")]
     public float useRange = 3f;
     public float moveSpeed = 2.5f;
     public float typeSpeed = 0.07f;
+    
 
     private bool canUse = false;
     private PlayerController playerController;
@@ -77,6 +78,7 @@ public class SofaInteract : MonoBehaviour
     }
     IEnumerator UseSofa()
     {
+        DisablePlayerFlashlight();
         // === BLOKADA ===
         _itemCheck.enabled = false;
         GameState.SofaSequenceActive = true;
@@ -119,7 +121,15 @@ public class SofaInteract : MonoBehaviour
             yield return StartCoroutine(FallbackExit());
         }
     }
-
+    public void DisablePlayerFlashlight()
+    {
+        if (flashlightObject != null)
+        {
+            flashlightObject.SetActive(false);
+            Debug.Log("[MedicinePickup] 🔦 Flashlight disabled via reference");
+            return;
+        }
+    }
     private IEnumerator FallbackExit()
     {
         yield return new WaitForSeconds(1f);

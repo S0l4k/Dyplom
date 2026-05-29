@@ -10,7 +10,6 @@ public class MedicinePickup : MonoBehaviour
     public GameObject pickupText;
     public GameObject sofaInteractObject; // ✅ Obiekt z SofaInteract (kanapa)
     public Outline outline;
-
     private Camera playerCamera;
     private bool canInteract = false;
 
@@ -67,7 +66,7 @@ public class MedicinePickup : MonoBehaviour
         Debug.Log("[MedicinePickup] 💊 Leki podniesione – rozpoczynam sekwencję końcową");
 
         GameNarrativeManager.Instance.blood.SetActive(false);
-
+    
 
         // ✅ Wyłącz demona
         if (demon != null)
@@ -95,6 +94,7 @@ public class MedicinePickup : MonoBehaviour
         StartCoroutine(StartEndingSequence());
        
     }
+
 
     private IEnumerator StartEndingSequence()
     {
@@ -155,6 +155,7 @@ public class MedicinePickup : MonoBehaviour
 
     private void DisableDemonSafely(EnemyAI demon)
     {
+        // ✅ Wyłącz NavMeshAgent i animacje (istniejący kod)
         if (demon.ai != null)
         {
             demon.ai.isStopped = true;
@@ -175,8 +176,34 @@ public class MedicinePickup : MonoBehaviour
 
         demon.aiAnim?.SetTrigger("idle");
 
+        // ✅ NOWE: Wyłącz WSZYSTKIE collidery demona (główny + dzieci)
+        Debug.Log($"[MedicinePickup] 🔕 Disabling colliders on {demon.name}");
+
+        // 1. Collidery na głównym obiekcie demona
+        foreach (var col in demon.GetComponents<Collider>())
+        {
+            if (col != null)
+            {
+                col.enabled = false;
+                Debug.Log($"[MedicinePickup] 🔕 Disabled Collider: {col.GetType().Name} on {demon.name}");
+            }
+        }
+
+        // 2. Collidery na dzieciach demona (np. ręce, body parts)
+        foreach (var col in demon.GetComponentsInChildren<Collider>(true))
+        {
+            if (col != null && col.gameObject != demon.gameObject) // Uniknij dubla głównego
+            {
+                col.enabled = false;
+                Debug.Log($"[MedicinePickup] 🔕 Disabled child Collider: {col.GetType().Name} on {col.gameObject.name}");
+            }
+        }
+
+        // ✅ Aktualizuj flagi GameState (istniejący kod)
         GameState.DemonRespawnedInApartment = false;
         GameState.FinalChase = false;
         GameState.ChaseLocked = true;
+
+        Debug.Log($"[MedicinePickup] 👹 Demon fully disabled: AI + visuals + colliders");
     }
 }

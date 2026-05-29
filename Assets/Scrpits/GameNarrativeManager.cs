@@ -147,6 +147,7 @@ public class GameNarrativeManager : MonoBehaviour
     public float postTurnRevealPause = 2f;
     [Tooltip("Czas powrotu kamery do normalnej pozycji po wstaniu z kanapy")]
     public float cameraReturnDuration = 1.5f;
+    public Outline windowOutline;
 
     [Tooltip("Czas płynnego obrotu kamery na demona przy jumpscare")]
     public float cameraTurnToDemonDuration = 0.8f;
@@ -206,7 +207,7 @@ public class GameNarrativeManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         playerCam = FindObjectOfType<PlayerCam>();
         demon = FindObjectOfType<EnemyAI>();
-
+        windowOutline.enabled = false;
         // ✅ Uruchom sekwencję narracyjną – zawsze przy starcie sceny
         StartCoroutine(StartNarrativeSequence());
 
@@ -771,6 +772,7 @@ public class GameNarrativeManager : MonoBehaviour
 
         // 🔓 Aktywuj collider jumpscare przy oknie
         windowTrigger.SetActive(true);
+        windowOutline.enabled = true;
 
         Debug.Log("[Ending2] ✅ Player control restored - camera returned to original position");
         // ✅ KONIEC – reszta w WindowJumpscareTrigger

@@ -217,13 +217,14 @@ public class MainMenu : MonoBehaviour
     {
         if (mouseSensitivitySlider == null) return;
 
-        float savedSens = PlayerPrefs.GetFloat("MouseSensitivity", defaultSensitivity);
-        Debug.Log($"[MainMenu] 🔽 Loaded sensitivity: {savedSens}");
+        // ✅ Ładuj czułość TYLKO do wyświetlenia w menu (nie wpływa na grę!)
+        float menuSens = PlayerPrefs.GetFloat("MouseSensitivity", defaultSensitivity);
+        Debug.Log($"[MainMenu] 🔽 Loaded sensitivity for display: {menuSens}");
 
         mouseSensitivitySlider.minValue = 0.1f;
         mouseSensitivitySlider.maxValue = 2000f;
-        mouseSensitivitySlider.value = savedSens;
-        mouseSensitivity = savedSens;
+        mouseSensitivitySlider.value = menuSens;  // Tylko wyświetlenie
+        mouseSensitivity = menuSens;  // Tylko lokalna zmienna dla menu
 
         mouseSensitivitySlider.onValueChanged.RemoveAllListeners();
         mouseSensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);

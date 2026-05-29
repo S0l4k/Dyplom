@@ -123,17 +123,22 @@ public class PauseMenu : MonoBehaviour
 
     private void SetupSensitivityControls()
     {
-        if (playerCam == null || sensitivitySlider == null) return;
+        // ✅ KLUCZOWE: Tylko jeśli jesteśmy w grze (FlatScene) z PlayerCam
+        if (playerCam == null || sensitivitySlider == null)
+        {
+            Debug.Log("[PauseMenu] ⏭️ Skipping sensitivity setup – no PlayerCam");
+            return;
+        }
 
-        // Load saved sensitivity
-        float savedSens = settingsManager != null
-            ? settingsManager.GetSavedSensitivity()
-            : playerCam.sensX;
+        // ✅ Ładuj zapisaną czułość z PlayerPrefs (bezpośrednio, dla pewności)
+        float savedSens = PlayerPrefs.GetFloat("MouseSensitivity", playerCam.sensX);
+        Debug.Log($"[PauseMenu] 🔽 Loaded game sensitivity: {savedSens}");
 
-        // ✅ SZANUJ ZAKRES SLIDERA Z INSPECTORA (nie nadpisuj min/max!)
+        // ✅ SZANUJ ZAKRES SLIDERA Z INSPECTORA
         float clampedSens = Mathf.Clamp(savedSens, sensitivitySlider.minValue, sensitivitySlider.maxValue);
         sensitivitySlider.value = clampedSens;
 
+        // ✅ Aplikuj do PlayerCam
         playerCam.SetSensitivity(clampedSens);
         UpdateSensitivityUI(clampedSens);
 
@@ -145,20 +150,19 @@ public class PauseMenu : MonoBehaviour
     {
         float clampedValue = Mathf.Clamp(value, sensitivitySlider.minValue, sensitivitySlider.maxValue);
 
-        if (playerCam != null) playerCam.SetSensitivity(clampedValue);
+        // ✅ Aplikuj do PlayerCam
+        if (playerCam != null)
+        {
+            playerCam.SetSensitivity(clampedValue);
+            Debug.Log($"[PauseMenu] 🎮 Game sensitivity set to: {clampedValue}");
+        }
+
         UpdateSensitivityUI(clampedValue);
 
-        if (settingsManager != null)
-        {
-            settingsManager.SaveSensitivity(clampedValue); // ✅ Ta metoda już woła PlayerPrefs.Save()
-        }
-        // ✅ Fallback jeśli nie ma SettingsManager:
-        else
-        {
-            PlayerPrefs.SetFloat("MouseSensitivity", clampedValue);
-            PlayerPrefs.Save(); // ✅ Bezpośredni zapis
-            Debug.Log($"[PauseMenu] 💾 Sensitivity saved (fallback): {clampedValue}");
-        }
+        // ✅ ZAPISZ do PlayerPrefs – TYLKO tutaj, w grze!
+        PlayerPrefs.SetFloat("MouseSensitivity", clampedValue);
+        PlayerPrefs.Save();  // ✅ Natychmiastowy flush
+        Debug.Log($"[PauseMenu] 💾 Game sensitivity SAVED: {clampedValue}");
     }
 
     private void UpdateSensitivityUI(float value)
@@ -255,5 +259,16 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1f;
+    }
+
+    void OnApplicationQuit()
+    {
+        // ✅ Zapisz czułość przy zamykaniu gry (ostatnia szansa)
+        if (playerCam != null)
+        {
+            PlayerPrefs.SetFloat("MouseSensitivity", playerCam.sensX);
+            PlayerPrefs.Save();
+            Debug.Log($"[PauseMenu] 💾 OnApplicationQuit: saved sens={playerCam.sensX}");
+        }
     }
 }

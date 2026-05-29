@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{bb707339-2bd0-4eb9-9d70-e12f22206820}">
+		<property name="assetPath">
+			<value>712416__zombyklr__jumpscare-1.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.3510204081632655</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{994e93a8-1e15-4e73-aefe-6b54654f82ba}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -39613,7 +39613,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1a49f0495bc3e0d4295c17364dd6d717, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1692402657}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a49f0495bc3e0d4295c17364dd6d717, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1987404999}
   m_SourcePrefab: {fileID: 100100000, guid: 1a49f0495bc3e0d4295c17364dd6d717, type: 3}
 --- !u!114 &924378126 stripped
 MonoBehaviour:
@@ -85147,6 +85150,7 @@ MonoBehaviour:
   interactText: {fileID: 1881660735}
   thoughtText: {fileID: 727417594}
   outline: {fileID: 1853850051}
+  flashlightObject: {fileID: 1700990271}
   useRange: 3
   moveSpeed: 2.5
   typeSpeed: 0.07
@@ -86767,11 +86771,11 @@ MonoBehaviour:
     Path: event:/PoliceSiren
   demonJumpscareRevealSFX:
     Guid:
-      Data1: -197537888
-      Data2: 1095770181
-      Data3: 1579716540
-      Data4: -1635452962
-    Path: event:/DemonStairsScream
+      Data1: -1604082076
+      Data2: 1118755624
+      Data3: -176131441
+      Data4: -247848181
+    Path: event:/FinalJumpscare
   demonDefeatedSFX:
     Guid:
       Data1: -1696707119
@@ -86823,6 +86827,7 @@ MonoBehaviour:
   blackScreenDuration: 6
   postTurnRevealPause: 2
   cameraReturnDuration: 1.5
+  windowOutline: {fileID: 1987404999}
   cameraTurnToDemonDuration: 0.8
   windowTrigger: {fileID: 1692402656}
   blood: {fileID: 1505597458}
@@ -88676,6 +88681,29 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8513859187771203891, guid: be0ad4bae7c60f940a2e5da7095ce934, type: 3}
   m_PrefabInstance: {fileID: 863753578}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1987404996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a49f0495bc3e0d4295c17364dd6d717, type: 3}
+  m_PrefabInstance: {fileID: 916806299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1987404999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987404996}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &1991672856
 PrefabInstance:
   m_ObjectHideFlags: 0

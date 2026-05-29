@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class PlayerCam : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        float savedSens = PlayerPrefs.GetFloat("MouseSensitivity", sensX);
+        SetSensitivity(savedSens);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -46,9 +48,15 @@ public class PlayerCam : MonoBehaviour
         xRotation = euler.x;
         yRotation = euler.y;
     }
-    public void SetSensitivity(float value)
+    public void SetSensitivity(float newSens)
     {
-        sensX = value;
-        sensY = value;
+        sensX = newSens;
+        sensY = newSens;
+
+        // ✅ Zapisz od razu dla pewności (dubel bezpieczeństwa)
+        PlayerPrefs.SetFloat("MouseSensitivity", newSens);
+        PlayerPrefs.Save();
+
+        Debug.Log($"[PlayerCam] ⚙️ Sensitivity set & saved: {newSens}");
     }
 }
