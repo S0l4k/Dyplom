@@ -25,7 +25,7 @@ public class FoodDeliveryManager : MonoBehaviour
         }
 
         // ✅ ODBLOKUJ DIALOG Z KURIEREM
-        GameState.CourierArrived = true;
+        
         Debug.Log("[FoodDelivery] 🚪 Kurier dostępny do rozmowy przy drzwiach");
 
         // ✅ UKOŃCZ QUEST "Order Food"

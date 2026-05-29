@@ -469,10 +469,10 @@ MonoBehaviour:
   settingsOverlay: {fileID: 1333546075}
   transitionOverlay: {fileID: 1327489215}
   transitionDuration: 0.8
-  volumeSlider: {fileID: 0}
+  volumeSlider: {fileID: 563849192}
   muteToggle: {fileID: 0}
-  volumeValueText: {fileID: 0}
-  mouseSensitivitySlider: {fileID: 563849192}
+  volumeValueText: {fileID: 288208135}
+  mouseSensitivitySlider: {fileID: 0}
   defaultSensitivity: 2
   mouseSensitivity: 2
   settingsManager: {fileID: 950330049}
@@ -3807,6 +3807,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 34a498dc2ca93d34c84cd30f1dab7628, type: 3}
   m_PrefabInstance: {fileID: 283545278}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &288208135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3303747294018386832, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+  m_PrefabInstance: {fileID: 563849191}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &290535915
 Mesh:
   m_ObjectHideFlags: 0
@@ -8250,6 +8261,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.7882353
       objectReference: {fileID: 0}
+    - target: {fileID: 2303187397150689951, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+      propertyPath: m_text
+      value: Volume
+      objectReference: {fileID: 0}
     - target: {fileID: 2412643728087149174, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.00066666666
@@ -8375,8 +8390,24 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6027825181993019421, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027825181993019421, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027825181993019421, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 508.405
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027825181993019421, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027825181993019421, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 304
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 6394654549544522524, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_Pivot.x
@@ -8484,7 +8515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7320746691964611658, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 242.17761
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8326991717700273591, guid: 8968aa4d4d0bb0c40861820352ad80f9, type: 3}
       propertyPath: m_Color.b

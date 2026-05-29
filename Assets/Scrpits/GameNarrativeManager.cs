@@ -484,6 +484,7 @@ public class GameNarrativeManager : MonoBehaviour
         {
             Debug.Log("[Narrative] ✅ All flashbacks completed! Triggering doorbell...");
             StartCoroutine(TriggerDoorbellSequence());
+            GameState.CourierArrived = true;
         }
     }
     private IEnumerator TriggerDoorbellSequence()
