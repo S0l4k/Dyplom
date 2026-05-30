@@ -1575,7 +1575,7 @@ Transform:
   m_GameObject: {fileID: 45204485}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.795, y: -10.361, z: 6.006}
+  m_LocalPosition: {x: -21.423, y: -10.361, z: 6.006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1999,6 +1999,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2491,6 +2495,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3044,7 +3052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2889697539488574818, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6044314
+      value: -3.622
       objectReference: {fileID: 0}
     - target: {fileID: 2889697539488574818, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3085,6 +3093,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8459,6 +8471,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.40215
@@ -9926,6 +9942,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13138,6 +13158,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6557773176867288192, guid: 5c4bba62231e5014d8a1309e72a1715b, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13446,6 +13470,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14375,6 +14403,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -27.71775
@@ -14790,6 +14822,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.862133
@@ -15001,6 +15037,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -15750,6 +15798,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.334
@@ -16250,6 +16302,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30.711956
@@ -16635,6 +16691,133 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2889697539488574818, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
   m_PrefabInstance: {fileID: 380383486}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &381500040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 381500041}
+  - component: {fileID: 381500045}
+  - component: {fileID: 381500044}
+  - component: {fileID: 381500043}
+  - component: {fileID: 381500042}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &381500041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381500040}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.674, y: -9.728, z: 6}
+  m_LocalScale: {x: 1, y: 2.2492, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1598220349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &381500042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381500040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!65 &381500043
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381500040}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &381500044
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381500040}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &381500045
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381500040}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &381833240
 GameObject:
   m_ObjectHideFlags: 0
@@ -17306,6 +17489,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18458,6 +18645,10 @@ PrefabInstance:
     - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_Size.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23420,6 +23611,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.406755
@@ -24036,6 +24231,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.917755
@@ -24260,7 +24459,7 @@ Transform:
   m_GameObject: {fileID: 477024568}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.6660543, z: -0, w: 0.74590325}
-  m_LocalPosition: {x: -26.435, y: -9.064538, z: 5.7750015}
+  m_LocalPosition: {x: -26.435, y: -9.321, z: 5.843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24690,6 +24889,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &488587001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25061,6 +25272,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25803,6 +26018,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29439,6 +29658,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.624
@@ -29625,6 +29848,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.251951
@@ -29694,6 +29921,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29795,6 +30026,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29905,6 +30140,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33518,6 +33757,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.7300014
@@ -34656,6 +34899,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -37026,6 +37281,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30.89956
@@ -38158,6 +38417,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.548212
@@ -39031,6 +39294,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.579805
@@ -39100,6 +39367,10 @@ PrefabInstance:
     - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_Size.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -39523,6 +39794,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40957,6 +41232,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -43938,6 +44217,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1007162984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45162,6 +45453,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.22
       objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -45665,6 +45960,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -53576,6 +53875,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.907999
@@ -55912,6 +56215,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -58794,6 +59101,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1220952968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59965,6 +60284,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -29.433756
@@ -60570,6 +60893,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.533966
@@ -60845,6 +61172,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.22
       objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -60914,6 +61245,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62348,6 +62683,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63891,6 +64230,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.867924
@@ -64230,6 +64573,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -65204,6 +65551,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.039804
@@ -65344,6 +65695,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.518196
@@ -65413,6 +65768,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65931,6 +66290,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 924378126}
+        m_TargetAssemblyTypeName: ComputerInteract, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -67273,7 +67644,7 @@ Transform:
   m_GameObject: {fileID: 1450390816}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.252756, y: -3.77, z: 3.9231567}
+  m_LocalPosition: {x: -13.252756, y: -3.75, z: 3.9231567}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69485,6 +69856,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.16
@@ -69861,6 +70236,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -70496,6 +70875,7 @@ Transform:
   - {fileID: 45204486}
   - {fileID: 1254162141}
   - {fileID: 477024569}
+  - {fileID: 381500041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1598220350
@@ -70541,7 +70921,7 @@ MonoBehaviour:
       Data3: -230245228
       Data4: 166272784
     Path: event:/Jumpscare
-  cutsceneFadeSpeed: 3
+  cutsceneFadeSpeed: 2
   linkedTrigger: {fileID: 601463405}
   delayBeforeReturn: 0.5
   cutsceneTrigger: {fileID: 45204487}
@@ -70550,6 +70930,7 @@ MonoBehaviour:
   mainCandleToDestroy: {fileID: 422208706}
   bloods:
   - {fileID: 2077457159}
+  hintbox: {fileID: 381500040}
 --- !u!1001 &1599487913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70569,6 +70950,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -70639,6 +71024,10 @@ PrefabInstance:
     - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_Size.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -71741,6 +72130,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.073954
@@ -72308,6 +72701,10 @@ PrefabInstance:
     - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
       propertyPath: m_Size.y
       value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -74112,6 +74509,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76584,6 +76985,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.008192
@@ -77661,7 +78066,7 @@ Transform:
   m_GameObject: {fileID: 1774565086}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -78305,6 +78710,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.227757
@@ -78859,6 +79268,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.22
       objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79338,6 +79751,10 @@ PrefabInstance:
     - target: {fileID: 6557773176867288192, guid: 5c4bba62231e5014d8a1309e72a1715b, type: 3}
       propertyPath: m_Size.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557773176867288192, guid: 5c4bba62231e5014d8a1309e72a1715b, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -79952,6 +80369,10 @@ PrefabInstance:
     - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_Size.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -85427,6 +85848,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.22
       objectReference: {fileID: 0}
+    - target: {fileID: 3354214404392683910, guid: 8c99b513b58d98848a455c245ad6361e, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -86254,6 +86679,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -29.383749
@@ -86488,6 +86917,10 @@ PrefabInstance:
     - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_Size.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -86936,7 +87369,7 @@ MonoBehaviour:
     Path: event:/WindowBreak
   couchFadeDuration: 1.5
   couchSitTime: 4
-  windowDemonVisibleTime: 4
+  windowDemonVisibleTime: 3
   cameraLookAtWindowDuration: 2
   lookAtWindowPause: 2.5
   walkToWindowDuration: 3
@@ -90865,6 +91298,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 939645157508514181, guid: 568b95428515d9448952669b85626ac0, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009318806263968086, guid: 568b95428515d9448952669b85626ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.624
@@ -91763,6 +92200,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20.574
@@ -91902,6 +92343,10 @@ PrefabInstance:
     - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_Size.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721945743382091071, guid: 626ebb963379f9646944480637695eba, type: 3}
+      propertyPath: m_DecalLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004642088490379140, guid: 626ebb963379f9646944480637695eba, type: 3}
       propertyPath: m_LocalPosition.x

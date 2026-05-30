@@ -191,6 +191,12 @@ public class SchoolQuestController : MonoBehaviour
         // ✅ Czekaj 10 sekund (jedzenie szkła)
         yield return new WaitForSeconds(10f);
 
+        // ✅ Aktywuj krew w szkole
+        if (schoolBlood != null)
+        {
+            schoolBlood.SetActive(true);
+            Debug.Log("[SchoolQuest] 🩸 School blood activated");
+        }
         // ✅ Ustaw kamerę cutscenki
         SetupCutsceneCamera();
 
@@ -200,12 +206,6 @@ public class SchoolQuestController : MonoBehaviour
         else
             yield return new WaitForSeconds(cutsceneFadeSpeed);
 
-        // ✅ Aktywuj krew w szkole
-        if (schoolBlood != null)
-        {
-            schoolBlood.SetActive(true);
-            Debug.Log("[SchoolQuest] 🩸 School blood activated");
-        }
 
         // ✅ Odtwórz krzyk dzieci
         if (!childrenScreamSound.IsNull && AudioManager.Instance != null)

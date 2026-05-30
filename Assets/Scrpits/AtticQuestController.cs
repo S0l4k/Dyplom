@@ -41,7 +41,7 @@ public class AtticQuestController : MonoBehaviour
     [Header("Blood Effects")]
     public GameObject[] bloods;  // ✅ Przeciągnij wszystkie obiekty z cząsteczkami krwi
 
-    // ✅ References
+    public GameObject hintbox;
     private QuestManager _questManager;
     private int _litCount = 0;
     private bool _cutscenePlayed = false;
@@ -110,6 +110,7 @@ public class AtticQuestController : MonoBehaviour
             cutsceneCollider.SetActive(true);
             cutsceneTrigger.enabled = true;
             Debug.Log("[AtticQuest] ✅ All candles lit! Trigger enabled");
+            hintbox.SetActive(true);
         }
     }
 
@@ -117,6 +118,7 @@ public class AtticQuestController : MonoBehaviour
     {
         if (_cutscenePlayed) return;
         StartCoroutine(PlayCutscene());
+        hintbox.SetActive(false); 
     }
 
     // ✅ NOWA METODA: Włącz/wyłącz wszystkie obiekty z krwią

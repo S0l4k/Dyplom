@@ -6,7 +6,6 @@ public class AtticCutsceneTrigger : MonoBehaviour
     public AtticQuestController questController;
     public Transform demonLookAtTarget;  // ✅ Przeciągnij demona lub punkt, na który ma patrzeć kamera
     public float lookAtSpeed = 5f;        // ✅ Prędkość obracania kamery
-
     private bool _triggered = false;
     private Camera _playerCamera;
     private PlayerCam _playerCamScript;

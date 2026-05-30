@@ -340,7 +340,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 50, y: 15.669983}
+  m_AnchoredPosition: {x: 50, y: 15.669922}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &690409262
@@ -676,25 +676,25 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "As a child, you and your friends attempted to summon a spirit in an abandoned
-    attic. What started as a harmless game with a candle and whispered Latin phrases
-    quickly turned into something disturbing. Shadows moved, objects trembled, and
-    from the darkness a twisted, smiling figure emerged, pointing directly at you.
-    Then everything went black.\n\nYou woke up in a hospital. Doctors and your parents
-    explained the event as a psychotic episode. According to them, nothing supernatural
-    had happened. Yet the feeling that something followed you from the attic never
-    left.\n\nThree months later, after returning to school, strange visions began
-    to appear \u2014 figures in empty corners, faces in reflections, movements no
-    one else could see. When you were alone, the same entity appeared again and claimed
-    it wanted to help you. Soon, whispers started guiding your actions. At first
-    they seemed harmless, but they grew stronger and more controlling, until they
-    led you to hurt yourself.\n\nYou were hospitalized again, this time for long-term
-    treatment. Fifteen years later, still confined in a psychiatric institution,
-    the entity \u2014 now clearly demonic \u2014 convinced you to stop taking your
-    medication and taught you how to manipulate the doctors. Believing you were cured,
-    they finally released you.\n\nNow, one month later, you live alone in a small
-    apartment. The visions have not faded \u2014 they are stronger than ever. The
-    entity is still with you. And it is no longer pretending to be human."
+  m_text: "As a child, you attempted to summon a spirit in an abandoned attic. What
+    started as a harmless game with a candle and whispered Latin phrases quickly
+    turned into something disturbing. Shadows moved, objects trembled, and from the
+    darkness a twisted, smiling figure emerged, pointing directly at you. Then everything
+    went black.\n\nYou woke up in a hospital. Doctors and your parents explained
+    the event as a psychotic episode. According to them, nothing supernatural had
+    happened. Yet the feeling that something followed you from the attic never left.\n\nThree
+    months later, after returning to school, strange visions began to appear \u2014
+    figures in empty corners, faces in reflections, movements no one else could see.
+    When you were alone, the same entity appeared again and claimed it wanted to
+    help you. Soon, whispers started guiding your actions. At first they seemed harmless,
+    but they grew stronger and more controlling, until they led you to hurt yourself.\n\nYou
+    were hospitalized again, this time for long-term treatment. Fifteen years later,
+    still confined in a psychiatric institution, the entity \u2014 now clearly demonic
+    \u2014 convinced you to stop taking your medication and taught you how to manipulate
+    the doctors. Believing you were cured, they finally released you.\n\nNow, one
+    month later, you live alone in a small apartment. The visions have not faded
+    \u2014 they are stronger than ever. The entity is still with you. And it is no
+    longer pretending to be human."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b1d21001fc5545b44aea30ed51d8d244, type: 2}
   m_sharedMaterial: {fileID: 892302641331877529, guid: b1d21001fc5545b44aea30ed51d8d244, type: 2}
