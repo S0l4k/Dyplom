@@ -22,14 +22,11 @@ public class ScreenFader : MonoBehaviour
 
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
-
-        // ✅ UKRYJ NA STARCIE
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
     }
 
-    // ✅ FADE TO BLACK
     public IEnumerator FadeOut(float duration = 1f)
     {
         canvasGroup.interactable = true;
@@ -46,7 +43,6 @@ public class ScreenFader : MonoBehaviour
         canvasGroup.alpha = 1f;
     }
 
-    // ✅ FADE FROM BLACK
     public IEnumerator FadeIn(float duration = 1f)
     {
         float elapsed = 0f;

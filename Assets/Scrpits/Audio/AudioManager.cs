@@ -34,37 +34,29 @@ public class AudioManager : MonoBehaviour
 
     private void LoadSavedVolume()
     {
-        // ✅ Sprawdź, czy w ogóle istnieje klucz "MasterVolume"
         if (!PlayerPrefs.HasKey("MasterVolume"))
         {
-            // Jeśli nie ma klucza -> ustaw domyślne 1.0 i zapisz
             masterVolume = 1f;
             PlayerPrefs.SetFloat("MasterVolume", masterVolume);
             PlayerPrefs.Save();
         }
         else
         {
-            // Jeśli klucz istnieje -> wczytaj zapisaną wartość
             masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
         }
 
         lastVolumeBeforeMute = masterVolume;
     }
-    // === DODAJ TE DWIE METODY DO SWOJEGO AudioManager.cs ===
-
-    // AudioManager.cs – popraw metody:
 
     public void SetMasterVolumeDirect(float volume)
     {
         volume = Mathf.Clamp01(volume);
         masterVolume = volume;
         PlayerPrefs.SetFloat("MasterVolume", volume);
-        PlayerPrefs.Save(); // ✅ KLUCZOWE!
+        PlayerPrefs.Save(); 
 
         if (volume > 0.01f) { isMuted = false; lastVolumeBeforeMute = volume; }
         UpdateActiveInstancesVolume();
-
-        Debug.Log($"[AudioManager] 💾 Volume saved: {volume}");
     }
 
     public void SetMuteStateDirect(bool mute)
@@ -73,11 +65,9 @@ public class AudioManager : MonoBehaviour
         else { masterVolume = lastVolumeBeforeMute; isMuted = false; }
 
         PlayerPrefs.SetFloat("MasterVolume", masterVolume);
-        PlayerPrefs.Save(); // ✅ KLUCZOWE!
+        PlayerPrefs.Save(); 
 
         UpdateActiveInstancesVolume();
-
-        Debug.Log($"[AudioManager] 💾 Mute state saved: {mute}");
     }
     public void AdjustMasterVolume(float step)
     {
@@ -86,7 +76,6 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
         if (masterVolume > 0f) isMuted = false;
 
-        // ✅ NOWE: zaktualizuj głośność wszystkich już grających instancji
         UpdateActiveInstancesVolume();
     }
 
@@ -106,13 +95,9 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("MasterVolume", masterVolume);
         PlayerPrefs.Save();
 
-        // ✅ NOWE: zaktualizuj głośność wszystkich już grających instancji
         UpdateActiveInstancesVolume();
     }
 
-    /// <summary>
-    /// Aktualizuje głośność wszystkich instancji w activeEventInstances.
-    /// </summary>
     private void UpdateActiveInstancesVolume()
     {
         foreach (var pair in activeEventInstances)
@@ -199,17 +184,12 @@ public class AudioManager : MonoBehaviour
         return instance;
     }
 
-    /// <summary>
-    /// Odtwarza muzykę lub dźwięk pętli z opcjonalnym fade-in.
-    /// </summary>
     public void PlayMusic(EventReference eventRef, float fadeIn = 0f)
     {
         if (eventRef.IsNull) return;
 
-        // ✅ Użyj Guid jako klucza – stabilny i unikalny
         string musicKey = eventRef.Guid.ToString();
 
-        // Sprawdź czy ta sama muzyka już gra
         if (activeEventInstances.ContainsKey(musicKey))
         {
             EventInstance existingInstance = activeEventInstances[musicKey];
@@ -217,10 +197,8 @@ public class AudioManager : MonoBehaviour
             if (state == PLAYBACK_STATE.PLAYING) return;
         }
 
-        // Zatrzymaj inną muzykę (tylko te z activeEventInstances)
         StopAllMusic();
 
-        // Stwórz nową instancję
         EventInstance newInstance = RuntimeManager.CreateInstance(eventRef);
         ApplyVolumeToInstance(newInstance);
 
@@ -235,7 +213,6 @@ public class AudioManager : MonoBehaviour
             newInstance.start();
         }
 
-        // Dodaj do śledzenia pod kluczem Guid
         if (activeEventInstances.ContainsKey(musicKey))
         {
             activeEventInstances[musicKey] = newInstance;

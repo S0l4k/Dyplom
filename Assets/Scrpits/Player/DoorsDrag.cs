@@ -49,11 +49,8 @@ public class DoorsDrag : MonoBehaviour
         isHoveringDoor = false;
         RaycastHit hit;
 
-        // ✅ Raycast przez WSZYSTKO (domyślny layermask ~0)
-        // Physics.Raycast ZAWSZE zatrzymuje się na pierwszym colliderze → ściany blokują!
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDistance))
         {
-            // ✅ Sprawdź czy trafiony obiekt ma HingeJoint (czyli są to drzwi)
             if (hit.collider.GetComponent<HingeJoint>() != null)
             {
                 isHoveringDoor = true;
@@ -66,7 +63,6 @@ public class DoorsDrag : MonoBehaviour
     {
         if (doorCrosshair == null) return;
 
-        // ✅ PRIORYTET: Przeciąganie > Najechanie > Ukrycie
         if (isDragging)
         {
             doorCrosshair.gameObject.SetActive(true);

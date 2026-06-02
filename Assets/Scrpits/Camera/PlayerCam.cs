@@ -10,7 +10,6 @@ public class PlayerCam : MonoBehaviour
 
     float xRotation;
     float yRotation;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         float savedSens = PlayerPrefs.GetFloat("MouseSensitivity", sensX);
@@ -24,7 +23,6 @@ public class PlayerCam : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
     }
-    // Update is called once per frame
     void Update()
     {
         float mouseX=Input.GetAxisRaw("Mouse X") *Time.deltaTime * sensX;
@@ -37,10 +35,6 @@ public class PlayerCam : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation= Quaternion.Euler(0, yRotation, 0);
-        if (Input.GetKeyDown(KeyCode.F12))
-        {
-            Debug.Log(">>> CURRENT ROT " + transform.rotation.eulerAngles);
-        }
     }
     public void SyncRotationWithCamera()
     {
@@ -53,10 +47,8 @@ public class PlayerCam : MonoBehaviour
         sensX = newSens;
         sensY = newSens;
 
-        // ✅ Zapisz od razu dla pewności (dubel bezpieczeństwa)
         PlayerPrefs.SetFloat("MouseSensitivity", newSens);
         PlayerPrefs.Save();
 
-        Debug.Log($"[PlayerCam] ⚙️ Sensitivity set & saved: {newSens}");
     }
 }

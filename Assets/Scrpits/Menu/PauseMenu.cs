@@ -1,5 +1,4 @@
-﻿// PauseMenu.cs - WERSJA: Same slidery, bez toggle mute
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -9,14 +8,14 @@ public class PauseMenu : MonoBehaviour
     [Header("UI")]
     public GameObject pausePanel;
     public GameObject settingsPanel;
-    public Slider sensitivitySlider;          // Zakres: 0-1200 (ustaw w Inspectorze!)
+    public Slider sensitivitySlider;         
     public TMP_Text sensitivityValueText;
     public GameObject crosshair;
     public GameObject main;
 
     [Header("Audio Controls")]
-    public Slider volumeSlider;               // Zakres: 0-1 (Slider głośności)
-    public TMP_Text volumeValueText;          // Tekst: "75%" lub "MUTED"
+    public Slider volumeSlider;               
+    public TMP_Text volumeValueText;        
 
     [Header("References")]
     public PlayerController playerController;
@@ -28,21 +27,16 @@ public class PauseMenu : MonoBehaviour
     public GameObject consolePanel;
 
     private bool isPaused = false;
-    private float lastNonZeroVolume = 1f;     // Zapamiętuje głośność przed wyciszeniem suwakiem
-
-    // ─────────────────────────────────────────────────────
+    private float lastNonZeroVolume = 1f;    
     void Start()
     {
         if (pausePanel != null)
             pausePanel.SetActive(false);
-        else
-            Debug.LogWarning("[PauseMenu] pausePanel is missing!");
 
         SetupSensitivityControls();
         SetupVolumeControls();
     }
 
-    // ─────────────────────────────────────────────────────
     void Update()
     {
         if (pausePanel == null || playerController == null || playerCam == null)
@@ -57,12 +51,10 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // ─────────────────────────────────────────────────────
     void Pause()
     {
         if (pausePanel == null)
         {
-            Debug.LogWarning("[PauseMenu] pausePanel destroyed - cannot pause");
             return;
         }
 
@@ -80,7 +72,6 @@ public class PauseMenu : MonoBehaviour
         UpdateVolumeUI();
     }
 
-    // ─────────────────────────────────────────────────────
     public void Resume()
     {
         if (pausePanel != null) pausePanel.SetActive(false);
@@ -93,11 +84,9 @@ public class PauseMenu : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Debug.Log("[PauseMenu] ▶️ Resume: inspect mode active → cursor kept visible");
         }
         else
         {
-            // Normalny tryb gry – przywróć zablokowany kursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -106,7 +95,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
     }
 
-    // ─────────────────────────────────────────────────────
     public void Quit()
     {
         Time.timeScale = 1f;
@@ -123,22 +111,16 @@ public class PauseMenu : MonoBehaviour
 
     private void SetupSensitivityControls()
     {
-        // ✅ KLUCZOWE: Tylko jeśli jesteśmy w grze (FlatScene) z PlayerCam
         if (playerCam == null || sensitivitySlider == null)
         {
-            Debug.Log("[PauseMenu] ⏭️ Skipping sensitivity setup – no PlayerCam");
             return;
         }
 
-        // ✅ Ładuj zapisaną czułość z PlayerPrefs (bezpośrednio, dla pewności)
         float savedSens = PlayerPrefs.GetFloat("MouseSensitivity", playerCam.sensX);
-        Debug.Log($"[PauseMenu] 🔽 Loaded game sensitivity: {savedSens}");
 
-        // ✅ SZANUJ ZAKRES SLIDERA Z INSPECTORA
         float clampedSens = Mathf.Clamp(savedSens, sensitivitySlider.minValue, sensitivitySlider.maxValue);
         sensitivitySlider.value = clampedSens;
 
-        // ✅ Aplikuj do PlayerCam
         playerCam.SetSensitivity(clampedSens);
         UpdateSensitivityUI(clampedSens);
 
@@ -150,25 +132,20 @@ public class PauseMenu : MonoBehaviour
     {
         float clampedValue = Mathf.Clamp(value, sensitivitySlider.minValue, sensitivitySlider.maxValue);
 
-        // ✅ Aplikuj do PlayerCam
         if (playerCam != null)
         {
             playerCam.SetSensitivity(clampedValue);
-            Debug.Log($"[PauseMenu] 🎮 Game sensitivity set to: {clampedValue}");
         }
 
         UpdateSensitivityUI(clampedValue);
-
-        // ✅ ZAPISZ do PlayerPrefs – TYLKO tutaj, w grze!
         PlayerPrefs.SetFloat("MouseSensitivity", clampedValue);
-        PlayerPrefs.Save();  // ✅ Natychmiastowy flush
-        Debug.Log($"[PauseMenu] 💾 Game sensitivity SAVED: {clampedValue}");
+        PlayerPrefs.Save();
     }
 
     private void UpdateSensitivityUI(float value)
     {
         if (sensitivityValueText != null)
-            sensitivityValueText.text = value.ToString("0"); // Bez miejsc po przecinku
+            sensitivityValueText.text = value.ToString("0"); 
     }
 
     // ════════════════════════════════════════════════════
@@ -180,7 +157,6 @@ public class PauseMenu : MonoBehaviour
         if (AudioManager.Instance == null) return;
 
         float savedVolume = AudioManager.Instance.GetMasterVolume();
-        // Zapamiętaj ostatnią nie-zerową głośność
         lastNonZeroVolume = savedVolume > 0.01f ? savedVolume : 1f;
 
         if (volumeSlider != null)
@@ -215,7 +191,6 @@ public class PauseMenu : MonoBehaviour
 
         UpdateVolumeUI();
 
-        // ✅ Upewnij się, że AudioManager woła PlayerPrefs.Save() wewnątrz SetMasterVolumeDirect!
     }
 
     private void UpdateVolumeUI()
@@ -227,10 +202,6 @@ public class PauseMenu : MonoBehaviour
 
         volumeValueText.text = isMuted ? "MUTED" : $"{Mathf.RoundToInt(vol * 100)}%";
     }
-
-    // ════════════════════════════════════════════════════
-    // ─── CONSOLE ────────────────────────────────────────
-    // ════════════════════════════════════════════════════
 
     public void OpenConsole()
     {
@@ -263,12 +234,10 @@ public class PauseMenu : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        // ✅ Zapisz czułość przy zamykaniu gry (ostatnia szansa)
         if (playerCam != null)
         {
             PlayerPrefs.SetFloat("MouseSensitivity", playerCam.sensX);
             PlayerPrefs.Save();
-            Debug.Log($"[PauseMenu] 💾 OnApplicationQuit: saved sens={playerCam.sensX}");
         }
     }
 }

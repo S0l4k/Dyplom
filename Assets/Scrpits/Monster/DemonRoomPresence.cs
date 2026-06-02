@@ -76,20 +76,16 @@ public class DemonRoomPresence : MonoBehaviour
 
         if (Random.value > appearanceChance)
         {
-            Debug.Log($"[Demon] 🎲 Skipped appearance in {roomTag}");
             return;
         }
 
         var data = roomPresences.FirstOrDefault(r => r.roomTag == roomTag);
         if (data == null) return;
 
-        Debug.Log($"[Demon] 👻 APPEARING in: {roomTag}");
         isBusy = true;
 
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
-
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!appearSound.IsNull)
             AudioManager.Instance.PlaySFX(appearSound, transform.position);
 
@@ -109,13 +105,11 @@ public class DemonRoomPresence : MonoBehaviour
         var data = roomPresences.FirstOrDefault(r => r.roomTag == roomTag);
         if (data == null) return false;
 
-        Debug.Log($"[Demon] 👹 FORCE APPEAR in: {roomTag}");
         isBusy = true;
 
         transform.position = data.spawnPoint.position;
         transform.rotation = data.spawnPoint.rotation;
 
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!appearSound.IsNull)
             AudioManager.Instance.PlaySFX(appearSound, transform.position);
 
@@ -133,11 +127,8 @@ public class DemonRoomPresence : MonoBehaviour
     public void ExitRoom()
     {
         if (string.IsNullOrEmpty(currentRoomTag) || isBusy) return;
-
-        Debug.Log($"[Demon] ⬅️ Exiting: {currentRoomTag}");
         isBusy = true;
 
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         if (!disappearSound.IsNull)
             AudioManager.Instance.PlaySFX(disappearSound, transform.position);
 

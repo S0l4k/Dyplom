@@ -43,7 +43,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
     private bool _isInFlashback = false;
     private bool _hasBeenUsed = false;
 
-    // ✅ ID questa do trackowania
     [Tooltip("ID questa do trackowania postępu (np. 'SchoolFlashback')")]
     public string flashbackQuestID;
 
@@ -68,14 +67,10 @@ public class NarrativeInspectTrigger : MonoBehaviour
             endInspectButton.onClick.AddListener(ExitInspect);
             endInspectButton.gameObject.SetActive(false);
         }
-
-        // ✅ DEBUG: Sprawdź stan na start
-        Debug.Log($"[NarrativeInspect] {gameObject.name} | enableFlashback={enableFlashback}, questID={flashbackQuestID}");
     }
 
     void Update()
     {
-        // Jeśli obiekt był już użyty lub w trakcie interakcji – zablokuj
         if (_isInInspect || _isInFlashback || _hasBeenUsed) return;
 
         CheckInteraction();
@@ -86,27 +81,19 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     void CheckInteraction()
     {
-        // ✅ DEBUG: Loguj stan checka
-        Debug.Log($"[CheckInteraction] {gameObject.name} | unlocked={GameState.ApartmentExplorationUnlocked}, used={_hasBeenUsed}");
-
-        // ✅ Blokada jeśli flashbacki nie są jeszcze odblokowane
         if (enableFlashback && !GameState.ApartmentExplorationUnlocked)
         {
-            Debug.Log($"[CheckInteraction] ❌ BLOCKED: ApartmentExplorationUnlocked={GameState.ApartmentExplorationUnlocked}");
             if (outline != null) outline.enabled = false;
             _canInteract = false;
             return;
         }
 
-        // ✅ Jeśli obiekt był już użyty – zablokuj
         if (_hasBeenUsed)
         {
-            Debug.Log($"[CheckInteraction] ❌ BLOCKED: Object already used");
             if (outline != null) outline.enabled = false;
             _canInteract = false;
             return;
         }
-        // ✅ Jeśli w trakcie inspect/flashback – zablokuj
         if (_isInInspect || _isInFlashback)
         {
             if (outline != null) outline.enabled = false;
@@ -114,10 +101,8 @@ public class NarrativeInspectTrigger : MonoBehaviour
             return;
         }
 
-        // ✅ FIX: Poprawny check kamery (było: !playerCamera== false)
         if (playerCamera == null)
         {
-            Debug.LogWarning($"[CheckInteraction] ❌ playerCamera is NULL on {gameObject.name}");
             return;
         }
 
@@ -130,14 +115,12 @@ public class NarrativeInspectTrigger : MonoBehaviour
             if (hit.collider.gameObject == gameObject || hit.transform.IsChildOf(transform))
             {
                 _canInteract = true;
-                Debug.Log($"[CheckInteraction] ✅ Raycast HIT on {gameObject.name}");
             }
         }
 
         if (_canInteract != wasCan)
         {
             if (outline != null) outline.enabled = _canInteract;
-            Debug.Log($"[CheckInteraction] outline.enabled = {_canInteract}");
         }
     }
 
@@ -188,9 +171,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
     {
         if (_activeInspector != this) return;
 
-        // ✅ KLUCZOWE: Zablokuj ponowną interakcję NATYCHMIAST, zanim korutyna się zacznie!
         _hasBeenUsed = true;
-        Debug.Log($"[NarrativeInspect] 🔒 {gameObject.name} marked as used (immediate)");
 
         if (playerCamera != null && !playerCamera.gameObject.activeSelf)
             playerCamera.gameObject.SetActive(true);
@@ -210,7 +191,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
             gameplayUI.blocksRaycasts = true;
         }
 
-        // ✅ Wyłącz outline po wyjściu z inspect
         if (outline != null) outline.enabled = false;
 
         if (!string.IsNullOrEmpty(afterText) && GameNarrativeManager.Instance != null)
@@ -234,9 +214,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     private void ContinueAfterInspect()
     {
-        // ✅ KLUCZOWE: Oznacz obiekt jako użyty, żeby nie można było wejść ponownie!
         _hasBeenUsed = true;
-        Debug.Log($"[NarrativeInspect] 🔒 {gameObject.name} marked as used");
 
         if (enableFlashback && flashbackLocation != null)
         {
@@ -250,7 +228,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     private void StartFlashback()
     {
-        Debug.Log($"[Flashback] 🌀 Starting flashback for {gameObject.name}");
         _isInFlashback = true;
         StartCoroutine(FlashbackTeleportSequence());
     }
@@ -294,8 +271,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
                 {
                     playerCamera.transform.rotation = targetRot;
                 }
-
-                Debug.Log($"[Flashback] 🚀 Teleported to {flashbackLocation.name} at {targetPos}");
             }
         }
 
@@ -319,8 +294,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
     public void EndFlashback()
     {
         if (!_isInFlashback) return;
-
-        Debug.Log($"[Flashback] 🔙 Returning from flashback for {gameObject.name}");
         _isInFlashback = false;
 
         StartCoroutine(ReturnFromFlashbackSequence());
@@ -328,7 +301,6 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
     private IEnumerator ReturnFromFlashbackSequence()
     {
-        // 🔒 Zablokuj gracza
         if (playerController != null) playerController.enabled = false;
         if (playerCamera != null) playerCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -340,14 +312,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
         if (enableFlashback && !string.IsNullOrEmpty(flashbackQuestID))
         {
             GameNarrativeManager.Instance?.OnFlashbackCompleted(flashbackQuestID);
-            Debug.Log($"[Narrative] 📢 Flashback completed: {flashbackQuestID}");
         }
-
-        // ❌ USUNIĘTE: FadeOut na początku – ekran JEST już czarny z AtticQuest!
-        // 🌑 Fade OUT – już jest czarno, więc to tylko dla pewności  ← USUŃ TO CAŁKOWICIE!
-        // if (screenFader != null) yield return StartCoroutine(screenFader.FadeOut(fadeSpeed));
-
-        // 🌀 TELEPORT POWROTNY (nadal na czarnym ekranie)
         Transform playerTrans = playerTransform != null ? playerTransform : playerController?.transform;
         if (playerTrans != null)
         {
@@ -367,23 +332,14 @@ public class NarrativeInspectTrigger : MonoBehaviour
 
             playerTrans.position = targetPos;
             playerTrans.rotation = targetRot;
-            Debug.Log($"[Flashback] 🔙 Returned to saved position: {targetPos}");
         }
 
-        // 🎬 Wyłącz scenę flashbacku
         if (flashbackScene != null) flashbackScene.SetActive(false);
-
-        // ✅ TERAZ: Fade IN – dopiero po teleportacji do mieszkania!
-        Debug.Log("[ReturnFromFlashback] 🌕 Fading IN after teleport to apartment...");
-
-        // ✅ Najpierw upewnij się, że ekran jest CZARNY przed FadeIn
+        
         if (screenFader != null)
         {
-            // Ustaw alpha na 1 (czarny) na wszelki wypadek
             var img = screenFader.GetComponent<UnityEngine.UI.Image>();
             if (img != null) img.color = new Color(0, 0, 0, 1);
-
-            // Teraz FadeIn
             yield return StartCoroutine(screenFader.FadeIn(fadeSpeed));
         }
         else
@@ -396,10 +352,7 @@ public class NarrativeInspectTrigger : MonoBehaviour
             QuestManager.Instance.questPanel.SetActive(true);
         }
 
-        // 🔓 Przywróć normalną grę
         RestorePlayerControl();
-
-        Debug.Log("[ReturnFromFlashback] ✅ FadeIn complete – player back in apartment");
     }
     private void StopFlashbackAmbience()
     {
@@ -409,39 +362,31 @@ public class NarrativeInspectTrigger : MonoBehaviour
             if (ambience != null)
             {
                 ambience.StopVoices(true);
-                Debug.Log("[Narrative] 🔇 Flashback ambience stopped");
             }
         }
     }
 
     private void RestorePlayerControl()
     {
-        Debug.Log("[RestorePlayerControl] 🔓 Restoring full player control...");
 
         if (playerController != null)
         {
             playerController.enabled = true;
-            Debug.Log("  ├─ PlayerController.enabled = true");
         }
 
         if (playerCamera != null)
         {
             playerCamera.enabled = true;
-            Debug.Log("  ├─ playerCamera GameObject.enabled = true");
         }
 
         PlayerCam playerCamScript = playerCamera?.GetComponent<PlayerCam>();
         if (playerCamScript != null)
         {
             playerCamScript.enabled = true;
-            Debug.Log("  ├─ PlayerCam script.enabled = true");
         }
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("  └─ Cursor locked, hidden");
-
-        Debug.Log("[RestorePlayerControl] ✅ Player fully unlocked");
     }
 
     IEnumerator FadeUI(CanvasGroup cg, float targetAlpha)

@@ -11,7 +11,6 @@ public class FlatAmbient : MonoBehaviour
 
     private void Start()
     {
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         ambientInstance = AudioManager.Instance.CreateAmbientInstance(apartmentAmbientEvent);
     }
 
@@ -19,8 +18,6 @@ public class FlatAmbient : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         if (isPlaying) return;
-
-        // ✅ ZAMIENIONE: bezpośrednie set3DAttributes + start -> AudioManager
         AudioManager.Instance.StartAmbientInstance(ambientInstance, transform.position);
         isPlaying = true;
     }
@@ -29,15 +26,12 @@ public class FlatAmbient : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         if (!isPlaying) return;
-
-        // ✅ ZAMIENIONE: bezpośrednie stop -> AudioManager
         AudioManager.Instance.StopAmbientInstance(ref ambientInstance, true);
         isPlaying = false;
     }
 
     private void OnDestroy()
     {
-        // ✅ ZAMIENIONE: bezpośrednie release -> AudioManager
         AudioManager.Instance.StopAmbientInstance(ref ambientInstance, true);
     }
 }

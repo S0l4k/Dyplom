@@ -13,9 +13,8 @@ public class DialogActivator : MonoBehaviour
     public bool isFinalDialog = false;
 
     [Header("Dialog Customization (per NPC)")]
-    public EventReference voiceEvent;          // ✅ Głos tego NPC (demon LUB kurier)
-    public Color textColor = Color.white;      // ✅ Kolor tekstu NPC
-    // ✅ Kolor markera (tło pod tekstem)
+    public EventReference voiceEvent;         
+    public Color textColor = Color.white;     
 
     [Header("Dialog Content")]
     public DialogNode[] dialogNodes;
@@ -33,8 +32,6 @@ public class DialogActivator : MonoBehaviour
     private MonoBehaviour playerMovementScript;
     private bool canTalk = false;
     public bool isTalking = false;
-
-    // ✅ ZAPAMIĘTAJ ORYGINALNE USTAWIENIA DIALOG UI (do przywrócenia po dialogu)
     private EventReference originalVoice;
     private Color originalTextColor = Color.white;
    
@@ -49,10 +46,6 @@ public class DialogActivator : MonoBehaviour
         if (player != null)
             playerMovementScript = player.GetComponent<MonoBehaviour>();
 
-
-
-
-        // ✅ ZAPISZ ORYGINALNE USTAWIENIA DIALOG UI
         if (dialogManager != null)
         {
             Dialog dialog = dialogManager.GetComponent<Dialog>();
@@ -75,7 +68,6 @@ public class DialogActivator : MonoBehaviour
 
         if (!playerCamera) return;
 
-        // ✅ BLOKADA DIALOGU KURIERA PRZED ZAMÓWIENIEM
         if (npcName == "Courier" && !GameState.CourierArrived)
         {
            
@@ -83,7 +75,6 @@ public class DialogActivator : MonoBehaviour
             return;
         }
 
-        // ✅ BLOKADA FINALNEGO DIALOGU
         if (isFinalDialog && !GameState.DemonLoopPhase)
         {
            
@@ -91,7 +82,6 @@ public class DialogActivator : MonoBehaviour
             return;
         }
 
-        // ✅ BLOKADA ZWYKŁYCH DIALOGÓW PODCZAS FAZY DEMONA
         if (!isFinalDialog && GameState.DemonLoopPhase && !GameState.ReadyForFinalChase)
         {
            
@@ -160,8 +150,7 @@ public class DialogActivator : MonoBehaviour
             Dialog dialog = dialogManager.GetComponent<Dialog>();
             if (dialog != null)
             {
-                // ✅ PODMIEŃ USTAWIENIA DIALOGU NA TE Z TEGO NPC
-                dialog.npcVoiceEvent = voiceEvent;  // 🔥 TO BYŁO BRAKUJĄCE!
+                dialog.npcVoiceEvent = voiceEvent;  
 
                 if (dialog.dialogText != null)
                     dialog.dialogText.color = textColor;
@@ -180,7 +169,6 @@ public class DialogActivator : MonoBehaviour
         isTalking = false;
         GameState.IsTalking = false;
 
-        // ✅ PRZYWRÓĆ ORYGINALNE USTAWIENIA DIALOG UI
         dialog.npcVoiceEvent = originalVoice;
        
 
@@ -194,19 +182,14 @@ public class DialogActivator : MonoBehaviour
             playerCamScript.enabled = true;
 
         _dialogJustFinished = true;
-        Debug.Log($"Rozmowa z {npcName} zakończona.");
 
         if (isFinalDialog)
         {
             GameState.ReadyForFinalChase = true;
             GameState.DemonLoopPhase = false;
-            Debug.Log("[DialogActivator] Final dialog finished. ReadyForFinalChase = true");
         }
     }
-    // Flag: czy dialog właśnie się skończył
     private bool _dialogJustFinished = false;
-
-    // ✅ Publiczna metoda dla SchoolQuestController
     public bool HasDialogJustFinished()
     {
         if (_dialogJustFinished)

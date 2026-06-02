@@ -12,20 +12,18 @@
     public static bool FridgeDemonDialogCompleted = false;
     public static bool IsInspecting = false;
     public static bool TriggerSeizureEffect = false;
-    // ✅ NOWE FLAGI DLA SEKWENCJI KOŃCOWEJ
     public static bool InteractionsLocked = false;
     public static bool SofaSequenceActive = false;
     public static bool IsInFlashback = false;
-    public static bool FoodOrdered = false;                    // Czy gracz zamówił jedzenie?
-    public static bool ApartmentExplorationUnlocked = false;   // Czy odblokowano quest "rozglądnij się"?
-    public static int FlashbacksCompleted = 0;                 // Ile z 2 flashbacków ukończono (0/1/2)
-    public static readonly int TotalFlashbacksRequired = 2;    // Ile flashbacków trzeba zrobić
+    public static bool FoodOrdered = false;                    
+    public static bool ApartmentExplorationUnlocked = false;  
+    public static int FlashbacksCompleted = 0;                
+    public static readonly int TotalFlashbacksRequired = 2;    
 
-    // ✅ Helper: czy wszystkie flashbacki są ukończone?
+
     public static bool AllFlashbacksCompleted => FlashbacksCompleted >= TotalFlashbacksRequired;
     public static void ResetAll()
     {
-        // ✅ Reset wszystkich flag narracyjnych
         DemonInStoryMode = true;
         ChaseLocked = true;
         LoopSequenceActive = false;

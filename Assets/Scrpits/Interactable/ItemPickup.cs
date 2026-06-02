@@ -28,21 +28,17 @@ public class ItemPickup : MonoBehaviour
 
     public StairLoop stairLoop;
 
-    // ✅ NOWE POLA DLA SYSTEMU ŚWIATŁA/LEKÓW
     [Header("Light & Medicine System")]
     public LightController lightController;
     public GameObject medicine;
 
-    // ✅ ATTIC QUEST INTEGRATION
     [Header("Attic Quest Integration")]
     public AtticQuestController atticQuestController;
 
-    // ✅ STATYCZNE REFERENCJE DO ŚLEDZENIA TRZYMANEGO PRZEDMIOTU
     private static ItemPickup heldItem = null;
     private static ItemPickup heldFlashlight = null;
     private static ItemPickup currentTarget = null;
 
-    // ✅ NOWE: Statyczna referencja do trzymanej świeczki attica
     private static ItemPickup _heldAtticCandle = null;
 
     private Camera playerCamera;
@@ -101,7 +97,6 @@ public class ItemPickup : MonoBehaviour
         if (isFlashlight && heldFlashlight != null) return;
         if (!isFlashlight && heldItem != null) return;
 
-        // ✅ KLUCZOWA BLOKADA: NIE POKAZUJ TEKSTU PODNOSZENIA LATARKI PRZED RESPAWNEM DEMONA
         if (isFlashlight && !GameState.DemonRespawnedInApartment)
         {
             HidePickupText();
@@ -110,14 +105,11 @@ public class ItemPickup : MonoBehaviour
             return;
         }
 
-        // ✅ NOWY CHECK: Jeśli interakcje zablokowane (po lekach) → seizure effect
         if (GameState.InteractionsLocked && !isHeld)
         {
             if (outline != null) outline.enabled = false;
             HidePickupText();
             canPickup = false;
-
-            // ✅ Użyj UNIKALNYCH nazw zmiennych – bez konfliktu z późniejszym ray/hit!
             Ray seizureRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             if (Physics.Raycast(seizureRay, out RaycastHit seizureHit, 3f)
                 && seizureHit.collider.gameObject == gameObject)
@@ -127,7 +119,6 @@ public class ItemPickup : MonoBehaviour
             return;
         }
 
-        // ✅ Reszta metody BEZ ZMIAN – oryginalny kod:
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
@@ -162,29 +153,23 @@ public class ItemPickup : MonoBehaviour
 
     void Pickup()
     {
-        // ✅ KLUCZOWA BLOKADA: NIE POZWÓL PODNIEŚĆ LATARKI PRZED RESPAWNEM DEMONA
         if (isFlashlight && !GameState.DemonRespawnedInApartment)
         {
-            Debug.Log("[Pickup] ❌ Cannot pick up flashlight yet – demon not respawned in apartment");
             return;
         }
 
         if (isFlashlight && heldFlashlight != null)
         {
-            Debug.Log("[Pickup] Flashlight already held – skipping pickup");
             return;
         }
 
         if (!isFlashlight && heldItem != null)
             return;
 
-        // ✅ Wyłącz outline przy podnoszeniu
         if (outline != null) outline.enabled = false;
 
-        // ✅ TUTAJ JEST JUŻ BEZPIECZNIE – demon się zrespawnował
         if (isFlashlight)
         {
-            Debug.Log("[Pickup] ✅ Flashlight picked up AFTER demon respawn");
             QuestManager.Instance.CompleteQuest("Find flashlight");
             StartCoroutine(LightsFlickerAndTurnOff());
         }
@@ -224,15 +209,12 @@ public class ItemPickup : MonoBehaviour
             if (stairLoop != null)
             {
                 stairLoop.loopCount = 0;
-                Debug.Log("[ItemPickup] Loop sequence activated after picking up food!");
             }
         }
 
-        // ✅ ATTIC QUEST: Jeśli to świeczka z attica – zapisz referencję
         if (atticQuestController != null && gameObject.CompareTag("AtticCandle"))
         {
             _heldAtticCandle = this;
-            Debug.Log($"[ItemPickup] 🕯️ Attic candle picked up – quest notified | item={itemName}");
         }
     }
 
@@ -249,7 +231,6 @@ public class ItemPickup : MonoBehaviour
 
         isHeld = false;
 
-        // ✅ Jeśli to była świeczka attica – wyczyść referencję
         if (_heldAtticCandle == this)
             _heldAtticCandle = null;
 
@@ -285,19 +266,14 @@ public class ItemPickup : MonoBehaviour
         flashlightUIImage.sprite = isHidden ? flashlightOffSprite : flashlightOnSprite;
     }
 
-
-    // ✅ NOWA METODA: GASZENIE ŚWIATŁA Z EFEKTEM TYPIENIA
     private IEnumerator LightsFlickerAndTurnOff()
     {
         if (lightController == null)
         {
-            Debug.LogError("[ItemPickup] LightController nie przypisany – pomijam gaszenie");
             yield break;
         }
 
-        Debug.Log("[ItemPickup] 🔌 Zaczynam gaszenie świateł po podniesieniu latarki...");
 
-        // ✅ Efekt typkania (3x)
         for (int i = 0; i < 3; i++)
         {
             lightController.TurnOffAllLights();
@@ -306,22 +282,15 @@ public class ItemPickup : MonoBehaviour
             yield return new WaitForSeconds(0.15f + (i * 0.1f));
         }
 
-        // ✅ Ostateczne zgaszenie
         lightController.TurnOffAllLights();
-        Debug.Log("[ItemPickup] 💡 Wszystkie światła zgaszone");
 
-        // ✅ SPAWN LEKÓW PO 1 SEKUNDZIE
         yield return new WaitForSeconds(1f);
         if (medicine != null)
         {
             QuestManager.Instance.AddQuest("Find meds");
             medicine.SetActive(true);
-            Debug.Log("[ItemPickup] 💊 Leki aktywowane");
         }
     }
-
-    // ✅ ✅ ✅ NOWA STATYCZNA METODA DLA CANDLECONTROLLER ✅ ✅ ✅
-    // Sprawdź czy gracz trzyma świeczkę z attica
     public static bool HeldItemIsAtticCandle()
     {
         return _heldAtticCandle != null && _heldAtticCandle.isHeld;

@@ -22,8 +22,6 @@ public class SofaInteract : MonoBehaviour
     private PlayerController playerController;
     private PlayerCam playerCam;
     public ItemCheck _itemCheck;
-
-    // === 📷 Zapisane pozycje kamery (jak w ComputerInteract) ===
     private Vector3 originalCamPosition;
     private Quaternion originalCamRotation;
 
@@ -63,8 +61,6 @@ public class SofaInteract : MonoBehaviour
         {
             interactText.gameObject.SetActive(true);
             canUse = true;
-
-            // ✅ NOWE: Włącz outline gdy gracz patrzy na sofę
             if (outline != null) outline.enabled = true;
 
             return;
@@ -72,14 +68,11 @@ public class SofaInteract : MonoBehaviour
 
         interactText.gameObject.SetActive(false);
         canUse = false;
-
-        // ✅ NOWE: Wyłącz outline gdy gracz nie patrzy na sofę
         if (outline != null) outline.enabled = false;
     }
     IEnumerator UseSofa()
     {
         DisablePlayerFlashlight();
-        // === BLOKADA ===
         _itemCheck.enabled = false;
         GameState.SofaSequenceActive = true;
         canUse = false;
@@ -87,12 +80,9 @@ public class SofaInteract : MonoBehaviour
 
         if (playerController != null) playerController.enabled = false;
         if (playerCam != null) playerCam.enabled = false;
-
-        // === 📷 ZAPISZ aktualną pozycję kamery PRZED cutscenką (jak w ComputerInteract) ===
         originalCamPosition = playerCamera.position;
         originalCamRotation = playerCamera.rotation;
         outline.enabled = false;
-        // === KAMERA: płynne przejście do pozycji na kanapie ===
         Vector3 startPos = playerCamera.position;
         Quaternion startRot = playerCamera.rotation;
         float elapsed = 0f;
@@ -105,19 +95,14 @@ public class SofaInteract : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(2f); // Krótka chwila ciszy na kanapie
+        yield return new WaitForSeconds(2f); 
 
-        // === 🎬 PRZEKAZANIE KONTROLI do GameNarrativeManager ===
         if (GameNarrativeManager.Instance != null)
         {
-            Debug.Log("[SofaInteract] 🎬 Handing off to GameNarrativeManager for extended ending");
-
-            // ✅ PRZEKAŻ zapisane pozycje kamery!
             GameNarrativeManager.Instance.StartSecondEndingFinalSequence(originalCamPosition, originalCamRotation);
         }
         else
         {
-            Debug.LogError("[SofaInteract] ❌ GameNarrativeManager NULL! Fallback exit...");
             yield return StartCoroutine(FallbackExit());
         }
     }
@@ -126,7 +111,6 @@ public class SofaInteract : MonoBehaviour
         if (flashlightObject != null)
         {
             flashlightObject.SetActive(false);
-            Debug.Log("[MedicinePickup] 🔦 Flashlight disabled via reference");
             return;
         }
     }

@@ -71,12 +71,10 @@ public class Dialog : MonoBehaviour
         isTyping = true;
         skipTyping = false;
 
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         npcVoiceInstance = AudioManager.Instance.PlayDialogVoice(npcVoiceEvent);
 
         yield return StartCoroutine(TypeText(dialogText, node.npcLine));
 
-        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
         AudioManager.Instance.StopDialogVoice(ref npcVoiceInstance, true);
 
         yield return new WaitForSeconds(0.4f);
@@ -170,7 +168,6 @@ public class Dialog : MonoBehaviour
 
     void OnDestroy()
     {
-        // ✅ ZAMIENIONE: bezpośrednie stop/release -> AudioManager
         AudioManager.Instance.StopDialogVoice(ref npcVoiceInstance, true);
     }
 }

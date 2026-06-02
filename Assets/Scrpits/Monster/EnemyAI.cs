@@ -67,7 +67,6 @@ public class EnemyAI : MonoBehaviour
     public float spawnInvincibilityTime = 1.5f;
     public float spawnInvincibilityTimer = 0f;
 
-    // --- Heartbeat private fields ---
     private FMOD.Studio.EventInstance heartbeatInstance;
     private bool isHeartbeatPlaying = false;
 
@@ -83,7 +82,7 @@ public class EnemyAI : MonoBehaviour
     private void OnDestroy()
     {
         AllEnemies.Remove(this);
-        StopHeartbeat(); // ✅ Cleanup
+        StopHeartbeat(); 
     }
 
     private void Start()
@@ -94,16 +93,12 @@ public class EnemyAI : MonoBehaviour
             randNum = Random.Range(0, destinations.Count);
             currentDest = destinations[randNum];
         }
-        else
-        {
-            Debug.LogWarning($"[EnemyAI] {name} has no patrol destinations assigned!");
-        }
+ 
     }
 
     private void Update()
     {
 
-        // ✅ PRIORYTET 1: FinalChase
         if (GameState.FinalChase)
         {
             if (GameNarrativeManager.Instance != null)
@@ -123,7 +118,6 @@ public class EnemyAI : MonoBehaviour
 
             if (player == null)
             {
-                Debug.LogError("[EnemyAI] Player reference is null during FinalChase!");
                 return;
             }
 
@@ -147,7 +141,6 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"[EnemyAI] {name} cannot chase - not on NavMesh!");
                     return;
                 }
             }
@@ -160,7 +153,6 @@ public class EnemyAI : MonoBehaviour
                 if (pc != null && pc.godMode) return;
 
                 jumpscareTriggered = true;
-                Debug.Log("[EnemyAI] FINAL CHASE CATCH! Triggering jumpscare sequence ONCE.");
 
                 if (player != null)
                     player.gameObject.SetActive(false);
@@ -190,7 +182,6 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        // ✅ PRIORYTET 2: Cooldown po respawnowaniu
         if (spawnInvincibilityTimer > 0f)
         {
             spawnInvincibilityTimer -= Time.deltaTime;
@@ -210,7 +201,6 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        // ✅ PRIORYTET 3: Rozmowa z graczem
         if (GameState.IsTalking)
         {
             ai.speed = 0;
@@ -226,8 +216,6 @@ public class EnemyAI : MonoBehaviour
             }
             return;
         }
-
-        // --- DETEKCJA GRACZA ---
         Vector3 direction = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
         
@@ -318,7 +306,6 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"[EnemyAI] {name} cannot chase - not on NavMesh!");
                     return;
                 }
             }
@@ -385,7 +372,6 @@ public class EnemyAI : MonoBehaviour
 
             if (ai.pathStatus != NavMeshPathStatus.PathComplete)
             {
-                Debug.LogWarning($"[EnemyAI] {name} Path status: {ai.pathStatus} – przechodzę do następnego punktu");
 
                 if (destinations != null && destinations.Count > 0)
                 {
@@ -420,7 +406,6 @@ public class EnemyAI : MonoBehaviour
                     if (Time.time - lastProgressTime > 2f)
                     {
                         stuckCounter++;
-                        Debug.LogWarning($"[EnemyAI] {name} Wykryto zapętlenie #{stuckCounter} – przechodzę do następnego punktu");
 
                         if (stuckCounter >= 2)
                         {
@@ -429,7 +414,6 @@ public class EnemyAI : MonoBehaviour
                                 randNum = (randNum + 1) % destinations.Count;
                                 currentDest = destinations[randNum];
                                 stuckCounter = 0;
-                                Debug.Log($"[EnemyAI] {name} Nowy cel: {currentDest.name}");
                             }
                         }
 
@@ -450,7 +434,6 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        // --- ❤️ HEARTBEAT SYSTEM ---
         if (player != null)
         {
             float dist = Vector3.Distance(transform.position, player.position);
@@ -459,15 +442,11 @@ public class EnemyAI : MonoBehaviour
     }
 
     // ============================================================
-    // HEARTBEAT SYSTEM – PROSTA WERSJA
+    // HEARTBEAT SYSTEM
     // ============================================================
 
     private void UpdateHeartbeat(float distance)
     {
-
-        // ❤️ HEARTBEAT GRA TYLKO PODCZAS PATROLU W MIESZKANIU
-        // Warunki: demon respawned w apartamencie, ale NIE w story mode / final chase / rozmowie
-
         bool isPatrolActive = GameState.DemonRespawnedInApartment &&
                               !GameState.DemonInStoryMode &&
                               !GameState.FinalChase &&
@@ -485,26 +464,21 @@ public class EnemyAI : MonoBehaviour
             StartHeartbeat();
         else if (!demonBlisko && isHeartbeatPlaying)
             StopHeartbeat();
-        Debug.Log($"[Heartbeat] PatrolActive:{isPatrolActive} | Dist:{distance:F1}m | Playing:{isHeartbeatPlaying}");
     }
 
     private void StartHeartbeat()
     {
         if (heartbeatEvent.IsNull || isHeartbeatPlaying) return;
 
-        // ✅ UŻYJ AudioManager, żeby zastosować masterVolume i tracking
         heartbeatInstance = AudioManager.Instance.CreateAmbientInstance(heartbeatEvent);
 
         if (heartbeatInstance.isValid())
         {
-            // ✅ Dodatkowo: ręczne ustawienie volume (dla pewności)
             float finalVol = heartbeatVolume * AudioManager.Instance.GetMasterVolume();
             heartbeatInstance.setVolume(finalVol);
 
-            // ✅ Start i dodanie do trackingu (opcjonalnie, ale zalecane)
             heartbeatInstance.start();
 
-            // 🔁 Dodaj do activeEventInstances, żeby zmiany volume działały w locie
             string key = heartbeatEvent.Guid.ToString() + "_heartbeat_" + GetInstanceID();
             if (!AudioManager.Instance.activeEventInstances.ContainsKey(key))
             {
@@ -512,11 +486,6 @@ public class EnemyAI : MonoBehaviour
             }
 
             isHeartbeatPlaying = true;
-            Debug.Log($"[EnemyAI] ❤️ Heartbeat STARTED | Vol: {finalVol:F2} | Valid: {heartbeatInstance.isValid()}");
-        }
-        else
-        {
-            Debug.LogError("[EnemyAI] ❌ Heartbeat instance INVALID after creation!");
         }
     }
 
@@ -530,7 +499,6 @@ public class EnemyAI : MonoBehaviour
         isHeartbeatPlaying = false;
     }
 
-    // ============================================================
 
     IEnumerator stayIdle()
     {
@@ -549,7 +517,7 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator deathRoutine()
     {
-        StopHeartbeat(); // ✅ Wyłącz heartbeat przed jumpscare
+        StopHeartbeat(); 
 
         yield return new WaitForSeconds(jumpscareTime);
 
@@ -572,10 +540,6 @@ public class EnemyAI : MonoBehaviour
 
             player.gameObject.SetActive(false);
         }
-        else
-        {
-            Debug.LogError("[EnemyAI] ❌ player reference is NULL in deathRoutine!");
-        }
 
         GameState.DemonInStoryMode = true;
         GameState.DemonRespawnedInApartment = false;
@@ -585,8 +549,6 @@ public class EnemyAI : MonoBehaviour
         GameState.DemonLoopPhase = false;
         GameState.FinalChase = false;
         jumpscareTriggered = false;
-
-        Debug.Log("[EnemyAI] Jumpscare triggered. Closing game...");
 
         yield return new WaitForSeconds(2.0f);
 
@@ -600,6 +562,5 @@ public class EnemyAI : MonoBehaviour
     public void SetSpawnInvincibility()
     {
         spawnInvincibilityTimer = spawnInvincibilityTime;
-        Debug.Log($"[EnemyAI] {name} spawn invincibility set for {spawnInvincibilityTime}s");
     }
 }

@@ -7,7 +7,7 @@ public class RoomManager : MonoBehaviour
     public static RoomManager Instance { get; private set; }
 
     private string currentRoom = "";
-    private HashSet<string> activeRooms = new HashSet<string>(); // pokoje w których jest gracz
+    private HashSet<string> activeRooms = new HashSet<string>(); 
 
     private void Awake()
     {
@@ -20,14 +20,12 @@ public class RoomManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Gracz wszedł do pokoju
     public void PlayerEnteredRoom(string roomTag)
     {
         activeRooms.Add(roomTag);
         UpdateCurrentRoom();
     }
 
-    // Gracz wyszedł z pokoju
     public void PlayerExitedRoom(string roomTag)
     {
         activeRooms.Remove(roomTag);
@@ -40,10 +38,8 @@ public class RoomManager : MonoBehaviour
 
         if (newRoom != currentRoom)
         {
-            Debug.Log($"[RoomManager] Room changed: '{currentRoom}' → '{newRoom}'");
             currentRoom = newRoom;
 
-            // Powiadom demona
             var demon = FindObjectOfType<DemonRoomPresence>();
             if (demon != null)
             {

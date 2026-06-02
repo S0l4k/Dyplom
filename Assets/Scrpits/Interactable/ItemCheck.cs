@@ -45,9 +45,6 @@ public class ItemCheck : MonoBehaviour
 
 
         if (outline != null) outline.enabled = false;
-
-        if (GameNarrativeManager.Instance == null)
-            Debug.LogError("[ItemCheck] Brak GameNarrativeManager w scenie!");
     }
 
     void Update()
@@ -64,14 +61,12 @@ public class ItemCheck : MonoBehaviour
 
     void CheckForInteraction()
     {
-        // ✅ NOWY CHECK: Jeśli interakcje zablokowane → seizure
         if (GameState.InteractionsLocked)
         {
             if (outline != null) outline.enabled = false;
             crossair.SetActive(false);
             canInteract = false;
 
-            // ✅ Użyj UNIKALNYCH nazw zmiennych – bez konfliktu!
             Ray seizureRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             if (Physics.Raycast(seizureRay, out RaycastHit seizureHit, 3f)
                 && (seizureHit.collider.gameObject == gameObject || seizureHit.transform.IsChildOf(transform)))
@@ -86,7 +81,6 @@ public class ItemCheck : MonoBehaviour
         bool wasInteracting = canInteract;
         canInteract = false;
 
-        // ✅ Reszta metody BEZ ZMIAN – oryginalny kod:
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 3f))
@@ -111,8 +105,6 @@ public class ItemCheck : MonoBehaviour
     }
 
 
-
-
     IEnumerator CheckItem()
     {
         isChecking = true;
@@ -121,9 +113,6 @@ public class ItemCheck : MonoBehaviour
         if (outline != null) outline.enabled = false;
         crossair.SetActive(false);
 
-        Debug.Log($"[ItemCheck] Rozpoczęto interakcję z: {itemName}");
-
-        // === ETAP 1: Myśl gracza (przez GameNarrativeManager) ===
         if (GameNarrativeManager.Instance != null)
         {
             yield return StartCoroutine(GameNarrativeManager.Instance.ShowThoughtWithStyle(
@@ -136,7 +125,6 @@ public class ItemCheck : MonoBehaviour
 
         yield return new WaitForSeconds(delayBeforeDemon);
 
-        // === ETAP 2: Odpowiedź demona (opcjonalnie) ===
         if (!string.IsNullOrWhiteSpace(demonResponse))
         {
             if (!demonVoiceEvent.IsNull && AudioManager.Instance != null)
@@ -161,7 +149,6 @@ public class ItemCheck : MonoBehaviour
             }
         }
 
-        // ✅ QUEST: ukończ po sprawdzeniu talerza
         if (itemName == "Plate" && QuestManager.Instance != null)
         {
            
@@ -172,7 +159,6 @@ public class ItemCheck : MonoBehaviour
 
 
         isChecking = false;
-        Debug.Log($"[ItemCheck] Interakcja z {itemName} zakończona");
     }
 
     void OnDestroy()

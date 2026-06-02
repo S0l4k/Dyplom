@@ -1,5 +1,4 @@
-﻿// MainMenu.cs - POPRAWIONA WERSJA (czysta składnia, same slidery)
-using FMOD.Studio;
+﻿using FMOD.Studio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using FMODUnity;
@@ -54,46 +53,33 @@ public class MainMenu : MonoBehaviour
     private Coroutine overlayFadeCoroutine;
     private Coroutine transitionCoroutine;
 
-    // ─────────────────────────────────────────────────────
     private void Start()
     {
-        // Reset timeScale na wszelki wypadek
         if (Time.timeScale <= 0f)
         {
-            Debug.LogWarning("[MainMenu] timeScale was paused! Resetting to 1f");
             Time.timeScale = 1f;
             Time.fixedDeltaTime = 0.02f;
         }
 
-        // Setup audio UI (slider + toggle)
         SetupAudioUI();
 
-        // Setup sensitivity UI (slider)
         SetupSensitivityUI();
 
-        // Apply volume to FMOD
         ApplyVolumeToFMOD();
 
-        // Show main menu panel
         ShowMainMenu();
 
-        // ✅ ZAMIEŃ na to:
-        // W MainMenu.Start(), sekcja Menu Ambient:
         if (!menuAmbientEvent.IsNull)
         {
-            // Twórz bezpośrednio przez RuntimeManager (zawsze działa)
             menuAmbientInstance = RuntimeManager.CreateInstance(menuAmbientEvent);
 
-            // Aplikuj obecną głośność z PlayerPrefs
             float vol = PlayerPrefs.GetFloat("MasterVolume", 1f);
             bool muted = (vol <= 0.01f);
             menuAmbientInstance.setVolume(muted ? 0f : vol);
 
-            // Start
             menuAmbientInstance.start();
         }
 
-        // Hide ending lock text on start
         if (cantEscapeText != null)
         {
             cantEscapeText.gameObject.SetActive(false);
@@ -105,11 +91,9 @@ public class MainMenu : MonoBehaviour
 
     private void SetupAudioUI()
     {
-        // Load saved values directly from PlayerPrefs (niezależnie od AudioManager)
         float savedVol = PlayerPrefs.GetFloat("MasterVolume", 1f);
         bool savedMute = (savedVol <= 0.01f);
 
-        // Setup volume slider
         if (volumeSlider != null)
         {
             volumeSlider.minValue = 0f;
@@ -119,7 +103,6 @@ public class MainMenu : MonoBehaviour
             volumeSlider.onValueChanged.AddListener(OnVolumeSliderChanged);
         }
 
-        // Setup mute toggle
         if (muteToggle != null)
         {
             muteToggle.isOn = savedMute;
@@ -128,28 +111,24 @@ public class MainMenu : MonoBehaviour
         }
 
         UpdateVolumeText();
-        ApplyVolumeToFMOD(); // Apply on start
+        ApplyVolumeToFMOD(); 
     }
 
     private void OnVolumeSliderChanged(float value)
     {
         bool isMuted = (value <= 0.01f);
 
-        // ✅ Zapisz do PlayerPrefs (wspólne dla MainMenu i FlatScene)
         PlayerPrefs.SetFloat("MasterVolume", value);
         PlayerPrefs.Save();
 
-        // ✅ Zaktualizuj globalny parametr FMOD (działa natychmiast, w każdej scenie)
         float finalVol = isMuted ? 0f : value;
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("MasterVolume", finalVol);
 
-        // ✅ Zaktualizuj menuAmbientInstance bezpośrednio
         if (menuAmbientInstance.isValid())
         {
             menuAmbientInstance.setVolume(finalVol);
         }
 
-        // Sync toggle UI
         if (muteToggle != null)
             muteToggle.isOn = isMuted;
 
@@ -158,24 +137,19 @@ public class MainMenu : MonoBehaviour
 
     private void OnMuteToggleChanged(bool isMuted)
     {
-        // Get last non-zero volume or default
         float lastVol = PlayerPrefs.GetFloat("MasterVolume", 1f);
         float newVol = isMuted ? 0f : (lastVol > 0.01f ? lastVol : 1f);
 
-        // ✅ Zapisz do PlayerPrefs
         PlayerPrefs.SetFloat("MasterVolume", newVol);
         PlayerPrefs.Save();
 
-        // ✅ Zaktualizuj FMOD globalnie
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("MasterVolume", newVol);
 
-        // ✅ Zaktualizuj menuAmbientInstance
         if (menuAmbientInstance.isValid())
         {
             menuAmbientInstance.setVolume(newVol);
         }
 
-        // Sync slider UI
         if (volumeSlider != null)
             volumeSlider.value = newVol;
 
@@ -194,15 +168,12 @@ public class MainMenu : MonoBehaviour
 
     private void ApplyVolumeToFMOD()
     {
-        // Pobierz głośność z PlayerPrefs (niezależnie od AudioManager)
         float savedVol = PlayerPrefs.GetFloat("MasterVolume", 1f);
         bool isMuted = (PlayerPrefs.GetInt("MasterVolume", 1) <= 0.01f);
         float finalVol = isMuted ? 0f : savedVol;
 
-        // ✅ Aktualizuj GLOBALNY parametr FMOD (działa ZAWSZE, niezależnie od AudioManager)
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("MasterVolume", finalVol);
 
-        // ✅ Aktualizuj też menuAmbientInstance bezpośrednio
         if (menuAmbientInstance.isValid())
         {
             menuAmbientInstance.setVolume(finalVol);
@@ -217,14 +188,12 @@ public class MainMenu : MonoBehaviour
     {
         if (mouseSensitivitySlider == null) return;
 
-        // ✅ Ładuj czułość TYLKO do wyświetlenia w menu (nie wpływa na grę!)
         float menuSens = PlayerPrefs.GetFloat("MouseSensitivity", defaultSensitivity);
-        Debug.Log($"[MainMenu] 🔽 Loaded sensitivity for display: {menuSens}");
 
         mouseSensitivitySlider.minValue = 0.1f;
         mouseSensitivitySlider.maxValue = 2000f;
-        mouseSensitivitySlider.value = menuSens;  // Tylko wyświetlenie
-        mouseSensitivity = menuSens;  // Tylko lokalna zmienna dla menu
+        mouseSensitivitySlider.value = menuSens;  
+        mouseSensitivity = menuSens;
 
         mouseSensitivitySlider.onValueChanged.RemoveAllListeners();
         mouseSensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
@@ -234,7 +203,6 @@ public class MainMenu : MonoBehaviour
     {
         mouseSensitivity = value;
 
-        // Save via SettingsManager
         if (settingsManager != null)
         {
             settingsManager.SaveSensitivity(value);
@@ -248,21 +216,17 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         ResetGameSession();
-        // Block double-clicks
         enabled = false;
 
-        // Stop ambient sound
         if (menuAmbientInstance.isValid())
         {
             menuAmbientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             menuAmbientInstance.release();
         }
 
-        // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Start fade transition
         if (transitionOverlay != null)
         {
             transitionOverlay.SetActive(true);
@@ -281,35 +245,24 @@ public class MainMenu : MonoBehaviour
         {
             OnTransitionComplete();
         }
-        // W PlayGame() i OnDestroy():
         if (menuAmbientInstance.isValid())
         {
-            menuAmbientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); // lub IMMEDIATE w OnDestroy
+            menuAmbientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); 
             menuAmbientInstance.release();
-            menuAmbientInstance = default; // Reset
+            menuAmbientInstance = default;
         }
     }
     private void ResetGameSession()
     {
-        Debug.Log("[MainMenu] 🔄 Resetting game session...");
 
-        // 1. Reset GameState
         GameState.ResetAll();
 
-        // 2. Reset QuestManager
         if (QuestManager.Instance != null)
             QuestManager.Instance.ResetAllQuests();
 
-       
-
-        // 4. Opcjonalnie: reset innych managerów (np. AudioManager – jeśli trzeba)
-        // if (AudioManager.Instance != null) AudioManager.Instance.Reset();
-
-        // 5. Reset Time.timeScale na wszelki wypadek
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        Debug.Log("[MainMenu] ✅ Game session reset complete");
     }
     private IEnumerator FadeTransition(Image img, float startAlpha, float endAlpha, float duration, System.Action onComplete)
     {
@@ -354,12 +307,9 @@ public class MainMenu : MonoBehaviour
     {
         if (IsQuitLocked())
         {
-            Debug.Log("[MainMenu] Quit blocked - playing 'U cant escape' sequence");
             StartCoroutine(CantEscapeSequence());
             return;
         }
-
-        Debug.Log("[MainMenu] Quitting game");
         Application.Quit();
     }
 
@@ -439,19 +389,16 @@ public class MainMenu : MonoBehaviour
             cantEscapeText.gameObject.SetActive(false);
         }
 
-        Debug.Log("[MainMenu] 'U cant escape' sequence finished");
     }
 
     private Camera FindActiveMainCamera()
     {
-        // Try Camera.main first
         Camera main = Camera.main;
         if (main != null && main.gameObject.activeInHierarchy)
         {
             return main;
         }
 
-        // Fallback: find by tag
         Camera[] allCameras = FindObjectsOfType<Camera>();
         foreach (Camera cam in allCameras)
         {
@@ -461,7 +408,6 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        // Last resort: any active camera
         foreach (Camera cam in allCameras)
         {
             if (cam.gameObject.activeInHierarchy)
@@ -470,7 +416,6 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        Debug.LogWarning("[MainMenu] No active camera found for shake!");
         return null;
     }
 
@@ -503,14 +448,12 @@ public class MainMenu : MonoBehaviour
 
     public void ShowSettings()
     {
-        // Stop any existing overlay fade
         if (overlayFadeCoroutine != null)
         {
             StopCoroutine(overlayFadeCoroutine);
             overlayFadeCoroutine = null;
         }
 
-        // Reset and show overlay
         if (settingsOverlay != null)
         {
             Image img = settingsOverlay.GetComponent<Image>();
@@ -521,11 +464,9 @@ public class MainMenu : MonoBehaviour
             settingsOverlay.SetActive(true);
         }
 
-        // Switch panels
         mainMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
 
-        // Fade in overlay
         if (settingsOverlay != null)
         {
             Image img = settingsOverlay.GetComponent<Image>();
@@ -535,19 +476,16 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        Debug.Log("[UI] ShowSettings: panels switched");
     }
 
     public void ShowMainMenu()
     {
-        // Stop any existing overlay fade
         if (overlayFadeCoroutine != null)
         {
             StopCoroutine(overlayFadeCoroutine);
             overlayFadeCoroutine = null;
         }
 
-        // Hide overlay
         if (settingsOverlay != null)
         {
             Image img = settingsOverlay.GetComponent<Image>();
@@ -558,11 +496,8 @@ public class MainMenu : MonoBehaviour
             settingsOverlay.SetActive(false);
         }
 
-        // Switch panels
         settingsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
-
-        Debug.Log("[UI] ShowMainMenu: panels switched");
     }
 
     private IEnumerator FadeOverlay(Image img, float startAlpha, float endAlpha, float duration)
@@ -588,15 +523,13 @@ public class MainMenu : MonoBehaviour
         overlayFadeCoroutine = null;
     }
 
-    // ─────────────────────────────────────────────────────
     private void OnDestroy()
     {
-        // W PlayGame() i OnDestroy():
         if (menuAmbientInstance.isValid())
         {
-            menuAmbientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); // lub IMMEDIATE w OnDestroy
+            menuAmbientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             menuAmbientInstance.release();
-            menuAmbientInstance = default; // Reset
+            menuAmbientInstance = default; 
         }
     }
 }

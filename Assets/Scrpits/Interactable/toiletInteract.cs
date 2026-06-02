@@ -7,7 +7,6 @@ public class toiletInteract : MonoBehaviour
     private Camera playerCamera;
     private bool canInteract = false;
     public Outline outline;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
@@ -15,7 +14,6 @@ public class toiletInteract : MonoBehaviour
         if (outline != null) outline.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckForInteraction();
@@ -34,7 +32,6 @@ public class toiletInteract : MonoBehaviour
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
-        // Naprawione wykrywanie (obs³uga dzieci obiektu)
         if (Physics.Raycast(ray, out RaycastHit hit, 3f))
         {
             if (hit.collider.gameObject == gameObject || hit.transform.IsChildOf(transform))

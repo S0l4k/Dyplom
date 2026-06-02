@@ -20,8 +20,6 @@ public class Flashlight : MonoBehaviour
         ON.SetActive(true);
         OFF.SetActive(false);
         isON = true;
-
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         AudioManager.Instance.PlaySFX(flashlightEvent);
     }
 
@@ -30,8 +28,6 @@ public class Flashlight : MonoBehaviour
         ON.SetActive(false);
         OFF.SetActive(true);
         isON = false;
-
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         AudioManager.Instance.PlaySFX(flashlightEvent);
     }
 }

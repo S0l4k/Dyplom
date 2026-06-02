@@ -52,8 +52,6 @@ public class LightSwitch : MonoBehaviour
     {
         if (lightOb == null)
             return;
-
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
         AudioManager.Instance.PlaySFX(flashlightEvent);
 
         lightOb.SetActive(!lightOb.activeSelf);

@@ -18,7 +18,6 @@ public class RandomWhispers : MonoBehaviour
 
     void Update()
     {
-        // Sprawdź czy poprzedni dźwięk jeszcze gra
         if (currentInstance.isValid())
         {
             PLAYBACK_STATE state;
@@ -43,8 +42,7 @@ public class RandomWhispers : MonoBehaviour
     }
 
     void PlayWhisper()
-    {
-        // ✅ ZAMIENIONE: RuntimeManager -> AudioManager
+    { 
         currentInstance = AudioManager.Instance.PlayRandomSound(whispersEvent, transform.position);
     }
 }

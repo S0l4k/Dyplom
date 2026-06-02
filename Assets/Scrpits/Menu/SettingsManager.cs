@@ -1,5 +1,4 @@
-﻿// SettingsManager.cs - AKTUALIZACJA: zakres 0-1200
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class SettingsManager : MonoBehaviour
     private const string KEY_SENSITIVITY = "Settings_MouseSensitivity";
 
     [Header("Defaults")]
-    [Range(0f, 2000f)]  // ← ZMIANA: 10f → 1200f
+    [Range(0f, 2000f)]  
     public float defaultSensitivity = 2f;
 
     private void Awake()
@@ -20,7 +19,6 @@ public class SettingsManager : MonoBehaviour
 
     public void SaveSensitivity(float sensitivity)
     {
-        // ← ZMIANA: Clamp do 0-1200, nie 0.1-10
         sensitivity = Mathf.Clamp(sensitivity, 0f, 1200f);
         PlayerPrefs.SetFloat(KEY_SENSITIVITY, sensitivity);
         PlayerPrefs.Save();
