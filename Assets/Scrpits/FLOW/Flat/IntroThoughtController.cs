@@ -10,7 +10,7 @@ public class IntroThoughtController : MonoBehaviour
 
     [Header("Typewriter Settings")]
     [TextArea]
-    public string thoughtLine = "It must be a dream...";
+    public string thoughtLine = "It's  him again";
     public float typeSpeed = 0.07f;
     public float stayTimeAfterTyping = 1.0f;
 

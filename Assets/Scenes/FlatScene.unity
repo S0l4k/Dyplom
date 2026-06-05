@@ -33088,7 +33088,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 715788424}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1928140119}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1587370007}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &715788424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39165,6 +39189,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6022639199455935822, guid: 2b6b089bab80e8b4286688410d3bc36f, type: 3}
   m_PrefabInstance: {fileID: 1475259984}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &897964276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 897964277}
+  - component: {fileID: 897964279}
+  - component: {fileID: 897964278}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &897964277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897964276}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.49999782, y: 0.5000022, z: 0.5000023, w: -0.49999774}
+  m_LocalPosition: {x: 0.01304246, y: 0.0153061105, z: 0.0077646086}
+  m_LocalScale: {x: 0.005, y: 0.01, z: 0.009999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1177566966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &897964278
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897964276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.3816586, y: 1, z: 1.0705757}
+  m_Center: {x: 1.1908293, y: 0, z: 1.8257246}
+--- !u!65 &897964279
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897964276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.058527, y: 2.276619, z: 2.7422924}
+  m_Center: {x: 0.029263496, y: 0.6383095, z: 0.10867691}
 --- !u!1 &900107269
 GameObject:
   m_ObjectHideFlags: 0
@@ -55750,6 +55849,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9912426}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1177566966 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8100289392136890061, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
+  m_PrefabInstance: {fileID: 347205097191751604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1179124693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59273,7 +59377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thoughtText: {fileID: 179521618}
-  thoughtLine: It must be a dream...
+  thoughtLine: It's him again...
   typeSpeed: 0.07
   stayTimeAfterTyping: 1
   markColor: '#00000080'
@@ -60474,7 +60578,7 @@ GameObject:
   - component: {fileID: 1264164711}
   - component: {fileID: 1264164710}
   - component: {fileID: 1264164709}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Celling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78066,7 +78170,7 @@ Transform:
   m_GameObject: {fileID: 1774565086}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalPosition: {x: 0, y: -0.026, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86493,7 +86597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5ebfa0c635dcd448568f9387b9e87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshair: {fileID: 0}
 --- !u!43 &1881873449
 Mesh:
   m_ObjectHideFlags: 0
@@ -87384,8 +87487,6 @@ MonoBehaviour:
   windowTrigger: {fileID: 1692402656}
   blood: {fileID: 1505597458}
   bloodStaircase: {fileID: 1384419386}
-  debugTeleportPosition: {fileID: 0}
-  debugSofaInteractReference: {fileID: 0}
 --- !u!114 &1893179576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93376,9 +93477,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -905405809, guid: 690fb00fc2310494881377719497f252, type: 3}
     - target: {fileID: 5112105959013125352, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1833239510}
+    - target: {fileID: 5112105959013125352, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
       propertyPath: closedHandSprite
       value: 
       objectReference: {fileID: 1666421236, guid: 690fb00fc2310494881377719497f252, type: 3}
+    - target: {fileID: 5112105959013125352, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
+      propertyPath: mouseDragStrength
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6369856301153719152, guid: 57c5a06b3f15fc64a8e219002e76b017, type: 3}
       propertyPath: m_SkinWidth
       value: 0.01
@@ -93557,7 +93666,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8100289392136890061, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 897964277}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5998764136715631841, guid: 3d5c119a191304f4ab74191691f301c1, type: 3}
       insertIndex: -1
@@ -94307,6 +94419,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1818004057}
     m_Modifications:
+    - target: {fileID: 1729036632644225624, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
+      propertyPath: m_Size.z
+      value: 0.013965135
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729036632644225624, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
+      propertyPath: m_Center.x
+      value: -0.000006513588
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729036632644225624, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
+      propertyPath: m_Center.z
+      value: -0.00014005184
+      objectReference: {fileID: 0}
     - target: {fileID: 2696070423866065883, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_Name
       value: F_fridge
@@ -94359,13 +94483,17 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3363030659425842571, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4886660979091141569, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_Mass
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5270691364691650024, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_Motor.force
-      value: 50
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6784114974456500139, guid: 2200545b07394ed4ca3c6542add52b4b, type: 3}
       propertyPath: m_IsActive

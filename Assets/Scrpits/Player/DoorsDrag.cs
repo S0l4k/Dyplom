@@ -13,6 +13,10 @@ public class DoorsDrag : MonoBehaviour
     [SerializeField] Sprite openHandSprite;
     [SerializeField] Sprite closedHandSprite;
 
+    [Header("Door Control")]
+    [Tooltip("Zwiększ wartość, aby drzwi były lżejsze (np. 2.0 - 5.0). 1.0 = domyślnie.")]
+    [SerializeField] float mouseDragStrength = 1f; // ✅ NOWE
+
     private Transform hoveredDoor;
     private Transform selectedDoor;
     private GameObject dragPointGameObject;
@@ -136,17 +140,23 @@ public class DoorsDrag : MonoBehaviour
         float speedMultiplier = 60000;
         JointMotor motor = joint.motor;
 
+        // ✅ KLUCZOWE: Zdejmij limit siły, żeby drzwi nie były "ciężkie"
+        motor.force = Mathf.Infinity;
+
+        // ✅ Zastosuj mouseDragStrength do prędkości
+        float baseVelocity = delta * speedMultiplier * Time.deltaTime * leftDoor * mouseDragStrength;
+
         if (Mathf.Abs(selectedDoor.parent.forward.z) > 0.5f)
         {
             motor.targetVelocity = dragPointGameObject.transform.position.x > selectedDoor.position.x
-                ? delta * -speedMultiplier * Time.deltaTime * leftDoor
-                : delta * speedMultiplier * Time.deltaTime * leftDoor;
+                ? -baseVelocity
+                : baseVelocity;
         }
         else
         {
             motor.targetVelocity = dragPointGameObject.transform.position.z > selectedDoor.position.z
-                ? delta * -speedMultiplier * Time.deltaTime * leftDoor
-                : delta * speedMultiplier * Time.deltaTime * leftDoor;
+                ? -baseVelocity
+                : baseVelocity;
         }
 
         joint.motor = motor;
